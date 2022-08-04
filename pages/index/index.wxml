@@ -1,0 +1,4 @@
+<!--index.wxml-->
+<navigator url="/03shenmingtansuo/index/index">5466666666</navigator>
+
+<view>{{ lists }}</view>

@@ -1,0 +1,22 @@
+{
+    "pages": [
+        "pages/index/index"
+    ],
+    "subpackages": [
+        {
+            "root": "03shenmingtansuo",
+            "name": "生命探索",
+            "pages": [
+                "index/index",
+                "zhutijieshao/zhutijieshao"
+            ]
+        }
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#222653",
+        "navigationBarTitleText": "",
+        "navigationBarTextStyle": "white"
+    },
+    "sitemapLocation": "sitemap.json"
+}
