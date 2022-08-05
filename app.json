@@ -1,21 +1,30 @@
 {
     "pages": [
-        "pages/index/index"
+        "pages/index/index",
+        "pages/login/login"
     ],
     "subpackages": [
         {
-            "root": "03shenmingtansuo",
-            "name": "生命探索",
+            "root": "02meiritiaopin",
+            "name": "每日调频",
             "pages": [
-                "index/index",
-                "zhutijieshao/zhutijieshao"
+                "index/index"
             ]
-        }
+        },
+        {
+          "root": "03shenmingtansuo",
+          "name": "生命探索",
+          "pages": [
+              "index/index",
+              "zhutijieshao/zhutijieshao"
+          ]
+      }
     ],
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#222653",
         "navigationBarTitleText": "",
+        "navigationStyle": "custom",
         "navigationBarTextStyle": "white"
     },
     "sitemapLocation": "sitemap.json"

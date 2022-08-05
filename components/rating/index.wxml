@@ -1,0 +1,8 @@
+<!--components/rating/index.wxml-->
+<view class="flex-row">
+  <view wx:if="{{showRating}}" class="rating_text">{{rating}}<span wx:if="{{rating}}">星</span></view>
+  <view class="rating-box">
+    <image src="{{item==1?'./img/star.png':'./img/star-o.png'}}" class="star" style="width:{{starWidth}}rpx;height:{{starWidth}}rpx" wx:for="{{stars}}" wx:key="index"
+           catchtap="{{readOnly?'':'choseStar'}}" data-index="{{index}}"></image>
+  </view>
+</view>

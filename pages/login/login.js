@@ -1,41 +1,19 @@
-// 03shenmingtansuo/zhutijieshao/zhutijieshao.js
+// pages/login/login.js
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        buyPopStatus: false,
-        yearPopStatus: false,
-        gwPopStatus: false
-    },
-    // 打开购买本探索弹窗
-    openBuyPop() {
-        var that = this;
-        that.setData({
-            buyPopStatus: true
-        })
-    },
-    // 关闭弹窗
-    closePop() {
-        var that = this;
-        that.setData({
-            buyPopStatus: false,
-            yearPopStatus: false,
-            gwPopStatus: false
-        })
+        agreeStatus: true
     },
 
-    // 打开购买本探索弹窗
-    openYearPop() {
+    clickAgree(){
         var that = this;
+        console.log(that.data.agreeStatus);
         that.setData({
-            yearPopStatus: true
+            agreeStatus: !that.data.agreeStatus
         })
-    },
-
-    change(e){
-        console.log(e.detail)
     },
 
     /**

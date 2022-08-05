@@ -1,5 +1,5 @@
 /**app.wxss**/
-page,view,image,input,text,swiper,swiper-item,navigator {
+page,view,image,input,text,swiper,swiper-item,navigator,textarea,button {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -11,6 +11,7 @@ page,view,image,input,text,swiper,swiper-item,navigator {
 	font-smoothing: antialiased;
 	word-break: break-all;
 	word-wrap: break-word;
+	font-size: 28rpx;
 	line-height: 1.5;
 }
 page {
@@ -24,4 +25,38 @@ button::after{
 }
 .wp{
 	padding: 0 40rpx;
+}
+.z-tab{
+	position: relative;
+	display: flex;
+	margin-bottom: 32rpx;
+}
+.z-tab .tab-item{
+	font-size: 32rpx;
+	line-height: 88rpx;
+	color: #ffffff;
+	opacity: .6;
+	margin-right: 32rpx;
+}
+.z-tab .tab-item.active{
+	position: relative;
+	opacity: 1;
+}
+.z-tab .tab-item.active:after{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	margin-left: -20rpx;
+	width: 40rpx;
+	height: 10rpx;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAC5SURBVHgBjVC7DcJADH02SBQ0bMCNwAi3AWQCWIMqR0UB7AATIIRQ2owQNjg2SAMSkXLGgBAkpIhLv4+fH0myiRHEgZBCwg5FmVI092gxsncD9PozgMYQWDA5ktNaGriZHvAo5QxmX0FCMCocqolVS1MXdjXdQglxbT/SiyPdT1RURZg++f5jqNcLlWRpEDoWwlNNZtF6KIdIBpYD7tctRS6nJpocV9oHm+97lRSXdw1lhuLmnya/8AMfjkU7ueyE/AAAAABJRU5ErkJggg==) no-repeat center;
+}
+.z-tab .detail{
+	position: absolute;
+	top: 0;
+	right: -16rpx;
+	font-size: 30rpx;
+	line-height: 88rpx;
+	color: #ffb58c;
 }

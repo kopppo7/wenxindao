@@ -1,0 +1,20 @@
+<!--pages/login/login.wxml-->
+<image mode="widthFix" class="welcome-bg" src="../../images/welcome-bg.jpg"></image>
+<view class="login-txt">
+    <view class="item">在遥远的时空之外，有一座神奇的岛屿-问心岛。据说，每个人的灵魂，都会在这里被看见。</view>
+    <view class="item">岛上有一种神奇的问心精灵，会教我们如何与自己的心灵对话，照见灵魂的深处。</view>
+</view>
+<view class="login-bottom">
+    <view class="btn-login"><image src="../../images/icon-weixin.png"></image>微信快捷登录</view>
+    <view class="login-select">
+        <view class="item">手机号登录</view>
+        <view class="item">随便看看</view>
+    </view>
+    <view class="label-agree">
+        <text bindtap="clickAgree" class="{{agreeStatus ? 'active' : ''}}">同意</text><navigator url=""
+                                                                                         hover-class="none">《用户服务协议》
+    </navigator>和
+        <navigator
+            url="" hover-class="none">《隐私协议保护协议》</navigator>
+    </view>
+</view>

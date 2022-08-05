@@ -83,21 +83,44 @@
         <view class="bottom-l">
             <view class="money">¥<text>20</text></view>
             <view class="year">/使用期1年</view>
-            <image class="tip" src="../../images/icon-tip.png"></image>
+            <image class="tip" bindtap="closeYearPop" src="../../images/icon-tip.png"></image>
         </view>
-        <view class="bottom-r bottom-r1">购买</view>
+        <view class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
     </view>
 </view>
 <!--购买本探索-->
-<view class="pop-mask"></view>
-<view class="pop-win">
-    <view class="pop-tit">购买本探索</view>
-    <image class="pop-close" src="../../images/icon-close.png"></image>
-    <view class="pop-cont">
-        <image class="pic" src="../../images/1.png"></image>
-        <view class="title">原生家庭-性格探索</view>
-        <view class="time">购买使用期：1年</view>
-        <view class="money">¥<text>20.00</text></view>
+<block wx:if="{{buyPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win">
+        <view class="pop-tit">购买本探索</view>
+        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <view class="pop-cont">
+            <image class="pic" src="../../images/1.png"></image>
+            <view class="title">原生家庭-性格探索</view>
+            <view class="time">购买使用期：1年</view>
+            <view class="money">¥<text>20.00</text></view>
+        </view>
+        <view class="btn-buy">确认购买</view>
     </view>
-    <view class="btn-buy">确认购买</view>
-</view>
+</block>
+<!--使用期1年弹窗-->
+<block wx:if="{{yearPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">购买本探索</view>
+        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <view class="desc">生命探索活动中的1年使用权指用户以当前价格购买后可免费此本子1年。</view>
+        <view class="btn-know" bindtap="closePop">知道了</view>
+    </view>
+</block>
+<!--写感悟弹窗-->
+<block wx:if="{{gwPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win">
+        <view class="pop-tit">给本次的生命探索引导打分</view>
+        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <rating showRating  rating="4" bind:click="change"></rating>
+        <textarea class="content" placeholder="您认为本次的引导设计如何？您收获了什么？您的感受如何？可以记录下来..." />
+        <view class="btn-buy">提交</view>
+    </view>
+</block>

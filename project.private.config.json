@@ -20,6 +20,20 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "login",
+          "pathName": "pages/login/login",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "每日调频",
+          "pathName": "02meiritiaopin/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

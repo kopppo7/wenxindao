@@ -1,0 +1,70 @@
+<!--02meiritiaopin/index/index.wxml-->
+<image class="m-p1" src="../../images/m-p1.jpg"></image>
+<view class="wp">
+    <view class="z-tab">
+        <view class="tab-item active">每日意图</view>
+        <view class="tab-item">要事规划</view>
+        <view class="tab-item">要事规划</view>
+        <navigator url="" hover-class="none" class="detail">帮助</navigator>
+    </view>
+    <view class="date-count">
+        <view class="date">
+            <view class="s1">
+                <text>29</text>
+                7月
+            </view>
+            <view class="s2">农历七月初一</view>
+        </view>
+        <view class="count">
+            <view class="s1">历史记录</view>
+            <view class="s2">1546人已打卡</view>
+        </view>
+    </view>
+    <view class="m-ask">
+        <view class="item">在早上，问问自己，</view>
+        <view class="item">今天我想用什么样的心情过一天？</view>
+        <view class="item">我在今天想要创造什么样的价值？</view>
+        <view class="item">我有没有关注到、帮助身边的人？</view>
+    </view>
+    <view class="z-btn">
+        <image src="../../images/icon-fanpai.png"></image>
+        抽牌获得启示
+    </view>
+    <view class="z-btn">
+        <image src="../../images/refresh-cw-01.svg"></image>
+        换一换卡牌
+    </view>
+    
+    <view class="card-list">
+        <view class="item">
+            <view class="pic">
+                <image src="../../images/1.png"></image>
+            </view>
+            <image class="btn-fan" src="../../images/icon-fan.png"></image>
+        </view>
+        <view class="item active">
+            <view class="pic">
+                <image src="../../images/1.png"></image>
+            </view>
+            <image class="btn-fan" src="../../images/icon-fan.png"></image>
+        </view>
+        <view class="item">
+            <view class="pic">
+                <image src="../../images/1.png"></image>
+            </view>
+            <image class="btn-fan" src="../../images/icon-fan.png"></image>
+        </view>
+    </view>
+    
+    <form catchsubmit="formSubmit" class="form-z">
+        <view class="textarea-box">
+            <textarea bindblur="bindTextAreaBlur" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;" />
+            <view class="btn-yuyin"><image src="../../images/icon-yuyin.png"></image>语音输入</view>
+        </view>
+        <radio-group bindchange="radioChange">
+            <label class="label-radio"><radio value="1"/>公开</label>
+            <label class="label-radio"><radio value="0" checked="true"/>仅自己可见</label>
+        </radio-group>
+        <button formType="submit" class="btn-submit">提交</button>
+    </form>
+</view>
