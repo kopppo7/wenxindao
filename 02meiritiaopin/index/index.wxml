@@ -5,7 +5,7 @@
         <view class="tab-item active">每日意图</view>
         <view class="tab-item">要事规划</view>
         <view class="tab-item">要事规划</view>
-        <navigator url="" hover-class="none" class="detail">帮助</navigator>
+        <view class="detail" bindtap="openPlayPop">帮助</view>
     </view>
     <view class="date-count">
         <view class="date">
@@ -34,32 +34,31 @@
         <image src="../../images/refresh-cw-01.svg"></image>
         换一换卡牌
     </view>
-    
     <view class="card-list">
         <view class="item">
             <view class="pic">
                 <image src="../../images/1.png"></image>
             </view>
-            <image class="btn-fan" src="../../images/icon-fan.png"></image>
+            <image bindtap="openBig" class="btn-fan" src="../../images/icon-fan.png"></image>
         </view>
         <view class="item active">
             <view class="pic">
                 <image src="../../images/1.png"></image>
             </view>
-            <image class="btn-fan" src="../../images/icon-fan.png"></image>
+            <image bindtap="openBig" class="btn-fan" src="../../images/icon-fan.png"></image>
         </view>
         <view class="item">
             <view class="pic">
                 <image src="../../images/1.png"></image>
             </view>
-            <image class="btn-fan" src="../../images/icon-fan.png"></image>
+            <image bindtap="openBig" class="btn-fan" src="../../images/icon-fan.png"></image>
         </view>
     </view>
-    
     <form catchsubmit="formSubmit" class="form-z">
         <view class="textarea-box">
             <textarea bindblur="bindTextAreaBlur" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;" />
             <view class="btn-yuyin"><image src="../../images/icon-yuyin.png"></image>语音输入</view>
+            <view class="btn-luyin"><image src="../../images/icon-luyin.png"></image><view class="txt">点击录音</view></view>
         </view>
         <radio-group bindchange="radioChange">
             <label class="label-radio"><radio value="1"/>公开</label>
@@ -68,3 +67,28 @@
         <button formType="submit" class="btn-submit">提交</button>
     </form>
 </view>
+<!--玩法介绍-->
+<block wx:if="{{playPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win">
+        <view class="pop-tit">玩法介绍</view>
+        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <view class="pop-intro">
+            <div class="pop-intro-item">
+                <view class="tit">为什么要设定意图？</view>
+                <view class="desc">描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字
+                </view>
+                <view class="tit">如何建立积极的自我对话？</view>
+                <view class="desc">描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字</view>
+            </div>
+        </view>
+    </view>
+</block>
+<!--放大卡牌-->
+<block wx:if="{{bigPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-big">
+        <image class="big-pic" src="../../images/big-pic.png"></image>
+        <image class="pop-close-bot" src="../../images/pop-close.png" bindtap="closePop"></image>
+    </view>
+</block>

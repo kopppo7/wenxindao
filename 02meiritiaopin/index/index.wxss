@@ -1,6 +1,6 @@
 /* 02meiritiaopin/index/index.wxss */
 page{
-	padding: 160rpx 0 0;
+	padding: 160rpx 0 88rpx;
 }
 .m-p1{
 	position: absolute;
@@ -68,8 +68,6 @@ page{
 	height: 40rpx;
 	margin-right: 16rpx;
 }
-.form-z{
-}
 .form-z .textarea-box{
 	position: relative;
 	margin-bottom: 24rpx;
@@ -104,6 +102,22 @@ page{
 	height: 32rpx;
 	margin-right: 16rpx;
 }
+
+.form-z .textarea-box .btn-luyin{
+	position: absolute;
+	top: 86rpx;
+	left: 50%;
+	-webkit-transform: translateX(-50%);-moz-transform: translateX(-50%);-ms-transform: translateX(-50%);-o-transform: translateX(-50%);transform: translateX(-50%);
+}
+.form-z .textarea-box .btn-luyin image{
+	width: 96rpx;
+	height: 96rpx;
+}
+.form-z .textarea-box .btn-luyin .txt{
+	font-size: 26rpx;
+	color: #b6b2cf;
+	text-align: center;
+}
 .form-z .btn-submit{
 	display: block;
 	font-size: 32rpx;
@@ -113,7 +127,6 @@ page{
 	line-height: 100rpx;
 	background: #7461E7;
 	border-radius: 72rpx;
-	margin-bottom: 88rpx;
 }
 .form-z radio-group{
 	margin-bottom: 48rpx;
@@ -135,6 +148,7 @@ page{
 .card-list{
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 54rpx;
 }
 .card-list .item{
 	position: relative;
@@ -160,4 +174,48 @@ page{
 	right: 8rpx;
 	width: 48rpx;
 	height: 48rpx;
+}
+.card-list .item.active{
+
+}
+.card-list .item.active .pic{
+	height: 340rpx;
+	margin-top: -10rpx;
+	background: #ffffff;
+	border: 1px solid #ffffff;
+}
+.pop-intro{
+
+}
+.pop-intro .pop-intro-item{
+
+}
+.pop-intro .pop-intro-item .tit{
+	font-size: 32rpx;
+	margin-bottom: 24rpx;
+}
+.pop-intro .pop-intro-item .desc{
+	font-size: 28rpx;
+	line-height: 44rpx;
+	opacity: .6;
+}
+.pop-big{
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);-moz-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);-o-transform: translate(-50%, -50%);transform: translate(-50%, -50%);
+	z-index: 801;
+}
+.pop-big .big-pic{
+	width: 670rpx;
+	height: 998rpx;
+}
+.pop-close-bot{
+	position: absolute;
+	bottom: -116rpx;
+	left: 50%;
+	margin-left: -48rpx;
+	width: 96rpx;
+	height: 96rpx;
+	z-index: 801;
 }

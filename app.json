@@ -8,7 +8,8 @@
             "root": "02meiritiaopin",
             "name": "每日调频",
             "pages": [
-                "index/index"
+                "index/index",
+                "share/share"
             ]
         },
         {
