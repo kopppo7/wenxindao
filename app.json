@@ -17,9 +17,18 @@
           "name": "生命探索",
           "pages": [
               "index/index",
-              "zhutijieshao/zhutijieshao"
+              "zhutijieshao/zhutijieshao",
+              "tansuo/tansuo"
           ]
-      }
+      },
+      {
+        "root": "06wode",
+        "name": "我的",
+        "pages": [
+            "index/index",
+            "wodedigndan/wodedigndan"
+        ]
+    }
     ],
     "window": {
         "backgroundTextStyle": "light",

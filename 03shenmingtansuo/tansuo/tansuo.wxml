@@ -1,0 +1,125 @@
+<!--03shenmingtansuo/tansuo/tansuo.wxml-->
+<view class="jdt-box"><text style="width: {{step * 20}}%;"></text></view>
+<scroll-view class="z-tab2" scroll-x="true">
+    <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
+    <view class="item {{step == 1 ? 'active' : ''}}">第1轮</view>
+    <view class="item {{step == 2 ? 'active' : ''}}">第2轮</view>
+    <view class="item {{step == 3 ? 'active' : ''}}">第3轮</view>
+    <view class="item {{step == 4 ? 'active' : ''}}">第4轮</view>
+    <view class="item {{step == 5 ? 'active' : ''}}">结语</view>
+</scroll-view>
+<view class="wp">
+    <view class="yinyan-box" wx:if="{{step === 0}}">
+        <view class="box1">
+            <image class="avatar" src="../../images/avatar0.jpg"></image>
+            <view class="txt">
+                <view>大家好，欢迎开启本次生命探索。</view>
+                <view>今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这种性格给我们带来什么样的影响，</view>
+            </view>
+        </view>
+        <view class="box2">
+            <view class="s1">阅读引言后，点击下一步。在之后的探索中，点击模拟1 和 模拟2的头像会看到他们的回答。 </view>
+            <view class="s2">
+                <view class="s2-item active">
+                    <view class="avatar-box">
+                        <text>1</text>
+                        <image class="avatar" src="../../images/avatar1.jpg"></image>
+                    </view>
+                    <view class="name">我</view>
+                </view>
+                <view class="s2-item">
+                    <view class="avatar-box">
+                        <text>2</text>
+                        <image class="avatar" src="../../images/avatar2.jpg"></image>
+                    </view>
+                    <view class="name">模拟1</view>
+                </view>
+                <view class="s2-item">
+                    <view class="avatar-box">
+                        <text>3</text>
+                        <image class="avatar" src="../../images/avatar3.jpg"></image>
+                    </view>
+                    <view class="name">模拟2</view>
+                </view>
+            </view>
+            <view class="g-submit">下一步</view>
+        </view>
+    </view>
+    <view class="tansuo-row" wx:if="{{step === 1}}">
+        <view class="box1">
+            <image class="avatar" src="../../images/avatar0.jpg"></image>
+            <view class="txt">那我们接着来探索下这样的性格给您的生活带来什么样的影响呢？</view>
+        </view>
+        <view class="box2">
+            <view class="box2-l">
+                <view class="box2-l-item active">
+                    <view class="avatar-box">
+                        <text></text>
+                        <image class="avatar" src="../../images/avatar1.jpg"></image>
+                    </view>
+                    <view class="name">我</view>
+                </view>
+                <view class="box2-l-item">
+                    <view class="avatar-box">
+                        <text></text>
+                        <image class="avatar" src="../../images/avatar2.jpg"></image>
+                    </view>
+                    <view class="name">模拟1</view>
+                </view>
+                <view class="box2-l-item">
+                    <view class="avatar-box">
+                        <text></text>
+                        <image class="avatar" src="../../images/avatar3.jpg"></image>
+                    </view>
+                    <view class="name">模拟2</view>
+                </view>
+            </view>
+            <view class="box2-r">
+                <view class="tit">链接卡牌，回答问心精灵的问题。</view>
+                
+            </view>
+        </view>
+        <view class="g-submit">下一步</view>
+    </view>
+    <view class="yinyan-box yinyan-box5" wx:if="{{step === 5}}">
+        <view class="box1">
+            <image class="avatar" src="../../images/avatar0.jpg"></image>
+            <view class="txt">
+                本次生命探索正式结束啦。
+                探索完父母的性格对你的影响，是不是对自己有很多新的看见呢？或许，你对父母也有很多新的看见。
+                我们都听过一句话，性格决定命运。我们这些遗传或者被父母影响塑造而成的性格，没有绝对的好坏。看见它，用好它，和它好好相处，也是我们自我接纳的重要课题。
+            </view>
+        </view>
+        <view class="box3">
+            <view class="box3-item">
+                <view class="tit">心理学小课堂</view>
+                <view class="con">科学研究发现，我们的性格在小时候有80%的比例受到父母的影响。成年以后，这种影响会降低到40%左右，依然是个非常高的比例，在生命中发挥重要作用。</view>
+            </view>
+            <view class="box3-item">
+                <view class="tit">想要收获更多反馈？ </view>
+                <view class="con">每个人都有自己认知的盲区。敞开自己，去拥抱其它小伙伴的角度和评论吧！</view>
+            </view>
+        </view>
+        <view class="box4">
+            <image class="box4-l" src="../../images/qrtxt.png"></image>
+            <image class="box4-r" src="../../images/qrcode.png"></image>
+        </view>
+        <view class="box5">
+            <view class="g-submit">查看本次记录</view>
+            <view class="share" bindtap="openSharePop">分享</view>
+        </view>
+    </view>
+</view>
+<!--分享到-->
+<block wx:if="{{sharePopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win">
+        <view class="pop-tit">分享到</view>
+        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <view class="pop-share">
+            <view class="share-item"><image src="../../images/share-weixin.png"></image>微信好友</view>
+            <view class="share-item"><image src="../../images/share-friends.png"></image>朋友圈</view>
+        </view>
+    </view>
+</block>
+

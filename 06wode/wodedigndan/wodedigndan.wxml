@@ -1,0 +1,99 @@
+<!--06wode/wodedigndan/wodedigndan.wxml-->
+<view class="wp">
+    <view class="z-tab">
+        <view bindtap="selTab" id="0" class="tab-item {{activeIndex == 0 ? 'active' : ''}}">我的</view>
+        <view bindtap="selTab" id="1" class="tab-item {{activeIndex == 1 ? 'active' : ''}}">赠送</view>
+    </view>
+    <view class="order-list" wx:if="{{activeIndex == 0}}">
+        <view class="item mb12">
+            <view class="s1">
+                <view class="s1-l">订单号：4Lk344REW3</view>
+                <view class="s1-r">¥
+                    <text>29.9</text></view>
+            </view>
+            <view class="s2">主题派对-亲子主题</view>
+            <view class="s3">
+                <view class="s3-l">2022/3/4 23:33</view>
+                <view class="s3-r">
+                    <view class="btn">去使用</view>
+                </view>
+            </view>
+        </view>
+        <view class="item mb12">
+            <view class="s1">
+                <view class="s1-l">订单号：4Lk344REW3</view>
+                <view class="s1-r">¥
+                    <text>29.9</text></view>
+            </view>
+            <view class="s2">问心邮局-一个月的夸奖</view>
+            <view class="s3">
+                <view class="s3-l">2022/3/4 23:33</view>
+                <view class="s3-r">
+                    <image class="avatar" src="../../images/avatar2.jpg"></image>
+                    <view class="name">模拟1</view>
+                    <view class="status">已使用</view>
+                </view>
+            </view>
+        </view>
+        <view class="item mb12">
+            <view class="s1">
+                <view class="s1-l">订单号：4Lk344REW3</view>
+                <view class="s1-r">¥
+                    <text>29.9</text></view>
+            </view>
+            <view class="s2">主题派对-亲子主题</view>
+            <view class="s3">
+                <view class="s3-l">2022/3/4 23:33</view>
+                <view class="s3-r">
+                    <view class="btn">去使用</view>
+                </view>
+            </view>
+        </view>
+        <view class="item mb12">
+            <view class="s1">
+                <view class="s1-l">订单号：4Lk344REW3</view>
+                <view class="s1-r">¥
+                    <text>29.9</text></view>
+            </view>
+            <view class="s2">问心邮局-一个月的夸奖</view>
+            <view class="s3">
+                <view class="s3-l">2022/3/4 23:33</view>
+                <view class="s3-r">
+                    <image class="avatar" src="../../images/avatar2.jpg"></image>
+                    <image class="avatar" src="../../images/avatar3.jpg"></image>
+                    <image class="avatar" src="../../images/avatar4.jpg"></image>
+                    <view class="status">已使用</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="order-list" wx:else>
+        <view class="item mb12">
+            <view class="s1">
+                <view class="s1-l">订单号：4Lk344REW3</view>
+                <view class="s1-r">¥<text>29.9</text></view>
+            </view>
+            <view class="s2">主题派对-亲子主题</view>
+            <view class="s3">
+                <view class="s3-l">2022/3/4 23:33</view>
+                <view class="s3-r">
+                    <view class="btn">已领取</view>
+                </view>
+            </view>
+        </view>
+        <view class="item mb12">
+            <view class="s1">
+                <view class="s1-l">订单号：4Lk344REW3</view>
+                <view class="s1-r">¥<text>9.9</text></view>
+            </view>
+            <view class="s2">主题派对-亲子主题</view>
+            <view class="s3">
+                <view class="s3-l">2022/3/4 23:33</view>
+            </view>
+            <view class="s4">
+                <image class="tip" src="../../images/icon-tip.png"></image>
+                最近一次赠送给<text>#王晓阳2567#</text> ，剩余<text>6</text> 天可领取；</view>
+        </view>
+    </view>
+</view>
+

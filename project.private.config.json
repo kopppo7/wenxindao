@@ -41,6 +41,27 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "探索",
+          "pathName": "03shenmingtansuo/tansuo/tansuo",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的",
+          "pathName": "06wode/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的订单",
+          "pathName": "06wode/wodedigndan/wodedigndan",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
