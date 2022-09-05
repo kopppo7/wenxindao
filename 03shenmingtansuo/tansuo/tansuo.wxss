@@ -254,24 +254,4 @@
 	background: #FFB58C;
 	border-radius: 72rpx;
 }
-.pop-share{
-	display: flex;
-	justify-content: space-between;
-	padding: 32rpx 0 60rpx;
-}
-.pop-share .share-item{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 28rpx;
-	color: #ffffff;
-	width: 322rpx;
-	height: 96rpx;
-	background: rgba(182, 178, 207, 0.18);
-	border-radius: 68rpx;
-}
-.pop-share .share-item image{
-	width: 32rpx;
-	height: 32rpx;
-	margin-right: 8rpx;
-}
+

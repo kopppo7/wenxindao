@@ -62,6 +62,27 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "我的动态",
+          "pathName": "06wode/wodedongtai/wodedongtai",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "每日调频 详情页",
+          "pathName": "06wode/det-tiaopin/det-tiaopin",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "生命探索详情页",
+          "pathName": "06wode/det-tansuo/det-tansuo",
+          "query": "生命探索 详情页",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

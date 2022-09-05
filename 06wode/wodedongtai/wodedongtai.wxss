@@ -1,0 +1,71 @@
+.h-dt-tab{
+	padding-top: 24rpx;
+	display: flex;
+	margin: 0 -12rpx;
+}
+.h-dt-tab-item{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 16rpx;
+	background: #7461E7;
+	margin: 0 12rpx;
+	flex:1;
+	flex-wrap: wrap;
+	padding: 16rpx 0;
+}
+.h-dt-tab-item .title{
+	color: #ffffff;
+	opacity: .6;
+	font-size: 28rpx;
+	flex:0 0 100%;
+	text-align: center;
+}
+.h-dt-tab-item .num{
+	font-size: 32rpx;
+	color: #ffffff;
+	margin-top: 12rpx;
+}
+.h-dt-tab-item.on{
+	background: #FFB58C;
+}
+.h-dt-tab-item.on .title{
+	opacity: 1;
+	color: #010206;
+}
+
+
+.mine-row3{
+	margin-top: 48rpx;
+	padding-bottom: 160rpx;
+}
+.mine-row3 .title-box{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 32rpx;
+}
+.mine-row3 .title-box .title{
+	position: relative;
+	font-size: 36rpx;
+	color: #ffffff;
+	padding-left: 22rpx;
+}
+.mine-row3 .title-box .title:before{
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 0;
+	margin-top: -17rpx;
+	width: 6rpx;
+	height: 34rpx;
+	background: #FFB58C;
+	border-radius: 6rpx;
+}
+
+
+
+
+
+
+

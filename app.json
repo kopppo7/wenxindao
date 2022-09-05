@@ -26,7 +26,10 @@
         "name": "我的",
         "pages": [
             "index/index",
-            "wodedigndan/wodedigndan"
+            "wodedigndan/wodedigndan",
+            "wodedongtai/wodedongtai",
+            "det-tiaopin/det-tiaopin",
+            "det-tansuo/det-tansuo"
         ]
     }
     ],
@@ -34,7 +37,7 @@
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#222653",
         "navigationBarTitleText": "",
-        "navigationStyle": "custom",
+        "navigationStyle": "default",
         "navigationBarTextStyle": "white"
     },
     "sitemapLocation": "sitemap.json"

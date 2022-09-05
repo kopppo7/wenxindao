@@ -1,31 +1,24 @@
-<!--06wode/index/index.wxml-->
+<!--06wode/wodedongtai/wodedongtai.wxml-->
+
 <view class="wp">
-    <view class="mine-row1">
-        <image class="avatar" src="../../images/avatar2.jpg"></image>
-        <view class="name">王晓洋2567</view>
-        <image class="set" src="../../images/icon-set.png"></image>
-    </view>
-    <view class="mine-row2">
-        <view class="item">
-            <image src="../../images/icon-message.png"></image>
-            我的消息
-            <text>4</text>
-        </view>
-        <view class="item">
-            <image src="../../images/icon-order.png"></image>
-            我的订单
+    <view class="h-dt-tab">
+        <view class="h-dt-tab-item {{cur_tab === index ? 'on' : ''}}"
+              bindtap="changeCurTab"
+              data-index="{{index}}"
+              wx:for="{{tab}}" wx:key="index">
+            <view class="title">{{item.title}}</view>
+            <view class="num" wx:if="{{item.num}}">{{item.num}}</view>
         </view>
     </view>
     <view class="mine-row3">
         <view class="title-box">
             <view class="title">我的动态</view>
-            <image src="../../images/icon-filter.svg"></image>
         </view>
         <view class="trend-list">
             <view class="trend-item">
                 <view class="time mb12">2022/3/4 23:33</view>
                 <view class="box">
-                     <view class="dot">
+                    <view class="dot" bindtap="openPop">
                         <image mode="widthFix" src="../../images/h-icon-dot.png"></image>
                     </view>
                     <view class="title">每日调频</view>
@@ -44,7 +37,7 @@
             <view class="trend-item">
                 <view class="time mb12">2022/3/4 23:33</view>
                 <view class="box">
-                     <view class="dot">
+                    <view class="dot" bindtap="openPop">
                         <image mode="widthFix" src="../../images/h-icon-dot.png"></image>
                     </view>
                     <view class="title">主题派对</view>
@@ -67,11 +60,12 @@
                         <view class="txt"><text>3</text>人已参与</view>
                     </view>
                 </view>
+               
             </view>
             <view class="trend-item">
                 <view class="time mb12">2022/3/4 23:33</view>
                 <view class="box">
-                     <view class="dot">
+                    <view class="dot" bindtap="openPop">
                         <image mode="widthFix" src="../../images/h-icon-dot.png"></image>
                     </view>
                     <view class="title">生命探索</view>
@@ -97,3 +91,28 @@
         </view>
     </view>
 </view>
+
+<view class="page-bot" wx:if="{{showPop}}">
+    <view class="page-mask" bindtap="closePop"></view>
+    <view class="page-bot-btn">
+        <view class="btn">删除</view>
+        <view class="btn" bindtap="closePop">取消</view>
+    </view>
+</view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

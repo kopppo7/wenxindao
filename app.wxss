@@ -177,3 +177,219 @@ button::after{
 	box-sizing: border-box;
 	margin-top: 64rpx;
 }
+
+/*带黄色竖线的标题*/
+.h-title-g{
+	display: flex;
+	align-items: center;
+}
+.h-title-g .line{
+	background-color: #ffb58c;
+	width: 6rpx;
+	height: 32rpx;
+	border-radius: 12rpx;
+	flex:0 0 6rpx;
+	margin-right: 16rpx;
+}
+.h-title-g .tit{
+	font-size: 32rpx;
+	color: #ffffff;
+}
+
+/*我的-动态列表*/
+.trend-list{
+
+}
+.trend-list .trend-item{
+	margin-bottom: 48rpx;
+}
+.trend-list .time{
+	font-size: 24rpx;
+	color: #B6B2CF;
+}
+.trend-list .box{
+	padding: 24rpx;
+	background: rgba(182, 178, 207, 0.12);
+	backdrop-filter: blur(12px);
+	border-radius: 8px;
+	position: relative;
+}
+.trend-list .box .dot{
+	position: absolute;
+	right: 24rpx;
+	top: 24rpx;
+	width: 30rpx;
+	height: 30rpx;
+}
+.trend-list .box .dot image{
+	display: block;width: 100%;height: 100%;
+}
+.trend-list .box .title{
+	font-size: 32rpx;
+	color: #ffffff;
+	margin-bottom: 16rpx;
+}
+.trend-list .box .type-list{
+	display: flex;
+	margin-bottom: 32rpx;
+}
+.trend-list .box .type-list .type-item{
+	display: inline-flex;
+	align-items: center;
+	padding: 0 24rpx;
+	height: 56rpx;
+	backdrop-filter: blur(12.2323px);
+	border-radius: 66rpx;
+	margin-right: 16rpx;
+}
+.trend-list .box .type-list .type-item.c1{
+	background: linear-gradient(224.5deg, rgba(178, 139, 222, 0.2) 1.92%, rgba(255, 255, 255, 0.08) 92.09%);
+	color: #b28bde;
+}
+.trend-list .box .type-list .type-item.c2{
+	background: linear-gradient(224.5deg, rgba(255, 181, 140, 0.2) 1.92%, rgba(255, 255, 255, 0.08) 92.09%);
+	color: #FFB58C;
+}
+.trend-list .box .type-list .type-item.c3{
+	background: linear-gradient(224.5deg, rgba(98, 201, 220, 0.2) 1.92%, rgba(255, 255, 255, 0.08) 92.09%);
+	color: #62C9DC;
+}
+.trend-list .box .pictxt{
+	display: flex;
+}
+.trend-list .box .pictxt .pic{
+	flex: 0 0 168rpx;
+	height: 248rpx;
+	margin-right: 24rpx;
+	border-radius: 16rpx;
+}
+.trend-list .box .pictxt .txt{
+	font-size: 24rpx;
+	line-height: 40rpx;
+}
+.trend-list .pic-list{
+	display: flex;
+	flex-wrap: wrap;
+	margin-right: -26rpx;
+}
+.trend-list .pic-list .pic{
+	width: 192rpx;
+	height: 272rpx;
+	border-radius: 16rpx;
+	margin-bottom: 24rpx;
+	margin-right: 24rpx;
+}
+.trend-list .count-box{
+	display: flex;
+	align-items: center;
+}
+.trend-list .count-box .avatar-box{
+	display: flex;
+	margin-right: 16rpx;
+}
+.trend-list .count-box .avatar-box .avatar{
+	width: 48rpx;
+	height: 48rpx;
+	border-radius: 50%;
+	box-shadow: 0 4rpx 4rpx #1E1F31;
+	margin-left: -16rpx;
+}
+.trend-list .count-box .txt{
+	font-size: 24rpx;
+	color: #ffffff;
+}
+.trend-list .count-box .txt text{
+	color: #ffb58c;
+	opacity: .9;
+}
+.trend-list .box .imgtxt{
+	margin-bottom: 32rpx;
+}
+
+
+/*底部操作*/
+.page-bot{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.page-mask{
+	display: block;width: 100%;height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+}
+.page-bot-btn{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	border-radius: 48rpx 48rpx 0 0;
+	background: #222537;
+	backdrop-filter: blur(20px);
+	padding: 64rpx 40rpx 70rpx;
+}
+.page-bot-btn .btn{
+	background: rgba(182, 178, 207, 0.18);
+	border-radius: 8px;
+	height: 92rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 32rpx;
+	color: #ffffff;
+}
+.page-bot-btn .btn+.btn{
+	margin-top: 64rpx;
+}
+
+
+
+
+.btn-share-g{
+  position: fixed;
+  bottom: 68rpx;
+  left: 40rpx;
+  right: 40rpx;
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFB58C;
+  border-radius: 72rpx;
+}
+.btn-share-g image{
+  display: block;
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 20rpx;
+}
+.btn-share-g  text{
+  font-size: 32rpx;
+  color: #010206; 
+}
+.pop-share{
+	display: flex;
+	justify-content: space-between;
+	padding: 32rpx 0 60rpx;
+}
+.pop-share .share-item{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 28rpx;
+	color: #ffffff;
+	width: 322rpx;
+	height: 96rpx;
+	background: rgba(182, 178, 207, 0.18);
+	border-radius: 68rpx;
+}
+.pop-share .share-item image{
+	width: 32rpx;
+	height: 32rpx;
+	margin-right: 8rpx;
+}
+
+
+
+
