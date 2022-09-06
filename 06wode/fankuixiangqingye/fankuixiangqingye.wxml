@@ -1,0 +1,25 @@
+<!--06wode/fankuixiangqingye/fankuixiangqingye.wxml-->
+<view class="wp">
+    <view class="z-tit1"><text>*</text>反馈问题</view>
+    <view class="z-tab1">
+        <view class="item">程序错误</view>
+        <view class="item active">体验问题</view>
+        <view class="item">新功能提议</view>
+        <view class="item">其他</view>
+    </view>
+    <view class="form-fk">
+        <form bindsubmit="formSubmit">
+            <textarea maxlength="300" value="{{Note}}" placeholder="请输入你的详细意见或建议" placeholder-style="color:#B6B2CF;" name="Note"/>
+            <view class="z-tit1">截图或图片（选填）</view>
+            <view class="photo-box">
+                <view class="item">
+                    <image src="../../images/m-p1.jpg" bindtap="previewImg"/>
+                </view>
+                <image bindtap="callGetPic" class="add" src="../../images/upload.png"></image>
+            </view>
+            <view class="z-tit1">联系方式</view>
+            <input class="input" placeholder="请输入手机号码" placeholder-style="color:#B6B2CF;" type="text"/>
+            <button formType="submit" class="submit">提交反馈</button>
+        </form>
+    </view>
+</view>

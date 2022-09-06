@@ -1,0 +1,49 @@
+<!--06wode/zhanghuyuanquan/zhanghuyuanquan.wxml-->
+<view class="wp">
+    <view class="z-list2">
+        <navigator url="" hover-class="none" class="item">
+            <view class="l">我的UID</view>
+            <view class="r">25151518855</view>
+        </navigator>
+        <navigator url="" hover-class="none" class="item">
+            <view class="l">手机号绑定</view>
+            <view class="r">
+                25151518855
+                <view class="btn">更换</view>
+            </view>
+        </navigator>
+        <navigator url="" hover-class="none" class="item">
+            <view class="l">微信</view>
+            <view class="r">扬帆</view>
+        </navigator>
+    </view>
+</view>
+<view class="bot-btns">
+    <view class="btn btn1">退出登录</view>
+    <view class="btn btn2">注销账号</view>
+</view>
+
+
+<!--验证当前手机号-->
+<block wx:if="{{telPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2" style="height: 594rpx">
+        <view class="pop-tit">验证当前手机号</view>
+        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <view class="desc">换绑新的手机号后，可以用新手机号登录</view>
+        <input type="number" placeholder="输入手机号" class="inp-tel"/>
+        <view class="btn-code">获取短信验证码</view>
+    </view>
+</block>
+<!--输入验证码-->
+<block wx:if="{{codePopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2" style="height: 482rpx">
+        <view class="pop-tit">输入验证码</view>
+        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <input type="number" placeholder="输入验证码" placeholder-style="color: #ffffff;opacity: .6;letter-spacing: 0px;"
+               class="inp-tel inp-code"/>
+        <view bindtap="send" class="btn-code {{isShow ? '' : 'hide'}}">重新获取
+            <text wx:if="{{!isShow}}">{{countdown}}″</text></view>
+    </view>
+</block>

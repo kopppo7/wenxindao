@@ -366,7 +366,7 @@ button::after{
 }
 .btn-share-g  text{
   font-size: 32rpx;
-  color: #010206; 
+  color: #010206;
 }
 .pop-share{
 	display: flex;
@@ -393,3 +393,54 @@ button::after{
 
 
 
+.z-list1{
+	background: rgba(182, 178, 207, 0.18);
+	border-radius: 30rpx;
+	margin-top: 40rpx;
+	padding: 0 32rpx;
+}
+.z-list1 .item{
+	display: flex;
+	align-items: center;
+	height: 108rpx;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABiSURBVHgB7ZZRCYBQEAQPExjBKEawmRG0gVGMYJR1HwgWkDt8zMB+z8D9XATAH5G0eps3RjaWLno50yOa0LuqIyYiiCCim4gheqL0BMiRI48sLJvL5E9Ae8l271DFUwrwNTdIfK4wMwA5NAAAAABJRU5ErkJggg==) no-repeat right center;
+	-webkit-background-size: 32rpx auto;background-size: 32rpx auto;
+}
+.z-list1 .item image{
+	width: 48rpx;
+	height: 48rpx;
+	margin-right: 16rpx;
+}
+.z-list1 .item + .item{
+	border-top: 1px solid rgba(182, 178, 207, 0.18);
+}
+.z-tit1{
+	display: flex;
+	align-items: center;
+	font-size: 32rpx;
+	color: #ffffff;
+	padding: 48rpx 0 32rpx;
+}
+.z-tit1 text{
+	color: #ffb58c;
+}
+.z-tab1{
+	display: flex;
+}
+.z-tab1 .item{
+	font-size: 24rpx;
+	color: #ffffff;
+	padding: 0 24rpx;
+	height: 60rpx;
+	line-height: 58rpx;
+	background: linear-gradient(90.81deg, rgba(170, 94, 192, 0.2) -12.46%, rgba(178, 139, 222, 0.2) 45.22%, rgba(95, 104, 188, 0.2) 101.73%);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(12px);
+	border-radius: 46rpx;
+	margin-right: 16rpx;
+}
+.z-tab1 .item.active{
+	background: #FFB58C;
+	border: 0.5px solid rgba(255, 255, 255, 0.2);
+	color: #010206;
+}

@@ -1,0 +1,31 @@
+<!--06wode/bangzhuyufankui/bangzhuyufankui.wxml-->
+<view class="wp">
+    <view class="z-tit1"><text>*</text>猜你想问</view>
+    <view class="z-tab1">
+        <view class="item">程序错误</view>
+        <view class="item active">体验问题</view>
+        <view class="item">新功能提议</view>
+        <view class="item">其他</view>
+    </view>
+    <view class="z-list1">
+        <navigator url="" hover-class="none" class="item">
+            1、问题标题问题标题
+        </navigator>
+        <navigator url="" hover-class="none" class="item">
+            1、问题标题问题标题
+        </navigator>
+        <navigator url="" hover-class="none" class="item">
+            1、问题标题问题标题
+        </navigator>
+        <navigator url="" hover-class="none" class="item">
+            1、问题标题问题标题
+        </navigator>
+    </view>
+</view>
+
+
+<view class="bot-btns">
+    <view class="btn">联系客服</view>
+    <view class="line"></view>
+    <view class="btn">提交反馈</view>
+</view>

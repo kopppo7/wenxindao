@@ -1,0 +1,21 @@
+/* 06wode/bangzhuyufankui/bangzhuyufankui.wxss */
+
+.bot-btns{
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 114rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.bot-btns .btn{
+	font-size: 30rpx;
+	color: #FFB58C;
+}
+.bot-btns .line{
+	width: 1px;
+	height: 24rpx;
+	background: rgba(255, 255, 255, 0.5);
+	margin: 0 40rpx;
+}

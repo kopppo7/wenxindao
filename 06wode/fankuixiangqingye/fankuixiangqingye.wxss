@@ -1,0 +1,54 @@
+/* 06wode/fankuixiangqingye/fankuixiangqingye.wxss */
+.form-fk{
+	padding: 32rpx 0 204rpx;
+}
+.form-fk textarea{
+	display: block;
+	width: 100%;
+	height: 320rpx;
+	background: rgba(29, 31, 48, 0.8);
+	border: 0.5px solid rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(12.2323px);
+	border-radius: 12px;
+	padding: 24rpx;
+}
+.photo-box{
+	display: flex;
+}
+.photo-box .item{
+	width: 160rpx;
+	height: 160rpx;
+	border-radius: 24rpx;
+	overflow: hidden;
+	margin-right: 32rpx;
+}
+.photo-box .item image{
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+.photo-box .add{
+	display: block;
+	width: 160rpx;
+	height: 160rpx;
+}
+.form-fk .input{
+	height: 104rpx;
+	background: rgba(29, 31, 48, 0.8);
+	border: 0.5px solid rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(12.2323px);
+	border-radius: 24rpx;
+	display: block;
+	margin-bottom: 64rpx;
+	padding: 0 24rpx;
+}
+.form-fk .submit{
+	display: block;
+	font-size: 32rpx;
+	width: 100%;
+	height: 100rpx;
+	line-height: 100rpx;
+	background: #7461E7;
+	border-radius: 68rpx;
+	color: #ffffff;
+}

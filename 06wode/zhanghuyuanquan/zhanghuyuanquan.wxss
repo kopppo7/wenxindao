@@ -1,0 +1,79 @@
+/* 06wode/zhanghuyuanquan/zhanghuyuanquan.wxss */
+.z-list2{
+	background: rgba(182, 178, 207, 0.18);
+	border-radius: 30rpx;
+	margin-top: 40rpx;
+	padding: 0 32rpx;
+}
+.z-list2 .item{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 108rpx;
+}
+.z-list2 .item .r{
+	display: flex;
+	align-items: center;
+}
+.z-list2 .item + .item{
+	border-top: 1px solid rgba(182, 178, 207, 0.18);
+}
+.z-list2 .item .r .btn{
+	width: 52px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	background: rgba(182, 178, 207, 0.18);
+	border-radius: 6px;
+	color: #fefefe;
+	margin-left: 24rpx;
+}
+.bot-btns{
+	position: fixed;
+	bottom: 68rpx;
+	left: 40rpx;
+	right: 40rpx;
+}
+.bot-btns .btn{
+	font-size: 30rpx;
+	color: #ffffff;
+	text-align: center;
+	height: 102rpx;
+	line-height: 102rpx;
+	border-radius: 51rpx;
+	background: rgba(182, 178, 207, 0.18);
+}
+.bot-btns .btn2{
+	margin-top: 24rpx;
+	color: #ffb58c;
+}
+.inp-tel{
+	font-size: 32rpx;
+	width: 526rpx;
+	margin: 48rpx auto 80rpx;
+	height: 100rpx;
+	background: rgba(182, 178, 207, 0.18);
+	border: 0.5px solid rgba(255, 255, 255, 0.24);
+	border-radius: 48rpx;
+	text-align: center;
+	letter-spacing: 10rpx;
+}
+.btn-code{
+	font-size: 32rpx;
+	color: #ffffff;
+	width: 526rpx;
+	margin: 0 auto;
+	height: 100rpx;
+	line-height: 100rpx;
+	background: #7461E7;
+	border-radius: 68rpx;
+	text-align: center;
+}
+.btn-code.hide{
+	opacity: .4;
+	pointer-events: none;
+}
+.inp-code{
+	font-size: 36rpx;
+	letter-spacing: 3;
+}

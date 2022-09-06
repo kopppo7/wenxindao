@@ -1,0 +1,38 @@
+/* 06wode/guanyu/guanyu.wxss */
+.z-about{
+	padding: 120rpx 0 0;
+	text-align: center;
+}
+.z-about .title1{
+	font-size: 50rpx;
+	line-height: 70rpx;
+	color: #FFB58C;
+	margin-bottom: 16rpx;
+}
+.z-about .title2{
+	font-size: 30rpx;
+	line-height: 42rpx;
+	letter-spacing: 12rpx;
+	color: #FEFEFE;
+	margin-bottom: 16rpx;
+}
+.z-about .title3{
+	font-size: 24rpx;
+	line-height: 34rpx;
+	color: #FEFEFE;
+	opacity: 0.5;
+	margin-bottom: 64rpx;
+}
+.z-about image{
+	display: block;
+	margin: 0 auto 64rpx;
+	width: 458rpx;
+	height: 688rpx;
+	border-radius: 32rpx;
+}
+.z-about .title4{
+	font-size: 30rpx;
+	line-height: 42rpx;
+	letter-spacing: 8rpx;
+	color: #FFFFFF;
+}

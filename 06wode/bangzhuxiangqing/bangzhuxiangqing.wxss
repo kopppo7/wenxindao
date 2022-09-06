@@ -1,0 +1,19 @@
+/* 06wode/bangzhuxiangqing/bangzhuxiangqing.wxss */
+.z-text{
+	color: #ffffff;
+	padding: 0px 40rpx 40rpx;
+	background: rgba(182, 178, 207, 0.18);
+	backdrop-filter: blur(12px);
+}
+.z-text .title{
+	font-size: 36rpx;
+	padding: 32rpx 0;
+	margin-bottom: 36rpx;
+}
+.z-text .con{
+	font-size: 28rpx;
+	line-height: 44rpx;
+}
+.z-text .con view{
+	margin-bottom: 32rpx;
+}

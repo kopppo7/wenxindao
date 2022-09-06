@@ -83,6 +83,48 @@
           "query": "生命探索 详情页",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "设置",
+          "pathName": "06wode/shezhi/shezhi",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "账户与安全",
+          "pathName": "06wode/zhanghuyuanquan/zhanghuyuanquan",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "帮助与反馈",
+          "pathName": "06wode/bangzhuyufankui/bangzhuyufankui",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "帮助详情",
+          "pathName": "06wode/bangzhuxiangqing/bangzhuxiangqing",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "反馈详情页",
+          "pathName": "06wode/fankuixiangqingye/fankuixiangqingye",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "关于",
+          "pathName": "06wode/guanyu/guanyu",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
