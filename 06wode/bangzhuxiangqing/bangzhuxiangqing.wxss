@@ -9,6 +9,7 @@
 	font-size: 36rpx;
 	padding: 32rpx 0;
 	margin-bottom: 36rpx;
+	border-bottom: 1px solid rgba(182, 178, 207, 0.18);
 }
 .z-text .con{
 	font-size: 28rpx;

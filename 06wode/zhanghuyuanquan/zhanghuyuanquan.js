@@ -10,9 +10,31 @@ Page({
 
 
         countdown: 30,
-        isShow: false
+        isShow: false,
+
+
+        errorStatus: false,
+        errorTxt: '手机号格式输入错误',
 
     },
+
+    changeTel: function(){
+        var that = this;
+        that.setData({
+            telPopStatus: true
+        })
+    },
+
+    closePop: function(){
+        var that = this;
+        that.setData({
+            telPopStatus: false
+        })
+    },
+
+
+
+
     //倒计时
     count:function(that){
         var interval = setInterval(function () {

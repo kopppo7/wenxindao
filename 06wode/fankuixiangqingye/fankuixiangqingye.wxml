@@ -2,10 +2,12 @@
 <view class="wp">
     <view class="z-tit1"><text>*</text>反馈问题</view>
     <view class="z-tab1">
-        <view class="item">程序错误</view>
-        <view class="item active">体验问题</view>
-        <view class="item">新功能提议</view>
-        <view class="item">其他</view>
+        <block wx:for="{{allTitle}}" wx:for-index="idx" wx:key="index">
+            <view id="{{item.id}}" class="item {{currentIndex==idx ? 'active' : ''}}" data-current="{{idx}}"
+                  bindtap="changeTitle">
+                {{item.title}}
+            </view>
+        </block>
     </view>
     <view class="form-fk">
         <form bindsubmit="formSubmit">

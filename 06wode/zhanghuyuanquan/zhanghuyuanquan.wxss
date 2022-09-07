@@ -77,3 +77,24 @@
 	font-size: 36rpx;
 	letter-spacing: 3;
 }
+.pop-win2 .error-box{
+	padding: 0 32rpx;
+	position: absolute;
+	top: -108rpx;
+	left: 50%;
+	-webkit-transform: translateX(-50%);-moz-transform: translateX(-50%);-ms-transform: translateX(-50%);-o-transform: translateX(-50%);transform: translateX(-50%);
+	height: 88rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #E65A5A;
+	border: 1px solid #FF604B;
+	backdrop-filter: blur(8px);
+	border-radius: 66rpx;
+	white-space: nowrap;
+}
+.pop-win2 .error-box image{
+	margin-right: 20rpx;
+	width: 36rpx;
+	height: 36rpx;
+}

@@ -2,30 +2,26 @@
 <view class="wp">
     <view class="z-tit1"><text>*</text>猜你想问</view>
     <view class="z-tab1">
-        <view class="item">程序错误</view>
-        <view class="item active">体验问题</view>
-        <view class="item">新功能提议</view>
-        <view class="item">其他</view>
+        <block wx:for="{{allTitle}}" wx:for-index="idx" wx:key="index">
+            <view id="{{item.id}}" class="item {{currentIndex==idx ? 'active' : ''}}" data-current="{{idx}}"
+                  bindtap="changeTitle">
+                {{item.title}}
+            </view>
+        </block>
     </view>
     <view class="z-list1">
-        <navigator url="" hover-class="none" class="item">
-            1、问题标题问题标题
-        </navigator>
-        <navigator url="" hover-class="none" class="item">
-            1、问题标题问题标题
-        </navigator>
-        <navigator url="" hover-class="none" class="item">
-            1、问题标题问题标题
-        </navigator>
-        <navigator url="" hover-class="none" class="item">
-            1、问题标题问题标题
-        </navigator>
+        <block wx:for="{{questionList}}" wx:key="index">
+            <navigator url="../../06wode/bangzhuxiangqing/bangzhuxiangqing?id={{item.id}}" hover-class="none"
+                       class="item">
+                {{index + 1}}、{{item.title}}
+            </navigator>
+        </block>
     </view>
 </view>
 
 
 <view class="bot-btns">
-    <view class="btn">联系客服</view>
+    <view class="btn">联系客服<button open-type="contact"></button></view>
     <view class="line"></view>
-    <view class="btn">提交反馈</view>
+    <navigator url="../../06wode/fankuixiangqingye/fankuixiangqingye" hover-class="none" class="btn">提交反馈</navigator>
 </view>
