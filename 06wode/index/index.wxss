@@ -1,29 +1,34 @@
 /* 06wode/index/index.wxss */
-.mine-row1{
+.mine-row1 {
 	display: flex;
 	align-items: center;
 	margin: 64rpx 0;
 }
-.mine-row1 .avatar{
+
+.mine-row1 .avatar {
 	flex: 0 0 112rpx;
 	height: 112rpx;
 	margin-right: 24rpx;
 	border-radius: 50%;
 }
-.mine-row1 .name{
+
+.mine-row1 .name {
 	font-size: 40rpx;
 	flex: 1;
 }
-.mine-row1 .set{
+
+.mine-row1 .set {
 	width: 48rpx;
 	height: 48rpx;
 }
-.mine-row2{
+
+.mine-row2 {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 80rpx;
 }
-.mine-row2 .item{
+
+.mine-row2 .item {
 	font-size: 30rpx;
 	color: #ffffff;
 	display: flex;
@@ -35,12 +40,14 @@
 	backdrop-filter: blur(12px);
 	border-radius: 16rpx;
 }
-.mine-row2 .item image{
+
+.mine-row2 .item image {
 	width: 48rpx;
 	height: 48rpx;
 	margin-right: 12rpx;
 }
-.mine-row2 .item text{
+
+.mine-row2 .item text {
 	font-size: 24rpx;
 	color: #ffffff;
 	width: 32rpx;
@@ -52,22 +59,24 @@
 	border-radius: 50%;
 	margin-left: 12rpx;
 }
-.mine-row3{
 
-}
-.mine-row3 .title-box{
+.mine-row3 {}
+
+.mine-row3 .title-box {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 32rpx;
 }
-.mine-row3 .title-box .title{
+
+.mine-row3 .title-box .title {
 	position: relative;
 	font-size: 36rpx;
 	color: #ffffff;
 	padding-left: 22rpx;
 }
-.mine-row3 .title-box .title:before{
+
+.mine-row3 .title-box .title:before {
 	content: '';
 	position: absolute;
 	top: 50%;
@@ -78,8 +87,8 @@
 	background: #FFB58C;
 	border-radius: 6rpx;
 }
-.mine-row3 .title-box image{
+
+.mine-row3 .title-box image {
 	width: 48rpx;
 	height: 48rpx;
 }
-

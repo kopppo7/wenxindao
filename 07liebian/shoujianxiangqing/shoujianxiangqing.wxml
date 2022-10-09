@@ -1,0 +1,25 @@
+<!--07liebian/shoujianxiangqing/shoujianxiangqing.wxml-->
+<view class="wp">
+    <view class="receive-content">
+        <view class="title">每天有一个 好心情</view>
+        <view class="other">
+            <text class="author">来自：张三</text>
+            <text class="date">2022-3-4 12:22</text>
+        </view>
+        <view class="tag-area">
+            <text>每日意图</text>
+            <text>每日意图</text>
+        </view>
+        <view class="info">
+            终于知道为啥我这么喜欢这次训练了，卡牌第一次带给我的释放源自我看到最后一张图片那一刻的释然。终于知道为啥我这么喜欢这次训练了，卡牌第一次带给我的释放源自我看到最后一张图片那一刻的释然。终于知道为啥我这么喜欢这次训练了，卡牌第一次带给我的释放源自我看到最后一张图片那一刻的释然。终于知道为啥我这么喜欢这次训练了，卡牌第一次带给我的释放源自我看到最后一张图片那一刻的释然。终于知道为啥我这么喜欢这次训练了，卡牌第一次带给我的释放源自我看到最后一张图片那一刻的释然。
+        </view>
+        <view class="pic">
+            <image mode="widthFix" src="../../images/del-h1.jpg"></image>
+        </view>
+    </view>
+</view>
+<view class="bottom-box">
+    <view class="wp">
+        <view class="btn-praise">回信好友</view>
+    </view>
+</view>

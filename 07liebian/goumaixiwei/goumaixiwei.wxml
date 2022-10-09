@@ -1,0 +1,65 @@
+<!--07liebian/goumaixiwei/goumaixiwei.wxml-->
+<view class="wp">
+    <view class="buy-one">
+        <view class="buy-pic">
+            <image mode="widthFix" src="../../images/1.png"></image>
+        </view>
+        <view class="buy-text">
+            <view class="title">原生家庭-性格探索</view>
+            <view class="text">参与人数：2-6人/场</view>
+            <view class="seat">
+                <view class="price">
+                    ¥ <text>20</text> 
+                </view>
+                / 席位
+            </view>
+        </view>
+    </view>
+    <view class="buy-list">
+        <view class="item">
+            <view class="buy-area">
+                <view class="text">
+                    <view class="p1">快速匹配</view>
+                    <view class="p2">系统自动匹配好友参与</view>
+                </view>
+                <view class="info">
+                    <view class="seat">
+                        <view class="price">
+                            ¥ <text>20</text> 
+                        </view>
+                        / 席位
+                    </view>
+                    <view class="tag">
+                        首单免费
+                    </view>
+                </view>
+            </view>
+            <image class="icon" src="../../images/icon-ClickBox-on.png"></image>
+        </view>
+        <view class="item item2">
+            <view class="buy-area">
+                <view class="text">
+                    <view class="p1">好友结伴</view>
+                    <view class="p2">包场，一场最多可容纳6个人</view>
+                </view>
+                <view class="info">
+                    <view class="seat">
+                        <view class="price">
+                            ¥ <text>48</text> 
+                        </view>
+                        / 场
+                    </view>
+                    <view class="tag">
+                        首单免费
+                    </view>
+                </view>
+            </view>
+            <image class="icon" src="../../images/icon-ClickBox.png"></image>
+        </view>
+    </view>
+</view>
+<view class="bottom-box">
+    <view class="wp">
+        <view class="btn-praise">去组队</view>
+    </view>
+</view>

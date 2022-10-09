@@ -1,0 +1,57 @@
+<!--07liebian/lingquzanmei/lingquzanmei.wxml-->
+<view class="wp">
+    <view class="index-row1">
+        <navigator url="" hover-class="none" class="item">
+            <image class="pic" src="../../images/home-title1.png"></image>
+        </navigator>
+        <navigator url="" hover-class="none" class="item">
+            <image class="pic" src="../../images/home-title2.png"></image>
+        </navigator>
+        <navigator url="" hover-class="none" class="item">
+            <image class="pic" src="../../images/home-title3.png"></image>
+        </navigator>
+    </view>
+    <view class="index-row2">
+         <view class="item item1">
+             <image class="avatar" src="../../images/home-avatar1.png"></image>
+             <view class="txt">
+                 <view class="title title1">#主题派对#</view>
+                 <view class="desc">在遥远的时空之外，有一座神奇的岛屿-问心岛。据说，每个人的灵魂，都会在这里被看见。</view>
+             </view>
+         </view>
+        <view class="item item2">
+            <image class="avatar" src="../../images/home-avatar2.png"></image>
+            <view class="txt">
+                <view class="title title2">#每日调频#</view>
+                <view class="desc">岛上有一种神奇的问心精灵，会教我们如何与自己的心灵对话，照见灵魂的深处。</view>
+                <view class="aduio-box">
+                    <image class="aduio" src="../../images/audio.png"></image>
+                    <view class="more" catchtap="changePop">查看更多</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="nav">
+    <navigator url="" hover-class="none" class="item active">
+        <image class="pic" src="../../images/icon-nav1.png"></image>
+        <view class="txt">问心岛</view>
+    </navigator>
+    <navigator url="" hover-class="none" class="item">
+        <image class="pic" src="../../images/icon-nav2.png"></image>
+        <view class="txt">我的</view>
+    </navigator>
+</view>
+<!-- 领取今日赞美 -->
+<block wx:if="{{praiseState}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2" style="height: 406rpx">
+        <view class="pop-tit">输入验证码</view>
+        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <view class="desc">新人注册前7天，每天都可以领到问心团队的赞美哦～</view>
+        <view class="btn-receive">去领取</view>
+    </view>
+</block>
+
+
+

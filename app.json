@@ -13,31 +13,51 @@
             ]
         },
         {
-          "root": "03shenmingtansuo",
-          "name": "生命探索",
-          "pages": [
-              "index/index",
-              "zhutijieshao/zhutijieshao",
-              "tansuo/tansuo"
-          ]
-      },
-      {
-        "root": "06wode",
-        "name": "我的",
-        "pages": [
-            "index/index",
-            "wodedigndan/wodedigndan",
-            "wodedongtai/wodedongtai",
-            "det-tiaopin/det-tiaopin",
-            "det-tansuo/det-tansuo",
-            "shezhi/shezhi",
-            "zhanghuyuanquan/zhanghuyuanquan",
-            "bangzhuyufankui/bangzhuyufankui",
-            "bangzhuxiangqing/bangzhuxiangqing",
-            "fankuixiangqingye/fankuixiangqingye",
-            "guanyu/guanyu"
-        ]
-    }
+            "root": "03shenmingtansuo",
+            "name": "生命探索",
+            "pages": [
+                "index/index",
+                "zhutijieshao/zhutijieshao",
+                "tansuo/tansuo"
+            ]
+        },
+        {
+            "root": "05chouyichou", 
+            "name": "抽一抽",
+            "pages":[
+                "index/index",
+                "shili/shili"
+            ]
+        },
+        {
+            "root": "06wode",
+            "name": "我的",
+            "pages": [
+                "index/index",
+                "wodedigndan/wodedigndan",
+                "wodedongtai/wodedongtai",
+                "det-tiaopin/det-tiaopin",
+                "det-tansuo/det-tansuo",
+                "shezhi/shezhi",
+                "zhanghuyuanquan/zhanghuyuanquan",
+                "bangzhuyufankui/bangzhuyufankui",
+                "bangzhuxiangqing/bangzhuxiangqing",
+                "fankuixiangqingye/fankuixiangqingye",
+                "guanyu/guanyu"
+            ]
+        },
+        {
+            "root": "07liebian",
+            "name": "裂变",
+            "pages": [
+                "index/index",
+                "wode/index",
+                "tongxinyouju/tongxinyouju",
+                "shoujianxiangqing/shoujianxiangqing",
+                "lingquzanmei/lingquzanmei",
+                "goumaixiwei/goumaixiwei"
+            ]
+        }
     ],
     "window": {
         "backgroundTextStyle": "light",

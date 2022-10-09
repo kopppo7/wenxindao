@@ -1,0 +1,129 @@
+/* 07liebian/goumaixiwei/goumaixiwei.wxss */
+page{
+    padding: 40rpx 0 276rpx;
+}
+.buy-one{
+    padding: 24rpx;
+    display: flex;
+    background: rgba(182,178,207,0.12);
+    border-radius: 16rpx;
+    margin-bottom: 48rpx;
+}
+.buy-pic{
+    width: 120rpx;
+    height: 172rpx;
+    margin-right: 30rpx;
+}
+.buy-pic image{
+    display: block;
+    width: 100%;
+    border-radius: 8rpx;
+}
+.buy-text .title{
+    font-size: 30rpx;
+    font-weight: 600;
+    line-height: 40rpx;
+    margin-bottom: 16rpx;
+}
+.buy-text .text{
+    color: #AAABBA;
+    margin-bottom: 20rpx;
+}
+.buy-text .seat{
+    color: #AAABBA;
+    line-height: 1.1;
+}
+.buy-text .seat .price{
+    color: #FFB58C;
+    display: inline-block;
+}
+.buy-text .seat .price text{
+    font-weight: bold;
+    font-size: 48rpx;
+}
+.bottom-box{
+    position: fixed;
+    bottom: 0;
+    padding-top: 20rpx;
+	padding-bottom: 68rpx;
+	left: 0;
+	right: 0;
+	background: #171A28;
+	z-index: 100;
+}
+.bottom-box .btn-praise{
+    text-align: center;
+    height: 100rpx;
+    line-height: 100rpx;
+    border-radius: 50rpx;
+    background: #7461E7;
+    font-size: 30rpx;
+}
+
+.buy-list .item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 8rpx;
+    margin-bottom: 32rpx;
+}
+.buy-list .item .buy-area{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 590rpx;
+    background: linear-gradient(45deg, #82EAEA 0%, #5C76FE 100%);
+    border-radius: 16rpx;
+    padding: 32rpx;
+}
+.buy-list .item2 .buy-area{
+    background: linear-gradient(45deg, #FDB988 0%, #FE5C5C 100%);
+}
+.buy-area .text .p1{
+    font-weight: 600;
+    color: #FEFEFE;
+    font-size: 32rpx;
+    line-height: 42rpx;
+    margin-bottom: 20rpx;
+}
+.buy-area .info{}
+.buy-area .info .price{
+    display: inline-block;
+}
+.buy-area .info .price text{
+    font-size: 48rpx;
+    font-family: DIN-Medium, DIN;
+    font-weight: bold;
+}
+.buy-area .info .tag{
+    background: linear-gradient(225deg, #F0273F 0%, #BC61E7 100%);
+    box-shadow: 0px 2px 2px 0px rgba(188,97,231,0.2);
+    text-align: center;
+    height: 44rpx;
+    line-height: 44rpx;
+    border-radius: 0 22rpx 22rpx 22rpx;
+}
+.buy-list .item .icon{
+    width: 48rpx;
+    height: 48rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

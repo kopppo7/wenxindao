@@ -1,0 +1,128 @@
+<!--07liebian/index/index.wxml-->
+<view class="wp">
+    <view class="z-tab">
+        <view class="tab-item active">原生家庭</view>
+        <view class="tab-item">亲密关系</view>
+        <view class="tab-item">亲子关系</view>
+        <navigator url="" hover-class="none" class="detail">玩法详情</navigator>
+    </view>
+    <view class="z-list1">
+        <view class="item">
+            <image mode="widthFix" class="pic" src="../../images/1.png"></image>
+            <view class="txt">
+                <view class="s1">
+                    <view class="title">性格探索</view>
+                    <view class="tags">最新</view>
+                </view>
+                <view class="s2">
+                    <text>约<text class="num">30</text>分钟</text>
+                    <text>已探索<text class="num">2</text>次</text>
+                </view>
+                <view class="s3">
+                    <view class="s3-l">
+                        <image src="../../images/People.png"></image>
+                        <image src="../../images/People.png"></image>
+                        <image src="../../images/People.png"></image>
+                        6人已学习
+                    </view>
+                    <view class="s3-r s3-r1"  catchtap="welfarePop">第3次探索</view>
+                </view>
+            </view>
+        </view>
+        <view class="item">
+            <image mode="widthFix" class="pic" src="../../images/1.png"></image>
+            <view class="txt">
+                <view class="s1">
+                    <view class="title">爸妈的财富观</view>
+                    <view class="tags hots-tag">热门</view>
+                </view>
+                <view class="s2">
+                    <text>约<text class="num">30</text>分钟</text>
+                    <text>已探索<text class="num">2</text>次</text>
+                </view>
+                <view class="s3">
+                    <view class="s3-l">
+                        <image src="../../images/People.png"></image>
+                        <image src="../../images/People.png"></image>
+                        <image src="../../images/People.png"></image>
+                        6人已学习
+                    </view>
+                    <view class="s3-r s3-r2"><text style="width: 20%;"></text>继续 20%</view>
+                </view>
+            </view>
+        </view>
+        <view class="item">
+            <image mode="widthFix" class="pic" src="../../images/1.png"></image>
+            <view class="txt">
+                <view class="s1">
+                    <view class="title">性格探索</view>
+                    <view class="tags">最新</view>
+                </view>
+                <view class="s2">
+                    <text>约<text class="num">30</text>分钟</text>
+                </view>
+                <view class="s3">
+                    <view class="s3-l">
+                        <image src="../../images/People.png"></image>
+                        <image src="../../images/People.png"></image>
+                        <image src="../../images/People.png"></image>
+                        6人已学习
+                    </view>
+                    <view class="s3-r s3-r3">9.9元 开始探索</view>
+                </view>
+            </view>
+        </view>
+        <view class="item">
+            <image mode="widthFix" class="pic" src="../../images/1.png"></image>
+            <view class="txt">
+                <view class="s1">
+                    <view class="title">性格探索</view>
+                    <view class="tags">最新</view>
+                </view>
+                <view class="s2">
+                    <text>约<text class="num">30</text>分钟</text>
+                </view>
+                <view class="s3">
+                    <view class="s3-l">
+                        <image src="../../images/People.png"></image>
+                        <image src="../../images/People.png"></image>
+                        <image src="../../images/People.png"></image>
+                        6人已学习
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="item">
+            <image mode="widthFix" class="pic" src="../../images/1.png"></image>
+            <view class="txt">
+                <view class="s1">
+                    <view class="title">性格探索</view>
+                    <view class="tags hots-tag">热门</view>
+                    <view class="tags first-tag">首单免费</view>
+                </view>
+                <view class="s2">
+                    <text>约<text class="num">30</text>分钟</text>
+                </view>
+                <view class="s3">
+                    <view class="s3-l">
+                        <image src="../../images/People.png"></image>
+                        <image src="../../images/People.png"></image>
+                        <image src="../../images/People.png"></image>
+                        15人已学习
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<!-- 您获得了一个免单福利 -->
+<block wx:if="{{welfareState}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2" style="height: 414rpx">
+        <view class="pop-tit">您获得了一个免单福利</view>
+        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <view class="desc">恭喜！您可以免费任选一个付费主题，邀请<text class="num">2-6</text>个好友组队探索。</view>
+        <view class="btn-know">知道了</view>
+    </view>
+</block>

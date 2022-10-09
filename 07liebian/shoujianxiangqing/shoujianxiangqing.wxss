@@ -1,0 +1,77 @@
+/* 07liebian/shoujianxiangqing/shoujianxiangqing.wxss */
+page{
+    padding: 24rpx 0 244rpx;
+}
+.receive-content .title{
+    font-weight: 600;
+    font-size: 32rpx;
+    margin-bottom: 12rpx;
+}
+.receive-content .tag-area{
+    margin-bottom: 32rpx;
+}
+.receive-content .tag-area text{
+    display: inline-block;
+    padding: 8rpx 16rpx;
+    background: linear-gradient(217deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.08) 100%);
+    border-radius: 8rpx;
+    font-size: 24rpx;
+    color: #B6B2CF;
+    margin-right: 24rpx;
+}
+.receive-content .info{
+    font-size: 32rpx;
+    margin-bottom: 32rpx;
+}
+.receive-content .pic image{
+    width: 320rpx;
+    display: block;
+    border-radius: 24rpx;
+}
+.receive-content .other{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 24rpx;
+    color: #9A9BAC;
+    font-weight: 400;
+    margin-bottom: 32rpx;
+}
+.bottom-box{
+    position: fixed;
+    bottom: 0;
+    padding-top: 20rpx;
+	padding-bottom: 68rpx;
+	left: 0;
+	right: 0;
+	background: #171A28;
+	z-index: 100;
+}
+.bottom-box .btn-praise{
+    text-align: center;
+    height: 100rpx;
+    line-height: 100rpx;
+    border-radius: 50rpx;
+    background: #7461E7;
+    font-size: 30rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

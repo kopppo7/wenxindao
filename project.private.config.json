@@ -11,119 +11,168 @@
           "name": "生命探索首页",
           "pathName": "03shenmingtansuo/index/index",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "主题介绍",
           "pathName": "03shenmingtansuo/zhutijieshao/zhutijieshao",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "login",
           "pathName": "pages/login/login",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "每日调频",
           "pathName": "02meiritiaopin/index/index",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "每日调频",
           "pathName": "02meiritiaopin/share/share",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "探索",
           "pathName": "03shenmingtansuo/tansuo/tansuo",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "我的",
           "pathName": "06wode/index/index",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "我的订单",
           "pathName": "06wode/wodedigndan/wodedigndan",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "我的动态",
           "pathName": "06wode/wodedongtai/wodedongtai",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "每日调频 详情页",
           "pathName": "06wode/det-tiaopin/det-tiaopin",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "生命探索详情页",
           "pathName": "06wode/det-tansuo/det-tansuo",
           "query": "生命探索 详情页",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "设置",
           "pathName": "06wode/shezhi/shezhi",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "账户与安全",
           "pathName": "06wode/zhanghuyuanquan/zhanghuyuanquan",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "帮助与反馈",
           "pathName": "06wode/bangzhuyufankui/bangzhuyufankui",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "帮助详情",
           "pathName": "06wode/bangzhuxiangqing/bangzhuxiangqing",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "反馈详情页",
           "pathName": "06wode/fankuixiangqingye/fankuixiangqingye",
           "query": "",
-          "launchMode": "default",
           "scene": null
         },
         {
           "name": "关于",
           "pathName": "06wode/guanyu/guanyu",
           "query": "",
-          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "02meiritiaopin/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "抽一抽",
+          "pathName": "05chouyichou/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "抽一抽示例",
+          "pathName": "05chouyichou/shili/shili",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "裂变首页",
+          "pathName": "07liebian/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "裂变-我的",
+          "pathName": "07liebian/wode/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "裂变-同心邮局",
+          "pathName": "07liebian/tongxinyouju/tongxinyouju",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "首页-问心岛",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "裂变-收件详情",
+          "pathName": "07liebian/shoujianxiangqing/shoujianxiangqing",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "裂变-首页-领取赞美",
+          "pathName": "07liebian/lingquzanmei/lingquzanmei",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "裂变-购买席位",
+          "pathName": "07liebian/goumaixiwei/goumaixiwei",
+          "query": "",
           "scene": null
         }
       ]
