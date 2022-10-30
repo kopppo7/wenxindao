@@ -4,7 +4,7 @@
   </view>
   <view class="face">
     <view class="pic">
-      <image src="../../images/avatar0.jpg"></image>
+      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
     </view>
     <view class="txt">
       <view class="name">罗伊</view>
@@ -20,7 +20,7 @@
         那么我们也要看到这种性格给我们带来什么样的影响，首先请链接您心里的问心卡牌，看看会让你想起来你身上什么样的性格是遗传自您的父亲的？
       </view>
       <view class="pic">
-        <image src="../../images/1.png"></image>
+        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
       </view>
       <view class="audio"></view>
     </view>
@@ -29,7 +29,7 @@
 </view>
 
 <view class="btn-share-g" bindtap="openShare">
-  <image src="../../images/share.svg"></image>
+  <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share.svg"></image>
   <text>分享</text>
 </view>
 
@@ -38,10 +38,10 @@
     <view class="pop-mask"></view>
     <view class="pop-win">
         <view class="pop-tit">分享到</view>
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <view class="pop-share">
-            <view class="share-item"><image src="../../images/share-weixin.png"></image>微信好友</view>
-            <view class="share-item"><image src="../../images/share-friends.png"></image>朋友圈</view>
+            <view class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>微信好友</view>
+            <view class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</view>
         </view>
     </view>
 </block>

@@ -2,7 +2,7 @@
 <view class="wp">
     <view class="buy-one">
         <view class="buy-pic">
-            <image mode="widthFix" src="../../images/1.png"></image>
+            <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
         </view>
         <view class="buy-text">
             <view class="title">原生家庭-性格探索</view>
@@ -34,7 +34,7 @@
                     </view>
                 </view>
             </view>
-            <image class="icon" src="../../images/icon-ClickBox-on.png"></image>
+            <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ClickBox-on.png"></image>
         </view>
         <view class="item item2">
             <view class="buy-area">
@@ -54,7 +54,7 @@
                     </view>
                 </view>
             </view>
-            <image class="icon" src="../../images/icon-ClickBox.png"></image>
+            <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ClickBox.png"></image>
         </view>
     </view>
 </view>

@@ -3,6 +3,6 @@
     <view class="title1">问心岛</view>
     <view class="title2">心灵对话社区</view>
     <view class="title3">v1.0.2</view>
-    <image src="../../images/del-h1.jpg"></image>
+    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/del-h1.jpg"></image>
     <view class="title4">在这里被看见</view>
 </view>

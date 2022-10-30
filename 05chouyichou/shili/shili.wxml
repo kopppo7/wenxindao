@@ -2,7 +2,7 @@
 <view class="wp">   
     <view class="example-box" bindtap="examplePop">
         <view class="pic">
-            <image mode="widthFix" src="../../images/example-img.png"></image>
+            <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/example-img.png"></image>
         </view>
         <text class="txt">示例</text>
     </view>
@@ -10,7 +10,7 @@
         <input class="ipt-info" placeholder="记录当下遇到的问题..." placeholder-style="color:#B6B2CF;" type="text"  />
         <view class="textarea-box">
             <textarea placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;" />
-            <view class="btn-yuyin"><image src="../../images/icon-yuyin.png"></image>切换语音</view>
+            <view class="btn-yuyin"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>切换语音</view>
         </view>
         <radio-group bindchange="radioChange">
             <label class="label-radio"><radio value="1"/>公开</label>
@@ -23,10 +23,10 @@
 <block wx:if="{{exampleStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2" style="height: 898rpx">
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <view class="desc">明天要在万人体育场公开演讲，我想分享什么主题？为什么？</view>
         <view class="pop-img">
-            <image mode="widthFix" src="../../images/example-img.png" alt=""/>
+            <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/example-img.png" alt=""/>
         </view>
         <view class="txt">获取卡牌灵感</view>
         <view class="p1">

@@ -29,7 +29,7 @@
             <view class="s3">
                 <view class="s3-l">2022/3/4 23:33</view>
                 <view class="s3-r">
-                    <image class="avatar" src="../../images/avatar2.jpg"></image>
+                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
                     <view class="name">模拟1</view>
                     <view class="status">已使用</view>
                 </view>
@@ -59,9 +59,9 @@
             <view class="s3">
                 <view class="s3-l">2022/3/4 23:33</view>
                 <view class="s3-r">
-                    <image class="avatar" src="../../images/avatar2.jpg"></image>
-                    <image class="avatar" src="../../images/avatar3.jpg"></image>
-                    <image class="avatar" src="../../images/avatar4.jpg"></image>
+                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
+                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
+                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar4.jpg"></image>
                     <view class="status">已使用</view>
                 </view>
             </view>
@@ -91,7 +91,7 @@
                 <view class="s3-l">2022/3/4 23:33</view>
             </view>
             <view class="s4">
-                <image class="tip" src="../../images/icon-tip.png"></image>
+                <image class="tip" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-tip.png"></image>
                 最近一次赠送给<text>#王晓阳2567#</text> ，剩余<text>6</text> 天可领取；</view>
         </view>
     </view>

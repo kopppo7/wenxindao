@@ -4,10 +4,16 @@ function wxPromisify(fn) {
         return new Promise((resolve, reject) => {
             obj.success = function (res) {
                 // 成功
+                if(res.data.msg == '未能读取到有效Token'|| res.data.msg == 'Token无效'){
+                    wx.reLaunch({
+                      url: '/pages/login/login',
+                    })
+                }
                 resolve(res)
             };
             obj.fail = function (res) {
                 // 失败
+               
                 reject(res)
             };
             fn(obj)
@@ -29,14 +35,17 @@ Promise.prototype.finally = function (callback) {
  * @param {String} url 接口地址
  * @param {Object} data 参数数据
  */
+
 function getRequest(url, data) {
     let getRequest = wxPromisify(wx.request);
+    let token = wx.getStorageSync('tokenKey');
     return getRequest({
         url: url,
         method: 'GET',
         data: data,
         header: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'token':token
         }
     })
 }
@@ -48,17 +57,19 @@ function getRequest(url, data) {
  */
 function postRequest(url, data) {
     let postRequest = wxPromisify(wx.request);
+    let token = wx.getStorageSync('tokenKey');
     return postRequest({
         url: url,
         method: 'POST',
         data: data,
         header: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'token':token
         },
     })
 }
 
 module.exports = {
-    fetch: getRequest,
+    get: getRequest,
     post: postRequest
 };

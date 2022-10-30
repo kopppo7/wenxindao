@@ -1,7 +1,7 @@
 <!--03shenmingtansuo/zhutijieshao/zhutijieshao.wxml-->
 <view class="wp">
     <view class="intro-row1">
-        <image class="pic" src="../../images/1.png"></image>
+        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
         <view class="txt">
             <view class="s1">性格探索</view>
             <view class="s2">探索生命意义与使命，为自己的人生注入全新的生命活力</view>
@@ -26,27 +26,27 @@
             <view class="z-tit2">茶话会环节</view>
             <view class="z-list2">
                 <view class="item">
-                    <view class="tit"><image src="../../images/num1.png"></image>准备：</view>
+                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num1.png"></image>准备：</view>
                     <view class="desc">提前十分钟进入房间，调试设备、环境、互相认识；</view>
                 </view>
                 <view class="item">
-                    <view class="tit"><image src="../../images/num2.png"></image>破冰：</view>
+                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num2.png"></image>破冰：</view>
                     <view class="desc">介绍话题流程，并用轻松小游戏快速拉近彼此之前的距离；</view>
                 </view>
                 <view class="item">
-                    <view class="tit"><image src="../../images/num3.png"></image>承诺：</view>
+                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num3.png"></image>承诺：</view>
                     <view class="desc">续写承诺，共建安全、尊重、秘密的氛围；</view>
                 </view>
                 <view class="item">
-                    <view class="tit"><image src="../../images/num4.png"></image>依次分享：</view>
+                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num4.png"></image>依次分享：</view>
                     <view class="desc">公开发言，分享观点/故事/困惑；</view>
                 </view>
                 <view class="item">
-                    <view class="tit"><image src="../../images/num5.png"></image>自由讨论：</view>
+                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num5.png"></image>自由讨论：</view>
                     <view class="desc">开放语音讨论，即时回应，观点碰撞；</view>
                 </view>
                 <view class="item">
-                    <view class="tit"><image src="../../images/num6.png"></image>相互关注：</view>
+                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num6.png"></image>相互关注：</view>
                     <view class="desc">资源公开身份，互关成为好友，开启新的友谊。</view>
                 </view>
             </view>
@@ -57,7 +57,7 @@
         <view class="z-list3">
             <view class="item g-box">
                 <view class="tit-box">
-                    <image class="avatar" src="../../images/1.png"></image>
+                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
                     <view class="name-time">
                         <view class="name">飞飞图</view>
                         <view class="time">2022-07-25 21:05:00</view>
@@ -67,7 +67,7 @@
             </view>
             <view class="item g-box">
                 <view class="tit-box">
-                    <image class="avatar" src="../../images/1.png"></image>
+                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
                     <view class="name-time">
                         <view class="name">飞飞图</view>
                         <view class="time">2022-07-25 21:05:00</view>
@@ -83,7 +83,7 @@
         <view class="bottom-l">
             <view class="money">¥<text>20</text></view>
             <view class="year">/使用期1年</view>
-            <image class="tip" bindtap="closeYearPop" src="../../images/icon-tip.png"></image>
+            <image class="tip" bindtap="closeYearPop" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-tip.png"></image>
         </view>
         <view class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
     </view>
@@ -93,9 +93,9 @@
     <view class="pop-mask"></view>
     <view class="pop-win">
         <view class="pop-tit">购买本探索</view>
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <view class="pop-cont">
-            <image class="pic" src="../../images/1.png"></image>
+            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
             <view class="title">原生家庭-性格探索</view>
             <view class="time">购买使用期：1年</view>
             <view class="money">¥<text>20.00</text></view>
@@ -108,7 +108,7 @@
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <view class="pop-tit">购买本探索</view>
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <view class="desc">生命探索活动中的1年使用权指用户以当前价格购买后可免费此本子1年。</view>
         <view class="btn-know" bindtap="closePop">知道了</view>
     </view>
@@ -118,7 +118,7 @@
     <view class="pop-mask"></view>
     <view class="pop-win">
         <view class="pop-tit">给本次的生命探索引导打分</view>
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <rating showRating  rating="4" bind:click="change"></rating>
         <textarea class="content" placeholder="您认为本次的引导设计如何？您收获了什么？您的感受如何？可以记录下来..." />
         <view class="btn-buy">提交</view>

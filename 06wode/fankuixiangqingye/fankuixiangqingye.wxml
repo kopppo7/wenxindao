@@ -15,9 +15,9 @@
             <view class="z-tit1">截图或图片（选填）</view>
             <view class="photo-box">
                 <view class="item">
-                    <image src="../../images/m-p1.jpg" bindtap="previewImg"/>
+                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg" bindtap="previewImg"/>
                 </view>
-                <image bindtap="callGetPic" class="add" src="../../images/upload.png"></image>
+                <image bindtap="callGetPic" class="add" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/upload.png"></image>
             </view>
             <view class="z-tit1">联系方式</view>
             <input class="input" placeholder="请输入手机号码" placeholder-style="color:#B6B2CF;" type="text"/>

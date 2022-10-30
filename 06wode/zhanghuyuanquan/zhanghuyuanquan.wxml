@@ -29,11 +29,11 @@
     <view class="pop-mask"></view>
     <view class="pop-win2" style="height: 594rpx">
         <view class="error-box" wx:if="{{errorStatus}}">
-            <image src="../../images/close-x.png"></image>
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/close-x.png"></image>
             {{errorTxt}}
         </view>
         <view class="pop-tit">验证当前手机号</view>
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <view class="desc">换绑新的手机号后，可以用新手机号登录</view>
         <input type="number" placeholder="输入手机号" class="inp-tel"/>
         <view class="btn-code">获取短信验证码</view>
@@ -44,7 +44,7 @@
     <view class="pop-mask"></view>
     <view class="pop-win2" style="height: 482rpx">
         <view class="pop-tit">输入验证码</view>
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <input type="number" placeholder="输入验证码" placeholder-style="color: #ffffff;opacity: .6;letter-spacing: 0px;"
                class="inp-tel inp-code"/>
         <view bindtap="send" class="btn-code {{isShow ? '' : 'hide'}}">重新获取

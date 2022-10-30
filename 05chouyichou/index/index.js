@@ -7,9 +7,9 @@ Page({
     data: {
         currentItemId: 1,
         imgUrls:[
-            {url:'../../images/pump-img.png'},
-            {url:'../../images/pump-img.png'},
-            {url:'../../images/pump-img.png'}
+            {url:'https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pump-img.png'},
+            {url:'https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pump-img.png'},
+            {url:'https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pump-img.png'}
         ]
     },
     swiperChange:function(e){

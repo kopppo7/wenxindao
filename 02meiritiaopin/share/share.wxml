@@ -1,7 +1,7 @@
 <!--02meiritiaopin/share/share.wxml-->
 <view class="canvas-box">
     <view class="s1">
-        <image class="s1-l" src="../../images/home-avatar2.png"></image>
+        <image class="s1-l" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-avatar2.png"></image>
         <view class="s1-r">
             <view class="days">21</view>
             <view class="date-box">
@@ -10,7 +10,7 @@
             </view>
         </view>
     </view>
-    <image class="s2" src="../../images/big-pic.png"></image>
+    <image class="s2" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/big-pic.png"></image>
     <view class="s3">
         <view class="s3-item">感恩</view>
         <view class="s3-item">敏锐</view>
@@ -32,12 +32,12 @@
             </view>
         </view>
         <view class="s5-r">
-            <image class="qr" src="../../images/qr.png"></image>
+            <image class="qr" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"></image>
         </view>
     </view>
 </view>
 <view class="tools-box">
-    <view class="tools-item"><image src="../../images/share-weixin.png"></image>微信好友</view>
-    <view class="tools-item"><image src="../../images/share-friends.png"></image>朋友圈</view>
-    <view class="tools-item"><image src="../../images/share-download.png"></image>保存本地</view>
+    <view class="tools-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>微信好友</view>
+    <view class="tools-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</view>
+    <view class="tools-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-download.png"></image>保存本地</view>
 </view>

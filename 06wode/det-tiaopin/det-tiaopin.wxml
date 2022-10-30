@@ -1,7 +1,7 @@
 <view class="wp">
   <view class="face">
     <view class="pic">
-      <image src="../../images/avatar0.jpg"></image>
+      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
     </view>
     <view class="txt">
       <view class="name">罗伊</view>
@@ -15,7 +15,7 @@
   </view>
 
   <view class="content">
-    <image class="fakeImg" mode="widthFix" src="../../images/1.png"></image>
+    <image class="fakeImg" mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
     <view class="desc">
       图片行是一个人打着一个管子，努力平衡走在钢丝上。相信目标的重要性，就算是走在钢丝上，找到好的平衡点。一天里可能需要处理的东西很多，可以通过专注力训练，轻而易举获得好本领。
     </view>
@@ -24,6 +24,6 @@
 </view>
 
 <view class="btn-share-g">
-  <image src="../../images/share.svg"></image>
+  <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share.svg"></image>
   <text>分享</text>
 </view>

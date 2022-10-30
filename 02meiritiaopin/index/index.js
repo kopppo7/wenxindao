@@ -7,23 +7,30 @@ Page({
     data: {
         playPopStatus: false,
         bigPopStatus: false,
+        tabs: ['每日意图', '要事规划', '复盘'],
+        activeIndex: 0
     },
-    openPlayPop(){
+    openPlayPop() {
         var that = this;
         that.setData({
             playPopStatus: true
         })
     },
-    openBig(){
+    openBig() {
         that.setData({
             bigPopStatus: true
         })
     },
-    closePop(){
+    closePop() {
         var that = this;
         that.setData({
             playPopStatus: false,
             bigPopStatus: false
+        })
+    },
+    changeTab(ind) {
+        this.setData({
+            activeIndex: ind,
         })
     },
     /**

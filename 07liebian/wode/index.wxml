@@ -1,20 +1,20 @@
 <!--07liebian/wode/index.wxml-->
 <view class="wp">
     <view class="mine-row1">
-        <image class="avatar" src="../../images/avatar3.jpg"></image>
+        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
         <view class="name">王晓洋2567</view>
-        <image class="set" src="../../images/icon-set.png"></image>
+        <image class="set" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-set.png"></image>
         <view class="bell">
-            <image src="../../images/icon-bell.png"></image>
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-bell.png"></image>
         </view>
     </view>
     <view class="mine-row2">
         <view class="item">
-            <image src="../../images/icon-email.png"></image>
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-email.png"></image>
             同心邮局
         </view>
         <view class="item">
-            <image src="../../images/icon-order.png"></image>
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-order.png"></image>
             我的订单
         </view>
     </view>
@@ -26,45 +26,45 @@
         <view class="praise-list">
             <view class="item hook">
                <view class="pic">
-                <image mode="widthFix" src="../../images/icon-hook.png"></image>
+                <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-hook.png"></image>
                </view>
                <view class="text">6.8</view>
             </view>
             <view class="item not-liked">
                 <view class="pic">
-                <image mode="widthFix" src="../../images/icon-z1.png"></image>
+                <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-z1.png"></image>
                </view>
                <view class="text">6.9</view>
                <view class="tag not-tag">未领赞</view>
             </view>
             <view class="item">
                 <view class="pic">
-                <image mode="widthFix" src="../../images/icon-z.png"></image>
+                <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-z.png"></image>
                </view>
                <view class="text">今天</view>
                <view class="tag">待领赞</view>
             </view>
             <view class="item">
                 <view class="pic">
-                <image mode="widthFix" src="../../images/icon-z.png"></image>
+                <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-z.png"></image>
                </view>
                <view class="text">6.11</view>
             </view>
             <view class="item">
                 <view class="pic">
-                <image mode="widthFix" src="../../images/icon-z.png"></image>
+                <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-z.png"></image>
                </view>
                <view class="text">6.12</view>
             </view>
             <view class="item">
                 <view class="pic">
-                <image mode="widthFix" src="../../images/icon-z.png"></image>
+                <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-z.png"></image>
                </view>
                <view class="text">6.13</view>
             </view>
             <view class="item">
                 <view class="pic">
-                <image mode="widthFix" src="../../images/icon-z.png"></image>
+                <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-z.png"></image>
                </view>
                <view class="text">6.14</view>
             </view>
@@ -72,7 +72,7 @@
         <view class="praise-two">
             <view class="txt" catchtap="playBtn">
                 <text>签到规则</text>
-                <image mode="widthFix" src="../../images/icon-Group.png" class="icon"></image>
+                <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-Group.png" class="icon"></image>
             </view>
             <view class="warn" catchtap="turnBtn">
                 <text>领赞提醒</text>
@@ -88,21 +88,21 @@
                 我的动态
                 <text class="tag">仅自己可见</text>
             </view>
-            <image src="../../images/icon-filter.svg"></image>
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-filter.svg"></image>
         </view>
         <view class="trend-list">
             <view class="trend-item item1">
                 <view class="time mb12">2022/3/4 23:33</view>
                 <view class="box">
                      <view class="dot">
-                        <image mode="widthFix" src="../../images/h-icon-dot.png"></image>
+                        <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
                     <view class="title">#生命探索#</view>
                     <view class="type-list">
                         <view class="type-item">原生家庭-性格探索</view>
                     </view>
                     <view class="imgtxt">
-                        <image mode="widthFix" class="mb24" src="../../images/wo-img.png"></image>
+                        <image mode="widthFix" class="mb24" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/wo-img.png"></image>
                         <view class="txt">
                             今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这种性格给我们带来什么样的影响！
                             <text class="more">更多</text>
@@ -110,9 +110,9 @@
                     </view>
                     <view class="count-box">
                         <view class="avatar-box">
-                            <image class="avatar" src="../../images/avatar1.jpg"></image>
-                            <image class="avatar" src="../../images/avatar2.jpg"></image>
-                            <image class="avatar" src="../../images/avatar3.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
                         </view>
                         <view class="txt"><text>3</text>人已参与</view>
                     </view>
@@ -122,7 +122,7 @@
                 <view class="time mb12">2022/3/4 23:33</view>
                 <view class="box">
                      <view class="dot">
-                        <image mode="widthFix" src="../../images/h-icon-dot.png"></image>
+                        <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
                     <view class="title">#每日调频#</view>
                     <view class="type-list">
@@ -134,13 +134,13 @@
                         </view>
                     </view>
                     <view class="pic-list">
-                        <image class="pic" src="../../images/del-h1.jpg"></image>
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/del-h1.jpg"></image>
                     </view>
                     <view class="count-box">
                         <view class="avatar-box">
-                            <image class="avatar" src="../../images/avatar1.jpg"></image>
-                            <image class="avatar" src="../../images/avatar2.jpg"></image>
-                            <image class="avatar" src="../../images/avatar3.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
                         </view>
                         <view class="txt"><text>3</text>人已参与</view>
                     </view>
@@ -150,24 +150,24 @@
                 <view class="time mb12">2022/3/4 23:33</view>
                 <view class="box">
                      <view class="dot">
-                        <image mode="widthFix" src="../../images/h-icon-dot.png"></image>
+                        <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
                     <view class="title">#每日调频#</view>
                     <view class="type-list">
                         <view class="type-item c3">每日意图</view>
                     </view>
                     <view class="pic-list">
-                        <image class="pic" src="../../images/del-h1.jpg"></image>
-                        <image class="pic" src="../../images/del-h1.jpg"></image>
-                        <image class="pic" src="../../images/del-h1.jpg"></image>
-                        <image class="pic" src="../../images/del-h1.jpg"></image>
-                        <image class="pic" src="../../images/del-h1.jpg"></image>
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/del-h1.jpg"></image>
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/del-h1.jpg"></image>
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/del-h1.jpg"></image>
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/del-h1.jpg"></image>
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/del-h1.jpg"></image>
                     </view>
                     <view class="count-box">
                         <view class="avatar-box">
-                            <image class="avatar" src="../../images/avatar1.jpg"></image>
-                            <image class="avatar" src="../../images/avatar2.jpg"></image>
-                            <image class="avatar" src="../../images/avatar3.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
                         </view>
                         <view class="txt"><text>3</text>人已参与</view>
                     </view>
@@ -177,11 +177,11 @@
     </view>
     <view class="mine-row4">
         <view class="ask-btn">
-            <image mode="widthFix" src="../../images/icon-nav1.png"></image>
+            <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-nav1.png"></image>
             <text class="txt">问心岛</text>
         </view>
-        <view class="my-btn" style="background-image: url(../../images/nav-active.png)">
-            <image mode="widthFix" src="../../images/icon-nav3.png"></image>
+        <view class="my-btn" style="background-image: url(https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/nav-active.png)">
+            <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-nav3.png"></image>
             <text class="txt">我的</text>
         </view>
     </view>
@@ -191,12 +191,12 @@
     <view class="pop-mask"></view>
     <view class="pop-win2" style="height: 390rpx">
         <view class="pop-title">
-            <image mode="widthFix" src="../../images/Group1.png"></image>
-            <view class="text" style="background-image: url(../../images/icon-z-bg.png);">
+            <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/Group1.png"></image>
+            <view class="text" style="background-image: url(https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-z-bg.png);">
                 领赞成功！
             </view>
         </view>
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <view class="desc desc-info">您的赞美已经发送到 <text>我的消息</text> 收件箱，快去查收吧！</view>
         <view class="btn-know btn-email">前往收件箱</view>
     </view>
@@ -206,7 +206,7 @@
     <view class="pop-mask"></view>
     <view class="pop-win2" style="height: 454rpx">
         <view class="pop-tit">开启提醒</view>
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closeWarn"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closeWarn"></image>
         <view class="desc">开启提醒后，问心卡片会 <text>在这7天（6.8-6.14日）每天早上8:3</text> 提醒您领取今日赞美。</view>
         <view class="btn-area">
             <view class="btn btn-need">不用了</view>
@@ -219,7 +219,7 @@
     <view class="pop-mask"></view>
     <view class="pop-win2" style="height: 552rpx">
         <view class="pop-tit">玩法介绍详情</view>
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePlay"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePlay"></image>
         <view class="desc paly-desc"><text>【限时活动】赞美朋友，送赞美！</text> 问心卡牌试营期间，创建给朋友的一封信【邮寄给TA】提醒好友收听后，便可立即收到问心团队邮递的赞美，每天限量一个赞美！</view>
         <view class="btn-know">我知道了</view>
     </view>
@@ -229,7 +229,7 @@
     <view class="pop-mask"></view>
     <view class="pop-win2" style="height: 454rpx">
         <view class="pop-tit">玩法介绍详情</view>
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closeNewPraise"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closeNewPraise"></image>
         <view class="desc">用户注册前7天，可每天来问心卡牌领取赞美，领取赞美后可前往<text> 问心邮局-收件箱</text> 查收！</view>
         <view class="btn-know">我知道了</view>
     </view>

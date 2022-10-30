@@ -4,5 +4,7 @@ App({
     },
     globalData: {
         userInfo: null
+    },
+    onShow(options) {
     }
 });

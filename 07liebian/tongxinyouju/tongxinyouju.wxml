@@ -21,9 +21,9 @@
                 <text class="author">来自：张三</text>
                 <text class="date">2022-3-4 12:22</text>
             </view>
-            <view class="post-btn" style="background-image: url(../../images/audio.png);">
+            <view class="post-btn" style="background-image: url(https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png);">
                 <view class="line-box">
-                    <image mode="widthFix" src="../../images/icon-shape.png"></image>
+                    <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-shape.png"></image>
                 </view>
                 <view class="second">
                     43”
@@ -41,9 +41,9 @@
                 <text class="author">来自：张三</text>
                 <text class="date">2022-3-4 12:22</text>
             </view>
-            <view class="post-btn" style="background-image: url(../../images/audio.png);">
+            <view class="post-btn" style="background-image: url(https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png);">
                 <view class="line-box">
-                    <image mode="widthFix" src="../../images/icon-shape.png"></image>
+                    <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-shape.png"></image>
                 </view>
                 <view class="second">
                     43”

@@ -8,7 +8,7 @@
     </view>
     <view class="z-list1">
         <view class="item">
-            <image class="pic" src="../../images/1.png"></image>
+            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
             <view class="txt">
                 <view class="s1">
                     <view class="title">性格探索</view>
@@ -20,9 +20,9 @@
                 </view>
                 <view class="s3">
                     <view class="s3-l">
-                        <image src="../../images/People.png"></image>
-                        <image src="../../images/People.png"></image>
-                        <image src="../../images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
                         6人已学习
                     </view>
                     <view class="s3-r s3-r1">第3次探索</view>
@@ -30,7 +30,7 @@
             </view>
         </view>
         <view class="item">
-            <image class="pic" src="../../images/1.png"></image>
+            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
             <view class="txt">
                 <view class="s1">
                     <view class="title">性格探索</view>
@@ -42,9 +42,9 @@
                 </view>
                 <view class="s3">
                     <view class="s3-l">
-                        <image src="../../images/People.png"></image>
-                        <image src="../../images/People.png"></image>
-                        <image src="../../images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
                         6人已学习
                     </view>
                     <view class="s3-r s3-r2"><text style="width: 20%;"></text>继续 20%</view>
@@ -52,7 +52,7 @@
             </view>
         </view>
         <view class="item">
-            <image class="pic" src="../../images/1.png"></image>
+            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
             <view class="txt">
                 <view class="s1">
                     <view class="title">性格探索</view>
@@ -63,9 +63,9 @@
                 </view>
                 <view class="s3">
                     <view class="s3-l">
-                        <image src="../../images/People.png"></image>
-                        <image src="../../images/People.png"></image>
-                        <image src="../../images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
                         6人已学习
                     </view>
                     <view class="s3-r s3-r3">9.9元 开始探索</view>

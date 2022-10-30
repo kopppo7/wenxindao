@@ -11,7 +11,7 @@
 <view class="wp">
     <view class="yinyan-box" wx:if="{{step === 0}}">
         <view class="box1">
-            <image class="avatar" src="../../images/avatar0.jpg"></image>
+            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
             <view class="txt">
                 <view>大家好，欢迎开启本次生命探索。</view>
                 <view>今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这种性格给我们带来什么样的影响，</view>
@@ -23,21 +23,21 @@
                 <view class="s2-item active">
                     <view class="avatar-box">
                         <text>1</text>
-                        <image class="avatar" src="../../images/avatar1.jpg"></image>
+                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
                     </view>
                     <view class="name">我</view>
                 </view>
                 <view class="s2-item">
                     <view class="avatar-box">
                         <text>2</text>
-                        <image class="avatar" src="../../images/avatar2.jpg"></image>
+                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
                     </view>
                     <view class="name">模拟1</view>
                 </view>
                 <view class="s2-item">
                     <view class="avatar-box">
                         <text>3</text>
-                        <image class="avatar" src="../../images/avatar3.jpg"></image>
+                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
                     </view>
                     <view class="name">模拟2</view>
                 </view>
@@ -47,7 +47,7 @@
     </view>
     <view class="tansuo-row" wx:if="{{step === 1}}">
         <view class="box1">
-            <image class="avatar" src="../../images/avatar0.jpg"></image>
+            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
             <view class="txt">那我们接着来探索下这样的性格给您的生活带来什么样的影响呢？</view>
         </view>
         <view class="box2">
@@ -55,21 +55,21 @@
                 <view class="box2-l-item active">
                     <view class="avatar-box">
                         <text></text>
-                        <image class="avatar" src="../../images/avatar1.jpg"></image>
+                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
                     </view>
                     <view class="name">我</view>
                 </view>
                 <view class="box2-l-item">
                     <view class="avatar-box">
                         <text></text>
-                        <image class="avatar" src="../../images/avatar2.jpg"></image>
+                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
                     </view>
                     <view class="name">模拟1</view>
                 </view>
                 <view class="box2-l-item">
                     <view class="avatar-box">
                         <text></text>
-                        <image class="avatar" src="../../images/avatar3.jpg"></image>
+                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
                     </view>
                     <view class="name">模拟2</view>
                 </view>
@@ -83,7 +83,7 @@
     </view>
     <view class="yinyan-box yinyan-box5" wx:if="{{step === 5}}">
         <view class="box1">
-            <image class="avatar" src="../../images/avatar0.jpg"></image>
+            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
             <view class="txt">
                 本次生命探索正式结束啦。
                 探索完父母的性格对你的影响，是不是对自己有很多新的看见呢？或许，你对父母也有很多新的看见。
@@ -101,8 +101,8 @@
             </view>
         </view>
         <view class="box4">
-            <image class="box4-l" src="../../images/qrtxt.png"></image>
-            <image class="box4-r" src="../../images/qrcode.png"></image>
+            <image class="box4-l" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrtxt.png"></image>
+            <image class="box4-r" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
         </view>
         <view class="box5">
             <view class="g-submit">查看本次记录</view>
@@ -115,10 +115,10 @@
     <view class="pop-mask"></view>
     <view class="pop-win">
         <view class="pop-tit">分享到</view>
-        <image class="pop-close" src="../../images/icon-close.png" bindtap="closePop"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <view class="pop-share">
-            <view class="share-item"><image src="../../images/share-weixin.png"></image>微信好友</view>
-            <view class="share-item"><image src="../../images/share-friends.png"></image>朋友圈</view>
+            <view class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>微信好友</view>
+            <view class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</view>
         </view>
     </view>
 </block>
