@@ -51,8 +51,9 @@ page{
 	justify-content: center;
 	align-items: center;
 	margin-bottom: 60rpx;
+	height: 60rpx;
 }
-.canvas-box .s3:before,
+/* .canvas-box .s3:before,
 .canvas-box .s3:after{
 	content: '';
 	width: 46px;
@@ -89,7 +90,7 @@ page{
 	height: 4px;
 	background: #D7744A;
 	border-radius: 50%;
-}
+} */
 .canvas-box .s4{
 	font-size: 16rpx;
 	text-align: center;

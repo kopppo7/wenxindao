@@ -5,8 +5,16 @@ const formatTime = date => {
     const hour = date.getHours()
     const minute = date.getMinutes()
     const second = date.getSeconds()
-
-    return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+    const obj ={
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        second,
+        allTime:[year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+    }
+    return obj
 };
 
 const formatNumber = n => {

@@ -1,14 +1,55 @@
 // 02meiritiaopin/index/index.js
+import {
+    addFm,
+    findByFmForUser,
+    getDayCard,
+    inspectText,
+    dayForSignNumber,
+    findByIsFlagNumber
+} from "../../utils/fm";
+import {
+    formatTime,
+} from "../../utils/util";
+const recorderManager = wx.getRecorderManager()
+const innerAudioContext = wx.createInnerAudioContext()
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+        isOpen: 0,
         playPopStatus: false,
         bigPopStatus: false,
         tabs: ['每日意图', '要事规划', '复盘'],
-        activeIndex: 0
+        activeIndex: 0,
+        cardList: [],
+        cardShow: false,
+        cardIndex: 1,
+        activeCard: {},
+        signNum: 0,
+        putType: 5,
+        content: [],
+        content: {
+            txt: "",
+            voice: ""
+        },
+        types: 0, // 类型1每日调频,2每日事件,3复盘
+        autioStatus: 1,
+        tempFilePath:"",
+        nowDate:null,
+        nowDate2:"",
+    },
+    changePutType(e) {
+        console.log(this.data.putType);
+        this.setData({
+            putType: e.currentTarget.dataset.type
+        })
+    },
+    radioChange(data) {
+        this.setData({
+            isOpen: data.detail.value
+        })
     },
     openPlayPop() {
         var that = this;
@@ -16,9 +57,9 @@ Page({
             playPopStatus: true
         })
     },
-    openBig() {
-        that.setData({
-            bigPopStatus: true
+    openBig(e) {
+        this.setData({
+            bigPopStatus: true,
         })
     },
     closePop() {
@@ -28,16 +69,259 @@ Page({
             bigPopStatus: false
         })
     },
-    changeTab(ind) {
+    changeTab(e) {
         this.setData({
-            activeIndex: ind,
+            activeIndex: e.currentTarget.dataset.ind,
+            types: e.currentTarget.dataset.ind + 1
+        })
+    },
+    changeCard(e) {
+        let active = this.data.cardList[e.currentTarget.dataset.ind]
+        this.setData({
+            cardIndex: e.currentTarget.dataset.ind,
+            activeCard: active
+        })
+    },
+    initData() {
+        this.setData({
+            nowDate:formatTime(new Date())
+        })
+        console.log(this.data.nowDate);
+        this.getDayCard()
+        this.dayForSignNumber()
+    },
+    // 新增每日调频
+    addFm() {
+        console.log(this.data.content);
+        let params = {
+            cardUrl: this.data.activeCard.imgUrl,
+            content: JSON.stringify(this.data.content),
+            types: this.data.types,
+            isOpen: this.data.isOpen
+        }
+        console.log(params);
+        addFm(params).then(res => {
+            console.log(res.data.data);
+        })
+    },
+    // 查询自己每日调频记录
+    findByFmForUser() {},
+    // 随机查询今日随机卡牌
+    getDayCard() {
+        let that = this;
+        getDayCard().then(res => {
+            console.log(res.data.data);
+            that.setData({
+                cardList: res.data.data,
+                activeCard: res.data.data[1]
+            })
+        })
+    },
+    // 检查文档是否合规
+    inspectText(e) {
+        let param = {
+            text: e.detail.value
+        }
+        let that = this
+        inspectText(param).then(res => {
+            if (res.data.data == true) {
+                that.setData({
+                    'content.txt': e.detail.value
+                })
+                return
+            } else {
+                if (e.detail.value != '') {
+                    wx.showModal({
+                        title: '文字不合规，请重新输入',
+                    })
+                    that.setData({
+                        'content.txt': ''
+                    })
+                }
+            }
+        })
+    },
+    // 查询当天签到人数
+    dayForSignNumber() {
+        dayForSignNumber().then(res => {
+            this.setData({
+                signNum: res.data.data.number || 0,
+                nowDate2:res.data.data.chinese.chineseMonth+res.data.data.chinese.chineseDay
+            })
+        })
+    },
+    // 查询本人连续签到次数
+    findByIsFlagNumber() {},
+    showCard() {
+        let show = this.data.cardShow
+        this.setData({
+            cardShow: !show
+        })
+    },
+    // 录音
+    start: function() {
+        var that = this
+        const options = {
+            duration: 10000, //指定录音的时长，单位 ms
+            sampleRate: 16000, //采样率
+            numberOfChannels: 1, //录音通道数
+            encodeBitRate: 96000, //编码码率
+            format: 'mp3', //音频格式，有效值 aac/mp3
+            frameSize: 5000, //指定帧大小，单位 KB
+        }
+        //开始录音
+        wx.authorize({
+            scope: 'scope.record',
+            success() {
+                console.log("录音授权成功");
+                //第一次成功授权后 状态切换为2
+                that.setData({
+                    autioStatus: 2,
+                })
+                recorderManager.start(options);
+                recorderManager.onStart(() => {
+                    console.log('recorder start')
+                });
+                //错误回调
+                recorderManager.onError((res) => {
+                    console.log(res);
+                })
+            },
+            fail() {
+                console.log("第一次录音授权失败");
+                wx.showModal({
+                    title: '提示',
+                    content: '您未授权录音，功能将无法使用',
+                    showCancel: true,
+                    confirmText: "授权",
+                    confirmColor: "#52a2d8",
+                    success: function(res) {
+                        if (res.confirm) {
+                            //确认则打开设置页面（重点）
+                            wx.openSetting({
+                                success: (res) => {
+                                    console.log(res.authSetting);
+                                    if (!res.authSetting['scope.record']) {
+                                        //未设置录音授权
+                                        console.log("未设置录音授权");
+                                        wx.showModal({
+                                            title: '提示',
+                                            content: '您未授权录音，功能将无法使用',
+                                            showCancel: false,
+                                            success: function(res) {
+
+                                            },
+                                        })
+                                    } else {
+                                        //第二次才成功授权
+                                        console.log("设置录音授权成功");
+                                        that.setData({
+                                            autioStatus: 2,
+                                        })
+
+                                        recorderManager.start(options);
+                                        recorderManager.onStart(() => {
+                                            console.log('recorder start')
+                                        });
+                                        //错误回调
+                                        recorderManager.onError((res) => {
+                                            console.log(res);
+                                        })
+                                    }
+                                },
+                                fail: function() {
+                                    console.log("授权设置录音失败");
+                                }
+                            })
+                        } else if (res.cancel) {
+                            console.log("cancel");
+                        }
+                    },
+                    fail: function() {
+                        console.log("openfail");
+                    }
+                })
+            }
+        })
+
+
+    },
+    //暂停录音
+    pause: function() {
+        var that = this;
+        recorderManager.pause();
+        recorderManager.onPause((res) => {
+            console.log(res);
+            that.setData({
+                autioStatus: 3,
+                tempFilePath:res.tempFilePath
+            })
+            console.log('暂停录音')
+
+        })
+    },
+    //继续录音
+    resume: function() {
+        recorderManager.resume();
+        recorderManager.onStart(() => {
+            console.log('重新开始录音')
+        });
+        //错误回调
+        recorderManager.onError((res) => {
+            console.log(res);
+        })
+    },
+    //停止录音
+    stop: function() {
+        var that = this;
+        recorderManager.stop();
+        recorderManager.onStop((res) => {
+            that.setData({
+                autioStatus: 3,
+                tempFilePath:res.tempFilePath
+            })
+            console.log('停止录音', res.tempFilePath)
+            const {
+                tempFilePath
+            } = res
+        })
+    },
+    //播放声音
+    play: function() {
+        innerAudioContext.autoplay = true
+        innerAudioContext.src = this.data.tempFilePath,
+        innerAudioContext.onPlay(() => {
+            console.log('开始播放')
+        })
+        innerAudioContext.onError((res) => {
+            console.log(res.errMsg)
+            console.log(res.errCode)
+        })
+    },
+    closeAudio(){
+        that.setData({
+            autioStatus: 0,
+            tempFilePath:''
+        })
+    },
+    saveAudio(){
+        recorderManager.stop();
+        that.setData({
+            autioStatus: 0,
+            putType:5
+        })
+    },
+    clsoeAudio(){
+        that.setData({
+            putType: 1,
+            tempFilePath:''
         })
     },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+        this.initData()
     },
 
     /**

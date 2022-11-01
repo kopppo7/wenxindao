@@ -1,13 +1,29 @@
 // 02meiritiaopin/share/share.js
+import {
+  findByFmForUser,
+  findByIsFlagNumber
+} from "../../utils/fm";
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    cardTime:"",
+    cardCount:0,
+    cardTime:"",
+    cardTime:"",
   },
-
+  getDayCard() {
+    let that = this;
+    getDayCard().then(res => {
+        console.log(res.data.data);
+        that.setData({
+            cardList: res.data.data,
+            activeCard: res.data.data[1]
+        })
+    })
+},
   /**
    * 生命周期函数--监听页面加载
    */

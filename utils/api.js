@@ -53,3 +53,4 @@ export const updatePhone = function (params) {
 export const updateImMsg = function (params) {
     return http.get(handleURL('/updateImMsg'), params);
 };
+
