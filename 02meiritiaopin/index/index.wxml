@@ -54,10 +54,9 @@
             <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{putType == 1}}">
                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>语音输入
             </view>
-            <view class="btn-audio" bindtap="play" data-type="0" wx:if="{{putType == 5}}">
+            <view class="btn-audio" bindtap="playAudio" data-type="0" wx:if="{{putType == 5}}">
                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image><text>43'</text>
-                <image src="../../static/audio-del.png" class="close" bindtap="clsoeAudio"></image>
-                <audio src="http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46" id="myAudio" controls loop></audio>
+                <image src="../../static/audio-del.png" class="close" bindtap="closeAudio"></image>
             </view>
             <view class="btn-yuyin" bindtap="changePutType" data-type="1" wx:if="{{putType == 0}}">
                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>文字输入
@@ -71,10 +70,10 @@
                     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
                     <view class="txt">点击暂停</view>
                 </view>
-                <view class="close"  bindtap="closeAudio">
+                <view class="close"  bindtap="closeAudio"  wx:if="{{autioStatus == 3}}">
                     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
                 </view>
-                <view class="saveAudio" bindtap="saveAudio">
+                <view class="saveAudio" bindtap="saveAudio" wx:if="{{autioStatus == 3}}">
                     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ok.png"></image>
                 </view>
                 <view class="btn-luyin" bindtap="play" wx:if="{{autioStatus == 3}}">

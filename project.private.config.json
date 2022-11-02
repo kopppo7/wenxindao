@@ -34,7 +34,8 @@
         {
           "name": "每日调频",
           "pathName": "02meiritiaopin/share/share",
-          "query": "",
+          "query": "id=19",
+          "launchMode": "default",
           "scene": null
         },
         {

@@ -3,28 +3,27 @@
     <view class="s1">
         <image class="s1-l" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-avatar2.png"></image>
         <view class="s1-r">
-            <view class="days">21</view>
+            <view class="days">{{nowDate.gregorianDay}}</view>
             <view class="date-box">
-                <view class="lc">八月初九</view>
-                <view class="date">2022.03</view>
+                <view class="lc">{{nowDate.chineseMonth}}{{nowDate.chineseDay}}</view>
+                <view class="date">{{nowDate.gregorianYear}}.{{nowDate.gregorianMonthBase1}}</view>
             </view>
         </view>
     </view>
-    <image class="s2" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/big-pic.png"></image>
+    <image class="s2" src="{{cardImg}}"></image>
     <view class="s3">
         <!-- <view class="s3-item">感恩</view> -->
         <!-- <view class="s3-item">敏锐</view> -->
         <!-- <view class="s3-item">觉察</view> -->
     </view>
     <view class="s4">
-        <view>在天上俯视整个世界，又是另一番模样，所有的人一点点缩小只能看到建筑、城市、山脉。</view>
-        <view>珍惜眼前人，活在当下...</view>
+        <view>{{content.txt}}</view>
     </view>
     <view class="s5">
         <view class="s5-l">
             <view class="s5-l-item">
                 <view class="s5-l-tit">打卡时间</view>
-                <view class="s5-l-time">06:29</view>
+                <view class="s5-l-time">{{cardTime}}</view>
             </view>
             <view class="s5-l-item">
                 <view class="s5-l-tit">连续打卡</view>

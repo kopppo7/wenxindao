@@ -39,3 +39,11 @@ export const dayForSignNumber = function (data) {
 export const findByIsFlagNumber = function (data) {
     return http.get(handleURL('/askfm/findByIsFlagNumber'), data);
 };
+// 用户模块上传文件
+export const uploadFile = function (data) {
+    return http.post(handleURL('/oss/upload/uploadFile'), data);
+};
+// 根据id查询每日调频详情
+export const findByFmOne = function (data) {
+    return http.get(handleURL('/askfm/findByFmOne'), data);
+};

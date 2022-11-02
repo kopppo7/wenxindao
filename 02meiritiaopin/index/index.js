@@ -5,13 +5,16 @@ import {
     getDayCard,
     inspectText,
     dayForSignNumber,
-    findByIsFlagNumber
+    uploadFile
 } from "../../utils/fm";
 import {
     formatTime,
 } from "../../utils/util";
+import config from "../../utils/config";
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext()
+const  audioCtx = wx.createInnerAudioContext();
+
 Page({
 
     /**
@@ -28,17 +31,19 @@ Page({
         cardIndex: 1,
         activeCard: {},
         signNum: 0,
-        putType: 5,
+        putType: 1,
         content: [],
-        content: {
+        contents: {
             txt: "",
             voice: ""
         },
         types: 0, // 类型1每日调频,2每日事件,3复盘
         autioStatus: 1,
-        tempFilePath:"",
-        nowDate:null,
-        nowDate2:"",
+        tempFilePath: "",
+        nowDate: null,
+        nowDate2: "",
+        audioStr: "",
+        isPlay: false,
     },
     changePutType(e) {
         console.log(this.data.putType);
@@ -84,7 +89,7 @@ Page({
     },
     initData() {
         this.setData({
-            nowDate:formatTime(new Date())
+            nowDate: formatTime(new Date())
         })
         console.log(this.data.nowDate);
         this.getDayCard()
@@ -92,16 +97,17 @@ Page({
     },
     // 新增每日调频
     addFm() {
-        console.log(this.data.content);
         let params = {
             cardUrl: this.data.activeCard.imgUrl,
-            content: JSON.stringify(this.data.content),
+            contents: JSON.stringify(this.data.contents),
             types: this.data.types,
             isOpen: this.data.isOpen
         }
-        console.log(params);
         addFm(params).then(res => {
             console.log(res.data.data);
+            wx.navigateTo({
+              url: '/02meiritiaopin/share/share?id='+res.data.data,
+            })
         })
     },
     // 查询自己每日调频记录
@@ -126,7 +132,7 @@ Page({
         inspectText(param).then(res => {
             if (res.data.data == true) {
                 that.setData({
-                    'content.txt': e.detail.value
+                    'contents.txt': e.detail.value
                 })
                 return
             } else {
@@ -135,7 +141,7 @@ Page({
                         title: '文字不合规，请重新输入',
                     })
                     that.setData({
-                        'content.txt': ''
+                        'contents.txt': ''
                     })
                 }
             }
@@ -146,7 +152,7 @@ Page({
         dayForSignNumber().then(res => {
             this.setData({
                 signNum: res.data.data.number || 0,
-                nowDate2:res.data.data.chinese.chineseMonth+res.data.data.chinese.chineseDay
+                nowDate2: res.data.data.chinese.chineseMonth + res.data.data.chinese.chineseDay
             })
         })
     },
@@ -254,7 +260,7 @@ Page({
             console.log(res);
             that.setData({
                 autioStatus: 3,
-                tempFilePath:res.tempFilePath
+                tempFilePath: res.tempFilePath
             })
             console.log('暂停录音')
 
@@ -278,7 +284,7 @@ Page({
         recorderManager.onStop((res) => {
             that.setData({
                 autioStatus: 3,
-                tempFilePath:res.tempFilePath
+                tempFilePath: res.tempFilePath
             })
             console.log('停止录音', res.tempFilePath)
             const {
@@ -290,32 +296,56 @@ Page({
     play: function() {
         innerAudioContext.autoplay = true
         innerAudioContext.src = this.data.tempFilePath,
-        innerAudioContext.onPlay(() => {
-            console.log('开始播放')
-        })
+            innerAudioContext.onPlay(() => {
+                console.log('开始播放')
+            })
         innerAudioContext.onError((res) => {
             console.log(res.errMsg)
             console.log(res.errCode)
         })
     },
-    closeAudio(){
-        that.setData({
-            autioStatus: 0,
-            tempFilePath:''
-        })
-    },
-    saveAudio(){
-        recorderManager.stop();
-        that.setData({
-            autioStatus: 0,
-            putType:5
-        })
-    },
-    clsoeAudio(){
-        that.setData({
+    closeAudio() {
+        this.setData({
             putType: 1,
-            tempFilePath:''
+            tempFilePath: '',
+            autioStatus: 1
         })
+    },
+    saveAudio() {
+        var that = this
+        recorderManager.stop();
+        wx.uploadFile({
+            url: config.getDomain + '/oss/upload/uploadFile', 
+            filePath: that.data.tempFilePath,
+            name: 'file',
+            header: {
+                'content-type': 'multipart/form-data',
+                'token':wx.getStorageSync('tokenKey') || ''
+            },
+            success(res) {
+                that.setData({
+                    autioStatus: 0,
+                    putType: 5,
+                    tempFilePath: '',
+                    audioStr: JSON.parse(res.data).data,
+                    'contents.voice':JSON.parse(res.data).data,
+                })
+                audioCtx.src= JSON.parse(res.data).data;
+            }
+        })
+    },
+    playAudio(){
+        if (this.data.isPlay) {
+            audioCtx.pause()
+            this.setData({
+                isPlay:false
+            })
+        }else{
+            audioCtx.play()
+            this.setData({
+                isPlay:true
+            })
+        }
     },
     /**
      * 生命周期函数--监听页面加载
