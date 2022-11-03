@@ -9,6 +9,7 @@ page{
 	width: 726rpx;
 	height: 1396rpx;
 	margin: 0 auto;
+	position: relative;z-index: 1;
 }
 .canvas-box .s1{
 	display: flex;
@@ -154,3 +155,4 @@ page{
 	height: 32rpx;
 	margin-right: 8rpx;
 }
+.myCanvas{position: fixed;left: 0;top: 0;width: 100%;height: 100vh;z-index: -2;background-color: transparent;opacity: 0;}

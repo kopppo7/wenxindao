@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "wxml2canvas": "^1.0.1"
+  }
+}
