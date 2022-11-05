@@ -1,9 +1,10 @@
-//app.js
+import { login } from './utils/common'
 App({
     onLaunch: function () {
+      login();
     },
     globalData: {
-        userInfo: null
+      token:''
     },
     onShow(options) {
     }

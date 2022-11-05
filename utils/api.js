@@ -13,7 +13,10 @@ function handleURL(url) {
 export const appletsLogin = function (params) {
     return http.post(handleURL('/appletsLogin'), params);
 };
-
+// 解密手机号
+export const decodePhone = function (params) {
+  return http.post(handleURL('/decodePhone'), params);
+};
 // 同步小程序用户信息
 export const updateUserMsg = function (params) {
     return http.post(handleURL('/updateUserMsg'), params);

@@ -1,19 +1,21 @@
 <!--06wode/index/index.wxml-->
 <view class="wp">
     <view class="mine-row1">
-        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
-        <view class="name">王晓洋2567</view>
+        <image class="avatar" src="{{userInfo.headImg}}"></image>
+        <view class="name">{{ userInfo.wechatName }}</view>
         <image class="set" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-set.png"></image>
     </view>
     <view class="mine-row2">
-        <view class="item">
+        <!-- <view class="item">
             <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-message.png"></image>
             我的消息
             <text>4</text>
+        </view> -->
+        <view class="item">
+            我的订单
         </view>
         <view class="item">
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-order.png"></image>
-            我的订单
+            我的动态
         </view>
     </view>
     <view class="mine-row3">
