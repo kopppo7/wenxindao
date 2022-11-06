@@ -1,7 +1,12 @@
 // pages/login/login.js
 import {
-    appletsLogin,
+  decodePhone,
+  updateUserMsg
 } from "../../utils/api";
+import {
+  getLoginInfo,
+  setLoginInfo
+} from "../../utils/stoage"
 Page({
 
     /**
@@ -25,44 +30,57 @@ Page({
         })
     },
     getPhone(e) {
-
-        console.log(e);
-        let that = this
-        that.encryptedData = e.detail.encryptedData
-        that.iv = e.detail.iv
-        that.wxLogin()
-    },
-    wxLogin(e) {
-        console.log(e);
-        wx.login({
-            success(res) {
-                if (res.code) {
-                    //发起网络请求
-                    var obj = {
-                        code: res.code,
-                        role: 1
-                    }
-                    appletsLogin(obj).then(res => {
-                        console.log(res.data.data.token);
-                        try {
-                            wx.setStorageSync('tokenKey', res.data.data.token)
-                            wx.setStorage({
-                                key: "tokenKey",
-                                data: res.data.data.token,
-                                success() {
-                                    wx.reLaunch({
-                                        url: '/pages/index/index'
-                                    })
-                                }
-                            })
-                        } catch (e) {}
-
+      wx.showLoading({
+        title: '授权中...',
+      })
+        if (e.detail.errMsg == "getPhoneNumber:ok") {
+          wx.login({
+            success: function (res) {
+              decodePhone({
+                iv: e.detail.iv,
+                encryptedData:e.detail.encryptedData,
+                code:res.code
+              }).then(res=>{
+                if(res.data.ret==200){
+                  var json =JSON.parse(res.data.data);
+                  var userInfo = getLoginInfo();
+                  if (userInfo != null&&userInfo!='') {
+                    userInfo.phone = json.phoneNumber;
+                  } else {
+                    userInfo = {
+                      phone: json.phoneNumber,
+                      wechatName: '',
+                      headImg: ''
+                    };
+                  }
+                  setLoginInfo(userInfo);
+                  if(userInfo.wechatName==''||userInfo.wechatName==null){
+                    wx.redirectTo({
+                      url: '/pages/auth/auth',
                     })
-                } else {
-                    console.log('登录失败！' + res.errMsg)
+                  }else{
+                    updateUserMsg({
+                      phone:json.phoneNumber,
+                      nickname:userInfo.wechatName,
+                      headimgurl:userInfo.headImg
+                    }).then(up=>{
+                      wx.hideLoading();
+                      wx.redirectTo({
+                        url: '/pages/index/index',
+                      })
+                    })
+                  }
+                }else{
+                  wx.hideLoading();
+                  wx.showToast({
+                    title: '授权失败，请稍后再试',
+                    icon:'error'
+                  });
                 }
+              })
             }
-        })
+          })
+        }
     },
     telLogin() {
         wx.navigateTo({

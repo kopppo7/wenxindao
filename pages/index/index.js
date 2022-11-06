@@ -1,4 +1,4 @@
-import { getUserMsg } from '../../utils/api.js'
+import { login } from '../../utils/common'
 
 //获取应用实例
 const app = getApp();
@@ -7,10 +7,8 @@ Page({
     data: {
         lists: []
     },
-    onShow: function () {
-        getUserMsg().then(res=>{
-
-        })
+    onLoad: function () {
+      login();
     },
 
 });
