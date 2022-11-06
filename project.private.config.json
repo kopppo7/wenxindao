@@ -183,6 +183,34 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "03shenmingtansuo/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "03shenmingtansuo/zhutijieshao/zhutijieshao",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "03shenmingtansuo/tansuo/tansuo",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "主题派对",
+          "pathName": "04zhutipaidui/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

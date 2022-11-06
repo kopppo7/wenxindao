@@ -22,6 +22,15 @@
             ]
         },
         {
+            "root": "04zhutipaidui",
+            "name": "主题派对",
+            "pages": [
+                "index/index",
+                "zhutijieshao/zhutijieshao",
+                "tansuo/tansuo"
+            ]
+        },
+        {
             "root": "05chouyichou", 
             "name": "抽一抽",
             "pages":[
