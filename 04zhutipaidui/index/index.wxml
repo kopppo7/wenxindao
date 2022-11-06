@@ -1,0 +1,76 @@
+<!--03shenmingtansuo/index/index.wxml-->
+<view class="wp">
+    <view class="z-tab">
+        <view class="tab-item active">原生家庭</view>
+        <view class="tab-item">亲密关系</view>
+        <view class="tab-item">亲子关系</view>
+        <!-- <navigator url="" hover-class="none" class="detail">玩法详情</navigator> -->
+    </view>
+    <view class="z-list1">
+        <view class="item">
+            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+            <view class="txt">
+                <view class="s1">
+                    <view class="title">性格探索</view>
+                    <view class="tags">最新</view>
+                </view>
+                <view class="s2">
+                    <text>约30分钟</text>
+                    <text>已探索2次</text>
+                </view>
+                <view class="s3">
+                    <view class="s3-l">
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        6人已学习
+                    </view>
+                    <view class="s3-r s3-r1">第3次探索</view>
+                </view>
+            </view>
+        </view>
+        <view class="item">
+            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+            <view class="txt">
+                <view class="s1">
+                    <view class="title">性格探索</view>
+                    <view class="tags hots-tag">热门</view>
+                </view>
+                <view class="s2">
+                    <text>约30分钟</text>
+                    <text>已探索2次</text>
+                </view>
+                <view class="s3">
+                    <view class="s3-l">
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        6人已学习
+                    </view>
+                    <view class="s3-r s3-r2"><text style="width: 20%;"></text>继续 20%</view>
+                </view>
+            </view>
+        </view>
+        <view class="item">
+            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+            <view class="txt">
+                <view class="s1">
+                    <view class="title">性格探索</view>
+                    <view class="tags">最新</view>
+                </view>
+                <view class="s2">
+                    <text>约30分钟</text>
+                </view>
+                <view class="s3">
+                    <view class="s3-l">
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        6人已学习
+                    </view>
+                    <view class="s3-r s3-r3">9.9元 开始探索</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

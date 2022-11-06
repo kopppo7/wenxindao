@@ -1,17 +1,80 @@
 {
-  "pages": [
-    "pages/index/index",
-    "pages/login/login",
-    "pages/auth/auth"
-  ],
-  "subpackages": [
-    {
-      "root": "02meiritiaopin",
-      "name": "每日调频",
-      "pages": [
-        "index/index",
-        "share/share"
-      ]
+    "pages": [
+        "pages/index/index",
+        "pages/login/login",
+        "pages/auth/auth"
+    ],
+    "subpackages": [
+        {
+            "root": "02meiritiaopin",
+            "name": "每日调频",
+            "pages": [
+                "index/index",
+                "share/share"
+            ]
+        },
+        {
+            "root": "03shenmingtansuo",
+            "name": "生命探索",
+            "pages": [
+                "index/index",
+                "zhutijieshao/zhutijieshao",
+                "tansuo/tansuo"
+            ]
+        },
+        {
+            "root": "04zhutipaidui",
+            "name": "主题派对",
+            "pages": [
+                "index/index",
+                "zhutijieshao/zhutijieshao",
+                "tansuo/tansuo"
+            ]
+        },
+        {
+            "root": "05chouyichou", 
+            "name": "抽一抽",
+            "pages":[
+                "index/index",
+                "shili/shili"
+            ]
+        },
+        {
+            "root": "06wode",
+            "name": "我的",
+            "pages": [
+                "index/index",
+                "wodedigndan/wodedigndan",
+                "wodedongtai/wodedongtai",
+                "det-tiaopin/det-tiaopin",
+                "det-tansuo/det-tansuo",
+                "shezhi/shezhi",
+                "zhanghuyuanquan/zhanghuyuanquan",
+                "bangzhuyufankui/bangzhuyufankui",
+                "bangzhuxiangqing/bangzhuxiangqing",
+                "fankuixiangqingye/fankuixiangqingye",
+                "guanyu/guanyu"
+            ]
+        },
+        {
+            "root": "07liebian",
+            "name": "裂变",
+            "pages": [
+                "index/index",
+                "wode/index",
+                "tongxinyouju/tongxinyouju",
+                "shoujianxiangqing/shoujianxiangqing",
+                "lingquzanmei/lingquzanmei",
+                "goumaixiwei/goumaixiwei"
+            ]
+        }
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#222653",
+        "navigationBarTitleText": "",
+        "navigationStyle": "default",
+        "navigationBarTextStyle": "white"
     },
     {
       "root": "03shenmingtansuo",
