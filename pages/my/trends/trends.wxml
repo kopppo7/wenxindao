@@ -1,0 +1,118 @@
+<!--06wode/wodedongtai/wodedongtai.wxml-->
+
+<view class="wp">
+    <view class="h-dt-tab">
+        <view class="h-dt-tab-item {{cur_tab === index ? 'on' : ''}}"
+              bindtap="changeCurTab"
+              data-index="{{index}}"
+              wx:for="{{tab}}" wx:key="index">
+            <view class="title">{{item.title}}</view>
+            <view class="num" wx:if="{{item.num}}">{{item.num}}</view>
+        </view>
+    </view>
+    <view class="mine-row3">
+        <view class="title-box">
+            <view class="title">我的动态</view>
+        </view>
+        <view class="trend-list">
+            <view class="trend-item">
+                <view class="time mb12">2022/3/4 23:33</view>
+                <view class="box">
+                    <view class="dot" bindtap="openPop">
+                        <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
+                    </view>
+                    <view class="title">每日调频</view>
+                    <view class="type-list">
+                        <view class="type-item c1">情绪调节</view>
+                        <view class="type-item c2">小结</view>
+                    </view>
+                    <view class="pictxt">
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                        <view class="txt">
+                            图片行是一个人打着一个管子，努力平衡走在钢丝上。相信目标的重要性，就算是走在钢丝上，找到好的平衡点。一天里可能需要处理的东西很多，可以通过专注力训练，轻而易举获得好本领。
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="trend-item">
+                <view class="time mb12">2022/3/4 23:33</view>
+                <view class="box">
+                    <view class="dot" bindtap="openPop">
+                        <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
+                    </view>
+                    <view class="title">主题派对</view>
+                    <view class="type-list">
+                        <view class="type-item c3">原生家庭-性格探索</view>
+                    </view>
+                    <view class="pic-list">
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                    </view>
+                    <view class="count-box">
+                        <view class="avatar-box">
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
+                        </view>
+                        <view class="txt"><text>3</text>人已参与</view>
+                    </view>
+                </view>
+               
+            </view>
+            <view class="trend-item">
+                <view class="time mb12">2022/3/4 23:33</view>
+                <view class="box">
+                    <view class="dot" bindtap="openPop">
+                        <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
+                    </view>
+                    <view class="title">生命探索</view>
+                    <view class="type-list">
+                        <view class="type-item c3">原生家庭-性格探索</view>
+                    </view>
+                    <view class="imgtxt">
+                        <image mode="widthFix" class="mb24" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                        <view class="txt">
+                            今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这种性格给我们带来什么样的影响！
+                        </view>
+                    </view>
+                    <view class="count-box">
+                        <view class="avatar-box">
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
+                        </view>
+                        <view class="txt"><text>3</text>人已参与</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<view class="page-bot" wx:if="{{showPop}}">
+    <view class="page-mask" bindtap="closePop"></view>
+    <view class="page-bot-btn">
+        <view class="btn">删除</view>
+        <view class="btn" bindtap="closePop">取消</view>
+    </view>
+</view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

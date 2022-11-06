@@ -57,3 +57,23 @@ export const updateImMsg = function (params) {
     return http.get(handleURL('/updateImMsg'), params);
 };
 
+//查询我的订单
+export const findByOrderList = function (params) {
+  return http.post(config.getOrder+'/findByOrderList',params);
+}
+//查询我的动态
+export const findMyTrends = function (params) {
+  return http.post(handleURL('/my/mytrends'),params);
+}
+//查询公开的动态
+export const findPublicTrends = function (params) {
+  return http.post(handleURL('/my/publictrends'),params);
+}
+//查询反馈分类
+export const getHelpTypeList = function () {
+  return http.get(handleURL('/help/getHelpTypeList'));
+}
+//查询反馈列表
+export const getHelpList = function (typeId,) {
+  return http.get(handleURL('/help/getHelpList?typeId='+typeId));
+}

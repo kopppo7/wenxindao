@@ -14,9 +14,6 @@ page{
 	width: 169rpx;
 	height: 304rpx;
 }
-.index-row2{
-
-}
 .index-row2 .item{
 	display: flex;
 	margin-bottom: 48rpx;

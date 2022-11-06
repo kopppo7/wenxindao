@@ -31,20 +31,20 @@
       ]
     },
     {
-      "root": "06wode",
+      "root": "pages/my",
       "name": "我的",
       "pages": [
         "index/index",
-        "wodedigndan/wodedigndan",
-        "wodedongtai/wodedongtai",
+        "order/order",
+        "trends/trends",
+        "setting/setting",
+        "about/about",
+        "feedback/feedback",
         "det-tiaopin/det-tiaopin",
         "det-tansuo/det-tansuo",
-        "shezhi/shezhi",
-        "zhanghuyuanquan/zhanghuyuanquan",
-        "bangzhuyufankui/bangzhuyufankui",
+        "safe/safe",
         "bangzhuxiangqing/bangzhuxiangqing",
-        "fankuixiangqingye/fankuixiangqingye",
-        "guanyu/guanyu"
+        "fankuixiangqingye/fankuixiangqingye"
       ]
     },
     {

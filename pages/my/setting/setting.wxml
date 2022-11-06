@@ -1,0 +1,14 @@
+<!--06wode/shezhi/shezhi.wxml-->
+<view class="wp">
+    <view class="z-list1">
+        <navigator url="../../my/safe/safe" hover-class="none" class="item">
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-set1.png"></image>账号与安全
+        </navigator>
+        <navigator url="../../my/feedback/feedback" hover-class="none" class="item">
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-set2.png"></image>帮助与反馈
+        </navigator>
+        <navigator url="../../my/about/about" hover-class="none" class="item">
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-set3.png"></image>关于问心卡牌
+        </navigator>
+    </view>
+</view>

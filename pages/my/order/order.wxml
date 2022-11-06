@@ -1,0 +1,25 @@
+<!--06wode/wodedigndan/wodedigndan.wxml-->
+<view class="wp">
+    <view class="order-list" >
+        <view class="item mb12" wx:for="{{list}}" wx:for-item="item" wx:key="id">
+            <view class="s1">
+                <view class="s1-l">订单号：{{item.payId}}</view>
+                <view class="s1-r">¥
+                    <text>{{item.paymentAmount+'/'+(item.types==2?'席位':'场')}}</text>
+                    </view>
+            </view>
+            <view class="s2">
+              <view class="only" wx:if="{{item.types==2}}">单独购买</view>
+              <view class="friend" wx:else>好友结伴</view>
+              <view>{{item.title||''}}</view>
+            </view>
+            <view class="s3">
+                <view class="s3-l">下单时间：{{item.addTime}}</view>
+                <view class="s3-r" wx:if="{{item.status==1}}">
+                    <view class="btn">去使用</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+

@@ -37,7 +37,7 @@
         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-nav1.png"></image>
         <view class="txt">问心岛</view>
     </navigator>
-    <navigator url="/06wode/index/index" hover-class="none" class="item">
+    <navigator url="/pages/my/index/index" hover-class="none" class="item">
         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-nav2.png"></image>
         <view class="txt">我的</view>
     </navigator>
