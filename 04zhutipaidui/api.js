@@ -20,3 +20,8 @@ export const findByAskPartyOne = function (data) {
     return http.get(handleURL('/askParty/findByAskPartyOne'), data);
 };
 
+// 获取某个生命探索下的评价
+export const evaluateList = function (data) {
+    return http.post(handleURL('/probe/evaluateList'), data);
+};
+

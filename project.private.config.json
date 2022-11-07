@@ -211,6 +211,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "主题详情",
+          "pathName": "04zhutipaidui/zhutijieshao/zhutijieshao",
+          "query": "id=9",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

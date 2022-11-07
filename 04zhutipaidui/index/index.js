@@ -19,9 +19,9 @@ Page({
     tabParams:{
       category:1,
     },
+    activeIndex:0
   },
   initData(){
-    this.getThemeList()
     this.getTabList()
   },
   getThemeList(){
@@ -34,11 +34,25 @@ Page({
   getTabList(){
     categoryList(this.data.tabParams).then(res=>{
       this.setData({
-        tabList:res.data.data
+        tabList:res.data,
+        'listParams.types':res.data[0].id,
       })
+      this.getThemeList()
     })
   },
-  initData2(){},
+  changeTab(e){
+    console.log(e);
+    this.setData({
+      'listParams.types':e.currentTarget.dataset.tid,
+      activeIndex:e.currentTarget.dataset.ind,
+    })
+    this.getThemeList()
+  },
+  goDetail(e){
+    wx.navigateTo({
+      url: '/04zhutipaidui/zhutijieshao/zhutijieshao?id='+e.currentTarget.dataset.id,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
