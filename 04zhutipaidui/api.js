@@ -25,3 +25,12 @@ export const evaluateList = function (data) {
     return http.post(handleURL('/probe/evaluateList'), data);
 };
 
+// 新增评价
+export const insertEvaluate = function (data) {
+    return http.post(handleURL('/probe/insertEvaluate'), data);
+};
+// 更改用户IM基础信息
+export const updateImMsg = function (data) {
+    return http.post(handleURL('/updateImMsg'), data);
+};
+

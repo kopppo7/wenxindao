@@ -1,7 +1,8 @@
 // 03shenmingtansuo/zhutijieshao/zhutijieshao.js
 import {
     findByAskPartyOne,
-    evaluateList
+    evaluateList,
+    insertEvaluate
   } from "../api";
 Page({
 
@@ -19,7 +20,9 @@ Page({
             pageSize:1,
             category:1
         },
-        evalList:[]
+        evalList:[],
+        rating:4,
+        area:'',
     },
     // 打开购买本探索弹窗
     openBuyPop() {
@@ -53,7 +56,9 @@ Page({
     },
 
     change(e){
-        console.log(e.detail)
+        this.setData({
+            rating:e.detail
+        })
     },
     initData(){
         this.getDetail()
@@ -74,6 +79,17 @@ Page({
             this.setData({
                 evalList:res.data.data
             })
+        })
+    },
+    bindFormSubmit(e){
+        let params = {
+            category:1,
+            objectId:this.data.themeId,
+            score:this.data.rating,
+            evaluate:e.detail.value.textarea,
+        }
+        insertEvaluate(params).then(res=>{
+
         })
     },
     /**

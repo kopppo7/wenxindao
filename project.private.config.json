@@ -218,6 +218,13 @@
           "query": "id=9",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/setHouse/setHouse",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
