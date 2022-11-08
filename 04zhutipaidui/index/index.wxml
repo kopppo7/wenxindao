@@ -1,76 +1,36 @@
 <!--03shenmingtansuo/index/index.wxml-->
 <view class="wp">
     <view class="z-tab">
-        <view class="tab-item active">原生家庭</view>
-        <view class="tab-item">亲密关系</view>
-        <view class="tab-item">亲子关系</view>
+        <view wx:for="{{tabList}}" data-tid="{{item.id}}" data-ind="{{index}}" class="{{activeIndex == index?'active tab-item':'tab-item'}}"
+            wx:for-index="index" bindtap="changeTab" wx:for-item="item">
+            {{item.typeName}}</view>
         <!-- <navigator url="" hover-class="none" class="detail">玩法详情</navigator> -->
     </view>
-    <view class="z-list1">
-        <view class="item">
-            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+    <view class="z-list1" wx:if="{{themeList.length > 0}}">
+        <view class="item" wx:for="{{themeList}}" wx:for-index="index"
+        wx:for-item="item" bindtap="goDetail" data-id="{{item.id}}">
+            <image class="pic" src="{{item.imgUrl}}"></image>
             <view class="txt">
                 <view class="s1">
-                    <view class="title">性格探索</view>
-                    <view class="tags">最新</view>
+                    <view class="title">{{item.title}}</view>
+                    <view class="tags" wx:if="{{item.isHot}}">最新</view>
+                    <view class="tags hots-tag" wx:if="{{item.isHot}}">热门</view>
                 </view>
                 <view class="s2">
-                    <text>约30分钟</text>
-                    <text>已探索2次</text>
+                    <text>约<text style="color:#FFB58C">{{item.meanTime}}</text>分钟</text>
+                    <text>建议人数<text style="color:#FFB58C">{{item.maxNumber}}</text>人</text>
                 </view>
                 <view class="s3">
                     <view class="s3-l">
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
-                        6人已学习
+                        6人参与
                     </view>
-                    <view class="s3-r s3-r1">第3次探索</view>
-                </view>
-            </view>
-        </view>
-        <view class="item">
-            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
-            <view class="txt">
-                <view class="s1">
-                    <view class="title">性格探索</view>
-                    <view class="tags hots-tag">热门</view>
-                </view>
-                <view class="s2">
-                    <text>约30分钟</text>
-                    <text>已探索2次</text>
-                </view>
-                <view class="s3">
-                    <view class="s3-l">
-                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
-                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
-                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
-                        6人已学习
-                    </view>
-                    <view class="s3-r s3-r2"><text style="width: 20%;"></text>继续 20%</view>
-                </view>
-            </view>
-        </view>
-        <view class="item">
-            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
-            <view class="txt">
-                <view class="s1">
-                    <view class="title">性格探索</view>
-                    <view class="tags">最新</view>
-                </view>
-                <view class="s2">
-                    <text>约30分钟</text>
-                </view>
-                <view class="s3">
-                    <view class="s3-l">
-                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
-                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
-                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
-                        6人已学习
-                    </view>
-                    <view class="s3-r s3-r3">9.9元 开始探索</view>
+                    <!-- <view class="s3-r s3-r3">9.9元 开始探索</view> -->
                 </view>
             </view>
         </view>
     </view>
+    <view class="nodata" wx:else>暂无数据</view>
 </view>

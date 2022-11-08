@@ -1,4 +1,9 @@
 // 03shenmingtansuo/zhutijieshao/zhutijieshao.js
+import {
+    findByAskPartyOne,
+    evaluateList,
+    insertEvaluate
+  } from "../api";
 Page({
 
     /**
@@ -7,7 +12,17 @@ Page({
     data: {
         buyPopStatus: false,
         yearPopStatus: false,
-        gwPopStatus: false
+        gwPopStatus: false,
+        themeId:'',
+        detailObj:{},
+        evalParams:{
+            page:1,
+            pageSize:1,
+            category:1
+        },
+        evalList:[],
+        rating:4,
+        area:'',
     },
     // 打开购买本探索弹窗
     openBuyPop() {
@@ -33,16 +48,60 @@ Page({
             yearPopStatus: true
         })
     },
-
-    change(e){
-        console.log(e.detail)
+    openGwPop() {
+        var that = this;
+        that.setData({
+            gwPopStatus: true
+        })
     },
 
+    change(e){
+        this.setData({
+            rating:e.detail
+        })
+    },
+    initData(){
+        this.getDetail()
+        this.getEvaluateList()
+    },
+    getDetail(){
+        findByAskPartyOne({id:this.data.themeId}).then(res=>{
+            let obj = res.data.data;
+            obj.tips = obj.tips.split(' ');
+            console.log(obj);
+            this.setData({
+                detailObj:obj
+            })
+        })
+    },
+    getEvaluateList(){
+        evaluateList(this.data.evalParams).then(res=>{
+            this.setData({
+                evalList:res.data.data
+            })
+        })
+    },
+    bindFormSubmit(e){
+        let params = {
+            category:1,
+            objectId:this.data.themeId,
+            score:this.data.rating,
+            evaluate:e.detail.value.textarea,
+        }
+        insertEvaluate(params).then(res=>{
+
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+        console.log(options);
+        this.setData({
+            themeId:options.id,
+            'evalParams.id':options.id,
+        })
+        this.initData()
     },
 
     /**

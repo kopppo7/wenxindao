@@ -3,12 +3,11 @@
     <view class="intro-row1">
         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
         <view class="txt">
-            <view class="s1">性格探索</view>
-            <view class="s2">探索生命意义与使命，为自己的人生注入全新的生命活力</view>
-            <view class="s3">预计35分钟</view>
+            <view class="s1">{{detailObj.title}}</view>
+            <rich-text nodes="{{detailObj.detailsText}}" type="text" class="s2"></rich-text>
+            <view class="s3">预计{{detailObj.meanTime}}分钟</view>
             <view class="s4">
-                <text>生命动力</text>
-                <text>人生设计</text>
+                <text wx:for="{{detailObj.tips}}" wx:for-item="item">{{item}}</text>
             </view>
         </view>
     </view>
@@ -19,8 +18,7 @@
         <view class="z-tit1">活动流程</view>
         <view class="g-box">
             <view class="z-tit2">语音参与者</view>
-            <view class="desc">单场茶话会时间约2小时，
-                <text>需要语音发言（可全程蛋名）井开放全体月食用户围观。</text>参与前请确保自己有充足时间，并检查自己的网络、麦克风、周围环境情况。</view>
+            <rich-text nodes="{{detailObj.flowText}}" type="text" class="desc"></rich-text>
         </view>
         <view class="g-box">
             <view class="z-tit2">茶话会环节</view>
@@ -79,13 +77,18 @@
     </view>
 </view>
 <view class="bottom-box">
-    <view class="box">
+    <!-- <view class="box">
         <view class="bottom-l">
             <view class="money">¥<text>20</text></view>
             <view class="year">/使用期1年</view>
             <image class="tip" bindtap="closeYearPop" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-tip.png"></image>
         </view>
         <view class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
+    </view> -->
+    <view class="btn-box">
+        <view class="bottom-r bottom-r1" bindtap="openBuyPop">快速匹配</view>
+        <view class="bottom-r bottom-r1" bindtap="openBuyPop">好友结伴</view>
+        <view class="bottom-r bottom-r2" bindtap="openGwPop">写感悟</view>
     </view>
 </view>
 <!--购买本探索-->
@@ -119,8 +122,11 @@
     <view class="pop-win">
         <view class="pop-tit">给本次的生命探索引导打分</view>
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
-        <rating showRating  rating="4" bind:click="change"></rating>
-        <textarea class="content" placeholder="您认为本次的引导设计如何？您收获了什么？您的感受如何？可以记录下来..." />
-        <view class="btn-buy">提交</view>
+        <rating showRating  rating="{{rating}}" bind:click="change"></rating>
+        <form bindsubmit="bindFormSubmit">
+            <textarea class="content" placeholder="您认为本次的引导设计如何？您收获了什么？您的感受如何？可以记录下来..." name="textarea"/>
+            <button form-type="submit" class="btn-buy"> 提交 </button>
+        </form>
+        
     </view>
 </block>
