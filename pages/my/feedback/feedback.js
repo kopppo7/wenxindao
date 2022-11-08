@@ -8,8 +8,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        allTitle: [
-        ],
+        allTitle: [],
         currentIndex: 0,
         questionList: [
         ]
@@ -48,7 +47,6 @@ Page({
         this.setData({
           allTitle:res.data.data
         });
-        debugger
         getHelpList(res.data.data[0].id).then(list=>{
           this.setData({
             questionList:list.data.data

@@ -1,7 +1,7 @@
 <!--06wode/wodedongtai/wodedongtai.wxml-->
 
 <view class="wp">
-    <view class="h-dt-tab">
+    <!-- <view class="h-dt-tab">
         <view class="h-dt-tab-item {{cur_tab === index ? 'on' : ''}}"
               bindtap="changeCurTab"
               data-index="{{index}}"
@@ -9,16 +9,16 @@
             <view class="title">{{item.title}}</view>
             <view class="num" wx:if="{{item.num}}">{{item.num}}</view>
         </view>
-    </view>
+    </view> -->
     <view class="mine-row3">
         <view class="title-box">
             <view class="title">我的动态</view>
         </view>
         <view class="trend-list">
-            <view class="trend-item">
-                <view class="time mb12">2022/3/4 23:33</view>
+          <view class="trend-item" wx:for="{{list}}"  wx:for-item="item" wx:key="id">
+                <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
-                    <view class="dot" bindtap="openPop">
+                     <view class="dot">
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
                     <view class="title">每日调频</view>
@@ -27,14 +27,14 @@
                         <view class="type-item c2">小结</view>
                     </view>
                     <view class="pictxt">
-                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                        <image class="pic" src="{{item.cardUrl}}"></image>
                         <view class="txt">
                             图片行是一个人打着一个管子，努力平衡走在钢丝上。相信目标的重要性，就算是走在钢丝上，找到好的平衡点。一天里可能需要处理的东西很多，可以通过专注力训练，轻而易举获得好本领。
                         </view>
                     </view>
                 </view>
             </view>
-            <view class="trend-item">
+            <!-- <view class="trend-item">
                 <view class="time mb12">2022/3/4 23:33</view>
                 <view class="box">
                     <view class="dot" bindtap="openPop">
@@ -87,7 +87,7 @@
                         <view class="txt"><text>3</text>人已参与</view>
                     </view>
                 </view>
-            </view>
+            </view> -->
         </view>
     </view>
 </view>

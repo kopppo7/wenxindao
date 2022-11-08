@@ -74,6 +74,14 @@ export const getHelpTypeList = function () {
   return http.get(handleURL('/help/getHelpTypeList'));
 }
 //查询反馈列表
-export const getHelpList = function (typeId,) {
+export const getHelpList = function (typeId) {
   return http.get(handleURL('/help/getHelpList?typeId='+typeId));
+}
+//新建反馈
+export const addFeedback = function (data){
+  return http.post(handleURL('/help/addFeedback'),data);
+}
+//查询反馈详情
+export const getHelpOne = function (id) {
+  return http.get(handleURL('/help/getHelpOne?id='+id));
 }

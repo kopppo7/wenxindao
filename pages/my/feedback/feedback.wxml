@@ -2,7 +2,7 @@
 <view class="wp">
     <view class="z-tit1"><text>*</text>猜你想问</view>
     <view class="z-tab1">
-        <block wx:for="{{allTitle}}" wx:for-index="idx" wx:key="index">
+        <block wx:for="{{allTitle}}" wx:for-index="idx"  wx:for-item="item" wx:key="id">
             <view id="{{item.id}}" class="item {{currentIndex==idx ? 'active' : ''}}" data-current="{{idx}}"
                   bindtap="changeTitle">
                 {{item.typeName}}
@@ -10,8 +10,8 @@
         </block>
     </view>
     <view class="z-list1">
-        <block wx:for="{{questionList}}" wx:key="index">
-            <navigator url="../../06wode/bangzhuxiangqing/bangzhuxiangqing?id={{item.id}}" hover-class="none"
+        <block wx:for="{{questionList}}"  wx:for-item="item" wx:key="id">
+            <navigator url="../../my/feedback/detail/detail?id={{item.id}}" hover-class="none"
                        class="item">
                 {{index + 1}}、{{item.title}}
             </navigator>
@@ -23,5 +23,5 @@
 <view class="bot-btns">
     <view class="btn">联系客服<button open-type="contact"></button></view>
     <view class="line"></view>
-    <navigator url="../../06wode/fankuixiangqingye/fankuixiangqingye" hover-class="none" class="btn">提交反馈</navigator>
+    <navigator url="../../my/feedback/submit/submit" hover-class="none" class="btn">提交反馈</navigator>
 </view>

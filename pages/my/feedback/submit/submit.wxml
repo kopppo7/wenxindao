@@ -1,0 +1,38 @@
+<!--06wode/fankuixiangqingye/fankuixiangqingye.wxml-->
+<view class="wp">
+    <view class="z-tit1"><text>*</text>反馈问题</view>
+    <view class="z-tab1">
+        <block wx:for="{{allTitle}}" wx:for-index="idx" wx:key="index">
+            <view id="{{item.id}}" class="item {{currentIndex==idx ? 'active' : ''}}" data-current="{{idx}}"
+                  bindtap="changeTitle">
+                {{item.typeName}}
+            </view>
+        </block>
+    </view>
+    <view class="form-fk">
+        <form bindsubmit="formSubmit">
+            <textarea maxlength="300" name="contents" placeholder="请输入你的详细意见或建议" placeholder-style="color:#B6B2CF;"/>
+            <view class="z-tit1">截图或图片（选填）</view>
+            <view class="photo-box">
+                <view class="item" wx:for="{{uploadImgs}}"  wx:for-item="item">
+                    <image src="{{item}}" mode="aspectFill" bindtap="previewImg" bindlongpress="deleteImg" />
+                </view>
+                <image bindtap="callGetPic" class="add" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/upload.png"></image>
+            </view>
+            <view class="z-tit1">联系方式</view>
+            <input class="input" name="phone" placeholder="请输入手机号码" maxlength="11" placeholder-style="color:#B6B2CF;" type="number"/>
+            <button formType="submit" class="submit">提交反馈</button>
+        </form>
+    </view>
+    <view class="privew-img" wx:if="{{showPrivew}}">
+      <view class="privew-title">{{tapImgIndex+1}}/{{uploadImgs.length}}</view>
+        <swiper class="privew-swiper" bindchange="privewChange" interval="600000" autoplay="false" circular="true" current="{{tapImgIndex}}" bindtap="closePrivew">
+          <swiper-item class="privew-img-item" wx:for="{{uploadImgs}}"  wx:for-item="item">
+            <image mode="widthFix" src="{{item}}"></image>
+          </swiper-item>
+        </swiper>
+        <view class="del-img">
+         <image class="icon" src="../../../../static/audio-del.png" bindtap="deleteImg"></image>
+        </view>
+    </view>
+</view>

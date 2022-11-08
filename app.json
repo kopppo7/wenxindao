@@ -52,7 +52,8 @@
         "tiaopin/det-tiaopin",
         "det-tansuo/det-tansuo",
         "safe/safe",
-        "fankuixiangqingye/fankuixiangqingye"
+        "feedback/detail/detail",
+        "feedback/submit/submit"
       ]
     },
     {

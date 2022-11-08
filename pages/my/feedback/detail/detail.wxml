@@ -1,0 +1,5 @@
+<!--06wode/bangzhuxiangqing/bangzhuxiangqing.wxml-->
+<view class="z-text">
+    <view class="title">{{title}}</view>
+    <rich-text class="con" nodes="{{content}}"></rich-text>
+</view>
