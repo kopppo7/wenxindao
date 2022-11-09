@@ -1,4 +1,14 @@
 <!--03shenmingtansuo/tansuo/tansuo.wxml-->
+<view class="hourse-set">
+    <view class="txt">
+        <text>房间ID：457364</text>
+        <text>人数：4-6人局</text>
+    </view>
+    <image
+        src="../../static/h-set.png"
+        mode="scaleToFill"
+    />
+</view>
 <view class="jdt-box"><text style="width: {{step * 20}}%;"></text></view>
 <scroll-view class="z-tab2" scroll-x="true">
     <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
@@ -122,4 +132,40 @@
         </view>
     </view>
 </block>
-
+<!-- 活动提示 -->
+<block wx:if="{{activityPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">活动提示</view>
+        <view class="desc">我是问心小精灵 , 是本场派对的活动主持人。请来到可以语音外放的环境 或  佩戴耳机。</view>
+        <label class="checkbox">
+            <checkbox checked="true" name="checkbox"></checkbox>
+            <text>不再提示</text>
+        </label>
+        <view class="btns">
+            <view class="close btn">退出</view>
+            <view class="ok btn">准备好了</view>
+        </view>
+    </view>
+</block>
+<!-- 匹配中 -->
+<block wx:if="{{matePopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">原生家庭-性格探索</view>
+        <view class="img">
+            <image
+                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"
+            />
+        </view>
+        <view class="wait">已等待{{waitTime}}</view>
+        <view class="wait nowait">暂未匹配到其他参与者</view>
+        <view class="btns" wx:if="{{!waitStatus}}">
+            <view class="close btn">取消匹配</view>
+        </view>
+        <view class="btns" wx:if="{{waitStatus}}">
+            <view class="close btn">返回主题</view>
+            <view class="btn ok">继续匹配</view>
+        </view>
+    </view>
+</block>

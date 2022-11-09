@@ -255,3 +255,10 @@
 	border-radius: 72rpx;
 }
 
+.hourse-set{
+	display: -webkit-flex;display: flex;justify-content: space-between;align-items:center;padding: 0 40rpx;background: rgba(182,178,207,0.12);
+}
+.hourse-set .txt{flex-grow: 1;line-height: 96rpx;}
+.hourse-set .txt text:first-child{padding-right: 20rpx;margin-right: 20rpx;position: relative;}
+.hourse-set .txt text:first-child:after{content: '';position: absolute;right: 0;top: 50%;width: 1px;height: 32rpx;margin-top: -16rpx;background: rgba(255,255,255,0.12);}
+.hourse-set image{flex-shrink: 0;width: 48rpx;height: 48rpx;}

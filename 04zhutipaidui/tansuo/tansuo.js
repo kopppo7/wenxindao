@@ -6,7 +6,11 @@ Page({
      */
     data: {
         sharePopStatus: false,
-        step: 5,
+        activityPopStatus: false,
+        matePopStatus: false,    
+        waitStatus:false,
+        step: 0,
+        waitTime:'00:23'
     },
     openSharePop(){
         var that = this;
@@ -17,7 +21,8 @@ Page({
     closePop(){
         var that = this;
         that.setData({
-            sharePopStatus: false
+            sharePopStatus: false,
+            activityPopStatus:false
         })
     },
     /**

@@ -225,6 +225,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

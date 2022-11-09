@@ -5,43 +5,47 @@
         <view class="txt">您即将进入主题派对语音房，请确保您所处环境可以语音交流，可以准备耳机收听声音。</view>
     </view>
     <view class="bot">
-        <view class="z-tit1">设置匿名昵称</view>
-        <view class="qx">
-            <view class="img">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
-                <text>点击更换</text>
-            </view>
-            <view class="sf">
-                <view class="name">身份权限：</view>
-                <view class="radio-box">
-                    <radio-group bindchange="radioChange">
-                        <label class="label-radio">
-                            <radio value="1" />隐藏身份
-                        </label>
-                        <label class="label-radio">
-                            <radio value="0" checked="true" />公开身份
-                        </label>
-                    </radio-group>
+        <form catchsubmit="formSubmit">
+            <view class="z-tit1">设置匿名昵称</view>
+            <view class="qx">
+                <view class="img" bindtap="uploadImg">
+                    <image src="{{useMes.headImg}}"></image>
+                    <text wx:if="{{isShow}}">点击更换</text>
+                </view>
+                <view class="sf">
+                    <view class="name">身份权限：</view>
+                    <view class="radio-box">
+                        <radio-group bindchange="radioChange" name="radio">
+                            <label class="label-radio">
+                                <radio value="0" checked="true"/>隐藏身份
+                            </label>
+                            <label class="label-radio">
+                                <radio value="1" />公开身份
+                            </label>
+                        </radio-group>
+                    </view>
+                </view>
+                <view class="inp" wx:if="{{isShow}}">
+                    <input auto-focus placeholder="请输入临时昵称" name="input"/>
                 </view>
             </view>
-            <view class="inp">
-                <input auto-focus placeholder="请输入临时昵称"/>
+            <view class="copy">
+                <checkbox-group name="checkbox">
+                    <label>
+                        <checkbox value="1"/>
+                        <text class="cb">需遵守《玩家规则》</text>
+                    </label>
+                </checkbox-group>
             </view>
-        </view>
-        <view class="copy">
-            <checkbox value="cb" checked="true"/>
-            <text class="cb">需遵守《玩家规则》</text>
-        </view>
-        <view class="copy2">
-            <text>进入房间则代表已阅读和同意</text>
-            <navigator
-                url="/pages/"
-                open-type="navigate"
-                hover-class="navigator-hover"
-                class="link"
-            >《玩家规则》</navigator>
-            <text>条款</text>
-        </view>
-        <button class="btn-submit">进入房间<image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/arrow-right.png"></image></button>
+            <view class="copy2">
+                <text>进入房间则代表已阅读和同意</text>
+                <navigator url="/pages/" open-type="navigate" hover-class="navigator-hover" class="link">《玩家规则》
+                </navigator>
+                <text>条款</text>
+            </view>
+            <button class="btn-submit" formType="submit">进入房间<image class="pic"
+                    src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/arrow-right.png"></image>
+                </button>
+        </form>
     </view>
 </view>
