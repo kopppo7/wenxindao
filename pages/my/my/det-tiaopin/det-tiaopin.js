@@ -1,4 +1,4 @@
-// pages/my/tiaopin/det-tiaopin.js
+// pages/my/my/det-tiaopin/det-tiaopin.js
 Page({
 
   /**
