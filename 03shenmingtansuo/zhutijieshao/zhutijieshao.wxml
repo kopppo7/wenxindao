@@ -4,7 +4,7 @@
         <image class="pic" src="{{product.imgUrl}}"></image>
         <view class="txt">
             <view class="s1">{{product.title}}</view>
-            <view class="s2">{{product.tips}}</view>
+            <view class="s2">探索生命意义与使命，为自己的人生注入全新的生命活力</view>
             <view class="s3">预计{{product.meanTime}}分钟</view>
             <view class="s4">
                 <text wx:for="{{labels}}" wx:for-item="item" wx:key="*this">{{item}}</text>
@@ -59,7 +59,7 @@
     <!-- 没有购买过 -->
     <view class="box">
         <view class="bottom-l">
-            <view class="money">¥<text>{{product.specialPrice}}</text></view>
+            <view class="money">¥<text>{{product.amount}}</text></view>
             <view class="year">/使用期1年</view>
             <image class="tip" bindtap="closeYearPop" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-tip.png"></image>
         </view>

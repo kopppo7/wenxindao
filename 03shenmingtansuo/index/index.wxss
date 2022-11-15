@@ -17,8 +17,9 @@
 }
 
 .z-list1 .pic {
-	flex: 0 0 66px;
-	height: 192rpx;
+  /* flex: 0 0 66px; */
+  width: 132rpx !important;
+	height: 196rpx !important;
 	margin-right: 28rpx;
 }
 
