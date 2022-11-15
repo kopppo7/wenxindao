@@ -139,7 +139,8 @@ button::after{
 	left: 50%;
 	-webkit-transform: translate(-50%, -50%);-moz-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);-o-transform: translate(-50%, -50%);transform: translate(-50%, -50%);
 	width: 622rpx;
-	height: 390rpx;
+	min-height: 390rpx;
+	padding-bottom: 40rpx;
 	background: #222537;
 	border-radius: 48rpx;
 	z-index: 801;
@@ -150,7 +151,22 @@ button::after{
 	opacity: .8;
 	text-align: center;
 	padding: 0 40rpx;
+	margin-bottom: 40rpx;
 }
+.pop-win2 .desc .num{color: #ffb58c;}
+.pop-win2 .person{padding: 40rpx 0;}
+.pop-win2 .person image{width: 128rpx;height: 128rpx;border-radius: 128rpx;display: block;margin: 0 auto 20rpx;}
+.pop-win2 .person .name{text-align: center;font-size: 32rpx;color: #fff;line-height: 40rpx;}
+.pop-win2 .btns{display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;/* 垂直居中 */align-content:center;/* 多行一起垂直居中 */}
+.pop-win2 .checkbox{
+	display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;/* 垂直居中 */align-content:center;/* 多行一起垂直居中 */
+	padding: 30rpx 0;
+}
+.pop-win2 .btns .btn{min-width: 232rpx;line-height: 88rpx;height: 92rpx;text-align: center;border-radius: 100rpx;border: 1px solid #7461E7;background-color: #7461E7;margin: 0 20rpx;}
+.pop-win2 .btns .close{border: 1px solid rgba(255,255,255,0.24);background: rgba(182,178,207,0.18);}
+.pop-win2 .img image{width: 180rpx;height: 260rpx;display: block;margin: 0 auto;}
+.pop-win2 .wait{text-align: center;font-size: 24rpx;color: #FFB58C;margin: 30rpx 0;}
+.pop-win2 .nowait{color: #B6B2CF;}
 .btn-know{
 	position: absolute;
 	font-size: 32rpx;

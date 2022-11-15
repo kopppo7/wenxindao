@@ -6,7 +6,15 @@ Page({
      */
     data: {
         sharePopStatus: false,
-        step: 5,
+        activityPopStatus: false,//活动提示
+        matePopStatus: false,     //匹配中
+        waitStatus:false,  //等待状态
+        mixPopStatus:false,  //至少两人开始派对
+        timePopStatus:false, //倒计时
+        kickPopStatus:true, //踢人
+        passerPopStatus:true, //匹配路人
+        step: 0,
+        waitTime:'00:23'
     },
     openSharePop(){
         var that = this;
@@ -17,7 +25,14 @@ Page({
     closePop(){
         var that = this;
         that.setData({
-            sharePopStatus: false
+            sharePopStatus: false,
+            activityPopStatus:false,
+            matePopStatus:false,
+            waitStatus:false,
+            mixPopStatus:false,
+            timePopStatus:false,
+            kickPopStatus:false,
+            passerPopStatus:false
         })
     },
     /**

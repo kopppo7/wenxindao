@@ -1,5 +1,14 @@
 <!--03shenmingtansuo/tansuo/tansuo.wxml-->
-<view class="jdt-box"><text style="width: {{step * 20}}%;"></text></view>
+<view class="hourse-set">
+    <view class="txt">
+        <text>房间ID：457364</text>
+        <text>人数：4-6人局</text>
+    </view>
+    <image
+        src="../../static/h-set.png"
+        mode="scaleToFill"
+    />
+</view>
 <scroll-view class="z-tab2" scroll-x="true">
     <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
     <view class="item {{step == 1 ? 'active' : ''}}">第1轮</view>
@@ -9,107 +18,56 @@
     <view class="item {{step == 5 ? 'active' : ''}}">结语</view>
 </scroll-view>
 <view class="wp">
-    <view class="yinyan-box" wx:if="{{step === 0}}">
-        <view class="box1">
-            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
-            <view class="txt">
-                <view>大家好，欢迎开启本次生命探索。</view>
-                <view>今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这种性格给我们带来什么样的影响，</view>
-            </view>
-        </view>
-        <view class="box2">
-            <view class="s1">阅读引言后，点击下一步。在之后的探索中，点击模拟1 和 模拟2的头像会看到他们的回答。 </view>
-            <view class="s2">
-                <view class="s2-item active">
-                    <view class="avatar-box">
-                        <text>1</text>
-                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
-                    </view>
-                    <view class="name">我</view>
-                </view>
-                <view class="s2-item">
-                    <view class="avatar-box">
-                        <text>2</text>
-                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
-                    </view>
-                    <view class="name">模拟1</view>
-                </view>
-                <view class="s2-item">
-                    <view class="avatar-box">
-                        <text>3</text>
-                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
-                    </view>
-                    <view class="name">模拟2</view>
+    <view class="room-theme">
+        <view class="help">
+            <view class="left">
+                <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+                <view class="ico">
+                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+                    <text class="name">帮助</text>
                 </view>
             </view>
-            <view class="g-submit">下一步</view>
+            <view class="right">
+                大家好欢迎来到问心岛的生命探索活动现场，今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这...
+            </view>
         </view>
-    </view>
-    <view class="tansuo-row" wx:if="{{step === 1}}">
-        <view class="box1">
-            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
-            <view class="txt">那我们接着来探索下这样的性格给您的生活带来什么样的影响呢？</view>
-        </view>
-        <view class="box2">
-            <view class="box2-l">
-                <view class="box2-l-item active">
-                    <view class="avatar-box">
-                        <text></text>
-                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
-                    </view>
-                    <view class="name">我</view>
-                </view>
-                <view class="box2-l-item">
-                    <view class="avatar-box">
-                        <text></text>
-                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
-                    </view>
-                    <view class="name">模拟1</view>
-                </view>
-                <view class="box2-l-item">
-                    <view class="avatar-box">
-                        <text></text>
-                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
-                    </view>
-                    <view class="name">模拟2</view>
+        <view class="peoples">
+            <view class="item">
+                <view class="people" wx:for="[3]">
+                    <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
+                    <text class="name">春天V地</text>
                 </view>
             </view>
-            <view class="box2-r">
-                <view class="tit">链接卡牌，回答问心精灵的问题。</view>
-                
+            <view class="item">
+                <view class="people" wx:for="[3]">
+                    <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
+                    <text class="name">春天V地</text>
+                </view>
             </view>
         </view>
-        <view class="g-submit">下一步</view>
-    </view>
-    <view class="yinyan-box yinyan-box5" wx:if="{{step === 5}}">
-        <view class="box1">
-            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
-            <view class="txt">
-                本次生命探索正式结束啦。
-                探索完父母的性格对你的影响，是不是对自己有很多新的看见呢？或许，你对父母也有很多新的看见。
-                我们都听过一句话，性格决定命运。我们这些遗传或者被父母影响塑造而成的性格，没有绝对的好坏。看见它，用好它，和它好好相处，也是我们自我接纳的重要课题。
+        <view class="content">
+            <view class="item sys">已有5人，还差1人开始派对！</view>
+            <view class="item">
+                <text class="name">玩家2：</text>
+                <text class="con">怎么还不开始，1号准备一下</text>
             </view>
-        </view>
-        <view class="box3">
-            <view class="box3-item">
-                <view class="tit">心理学小课堂</view>
-                <view class="con">科学研究发现，我们的性格在小时候有80%的比例受到父母的影响。成年以后，这种影响会降低到40%左右，依然是个非常高的比例，在生命中发挥重要作用。</view>
-            </view>
-            <view class="box3-item">
-                <view class="tit">想要收获更多反馈？ </view>
-                <view class="con">每个人都有自己认知的盲区。敞开自己，去拥抱其它小伙伴的角度和评论吧！</view>
-            </view>
-        </view>
-        <view class="box4">
-            <image class="box4-l" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrtxt.png"></image>
-            <image class="box4-r" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
-        </view>
-        <view class="box5">
-            <view class="g-submit">查看本次记录</view>
-            <view class="share" bindtap="openSharePop">分享</view>
         </view>
     </view>
 </view>
+<view class="theme-bot">
+    <view class="play">
+        <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+    </view>
+    <view class="inp">
+        <input type="text" placeholder="说点什么吧..." />
+    </view>
+    <view class="btn">
+        准备
+        <text>点击准备</text>
+    </view>
+</view>
+<!-- 倒计时 -->
+<view class="timeDown"  wx:if="{{ timePopStatus}}">10</view>
 <!--分享到-->
 <block wx:if="{{sharePopStatus}}">
     <view class="pop-mask"></view>
@@ -122,4 +80,119 @@
         </view>
     </view>
 </block>
-
+<!-- 活动提示 -->
+<block wx:if="{{activityPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">活动提示</view>
+        <view class="desc">我是问心小精灵 , 是本场派对的活动主持人。请来到可以语音外放的环境 或  佩戴耳机。</view>
+        <label class="checkbox">
+            <checkbox checked="true" name="checkbox"></checkbox>
+            <text>不再提示</text>
+        </label>
+        <view class="btns">
+            <view class="close btn">退出</view>
+            <view class="ok btn">准备好了</view>
+        </view>
+    </view>
+</block>
+<!-- 匹配中 -->
+<block wx:if="{{matePopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">原生家庭-性格探索</view>
+        <view class="img">
+            <image
+                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"
+            />
+        </view>
+        <view class="wait">已等待{{waitTime}}</view>
+        <view class="wait nowait">暂未匹配到其他参与者</view>
+        <view class="btns" wx:if="{{!waitStatus}}">
+            <view class="close btn">取消匹配</view>
+        </view>
+        <view class="btns" wx:if="{{waitStatus}}">
+            <view class="close btn">返回主题</view>
+            <view class="btn ok">继续匹配</view>
+        </view>
+    </view>
+</block>
+<!-- 至少两人开始派对 -->
+<block wx:if="{{mixPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">至少2人开始派对</view>
+        <view class="desc">
+            你购买了个<text class="num">3</text>席位，目前邀约<text class="num">1</text>个好友，至少<text class="num">2</text>个好友才可以开始派对，请邀请好友！
+        </view>
+        <view class="btns">
+            <view class="btn ok">知道了</view>
+        </view>
+    </view>
+</block>
+<!-- 踢人 -->
+<block wx:if="{{kickPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop" data-pop="kickPopStatus"></image>
+        <view class="person">
+            <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
+            <view class="name">路人1</view>
+        </view>
+        <view class="btns">
+            <view class="btn close">踢出房间</view>
+        </view>
+    </view>
+</block>
+<!-- 匹配路人 -->
+<block wx:if="{{passerPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">确认开始匹配路人吗？</view>
+        <view class="desc">
+            匹配路人参与者则不能再邀请好友，请先邀请好友！
+        </view>
+        <view class="btns">
+            <view class="btn  close">取消</view>
+            <view class="btn ok">确认匹配</view>
+        </view>
+    </view>
+</block>
+<!-- 房间设置 -->
+<block wx:if="{{passerPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">确认开始匹配路人吗？</view>
+        <view class="roomset">
+            <view class="item">
+                <text class="name">房间ID</text>
+                <text class="num">342222</text>
+            </view>
+            <view class="item">
+                <text class="name">开局人数</text>
+                <text class="num">4-6人</text>
+            </view>
+            <view class="item">
+                <text class="name">发言时间</text>
+                <view class="process"></view>
+            </view>
+            <view class="item">
+                <text class="name">结束自由交流时间</text>
+                <view class="process"></view>
+            </view>
+            <view class="item">
+                <text class="name">音乐</text>
+                <switch
+                />
+            </view>
+            <view class="item">
+                <text class="name">音效</text>
+                <switch
+                />
+            </view>
+        </view>
+        <view class="btns">
+            <view class="btn ok">确定</view>
+        </view>
+    </view>
+</block>

@@ -25,7 +25,7 @@
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
-                        6人参与
+                        {{item.number}}人参与
                     </view>
                     <!-- <view class="s3-r s3-r3">9.9元 开始探索</view> -->
                 </view>
