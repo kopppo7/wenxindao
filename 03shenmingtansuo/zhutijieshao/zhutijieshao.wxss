@@ -169,7 +169,7 @@ page{
 	background: #171A28;
 	z-index: 100;
 }
-.bottom-box .box{
+.bottom-box .box,.buyBox{
 	padding: 0 40rpx;
 	display: flex;
 	align-items: center;
@@ -204,4 +204,33 @@ page{
 	background: #7461E7;
 	border-radius: 44rpx;
 	text-align: center;
+}
+.buyBox .percep{
+    font-size: 28rpx;
+	width: 200rpx;
+	height: 88rpx;
+	line-height: 88rpx;
+	background: #ef8046;
+	border-radius: 44rpx;
+	text-align: center;
+}
+.buyBox .progress{
+    font-size: 26rpx;
+	width: 400rpx;
+	height: 88rpx;
+	line-height: 88rpx;
+	background: rgba(182, 178, 207, 0.12);
+	border-radius: 44rpx;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.buyBox .progress .inner{
+    position: absolute;
+    width: 100rpx;
+	height: 88rpx;
+	line-height: 88rpx;
+	background: #7461E7;
+    left: 0;
+    top: 0;
 }

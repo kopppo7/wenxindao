@@ -1,4 +1,5 @@
 // 03shenmingtansuo/tansuo/tansuo.js
+import{ getProDetail } from '../../utils/api'
 Page({
 
     /**
@@ -7,6 +8,8 @@ Page({
     data: {
         sharePopStatus: false,
         step: 5,
+        id: '',
+        product: ''
     },
     openSharePop(){
         var that = this;
@@ -20,10 +23,23 @@ Page({
             sharePopStatus: false
         })
     },
+    getDetail(id) {
+      getProDetail(id).then((res) => {
+        this.setData({
+          product: res.data
+        })
+      })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+      if(options.id) {
+        this.setData({
+          id: options.id
+        })
+        this.getDetail(options.id)
+      }
 
     },
 
