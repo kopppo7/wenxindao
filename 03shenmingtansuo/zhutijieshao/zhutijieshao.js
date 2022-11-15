@@ -10,12 +10,13 @@ Page({
         yearPopStatus: false,
         gwPopStatus: false,
         id: '',
-        categoryId: '',
         product: '',
         labels: [],
         evaluateList: [], // 评价列表
         score:5, // 提交的评分
-        evaluate: '' // 提交的评价
+        evaluate: '', // 提交的评价
+        page: 1,
+        total:0
     },
     // 打开购买本探索弹窗
     openBuyPop() {
@@ -58,7 +59,6 @@ Page({
     },
     // 提交评价内容
     addPercep() {
-        debugger
         wx.showLoading({
             title: '提交中',
             mask:true,
@@ -75,10 +75,10 @@ Page({
             score: this.data.score,
             evaluate: this.data.evaluate,
             objectId: this.data.id,
-            category: this.data.categoryId,
+            category: 0, // 类型(0:生命探索,1:主题派对)
         }).then((res) => {
             wx.hideLoading()
-            this.getEvaList(this.data.id, this.data.categoryId)
+            this.getEvaList()
             this.closePop()
         })
     },
@@ -159,16 +159,27 @@ Page({
       })
     },
     // 评价
-    getEvaList(id,categoryId) {
+    getEvaList() {
         getProEvaList({
-            page:1,
+            page:this.data.page,
             pageSize:20,
-            id: id,
-            category: categoryId,
+            id: this.data.id,
+            category: 0, // 类型(0:生命探索,1:主题派对)
         }).then((res) => {
+          // this.setData({
+          //   evaluateList: res.data.data,
+          // })
+          if(this.data.page==1){
+            this.data.evaluateList = res.data.data.list;
+          }else{
+            this.data.evaluateList.concat(res.data.data.list);
+          }
           this.setData({
-            evaluateList: res.data.data,
+            evaluateList: this.data.evaluateList,
+            total: res.data.data.total
           })
+          wx.stopPullDownRefresh()
+          wx.hideLoading();
         })
       },
       // 提交评价
@@ -181,11 +192,10 @@ Page({
     onLoad(options) {
       if(options.id) {
         this.setData({
-          id: options.id,
-          categoryId: options.categoryId
+          id: options.id
         })
         this.getDetail(options.id)
-        this.getEvaList(options.id,options.categoryId)
+        this.getEvaList()
       }
 
     },
@@ -222,14 +232,18 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh() {
-
+      this.data.page=1;
+      this.getEvaList();
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
     onReachBottom() {
-
+      if(this.data.evaluateList.length<this.data.total){
+        this.data.page+=1;
+        this.getEvaList();
+      }
     },
 
     /**

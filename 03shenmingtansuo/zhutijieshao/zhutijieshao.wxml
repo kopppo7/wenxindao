@@ -32,32 +32,23 @@
     <view class="intro-row4">
         <view class="z-tit1">探索感悟</view>
         <view class="z-list3">
-            <view class="item g-box">
+            <view class="item g-box" wx:for="{{evaluateList}}" data-id="{{item.id}}" wx:for-item="item">
                 <view class="tit-box">
-                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                    <image class="avatar" src="{{item.userHeadImg}}"></image>
                     <view class="name-time">
-                        <view class="name">飞飞图</view>
-                        <view class="time">2022-07-25 21:05:00</view>
+                        <view class="name">{{item.wechatName}}</view>
+                        <view class="time">{{item.addTime}}</view>
                     </view>
                 </view>
-                <view class="desc">学习完了整个主题的来训练，收获颇多！也会将学习应用到日常生活中去。不断的修炼自我，成为更好的自己。期待参加下一个主题探索。期待...<text>更多</text></view>
-            </view>
-            <view class="item g-box">
-                <view class="tit-box">
-                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
-                    <view class="name-time">
-                        <view class="name">飞飞图</view>
-                        <view class="time">2022-07-25 21:05:00</view>
-                    </view>
-                </view>
-                <view class="desc">学习完了整个主题的来训练，收获颇多！也会将学习应用到日常生活中去。不断的修炼自我，成为更好的自己。期待参加下一个主题探索。期待...<text>更多</text></view>
+                <view class="desc">{{item.evaluate}}</view>
+                <!-- ...<text>更多</text> -->  
             </view>
         </view>
     </view>
 </view>
 <view class="bottom-box">
-    <!-- 没有购买过 -->
-    <view class="box">
+    <!-- 没有购买过 product.isPower == 0 -->
+    <view class="box" wx:if="{{product.isPower == 0}}">
         <view class="bottom-l">
             <view class="money">¥<text>{{product.amount}}</text></view>
             <view class="year">/使用期1年</view>
@@ -65,12 +56,15 @@
         </view>
         <view wx:if="{{product.isPower != 1 }}" class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
     </view>
-    <!-- 购买过 -->
-    <view class="buyBox">
+    <!-- 购买过 product.isPower == 1 && product.playerNum > 0 -->
+    <view class="buyBox" wx:if="{{product.isPower == 1 && product.playerNum > 0}}">
        <view class="percep " bindtap="openPercepPop">写感悟</view>
-       <view class="progress">
-          <text class="inner"></text>
-          继续 20%
+       <view class="progress" wx:if="{{product.isPower == 1 && product.progress}}">
+          <text class="inner" style="width : {{product.progress }}'%'"></text>
+          继续 {{product.progress}}%
+       </view>
+       <view class="progress" wx:if="{{product.isPower == 1 && !product.progress}}">
+        第{{product.learnNum + 1 }}次探索
        </view>
     </view>
 </view>
