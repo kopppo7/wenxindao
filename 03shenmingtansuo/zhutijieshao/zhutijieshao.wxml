@@ -1,91 +1,71 @@
 <!--03shenmingtansuo/zhutijieshao/zhutijieshao.wxml-->
 <view class="wp">
     <view class="intro-row1">
-        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+        <image class="pic" src="{{product.imgUrl}}"></image>
         <view class="txt">
-            <view class="s1">性格探索</view>
+            <view class="s1">{{product.title}}</view>
             <view class="s2">探索生命意义与使命，为自己的人生注入全新的生命活力</view>
-            <view class="s3">预计35分钟</view>
+            <view class="s3">预计{{product.meanTime}}分钟</view>
             <view class="s4">
-                <text>生命动力</text>
-                <text>人生设计</text>
+                <text wx:for="{{labels}}" wx:for-item="item" wx:key="*this">{{item}}</text>
             </view>
         </view>
     </view>
-    <view class="intro-row2">
+    <view class="intro-row2"  bindtap="toDetail">
         <text>语音参与须知</text>
     </view>
     <view class="intro-row3">
         <view class="z-tit1">活动流程</view>
         <view class="g-box">
             <view class="z-tit2">语音参与者</view>
-            <view class="desc">单场茶话会时间约2小时，
-                <text>需要语音发言（可全程蛋名）井开放全体月食用户围观。</text>参与前请确保自己有充足时间，并检查自己的网络、麦克风、周围环境情况。</view>
+            <view class="desc">
+                <rich-text nodes="{{product.activity}}"></rich-text>
+            </view>
         </view>
         <view class="g-box">
             <view class="z-tit2">茶话会环节</view>
             <view class="z-list2">
-                <view class="item">
-                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num1.png"></image>准备：</view>
-                    <view class="desc">提前十分钟进入房间，调试设备、环境、互相认识；</view>
-                </view>
-                <view class="item">
-                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num2.png"></image>破冰：</view>
-                    <view class="desc">介绍话题流程，并用轻松小游戏快速拉近彼此之前的距离；</view>
-                </view>
-                <view class="item">
-                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num3.png"></image>承诺：</view>
-                    <view class="desc">续写承诺，共建安全、尊重、秘密的氛围；</view>
-                </view>
-                <view class="item">
-                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num4.png"></image>依次分享：</view>
-                    <view class="desc">公开发言，分享观点/故事/困惑；</view>
-                </view>
-                <view class="item">
-                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num5.png"></image>自由讨论：</view>
-                    <view class="desc">开放语音讨论，即时回应，观点碰撞；</view>
-                </view>
-                <view class="item">
-                    <view class="tit"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/num6.png"></image>相互关注：</view>
-                    <view class="desc">资源公开身份，互关成为好友，开启新的友谊。</view>
-                </view>
+                <rich-text nodes="{{product.introduce}}"></rich-text>
             </view>
         </view>
     </view>
     <view class="intro-row4">
         <view class="z-tit1">探索感悟</view>
         <view class="z-list3">
-            <view class="item g-box">
+            <view class="item g-box" wx:for="{{evaluateList}}" data-id="{{item.id}}" wx:for-item="item">
                 <view class="tit-box">
-                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                    <image class="avatar" src="{{item.userHeadImg}}"></image>
                     <view class="name-time">
-                        <view class="name">飞飞图</view>
-                        <view class="time">2022-07-25 21:05:00</view>
+                        <view class="name">{{item.wechatName}}</view>
+                        <view class="time">{{item.addTime}}</view>
                     </view>
                 </view>
-                <view class="desc">学习完了整个主题的来训练，收获颇多！也会将学习应用到日常生活中去。不断的修炼自我，成为更好的自己。期待参加下一个主题探索。期待...<text>更多</text></view>
-            </view>
-            <view class="item g-box">
-                <view class="tit-box">
-                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
-                    <view class="name-time">
-                        <view class="name">飞飞图</view>
-                        <view class="time">2022-07-25 21:05:00</view>
-                    </view>
-                </view>
-                <view class="desc">学习完了整个主题的来训练，收获颇多！也会将学习应用到日常生活中去。不断的修炼自我，成为更好的自己。期待参加下一个主题探索。期待...<text>更多</text></view>
+                <view class="desc">{{item.evaluate}}</view>
+                <!-- ...<text>更多</text> -->  
             </view>
         </view>
     </view>
 </view>
 <view class="bottom-box">
-    <view class="box">
+    <!-- 没有购买过 product.isPower == 0 -->
+    <view class="box" wx:if="{{product.isPower == 0}}">
         <view class="bottom-l">
-            <view class="money">¥<text>20</text></view>
+            <view class="money">¥<text>{{product.amount}}</text></view>
             <view class="year">/使用期1年</view>
             <image class="tip" bindtap="closeYearPop" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-tip.png"></image>
         </view>
-        <view class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
+        <view wx:if="{{product.isPower != 1 }}" class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
+    </view>
+    <!-- 购买过 product.isPower == 1 && product.playerNum > 0 -->
+    <view class="buyBox" wx:if="{{product.isPower == 1 && product.playerNum > 0}}">
+       <view class="percep " bindtap="openPercepPop">写感悟</view>
+       <view class="progress" wx:if="{{product.isPower == 1 && product.progress}}">
+          <text class="inner" style="width : {{product.progress }}'%'"></text>
+          继续 {{product.progress}}%
+       </view>
+       <view class="progress" wx:if="{{product.isPower == 1 && !product.progress}}">
+        第{{product.learnNum + 1 }}次探索
+       </view>
     </view>
 </view>
 <!--购买本探索-->
@@ -95,12 +75,12 @@
         <view class="pop-tit">购买本探索</view>
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <view class="pop-cont">
-            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
-            <view class="title">原生家庭-性格探索</view>
+            <image class="pic" src="{{product.imgUrl}}"></image>
+            <view class="title">{{product.title}}</view>
             <view class="time">购买使用期：1年</view>
-            <view class="money">¥<text>20.00</text></view>
+            <view class="money">¥<text>{{product.specialPrice}}</text></view>
         </view>
-        <view class="btn-buy">确认购买</view>
+        <view class="btn-buy" catchtap="toPay">确认购买</view>
     </view>
 </block>
 <!--使用期1年弹窗-->
@@ -119,8 +99,8 @@
     <view class="pop-win">
         <view class="pop-tit">给本次的生命探索引导打分</view>
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
-        <rating showRating  rating="4" bind:click="change"></rating>
-        <textarea class="content" placeholder="您认为本次的引导设计如何？您收获了什么？您的感受如何？可以记录下来..." />
-        <view class="btn-buy">提交</view>
+        <rating showRating  rating="{{score}}" bind:click="change"></rating>
+        <textarea bindinput="getValue" maxlength="150" class="content" placeholder="您认为本次的引导设计如何？您收获了什么？您的感受如何？可以记录下来..." />
+        <view class="btn-buy" bindtap="addPercep">提交</view>
     </view>
 </block>

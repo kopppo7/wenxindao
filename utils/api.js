@@ -85,3 +85,28 @@ export const addFeedback = function (data){
 export const getHelpOne = function (id) {
   return http.get(handleURL('/help/getHelpOne?id='+id));
 }
+// 生命探索&主题派对
+export const getCateList = function (category) {
+  return http.get(handleURL('/category/list?category='+category));
+}
+// 生命探索&主题派对 列表数据
+export const getCateDataList = function (data) {
+  return http.post(handleURL('/probe/probeList'),data);
+}
+// 生命探索&主题派对 支付
+export const getPayProbe = function (data) {
+  return http.post(config.getOrder+'/payProbe',data);
+}
+// 生命探索详情
+export const getProDetail = function (id) {
+  return http.get(handleURL('/probe/probeInfo?id='+id));
+}
+// 生命探索详情 评价列表
+export const getProEvaList = function (data) {
+  return http.post(handleURL('/probe/evaluateList'),data);
+}
+
+// 生命探索详情 提交评价
+export const submitScore = function (data) {
+    return http.post(handleURL('/probe/insertEvaluate'),data);
+  }
