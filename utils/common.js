@@ -35,7 +35,9 @@ export const checkLogInfo = (token,callback) => {
     var user = {
       phone:userInfo.data.data.phone,
       wechatName: userInfo.data.data.wechatName,
-      headImg : userInfo.data.data.headImg
+      headImg : userInfo.data.data.headImg,
+      yunToken : userInfo.data.data.yunToken,
+      yunId : userInfo.data.data.yunId,
     };
     setLoginInfo(user);
     if(user.wechatName==''||user.wechatName==null||user.wechatName==undefined){

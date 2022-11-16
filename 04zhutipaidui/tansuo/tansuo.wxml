@@ -61,7 +61,7 @@
     <view class="inp">
         <input type="text" placeholder="说点什么吧..." />
     </view>
-    <view class="btn">
+    <view class="btn" bindtap="dismissTeamDone">
         准备
         <text>点击准备</text>
     </view>
@@ -159,7 +159,7 @@
     </view>
 </block>
 <!-- 房间设置 -->
-<block wx:if="{{passerPopStatus}}">
+<block wx:if="{{roomSetPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <view class="pop-tit">确认开始匹配路人吗？</view>
@@ -174,20 +174,32 @@
             </view>
             <view class="item">
                 <text class="name">发言时间</text>
-                <view class="process"></view>
+                <view class="process">
+                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle" selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7" show-value=
+                    "true" value="30" max="60"/>
+                    <text class="sec">s</text>
+                </view>
             </view>
             <view class="item">
                 <text class="name">结束自由交流时间</text>
-                <view class="process"></view>
+                <view class="process">
+                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle" selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7" show-value=
+                    "true" value="30" max="60"/>
+                    <text class="sec">s</text>
+                </view>
             </view>
+            <view class="line"></view>
             <view class="item">
                 <text class="name">音乐</text>
                 <switch
+                size="small"
+                color="#7461E7"
                 />
             </view>
             <view class="item">
                 <text class="name">音效</text>
                 <switch
+                color="#7461E7"
                 />
             </view>
         </view>

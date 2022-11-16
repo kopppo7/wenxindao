@@ -44,6 +44,38 @@ Page({
         nowDate2: "",
         audioStr: "",
         isPlay: false,
+        contentsArray:[
+            {
+                txt: "",
+                voice: "",
+                putType: 1,
+                autioStatus: 1,
+                cardShow:false,
+                tempFilePath:'',
+            }
+        ]
+    },
+    initAudio(){
+        this.setData({
+            putType: 1,
+            autioStatus: 1,
+            cardShow:false,
+            isOpen:0
+        })
+    },
+    addThing(){
+        var arr = this.data.contentsArray;
+        arr.push({
+            txt: "",
+            voice: "",
+            putType: 1,
+            autioStatus: 1,
+            cardShow:false,
+            tempFilePath:'',
+        })
+        this.setData({
+            contentsArray:arr
+        })
     },
     changePutType(e) {
         console.log(this.data.putType);
@@ -79,6 +111,8 @@ Page({
             activeIndex: e.currentTarget.dataset.ind,
             types: e.currentTarget.dataset.ind + 1
         })
+        this.initAudio()
+
     },
     changeCard(e) {
         let active = this.data.cardList[e.currentTarget.dataset.ind]

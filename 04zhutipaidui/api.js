@@ -34,3 +34,7 @@ export const updateImMsg = function (data) {
     return http.post(handleURL('/updateImMsg'), data);
 };
 
+//查询反馈详情
+export const createBaoRoom = function (params) {
+    return http.post(handleURL('/room/createBaoRoom'),params);
+  }
