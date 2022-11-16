@@ -1,7 +1,7 @@
 import { login } from './utils/common'
 App({
     onLaunch: function () {
-      login();
+      //login();
     },
     globalData: {
       token:''
