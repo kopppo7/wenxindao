@@ -1,7 +1,10 @@
 <!--02meiritiaopin/index/index.wxml-->
-<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg" wx:if="{{activeIndex === 0}}"></image>
-<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg" wx:if="{{activeIndex === 1}}"></image>
-<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg" wx:if="{{activeIndex === 2}}"></image>
+<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg"
+    wx:if="{{activeIndex === 0}}"></image>
+<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg"
+    wx:if="{{activeIndex === 1}}"></image>
+<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg"
+    wx:if="{{activeIndex === 2}}"></image>
 <view class="wp">
     <view class="z-tab">
         <view class="{{activeIndex == index?'active tab-item':'tab-item'}}" wx:for="{{tabs}}" wx:for-index="index"
@@ -48,8 +51,8 @@
             换一换卡牌
         </view>
         <view class="card-list">
-            <view  class="{{cardIndex == index?'active item':'item'}}" wx:for="{{cardList}}" wx:for-index="index"
-            wx:for-item="item" bindtap="changeCard" data-ind="{{index}}">
+            <view class="{{cardIndex == index?'active item':'item'}}" wx:for="{{cardList}}" wx:for-index="index"
+                wx:for-item="item" bindtap="changeCard" data-ind="{{index}}">
                 <view class="pic">
                     <image src="{{item.imgUrl}}"></image>
                 </view>
@@ -60,87 +63,47 @@
 
     </view>
 
-    <form catchsubmit="addFm" class="form-z" wx:if="{{activeIndex === 0}}">
-        <view class="textarea-box">
-            <textarea bindblur="inspectText" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;"  wx:if="{{putType == 1 || putType == 5}}"  value="{{content.txt}}"/>
-            <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{putType == 1}}">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>语音输入
-            </view>
-            <view class="btn-audio" bindtap="playAudio" data-type="0" wx:if="{{putType == 5}}">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image><text>43'</text>
-                <image src="../../static/audio-del.png" class="close" bindtap="closeAudio"></image>
-            </view>
-            <view class="btn-yuyin" bindtap="changePutType" data-type="1" wx:if="{{putType == 0}}">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>文字输入
-            </view>
-            <view class="m-luyin" wx:if="{{putType == 0}}">
-                <view class="btn-luyin" bindtap="start" wx:if="{{autioStatus == 1}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-                    <view class="txt">点击录音</view>
-                </view>
-                <view class="btn-luyin" bindtap="stop" wx:if="{{autioStatus == 2}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-                    <view class="txt">点击暂停</view>
-                </view>
-                <view class="close"  bindtap="closeAudio"  wx:if="{{autioStatus == 3}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
-                </view>
-                <view class="saveAudio" bindtap="saveAudio" wx:if="{{autioStatus == 3}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ok.png"></image>
-                </view>
-                <view class="btn-luyin" bindtap="play" wx:if="{{autioStatus == 3}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-                    <view class="txt">点击播放</view>
-                </view>
-                
-            </view>
-        </view>
-        <radio-group bindchange="radioChange">
-            <label class="label-radio">
-                <radio value="1" />公开
-            </label>
-            <label class="label-radio">
-                <radio value="0" checked="true" />仅自己可见
-            </label>
-        </radio-group>
-        <button formType="submit" class="btn-submit">提交</button>
-    </form>
-    <form catchsubmit="addFm" class="form-z" wx:if="{{activeIndex === 1}}">
-        <view class="textarea-box" wx:for="{{contentsArray}}" wx:for-index="idx" wx:for-item="content">
-            <textarea bindblur="inspectText" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;"  wx:if="{{content.putType == 1 || content.putType == 5}}"  value="{{content.txt}}"/>
-            <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{content.putType == 1}}">
+    <form catchsubmit="addFm" class="form-z">
+        <view class="textarea-box" wx:for="{{contentsArray}}" wx:for-index="idx" wx:for-item="content" wx:key="idx">
+            <textarea bindblur="inspectText" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;"
+                wx:if="{{content.putType == 1 || content.putType == 5}}" value="{{content.txt}}" 
+                data-iid="{{idx}}"/>
+            <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{content.putType == 1}}"
+                data-iid="{{idx}}">
                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>语音输入
             </view>
             <view class="btn-audio" bindtap="playAudio" data-type="0" wx:if="{{content.putType == 5}}">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image><text>43'</text>
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image>
+                <text>43'</text>
                 <image src="../../static/audio-del.png" class="close" bindtap="closeAudio"></image>
             </view>
-            <view class="btn-yuyin" bindtap="changePutType" data-type="1" wx:if="{{content.putType == 0}}">
+            <view class="btn-yuyin" bindtap="changePutType" data-type="1" wx:if="{{content.putType == 0}}"
+                data-iid="{{idx}}">
                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>文字输入
             </view>
             <view class="m-luyin" wx:if="{{content.putType == 0}}">
-                <view class="btn-luyin" bindtap="start" wx:if="{{content.autioStatus == 1}}">
+                <view class="btn-luyin" bindtap="start" wx:if="{{content.autioStatus == 1}}" data-iid="{{idx}}">
                     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
                     <view class="txt">点击录音</view>
                 </view>
-                <view class="btn-luyin" bindtap="stop" wx:if="{{content.autioStatus == 2}}">
+                <view class="btn-luyin" bindtap="stop" wx:if="{{content.autioStatus == 2}}" data-iid="{{idx}}">
                     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
                     <view class="txt">点击暂停</view>
                 </view>
-                <view class="close"  bindtap="closeAudio"  wx:if="{{content.autioStatus == 3}}">
+                <view class="close" bindtap="closeAudio" wx:if="{{content.autioStatus == 3}}" data-iid="{{idx}}">
                     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
                 </view>
-                <view class="saveAudio" bindtap="saveAudio" wx:if="{{content.autioStatus == 3}}">
+                <view class="saveAudio" bindtap="saveAudio" wx:if="{{content.autioStatus == 3}}" data-iid="{{idx}}">
                     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ok.png"></image>
                 </view>
-                <view class="btn-luyin" bindtap="play" wx:if="{{content.autioStatus == 3}}">
+                <view class="btn-luyin" bindtap="play" wx:if="{{content.autioStatus == 3}}" data-iid="{{idx}}">
                     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
                     <view class="txt">点击播放</view>
                 </view>
             </view>
         </view>
-        <view class="addThing" bindtap="addThing">
-            <image class="m-p1" src="../../static/plus.png" ></image>
+        <view class="addThing" bindtap="addThing" wx:if="{{activeIndex == 1}}">
+            <image class="m-p1" src="../../static/plus.png"></image>
             <text class="name">添加一件事</text>
         </view>
         <radio-group bindchange="radioChange">
@@ -153,51 +116,7 @@
         </radio-group>
         <button formType="submit" class="btn-submit">提交</button>
     </form>
-    <form catchsubmit="addFm" class="form-z" wx:if="{{activeIndex === 2}}">
-        <view class="textarea-box">
-            <textarea bindblur="inspectText" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;"  wx:if="{{putType == 1 || putType == 5}}"  value="{{content.txt}}"/>
-            <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{putType == 1}}">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>语音输入
-            </view>
-            <view class="btn-audio" bindtap="playAudio" data-type="0" wx:if="{{putType == 5}}">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image><text>43'</text>
-                <image src="../../static/audio-del.png" class="close" bindtap="closeAudio"></image>
-            </view>
-            <view class="btn-yuyin" bindtap="changePutType" data-type="1" wx:if="{{putType == 0}}">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>文字输入
-            </view>
-            <view class="m-luyin" wx:if="{{putType == 0}}">
-                <view class="btn-luyin" bindtap="start" wx:if="{{autioStatus == 1}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-                    <view class="txt">点击录音</view>
-                </view>
-                <view class="btn-luyin" bindtap="stop" wx:if="{{autioStatus == 2}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-                    <view class="txt">点击暂停</view>
-                </view>
-                <view class="close"  bindtap="closeAudio"  wx:if="{{autioStatus == 3}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
-                </view>
-                <view class="saveAudio" bindtap="saveAudio" wx:if="{{autioStatus == 3}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ok.png"></image>
-                </view>
-                <view class="btn-luyin" bindtap="play" wx:if="{{autioStatus == 3}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-                    <view class="txt">点击播放</view>
-                </view>
-                
-            </view>
-        </view>
-        <radio-group bindchange="radioChange">
-            <label class="label-radio">
-                <radio value="1" />公开
-            </label>
-            <label class="label-radio">
-                <radio value="0" checked="true" />仅自己可见
-            </label>
-        </radio-group>
-        <button formType="submit" class="btn-submit">提交</button>
-    </form>
+
 </view>
 <!--玩法介绍-->
 <block wx:if="{{playPopStatus}}">

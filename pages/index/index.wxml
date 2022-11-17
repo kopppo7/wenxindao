@@ -42,3 +42,17 @@
         <view class="txt">我的</view>
     </navigator>
 </view>
+<!-- 封禁 -->
+<block wx:if="{{stopUse}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">提示</view>
+        <view class="pop-tit">你的账号被封禁6个月！</view>
+        <view class="desc">
+            {{relieveTime}}解封。有疑问请咨询客服：<text class="num" bindtap="callNum">{{phoneNumber}}</text>
+        </view>
+        <view class="btns">
+            <view class="btn ok" bindtap="sure">确定</view>
+        </view>
+    </view>
+</block>

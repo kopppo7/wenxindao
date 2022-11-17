@@ -53,6 +53,16 @@ Page({
                 cardShow:false,
                 tempFilePath:'',
             }
+        ],
+        initContentsArray:[
+            {
+                txt: "",
+                voice: "",
+                putType: 1,
+                autioStatus: 1,
+                cardShow:false,
+                tempFilePath:'',
+            }
         ]
     },
     initAudio(){
@@ -78,14 +88,16 @@ Page({
         })
     },
     changePutType(e) {
-        console.log(this.data.putType);
+        console.log(e.currentTarget.dataset.iid);
+        var arr = this.data.contentsArray;
+        arr[e.currentTarget.dataset.iid]['putType'] = e.currentTarget.dataset.type
         this.setData({
-            putType: e.currentTarget.dataset.type
+            contentsArray: arr
         })
     },
     radioChange(data) {
         this.setData({
-            isOpen: data.detail.value
+            isOpen: Number(data.detail.value)
         })
     },
     openPlayPop() {
@@ -133,15 +145,21 @@ Page({
     addFm() {
         let params = {
             cardUrl: this.data.activeCard.imgUrl,
-            contents: JSON.stringify(this.data.contents),
+            contents: JSON.stringify(this.data.contentsArray),
             types: this.data.types,
             isOpen: this.data.isOpen
         }
+        var that =this;
         addFm(params).then(res => {
             console.log(res.data.data);
-            wx.navigateTo({
-              url: '/02meiritiaopin/share/share?id='+res.data.data,
-            })
+            if (res.data.data) {
+                that.setData({
+                    contentsArray: that.data.initContentsArray
+                })
+                wx.navigateTo({
+                  url: '/02meiritiaopin/share/share?id='+res.data.data,
+                })
+            }
         })
     },
     // 查询自己每日调频记录
@@ -165,8 +183,10 @@ Page({
         let that = this
         inspectText(param).then(res => {
             if (res.data.data == true) {
+                var arr = that.data.contentsArray;
+                arr[e.currentTarget.dataset.iid]['txt'] = e.detail.value
                 that.setData({
-                    'contents.txt': e.detail.value
+                    contentsArray: arr
                 })
                 return
             } else {
@@ -174,8 +194,10 @@ Page({
                     wx.showModal({
                         title: '文字不合规，请重新输入',
                     })
+                    var arr = that.data.contentsArray;
+                    arr[e.currentTarget.dataset.iid]['txt'] = ''
                     that.setData({
-                        'contents.txt': ''
+                        contentsArray: arr
                     })
                 }
             }
@@ -199,7 +221,7 @@ Page({
         })
     },
     // 录音
-    start: function() {
+    start: function(e) {
         var that = this
         const options = {
             duration: 10000, //指定录音的时长，单位 ms
@@ -215,8 +237,10 @@ Page({
             success() {
                 console.log("录音授权成功");
                 //第一次成功授权后 状态切换为2
+                var arr = that.data.contentsArray;
+                arr[e.currentTarget.dataset.iid]['autioStatus'] = 2
                 that.setData({
-                    autioStatus: 2,
+                    contentsArray: arr
                 })
                 recorderManager.start(options);
                 recorderManager.onStart(() => {
@@ -255,8 +279,10 @@ Page({
                                     } else {
                                         //第二次才成功授权
                                         console.log("设置录音授权成功");
+                                        var arr = that.data.contentsArray;
+                                        arr[e.currentTarget.dataset.iid]['autioStatus'] = 2
                                         that.setData({
-                                            autioStatus: 2,
+                                            contentsArray: arr
                                         })
 
                                         recorderManager.start(options);
@@ -287,14 +313,16 @@ Page({
 
     },
     //暂停录音
-    pause: function() {
+    pause: function(e) {
         var that = this;
         recorderManager.pause();
         recorderManager.onPause((res) => {
             console.log(res);
+            var arr = that.data.contentsArray;
+            arr[e.currentTarget.dataset.iid]['autioStatus'] = 3
+            arr[e.currentTarget.dataset.iid]['tempFilePath'] = res.tempFilePath
             that.setData({
-                autioStatus: 3,
-                tempFilePath: res.tempFilePath
+                contentsArray: arr
             })
             console.log('暂停录音')
 
@@ -312,13 +340,15 @@ Page({
         })
     },
     //停止录音
-    stop: function() {
+    stop: function(e) {
         var that = this;
         recorderManager.stop();
         recorderManager.onStop((res) => {
+            var arr = that.data.contentsArray;
+            arr[e.currentTarget.dataset.iid]['autioStatus'] = 3
+            arr[e.currentTarget.dataset.iid]['tempFilePath'] = res.tempFilePath
             that.setData({
-                autioStatus: 3,
-                tempFilePath: res.tempFilePath
+                contentsArray: arr
             })
             console.log('停止录音', res.tempFilePath)
             const {
@@ -327,9 +357,10 @@ Page({
         })
     },
     //播放声音
-    play: function() {
+    play: function(e) {
         innerAudioContext.autoplay = true
-        innerAudioContext.src = this.data.tempFilePath,
+        
+        innerAudioContext.src = this.data.contentsArray[e.currentTarget.dataset.iid].tempFilePath,
             innerAudioContext.onPlay(() => {
                 console.log('开始播放')
             })
@@ -338,31 +369,35 @@ Page({
             console.log(res.errCode)
         })
     },
-    closeAudio() {
-        this.setData({
-            putType: 1,
-            tempFilePath: '',
-            autioStatus: 1
+    closeAudio(e) {
+        var arr = that.data.contentsArray;
+        arr[e.currentTarget.dataset.iid]['putType'] = 1
+        arr[e.currentTarget.dataset.iid]['tempFilePath'] = ''
+        arr[e.currentTarget.dataset.iid]['autioStatus'] = 1
+        that.setData({
+            contentsArray: arr
         })
     },
-    saveAudio() {
+    saveAudio(e) {
         var that = this
         recorderManager.stop();
         wx.uploadFile({
             url: config.getDomain + '/oss/upload/uploadFile', 
-            filePath: that.data.tempFilePath,
+            filePath: that.data.contentsArray[e.currentTarget.dataset.iid].tempFilePath,
             name: 'file',
             header: {
                 'content-type': 'multipart/form-data',
                 'token':wx.getStorageSync('tokenKey') || ''
             },
             success(res) {
+                var arr = that.data.contentsArray;
+                arr[e.currentTarget.dataset.iid]['autioStatus'] = 0
+                arr[e.currentTarget.dataset.iid]['putType'] = 5
+                arr[e.currentTarget.dataset.iid]['tempFilePath'] = ''
+                arr[e.currentTarget.dataset.iid]['audioStr'] = JSON.parse(res.data).data
+                arr[e.currentTarget.dataset.iid]['voice'] = JSON.parse(res.data).data
                 that.setData({
-                    autioStatus: 0,
-                    putType: 5,
-                    tempFilePath: '',
-                    audioStr: JSON.parse(res.data).data,
-                    'contents.voice':JSON.parse(res.data).data,
+                    contentsArray: arr
                 })
                 audioCtx.src= JSON.parse(res.data).data;
             }

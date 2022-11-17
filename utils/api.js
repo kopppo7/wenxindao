@@ -44,7 +44,7 @@ export const sendCodeForUpdate = function (params) {
 
 // 手机号登录
 export const phoneLogin = function (params) {
-    return http.get(handleURL('/phoneLogin'), params);
+    return http.post(handleURL('/phoneLogin'), params);
 };
 
 // 修改当前手机号

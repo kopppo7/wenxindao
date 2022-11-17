@@ -78,40 +78,6 @@ Page({
     onError(error) {
         console.log(error);
     },
-    onChatroomConnect(obj) {
-        console.log('进入聊天室', obj);
-        // 连接成功后才可以发消息
-        var msg = chatroom.sendText({
-            text: 'hello',
-            done: function sendChatroomMsgDone(msgObj) {}
-        })
-    },
-    onChatroomWillReconnect(obj) {
-        // 此时说明 `SDK` 已经断开连接, 请开发者在界面上提示用户连接已断开, 而且正在重新建立连接
-        console.log('即将重连', obj);
-    },
-    onChatroomDisconnect(error) {
-        // 此时说明 `SDK` 处于断开状态, 开发者此时应该根据错误码提示相应的错误信息, 并且跳转到登录页面
-        console.log('连接断开', error);
-        if (error) {
-            switch (error.code) {
-                // 账号或者密码错误, 请跳转到登录页面并提示错误
-                case 302:
-                    break;
-                    // 被踢, 请提示错误后跳转到登录页面
-                case 'kicked':
-                    break;
-                default:
-                    break;
-            }
-        }
-    },
-    onChatroomError(error, obj) {
-        console.log('发生错误', error, obj);
-    },
-    onChatroomMsgs(msgs) {
-        console.log('收到聊天室消息', msgs);
-    },
     initRoom() {
         var token = wx.getStorageSync('loginInfo').yunToken;
         var account = wx.getStorageSync('loginInfo').yunId;
@@ -122,6 +88,7 @@ Page({
             account: account,
             token: token || '',
             db: true, //若不要开启数据库请设置false。SDK默认为true。
+            onteammembers: this.onTeamMembers,
             // privateConf: {}, // 私有化部署方案所需的配置
             // onconnect: this.onConnect,
             // onwillreconnect: this.onWillReconnect,
@@ -153,8 +120,13 @@ Page({
         document.getElementById(FormData)
         console.log(nim);
     },
+    // 群组更新
     onTeams(e){
         console.log('收到群组',e);
+    },
+    // 群成员更新
+    onTeamMembers(obj){
+        console.log('收到群成员',obj);
     },
     // 解散群
     dismissTeamDone(){
@@ -163,6 +135,7 @@ Page({
             done: yunApi.dismissTeamDone
         });
     },
+    // 创建房间
     creatRoom(){
         let params = {
             askId:'9'

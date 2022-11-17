@@ -1,0 +1,17 @@
+<!--pages/telLogin/index.wxml-->
+<view class="tel-login">
+    <view class="tit">手机号登录</view>
+    <view class="inp">
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{numArr}}">
+            <view class="picker">
+                {{activeNum}}
+            </view>
+        </picker>
+        <input class="weui-input" auto-focus placeholder="请输入手机号" type="number"  maxlength="13" value="{{telphone}}"  bindblur="testPhone"/>
+    </view>
+    <view class="inp">
+        <input class="weui-input" auto-focus placeholder="请输入验证码" type="number" maxlength="6" value="{{msg}}" bindblur="getMsg" />
+        <button class="yzm" disabled="{{disabled}}" size="mini" bindtap="sendcode">{{codebtn}}</button>
+    </view>
+    <button class="btn-login" bindtap="login">登录</button>
+</view>

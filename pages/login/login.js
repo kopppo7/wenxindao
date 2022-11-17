@@ -7,6 +7,7 @@ import {
   getLoginInfo,
   setLoginInfo
 } from "../../utils/stoage"
+import { login } from '../../utils/common'
 Page({
 
     /**
@@ -42,34 +43,35 @@ Page({
                 code:res.code
               }).then(res=>{
                 if(res.data.ret==200){
-                  var json =JSON.parse(res.data.data);
-                  var userInfo = getLoginInfo();
-                  if (userInfo != null&&userInfo!='') {
-                    userInfo.phone = json.phoneNumber;
-                  } else {
-                    userInfo = {
-                      phone: json.phoneNumber,
-                      wechatName: '',
-                      headImg: ''
-                    };
-                  }
-                  setLoginInfo(userInfo);
-                  if(userInfo.wechatName==''||userInfo.wechatName==null){
-                    wx.redirectTo({
-                      url: '/pages/auth/auth',
-                    })
-                  }else{
-                    updateUserMsg({
-                      phone:json.phoneNumber,
-                      nickname:userInfo.wechatName,
-                      headimgurl:userInfo.headImg
-                    }).then(up=>{
-                      wx.hideLoading();
-                      wx.redirectTo({
-                        url: '/pages/index/index',
-                      })
-                    })
-                  }
+                  login();
+                  // var json =JSON.parse(res.data.data);
+                  // var userInfo = getLoginInfo();
+                  // if (userInfo != null&&userInfo!='') {
+                  //   userInfo.phone = json.phoneNumber;
+                  // } else {
+                  //   userInfo = {
+                  //     phone: json.phoneNumber,
+                  //     wechatName: '',
+                  //     headImg: ''
+                  //   };
+                  // }
+                  // setLoginInfo(userInfo);
+                  // if(userInfo.wechatName==''||userInfo.wechatName==null){
+                  //   wx.redirectTo({
+                  //     url: '/pages/auth/auth',
+                  //   })
+                  // }else{
+                  //   updateUserMsg({
+                  //     phone:json.phoneNumber,
+                  //     nickname:userInfo.wechatName,
+                  //     headimgurl:userInfo.headImg
+                  //   }).then(up=>{
+                  //     wx.hideLoading();
+                  //     wx.redirectTo({
+                  //       url: '/pages/index/index',
+                  //     })
+                  //   })
+                  // }
                 }else{
                   wx.hideLoading();
                   wx.showToast({
@@ -96,25 +98,31 @@ Page({
      */
     onLoad(options) {
         var that = this;
-        wx.getSetting({
-            success(res) {
-                if (res.authSetting['scope.userInfo']) {
-                    // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-                    let user = {};
-                    wx.getUserInfo({
-                        success: function(res) {
-                            console.log(res.userInfo)
-                            user.nickname = res.userInfo.nickName
-                            user.headimgurl = res.userInfo.avatarUrl
-                            user.citys = res.userInfo.city
-                            that.setData({
-                                useInfor: user
-                            })
-                        }
-                    })
-                }
-            }
-        })
+        if (wx.getStorageSync('tokenKey')) {
+          wx.redirectTo({
+            url: '/pages/index/index',
+          })
+        } else {
+          wx.getSetting({
+              success(res) {
+                  if (res.authSetting['scope.userInfo']) {
+                      // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+                      let user = {};
+                      wx.getUserInfo({
+                          success: function(res) {
+                              console.log(res.userInfo)
+                              user.nickname = res.userInfo.nickName
+                              user.headimgurl = res.userInfo.avatarUrl
+                              user.citys = res.userInfo.city
+                              that.setData({
+                                  useInfor: user
+                              })
+                          }
+                      })
+                  }
+              }
+          })
+        }
     },
 
     /**

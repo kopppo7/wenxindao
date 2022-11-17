@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/login/login",
+    "pages/telLogin/index",
     "pages/auth/auth"
   ],
   "subpackages": [

@@ -5,10 +5,29 @@ const app = getApp();
 
 Page({
     data: {
-        lists: []
+        lists: [],
+        stopUse:false,
+        phoneNumber:"999 9090",
+        relieveTime:""
     },
-    onLoad: function () {
-      login();
+    callNum(){
+      wx.makePhoneCall({
+        phoneNumber: this.data.phoneNumber,
+      })
+    },
+    sure(){
+      this.setData({
+        stopUse:false
+      })
+    },
+    onLoad: async function () {
+      await login();
+      if (wx.getStorageSync('loginInfo').relieveTime) {
+        this.setData({
+          relieveTime:wx.getStorageSync('loginInfo').relieveTime,
+          stopUse:true
+        })
+      }
     },
 
 });

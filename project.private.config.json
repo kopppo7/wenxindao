@@ -232,6 +232,20 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/auth/auth",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/telLogin/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
