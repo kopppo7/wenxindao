@@ -29,7 +29,7 @@ Page({
         product: '',
         selectCard: '',  // 选中的卡片 人物
         
-      /  // 录音相关
+        // 录音相关
         bigPopStatus: false, // 放大卡牌
         putType: 1,
         content: [],
