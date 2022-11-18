@@ -2,7 +2,8 @@
 .z-tab2{
 	padding: 24rpx 24rpx 24rpx 0;
 	margin-bottom: 32rpx;
-	white-space: nowrap;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 .z-tab2 .item{
 	display: inline-block;
@@ -56,14 +57,16 @@
 	background: rgba(29, 31, 48, 0.8);
 	border: 0.5px solid rgba(255, 255, 255, 0.2);
 	backdrop-filter: blur(12.2323px);
-	padding: 24rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
 	margin-bottom: 40rpx;
 	border-radius: 24rpx;
 }
 .yinyan-box .box2 .s2{
 	display: flex;
 	justify-content: space-between;
-	padding: 0 24rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
 }
 .yinyan-box .box2 .s2 .s2-item{
 
@@ -118,7 +121,10 @@
 	border-radius: 0px 2px 2px 0px;
 }
 .tansuo-row{
-
+  padding-bottom: 40rpx;
+}
+.tansuo-row .box2{
+  margin-bottom: 40rpx;
 }
 .tansuo-row .box1{
 	display: flex;
@@ -136,7 +142,8 @@
 	background: linear-gradient(224.5deg, rgba(98, 201, 220, 0.2) 1.92%, rgba(255, 255, 255, 0.08) 92.09%);
 	border-radius: 24rpx;
 	color: #62c9dc;
-	padding: 24rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
 }
 .tansuo-row .box2{
 	display: flex;
@@ -186,17 +193,20 @@
 	backdrop-filter: blur(12px);
 	border: 0.5px solid rgba(255, 255, 255, 0.2);
 	border-radius: 12px;
-	padding: 24rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
 }
 .tansuo-row .box2 .box2-r .tit{
 	font-size: 26rpx;
 	color: #ffb58c;
 }
 .yinyan-box5 .box3{
-	padding: 80rpx 0 24rpx;
+  padding: 80rpx 0 24rpx;
+  box-sizing: border-box;
 }
 .yinyan-box5 .box3 .box3-item{
-	padding: 24rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
 	background: rgba(182, 178, 207, 0.12);
 	border-radius: 16rpx;
 	margin-bottom: 24rpx;
@@ -206,7 +216,8 @@
 	font-size: 30rpx;
 	color: #ffb58c;
 	margin-bottom: 24rpx;
-	padding-left: 24rpx;
+  padding-left: 24rpx;
+  box-sizing: border-box;
 }
 .yinyan-box5 .box3 .box3-item .tit:before{
 	content: '';
@@ -238,7 +249,8 @@
 .yinyan-box5 .box5{
 	display: flex;
 	justify-content: space-between;
-	padding: 96rpx 0 68rpx;
+  padding: 96rpx 0 68rpx;
+  box-sizing: border-box;
 }
 .yinyan-box5 .box5 .g-submit{
 	position: static;
@@ -254,4 +266,140 @@
 	background: #FFB58C;
 	border-radius: 72rpx;
 }
+.cardContent .cardImg{
+  width: 70%;
+  border-radius: 32rpx;
+}
 
+/* 语音录入相关 */
+.form-z .textarea-box {
+	position: relative;
+	margin-bottom: 24rpx;
+	height: 320rpx;
+	background: rgba(29, 31, 48, 0.8);
+	border: 0.5px solid rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(12.2323px);
+	border-radius: 24rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.form-z .textarea-box textarea {
+	display: block;
+	width: 100%;
+	height: 100rpx;
+}
+
+.form-z .textarea-box .btn-yuyin {
+    font-size: 24rpx;
+    position: absolute;
+    bottom: 24rpx;
+    left: 24rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+	background: linear-gradient(248.27deg, rgba(119, 138, 255, 0.096) 18.05%, rgba(255, 255, 255, 0.128) 83.27%);
+	border: 0.5px solid rgba(255, 255, 255, 0.2);
+	border-radius: 16rpx;
+	color: #B6B2CF;
+}
+
+.form-z .textarea-box .btn-yuyin image {
+	width: 32rpx;
+	height: 32rpx;
+	margin-right: 16rpx;
+}
+
+.form-z .textarea-box .btn-luyin {
+	position: absolute;
+	top: 30rpx;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background: transparent;
+}
+.m-luyin .close{
+	position: absolute;
+	top: 100rpx;
+	left: 50%;
+	margin-left: -150rpx;
+}
+.m-luyin .close image{
+	width: 64rpx;
+	height: 64rpx;
+	margin-right: 16rpx;
+}
+.m-luyin .saveAudio{
+	position: absolute;
+	top: 100rpx;
+	left: 50%;
+	margin-left: 60rpx;
+	
+}
+.m-luyin .saveAudio image{
+	width: 64rpx;
+	height: 64rpx;
+	margin-left: 16rpx;
+}
+.form-z .textarea-box .btn-luyin image {
+	width: 96rpx;
+	height: 96rpx;
+}
+
+.form-z .textarea-box .btn-luyin .txt {
+	font-size: 26rpx;
+	color: #b6b2cf;
+	text-align: center;
+}
+
+.form-z .btn-submit {
+	display: block;
+	font-size: 32rpx;
+	color: #ffffff;
+	width: 100%;
+	height: 100rpx;
+	line-height: 100rpx;
+	background: #7461E7;
+	border-radius: 72rpx;
+}
+.btn-audio{
+	/* position: absolute;
+	bottom: 24rpx;
+	left: 24rpx; */
+  display: -webkit-flex;display: flex;
+  align-items:center;
+  font-size: 32rpx;color: #fff;
+}
+.btn-audio text{
+  /* position: absolute;right: 48rpx;top: 0; */
+  line-height: 72rpx;
+}
+.btn-audio .icon{
+	position: absolute;left: 48rpx;top: 0;
+}
+.btn-audio .close{
+	position: absolute;right: -50rpx;width: 32rpx;height: 32rpx;top: 50%;margin-top: -16rpx;
+}
+.btn-audio image{
+	width: 290rpx;
+	height: 72rpx;
+	margin-right: 20rpx;
+}
+.form-z radio-group {
+	margin-bottom: 48rpx;
+}
+.nextSubmit{
+	font-size: 32rpx;
+	height: 100rpx;
+	line-height: 100rpx;
+	text-align: center;
+	background: #7461E7;
+  border-radius: 68rpx;
+  margin: 40rpx auto;
+}

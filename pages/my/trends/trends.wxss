@@ -12,7 +12,9 @@
 	margin: 0 12rpx;
 	flex:1;
 	flex-wrap: wrap;
-	padding: 16rpx 0;
+  padding: 16rpx 0;
+  box-sizing: border-box;
+  box-sizing: border-box;
 }
 .h-dt-tab-item .title{
 	color: #ffffff;
@@ -49,7 +51,8 @@
 	position: relative;
 	font-size: 36rpx;
 	color: #ffffff;
-	padding-left: 22rpx;
+  padding-left: 22rpx;
+  box-sizing: border-box;
 }
 .mine-row3 .title-box .title:before{
 	content: '';

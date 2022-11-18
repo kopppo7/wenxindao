@@ -1,6 +1,7 @@
 /* 07liebian/tongxinyouju/tongxinyouju.wxss */
 page{
     padding: 32rpx 0 284rpx;
+    box-sizing: border-box;
 }
 .post-list{}
 .post-list .item{
@@ -8,6 +9,7 @@ page{
     border-radius: 16rpx;
     padding: 24rpx;
     margin-bottom: 24rpx;
+    box-sizing: border-box;
 }
 .post-list .item .title{
     font-weight: 600;
@@ -32,6 +34,7 @@ page{
     line-height: 72rpx;
     border-radius: 16rpx;
     padding: 0 24rpx;
+    box-sizing: border-box;
     margin-bottom: 16rpx;
     background-size: cover;
 }

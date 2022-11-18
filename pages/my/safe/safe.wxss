@@ -3,7 +3,8 @@
 	background: rgba(182, 178, 207, 0.18);
 	border-radius: 30rpx;
 	margin-top: 40rpx;
-	padding: 0 32rpx;
+  padding: 0 32rpx;
+  box-sizing: border-box;
 }
 .z-list2 .item{
 	display: flex;
@@ -78,7 +79,8 @@
 	letter-spacing: 3;
 }
 .pop-win2 .error-box{
-	padding: 0 32rpx;
+  padding: 0 32rpx;
+  box-sizing: border-box;
 	position: absolute;
 	top: -108rpx;
 	left: 50%;

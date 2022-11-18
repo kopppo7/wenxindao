@@ -28,7 +28,8 @@ page{
 .index-row2 .txt{
 	width: 582rpx;
 	background-repeat: no-repeat;
-	padding: 20rpx 18rpx 0 60rpx;
+  padding: 20rpx 18rpx 0 60rpx;
+  box-sizing: border-box;
 }
 .index-row2 .item1 .txt{
 	height: 212rpx;
@@ -64,7 +65,8 @@ page{
 .index-row2 .txt .aduio-box .more{
 	font-size: 24rpx;
 	color: #7a7adc;
-	padding-right: 32rpx;
+  padding-right: 32rpx;
+  box-sizing: border-box;
 	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAKgSURBVHgBpVVNbtpAFH5vDEhBbcW6mxo1qdRdOEHoCUJPUDhB6I44C8wiECmL0hNAbwAnaHIC2FVqWkE33dZSKhYYz/Q9z5gSxzg4+aTx/Hm+N/PmzfcQUtBsTkrF4osTRFVVCmwa4gKI6AGoqZRqrNRqdHHxdr6NA5MGW61vtmXlB0Rahd0wlNLvJBkS8QHHmZ1YVmFiyD0p4TO130tplbvdfeQCICs8ppT8YpbVhchPTk9vmpB2Asf52aaju6Y7WixuG/1+xYMU8GkRLRdRfDCUbrf7unPPAO8cIOhzWyn1sdc76EMGOM6NS3Tt+HqMdqHdoko03el2D1x4BNhFFACfIHStX+E7Ce+A/NfW5DB8LDnD7HpEpYSYH4TcvHuq69zhSIAnolCwGhzGiFDlMBeIhZqZG6bFcxwUEDMuZoNruG7ZI2+E0VUsPmsKIdQxd1arYAwZQCT8tYUofI0boakrXeMR3QEems4cMkAp/x0RzZOM0NyUa3KVnTOXC5eXb6abBHx8Xgw7QRuhRpl77GrH+aHHty4JXbA7tv2fozKnYp+d/X51fv7yVzTR6+2X0wjZJXrXymZXscuiOcf5fmiantB+BPD92wpkQJx8MwKVEjbXFKpTClN1rRdYVcgAdkkSuSEOI5PlHF13Vlougz98HBK38kPi9hC06/IzbcAvC/0wwrgt7e09H8ATwbJjmsO1FtExo+ddS9L0XaHlPpQdL5Kd0ABbklKGA6yG5seM5Cz3OpfQ/ayzWyzh/Nd0SEmDm9B5O3St0bS7cn8vJ7OLSKAi+Q4NKRWMVyucR6+91ZpRFltSrOeOhIC6+ZdFrhNPVFuT/t00mA66u6sg8BtJp8W0hdpQriYEHlOk8euMTjUnUnoD6nqx+NtPC+1/Vl55uORIAREAAAAASUVORK5CYII=) no-repeat right  center;
 	-webkit-background-size: 24rpx auto;background-size: 24rpx auto;
 }
@@ -87,7 +89,8 @@ page{
 	backdrop-filter: blur(12.2323px);
 	border-radius: 30px;
 	text-align: center;
-	padding: 10rpx 0 0;
+  padding: 10rpx 0 0;
+  box-sizing: border-box;
 	margin: 0 18rpx;
 }
 .nav .item image{

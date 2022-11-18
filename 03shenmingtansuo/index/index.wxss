@@ -13,7 +13,8 @@
 	border-radius: 16rpx;
 	margin-bottom: 24rpx;
 	height: 240rpx;
-	padding: 24rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
 }
 
 .z-list1 .pic {
@@ -121,10 +122,19 @@
 	height: 60rpx;
 	line-height: 60rpx;
 	text-align: center;
-	background: linear-gradient(90deg, #7461E6 0%, #7461E6 21.23%, rgba(255, 255, 255, 0) 21.7%), linear-gradient(260.43deg, rgba(119, 138, 255, 0.24) 2.12%, rgba(255, 255, 255, 0.32) 102.79%);
-	border: 0.5px solid rgba(255, 255, 255, 0.2);
+	/* background: linear-gradient(90deg, #7461E6 0%, #7461E6 21.23%, rgba(255, 255, 255, 0) 21.7%), linear-gradient(260.43deg, rgba(119, 138, 255, 0.24) 2.12%, rgba(255, 255, 255, 0.32) 102.79%);
+	border: 0.5px solid rgba(255, 255, 255, 0.2); */
 	backdrop-filter: blur(12px);
-	border-radius: 46rpx;
+  border-radius: 46rpx;
+}
+.z-list1 .txt .s3 .s3-r2 text{
+  position: absolute;
+  width: 150rpx;
+	height: 60rpx;
+  line-height: 60rpx;
+  background: #7461E7;
+    left: 0;
+    top: 0;
 }
 
 .z-list1 .txt .s3 .s3-r3 {

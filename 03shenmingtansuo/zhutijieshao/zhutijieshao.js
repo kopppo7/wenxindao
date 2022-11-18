@@ -1,5 +1,6 @@
 // 03shenmingtansuo/zhutijieshao/zhutijieshao.js
-import{ getProDetail, getPayProbe , getProEvaList, submitScore } from '../../utils/api'
+import{ getProDetail, getPayProbe , getProEvaList, submitScore
+, getExpId } from '../../utils/api'
 Page({
 
     /**
@@ -143,6 +144,28 @@ Page({
     
         })
       },
+    // 继续探索
+    toExplore() {
+      if(this.data.product.userProbeId) {
+         wx.navigateTo({
+           url: '../tansuo/tansuo?id=' + this.data.product.userProbeId,
+         })
+      } else {
+        wx.showLoading({
+          title: '加载中',
+          mask:true,
+        })
+        getExpId({
+          probeId: this.data.product.id
+        }).then((res) => {
+          wx.hideLoading()
+          wx.navigateTo({
+            url: '../tansuo/tansuo?id=' + res.data.data.id,
+          })
+        })
+      }
+     
+    },
     
     // 详情
     getDetail(id) {

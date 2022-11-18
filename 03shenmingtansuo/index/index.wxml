@@ -27,8 +27,8 @@
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
                         {{item.playerNum}}人已学习
                     </view>
-                    <view class="s3-r s3-r1" wx:if="{{item.isPower == 1 && !item.progress}}">第{{item.learnNum + 1 }}次探索</view>
-                    <view class="s3-r s3-r2" wx:if="{{item.isPower == 1 && item.progress }}"><text style="width: {{item.progress}};"></text>继续 {{item.progress}}%</view>
+                    <view class="s3-r s3-r1" wx:if="{{item.isPower == 1 && !item.userProbeId}}">第{{item.learnNum + 1 }}次探索</view>
+                    <view class="s3-r s3-r2" wx:if="{{item.isPower == 1 && item.userProbeId }}"><text style="width:{{item.progress}}%;"></text>继续 {{item.progress}}%</view>
                     <!-- <view data-id="{{item.id}}" catchtap="toPay" class="s3-r s3-r3" wx:if="{{item.isPower == 0}}">{{item.specialPrice}}元 开始探索</view> -->
                 </view>
             </view>

@@ -46,7 +46,8 @@ page{
 	display: flex;
 	justify-content: space-between;
 	padding: 0 146rpx;
-	margin-bottom: 104rpx;
+  margin-bottom: 104rpx;
+  box-sizing: border-box;
 }
 .login-select .item{
 	font-size: 26rpx;
@@ -66,7 +67,8 @@ page{
 }
 .label-agree text{
 	position: relative;
-	padding-left: 36rpx;
+  padding-left: 36rpx;
+  box-sizing: border-box;
 }
 .label-agree text:before{
 	content: '';

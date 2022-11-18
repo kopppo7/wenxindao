@@ -1,9 +1,11 @@
 /* 07liebian/goumaixiwei/goumaixiwei.wxss */
 page{
     padding: 40rpx 0 276rpx;
+    box-sizing: border-box;
 }
 .buy-one{
     padding: 24rpx;
+    box-sizing: border-box;
     display: flex;
     background: rgba(182,178,207,0.12);
     border-radius: 16rpx;
@@ -66,6 +68,7 @@ page{
     align-items: center;
     padding-right: 8rpx;
     margin-bottom: 32rpx;
+    box-sizing: border-box;
 }
 .buy-list .item .buy-area{
     display: flex;
@@ -75,6 +78,7 @@ page{
     background: linear-gradient(45deg, #82EAEA 0%, #5C76FE 100%);
     border-radius: 16rpx;
     padding: 32rpx;
+    box-sizing: border-box;
 }
 .buy-list .item2 .buy-area{
     background: linear-gradient(45deg, #FDB988 0%, #FE5C5C 100%);

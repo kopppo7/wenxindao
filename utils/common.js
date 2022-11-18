@@ -23,9 +23,6 @@ export const login = (callback) => {
           wx.hideLoading();
           wx.setStorageSync('tokenKey', res.data.data.token)
           checkLogInfo( res.data.data.token,callback);
-          wx.redirectTo({
-            url: '/pages/index/index',
-          })
         })
       }
     });
@@ -42,7 +39,7 @@ export const checkLogInfo = (token,callback) => {
       yunToken : userInfo.data.data.yunToken,
       yunId : userInfo.data.data.yunId,
     };
-    setLoginInfo(userInfo.data.data);
+    setLoginInfo(user);
     if(user.wechatName==''||user.wechatName==null||user.wechatName==undefined){
       wx.redirectTo({
         url: '/pages/auth/auth',

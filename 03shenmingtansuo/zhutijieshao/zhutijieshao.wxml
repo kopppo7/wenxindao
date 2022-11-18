@@ -56,14 +56,13 @@
         </view>
         <view wx:if="{{product.isPower != 1 }}" class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
     </view>
-    <!-- 购买过 product.isPower == 1 && product.playerNum > 0 -->
-    <view class="buyBox" wx:if="{{product.isPower == 1 && product.playerNum > 0}}">
-       <view class="percep " bindtap="openPercepPop">写感悟</view>
-       <view class="progress" wx:if="{{product.isPower == 1 && product.progress}}">
-          <text class="inner" style="width : {{product.progress }}'%'"></text>
+    <view class="buyBox" wx:if="{{product.isPower == 1 }}">
+       <view class="percep "  wx:if="{{product.learnNum > 0}}" bindtap="openPercepPop">写感悟</view>
+       <view class="{{product.learnNum > 0 ? 'progress' : 'progressNum'}}" wx:if="{{product.userProbeId}}" catchtap="toExplore">
+          <text class="inner" style="width:{{product.progress }}%"></text>
           继续 {{product.progress}}%
        </view>
-       <view class="progress" wx:if="{{product.isPower == 1 && !product.progress}}">
+       <view class="{{product.learnNum > 0 ? 'progress' : 'progressNum'}}" wx:if="{{!product.userProbeId}}" catchtap="toExplore">
         第{{product.learnNum + 1 }}次探索
        </view>
     </view>

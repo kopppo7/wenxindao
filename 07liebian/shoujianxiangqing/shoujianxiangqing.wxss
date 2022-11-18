@@ -1,6 +1,7 @@
 /* 07liebian/shoujianxiangqing/shoujianxiangqing.wxss */
 page{
     padding: 24rpx 0 244rpx;
+    box-sizing: border-box;
 }
 .receive-content .title{
     font-weight: 600;
@@ -12,7 +13,7 @@ page{
 }
 .receive-content .tag-area text{
     display: inline-block;
-    padding: 8rpx 16rpx;
+    padding: 8rpx 16rpx;box-sizing: border-box;
     background: linear-gradient(217deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.08) 100%);
     border-radius: 8rpx;
     font-size: 24rpx;
