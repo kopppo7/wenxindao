@@ -1,9 +1,9 @@
 <!--03shenmingtansuo/tansuo/tansuo.wxml-->
 <view class="jdt-box"><text style="width: {{(step + 1) * stepBg }}%;"></text></view>
 <scroll-view class="z-tab2" scroll-x="true">
-    <view data-idx="0" catchtap="changeStep" class="item {{step == 0 ? 'active' : ''}}">引言</view>
-    <view wx:for="{{stepList}}"  data-idx="{{index + 1}}" wx:for-item="item" wx:for-index="index" wx:key="*this" catchtap="changeStep" class="item {{step == index + 1 ? 'active' : ''}}">第{{index + 1}}轮</view>
-    <view data-idx="{{ stepList.length + 1}}" catchtap="changeStep" class="item {{step == stepList.length + 1 ? 'active' : ''}}">结语</view>
+    <view data-idx="0"  class="item {{step == 0 ? 'active' : ''}}">引言</view>
+    <view wx:for="{{stepList}}"  data-idx="{{index + 1}}" wx:for-item="item" wx:for-index="index" wx:key="*this"  class="item {{step == index + 1 ? 'active' : ''}}">第{{index + 1}}轮</view>
+    <view data-idx="{{ stepList.length + 1}}"  class="item {{step == stepList.length + 1 ? 'active' : ''}}">结语</view>
 </scroll-view>
 <view class="wp">
     <view class="yinyan-box" wx:if="{{step == 0}}">
@@ -64,7 +64,7 @@
                   bindtap="changeCard">
                       <view class="avatar-box">
                           <text></text>
-                          <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
+                          <image class="avatar" src="{{userInfo.headImg}}"></image>
                       </view>
                       <view class="name">{{item1.cardMaster}}</view>
                   </view>
@@ -105,8 +105,7 @@
                               <view class="btn-luyin" bindtap="play" wx:if="{{autioStatus == 3}}">
                                   <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
                                   <view class="txt">点击播放</view>
-                              </view>
-                              
+                              </view>    
                           </view>
                       </view>
                       <view class="btn-audio" bindtap="playAudio" data-type="0" wx:if="{{putType == 5}}" >
@@ -119,8 +118,8 @@
                   </view>
               </view>
           </view>
+          <view data-idx="{{index + 1}}"  class="nextSubmit" catchtap="nextStep">下一步</view>
         </view>
-        <view class="nextSubmit" catchtap="nextStep">下一步</view>
     </view>
     <view class="yinyan-box yinyan-box5" wx:if="{{step == stepList.length + 1}}">
         <view class="box1">

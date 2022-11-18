@@ -1,5 +1,5 @@
 // 03shenmingtansuo/tansuo/tansuo.js
-import{ getProExpDetail } from '../../utils/api'
+import{ getProExpDetail, submitContent } from '../../utils/api'
 import {
   addFm,
   findByFmForUser,
@@ -12,6 +12,9 @@ import {
   formatTime,
 } from "../../utils/util";
 import config from "../../utils/config";
+import {
+  getLoginInfo
+} from "../../utils/stoage"
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext()
 const  audioCtx = wx.createInnerAudioContext();
@@ -28,8 +31,9 @@ Page({
         id: '',
         product: '',
         selectCard: '',  // 选中的卡片 人物
+        userInfo: {}, // 个人信息
         
-        // 录音相关
+         // 录音相关
         bigPopStatus: false, // 放大卡牌
         putType: 1,
         content: [],
@@ -217,7 +221,7 @@ Page({
           that.setData({
               autioStatus: 3,
               tempFilePath: res.tempFilePath,
-              totalTime: Math.floor((this.data.endTime - this.data.startTime ) / 1000)
+              totalTime: Math.ceil((this.data.endTime - this.data.startTime ) / 1000)
           })
           console.log('停止录音', res.tempFilePath)
           const {
@@ -228,10 +232,11 @@ Page({
   //播放声音
   play() {
       innerAudioContext.autoplay = true
-      innerAudioContext.src = this.data.tempFilePath,
-          innerAudioContext.onPlay(() => {
-              console.log('开始播放')
-          })
+      innerAudioContext.src = this.data.tempFilePath
+      console.log('this.data.tempFilePath', this.data.tempFilePath)
+      innerAudioContext.onPlay(() => {
+          console.log('开始播放')
+      })
       innerAudioContext.onError((res) => {
           console.log(res.errMsg)
           console.log(res.errCode)
@@ -248,7 +253,7 @@ Page({
   // 保存语音
   saveAudio() {
       var that = this
-      recorderManager.stop();
+      // recorderManager.stop();
       wx.uploadFile({
           url: config.getDomain + '/oss/upload/uploadFile', 
           filePath: that.data.tempFilePath,
@@ -297,10 +302,54 @@ Page({
       }
     },
     // 下一步
-    nextStep() {
-       this.setData({
-         step: this.data.step + 1
-       })
+    nextStep(e) {
+       // 上传录音
+       if(e.currentTarget.dataset.idx){
+         if(!this.data.contents.txt && !this.data.contents.voice ) {
+          wx.showToast({
+            title: '请先录音或输入内容',
+            icon:'none',
+            duration: 2000
+          })
+           return
+         }
+        wx.showLoading({
+          title: '提交中',
+          mask:true,
+        })
+        submitContent({
+          answerText:  this.data.contents.txt,
+          answerVoice: this.data.contents.voice,
+          cardId:  '',
+          id:  this.data.stepList[e.currentTarget.dataset.idx-1].id,
+          imgUrl:'',
+          userProbeId: this.data.id,
+        }).then((res)=> {
+          wx.hideLoading()
+          this.setData({
+            step: this.data.step + 1,
+            // 录音相关
+            bigPopStatus: false, // 放大卡牌
+            putType: 1,
+            content: [],
+            contents: {
+                txt: "",
+                voice: ""
+            },
+            autioStatus: 1,
+            tempFilePath: "",
+            audioStr: "",
+            isPlay: false,
+            startTime: 0, // 开始录音时间
+            endTime: 0, // 结束录音时间
+            totalTime: 0 
+          })
+        })
+       } else {
+        this.setData({
+          step: this.data.step + 1
+        })
+       }  
     },
     // 切换第几部
     changeStep(e) {
@@ -323,6 +372,10 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+      let info = getLoginInfo();
+      this.setData({
+        userInfo:info
+      });
       if(options.id) {
         this.setData({
           id: options.id
