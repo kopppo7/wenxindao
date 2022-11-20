@@ -70,6 +70,9 @@
 	border-radius: 68rpx;
 	text-align: center;
 }
+.btn-code.disabled{
+  background: #a5a3ad;
+}
 .btn-code.hide{
 	opacity: .4;
 	pointer-events: none;
