@@ -77,7 +77,7 @@
             <image class="pic" src="{{product.imgUrl}}"></image>
             <view class="title">{{product.title}}</view>
             <view class="time">购买使用期：1年</view>
-            <view class="money">¥<text>{{product.specialPrice}}</text></view>
+            <view class="money">¥<text>{{product.amount}}</text></view>
         </view>
         <view class="btn-buy" catchtap="toPay">确认购买</view>
     </view>
