@@ -117,3 +117,7 @@ export const getExpId = function (data) {
 export const getProExpDetail = function (data) {
   return http.post(handleURL('/userprobe/readInfo'),data);
 }
+// 生命继续探索 提交答案
+export const submitContent = function (data) {
+  return http.post(handleURL('/userprobe/answer'),data);
+}

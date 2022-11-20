@@ -94,7 +94,7 @@ Page({
           setLoginInfo(userInfo);
           if(userInfo.phone==''||userInfo.phone==null){
             wx.redirectTo({
-              url: '/pages/auth/login',
+              url: '/pages/login/login',
             })
           }
         })

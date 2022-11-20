@@ -83,8 +83,9 @@
         },
         {
           "name": "账户与安全",
-          "pathName": "06wode/zhanghuyuanquan/zhanghuyuanquan",
+          "pathName": "pages/my/safe/safe",
           "query": "",
+          "launchMode": "default",
           "scene": null
         },
         {
