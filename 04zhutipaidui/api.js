@@ -1,7 +1,7 @@
 import config from '../utils/config';
 import http from '../utils/http.js';
 
-function handleURL(url) {
+function handleURL (url) {
     return config.getDomain + url;
 }
 
@@ -34,7 +34,47 @@ export const updateImMsg = function (data) {
     return http.post(handleURL('/updateImMsg'), data);
 };
 
-//查询反馈详情
+//创建房间
 export const createBaoRoom = function (params) {
-    return http.post(handleURL('/room/createBaoRoom'),params);
-  }
+    return http.post(handleURL('/room/createBaoRoom'), params);
+}
+
+//打开包房房间匹配模式
+export const openBaoRoomMate = function (params) {
+    return http.get(handleURL('/room/openBaoRoomMate'), params);
+}
+//开始游戏
+export const startPlayRoom = function (params) {
+    return http.post(handleURL('/room/startPlayRoom'), params);
+}
+//匹配游戏
+export const matchingPlay = function (params) {
+    return http.post(handleURL('/room/matchingPlay'), params);
+}
+//修改房主
+export const updateOwner = function (params) {
+    return http.post(handleURL('/room/updateOwner'), params);
+}
+//解散房间
+export const dissolveGroup = function (params) {
+    return http.post(handleURL('/room/dissolveGroup'), params);
+}
+//点赞队友
+export const likeTeammate = function (params) {
+    return http.post(handleURL('/room/likeTeammate'), params);
+}
+//投诉队友
+export const complaintUser = function (params) {
+    return http.post(handleURL('/room/complaintUser'), params);
+}//退出房间
+export const quitRoom = function (params) {
+    return http.post(handleURL('/room/quitRoom'), params);
+}
+//邀请好友进入房间
+export const inviteFriendsRoom = function (params) {
+    return http.post(handleURL('/room/inviteFriendsRoom'), params);
+}
+//游戏房间踢人
+export const kickingPlayer = function (params) {
+    return http.post(handleURL('/room/kickingPlayer'), params);
+}

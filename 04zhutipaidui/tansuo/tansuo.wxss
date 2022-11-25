@@ -278,10 +278,20 @@
 	overflow-y: scroll;background: linear-gradient(217deg, rgba(98,201,220,0.2) 0%, rgba(255,255,255,0.08) 100%);border-radius: 24rpx;
 	font-size: 28rpx;color: #62C9DC;
 }
-.room-theme .peoples{display: flex;justify-content: space-between;}
-.room-theme .peoples .item{}
-.room-theme .peoples .item .people{margin-bottom: 24rpx;}
+.room-theme .peoples{display: flex;justify-content: space-between;flex-wrap: wrap;}
+.room-theme .peoples .item{width: 50%;}
+.room-theme .peoples .item:nth-child(2n){
+	text-align: right;
+}
+.room-theme .peoples .item .people{margin-bottom: 24rpx;display: inline-block;}
 .room-theme .peoples .item .people .ico{border: 1px solid rgba(255,255,255,0.24);width: 96rpx;height: 96rpx;border-radius: 50%;margin-bottom: 20rpx;display: block;}
+.room-theme .peoples .item .people .ico2{
+	border: 1px solid rgba(255,255,255,0.24);width: 96rpx;height: 96rpx;border-radius: 50%;margin-bottom: 20rpx;display: -webkit-flex;display: flex;justify-content: center;align-items:center;
+	background: linear-gradient(225deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.24) 100%);
+}
+.room-theme .peoples .item .people .ico2 image{
+	width: 48rpx;height: 48rpx;
+}
 .room-theme .peoples .item .people .name{text-align: center;font-size: 24rpx;line-height: 32rpx;color: #fff;display: block;}
 .room-theme .content{position: absolute;left: 50%;top: 288rpx;width: 454rpx;margin-left: -227rpx;max-height: 500rpx;overflow-y: scroll;}
 .room-theme .content .item{padding: 16rpx 24rpx;margin-bottom: 12px;background: rgba(182,178,207,0.18);border-radius: 24rpx;font-size: 24rpx;line-height: 32rpx;}
@@ -292,7 +302,7 @@
 .theme-bot .play{width: 80rpx;height: 80rpx;border-radius: 50%;background: rgba(255,255,255,0.1);flex-shrink: 0;overflow: hidden;margin-right: 32rpx;}
 .theme-bot .play .img{width: 80rpx;height: 80rpx;display: block;}
 .theme-bot .inp{flex-grow: 1;}
-.theme-bot .inp input{width: 400rpx;height: 80rpx;line-height: 80rpx;border: 1px solid rgba(255,255,255,0.2);background: rgba(29,31,48,0.8);border-radius: 40rpx;padding: 0 20rpx;}
+.theme-bot .inp input{width: 100%;height: 80rpx;line-height: 80rpx;border: 1px solid rgba(255,255,255,0.2);background: rgba(29,31,48,0.8);border-radius: 40rpx;padding: 0 20rpx;}
 .theme-bot .btn{margin-left: 16rpx;width: 160rpx;
 	height: 80rpx;
 	background: #7461E7;
@@ -303,3 +313,13 @@
 	border-radius: 16rpx;font-size: 28rpx;color: #fff;text-align: center;right: 0;top: -130rpx;line-height: 72rpx;}
 .theme-bot .btn text:after{content: "";position: absolute;left: 50%;border: 12rpx solid #F0273F;border-left-color: transparent;border-right-color: transparent;border-bottom-color: transparent;bottom: -24rpx;margin-left: -12rpx;}
 .timeDown{position: fixed;left: 50%;top: 50%;width: 200rpx;height: 200rpx;line-height: 200rpx;text-align: center;background: #222537;border: 1px solid rgba(255,255,255,0.13);font-size: 96rpx;color: #FFB58C;font-family: DINPro-Bold, DINPro;border-radius: 50%;margin-left: -100rpx;margin-top: 100rpx;font-weight: bold;}
+.own-btns{
+	display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;
+	position: absolute;left: 0;width: 100%;top: -100rpx;
+}
+.own-btns .btn{
+	width: 196rpx;line-height: 72rpx;
+	background: #7461E7;
+	text-align: center;color: #fff;font-size: 28rpx;border-radius: 72rpx;margin: 0 24rpx;
+	height: 72rpx;
+}

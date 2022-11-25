@@ -229,7 +229,7 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "",
+          "query": "isfriend=false",
           "launchMode": "default",
           "scene": null
         },

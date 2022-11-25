@@ -173,6 +173,9 @@ button::after{
 	display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;/* 垂直居中 */align-content:center;/* 多行一起垂直居中 */
 	padding: 30rpx 0;
 }
+.pop-win2 .checkbox image{
+	width: 32rpx;height: 32rpx;margin-right: 10rpx;
+}
 .pop-win2 .btns .btn{min-width: 232rpx;line-height: 88rpx;height: 92rpx;text-align: center;border-radius: 100rpx;border: 1px solid #7461E7;background-color: #7461E7;margin: 0 20rpx;}
 .pop-win2 .btns .close{border: 1px solid rgba(255,255,255,0.24);background: rgba(182,178,207,0.18);}
 .pop-win2 .img image{width: 180rpx;height: 260rpx;display: block;margin: 0 auto;}

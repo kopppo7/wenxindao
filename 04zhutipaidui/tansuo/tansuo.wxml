@@ -1,19 +1,16 @@
 <!--03shenmingtansuo/tansuo/tansuo.wxml-->
 <view class="hourse-set">
     <view class="txt">
-        <text>房间ID：457364</text>
-        <text>人数：4-6人局</text>
+        <text>房间ID：{{roomData.imGroup}}</text>
+        <text>人数：2-{{roomData.maxNumber}}人局</text>
     </view>
-    <image
-        src="../../static/h-set.png"
-        mode="scaleToFill"
-    />
+    <image src="../../static/h-set.png" mode="scaleToFill" />
 </view>
 <scroll-view class="z-tab2" scroll-x="true">
     <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
     <view class="item {{step == 1 ? 'active' : ''}}">第1轮</view>
     <view class="item {{step == 2 ? 'active' : ''}}">第2轮</view>
-    <view class="item {{step == 3 ? 'active' : ''}}">第3轮</view>
+        <view class="item {{step == 3 ? 'active' : ''}}">第3轮</view>
     <view class="item {{step == 4 ? 'active' : ''}}">第4轮</view>
     <view class="item {{step == 5 ? 'active' : ''}}">结语</view>
 </scroll-view>
@@ -21,7 +18,8 @@
     <view class="room-theme">
         <view class="help">
             <view class="left">
-                <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+                <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg">
+                </image>
                 <view class="ico">
                     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
                     <text class="name">帮助</text>
@@ -32,16 +30,16 @@
             </view>
         </view>
         <view class="peoples">
-            <view class="item">
-                <view class="people" wx:for="[3]">
-                    <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
-                    <text class="name">春天V地</text>
-                </view>
-            </view>
-            <view class="item">
-                <view class="people" wx:for="[3]">
-                    <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
-                    <text class="name">春天V地</text>
+            <view class="item" wx:for="{{playerList}}" wx:for-index="index"
+            wx:for-item="item">
+                <view class="people" bindlongpress="handleKick" data-item="{{item}}">
+                    <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
+                    </image>
+                    <view class="ico2" wx:else>
+                        <image src="../../static/room-kong.png">
+                        </image>
+                    </view>
+                    <text class="name">{{item.nick}}</text>
                 </view>
             </view>
         </view>
@@ -55,44 +53,57 @@
     </view>
 </view>
 <view class="theme-bot">
-    <view class="play">
-        <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+    <view class="play" bindtap="sendMsg">
+        <image class="img" src="../../static/room-audio1.png" wx:if="{{voiceStatus == 1}}"></image>
+        <image class="img" src="../../static/room-audio2.png" wx:if="{{voiceStatus == 0}}"></image>
+        <image class="img" src="../../static/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
     </view>
     <view class="inp">
         <input type="text" placeholder="说点什么吧..." />
     </view>
-    <view class="btn" bindtap="dismissTeamDone">
+    <view class="btn" bindtap="handleReady" wx:if="{{!isOwner}}">
         准备
         <text>点击准备</text>
     </view>
+    <view class="own-btns" wx:if="{{isOwner && isBeginPlay}}">
+        <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
+        <view class="btn" bindtap="handleInviRoad">匹配路人</view>
+        <view class="btn" bindtap="handleBegin">快速开始</view>
+    </view>
 </view>
 <!-- 倒计时 -->
-<view class="timeDown"  wx:if="{{ timePopStatus}}">10</view>
+<view class="timeDown" wx:if="{{ timePopStatus}}">10</view>
 <!--分享到-->
 <block wx:if="{{sharePopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win">
         <view class="pop-tit">分享到</view>
-        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
+            bindtap="closePop"></image>
         <view class="pop-share">
-            <view class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>微信好友</view>
-            <view class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</view>
+            <view class="share-item">
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>微信好友
+            </view>
+            <view class="share-item">
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈
+            </view>
         </view>
     </view>
 </block>
 <!-- 活动提示 -->
-<block wx:if="{{activityPopStatus}}">
+<block wx:if="{{activityPopStatus && (isfriend == false || isfriend == 'false')}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <view class="pop-tit">活动提示</view>
-        <view class="desc">我是问心小精灵 , 是本场派对的活动主持人。请来到可以语音外放的环境 或  佩戴耳机。</view>
-        <label class="checkbox">
-            <checkbox checked="true" name="checkbox"></checkbox>
+        <view class="desc">我是问心小精灵 , 是本场派对的活动主持人。请来到可以语音外放的环境 或 佩戴耳机。</view>
+        <div class="checkbox" bindtap="activityChange">
+            <image class="ico" src="../../static/room-check1.png" wx:if="{{!activeStatus}}"></image>
+            <image class="ico" src="../../static/room-check2.png" wx:else></image>
             <text>不再提示</text>
-        </label>
+        </div>
         <view class="btns">
-            <view class="close btn">退出</view>
-            <view class="ok btn">准备好了</view>
+            <view class="close btn" bindtap="concleActivityPop">退出</view>
+            <view class="ok btn" bindtap="closeActivityPop">准备好了</view>
         </view>
     </view>
 </block>
@@ -102,18 +113,11 @@
     <view class="pop-win2">
         <view class="pop-tit">原生家庭-性格探索</view>
         <view class="img">
-            <image
-                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"
-            />
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg" />
         </view>
-        <view class="wait">已等待{{waitTime}}</view>
-        <view class="wait nowait">暂未匹配到其他参与者</view>
-        <view class="btns" wx:if="{{!waitStatus}}">
+        <view class="wait">已等待00:{{waitTime}}</view>
+        <view class="btns" bindtap="concleActivityPop">
             <view class="close btn">取消匹配</view>
-        </view>
-        <view class="btns" wx:if="{{waitStatus}}">
-            <view class="close btn">返回主题</view>
-            <view class="btn ok">继续匹配</view>
         </view>
     </view>
 </block>
@@ -123,10 +127,11 @@
     <view class="pop-win2">
         <view class="pop-tit">至少2人开始派对</view>
         <view class="desc">
-            你购买了个<text class="num">3</text>席位，目前邀约<text class="num">1</text>个好友，至少<text class="num">2</text>个好友才可以开始派对，请邀请好友！
+            至少<text
+                class="num">2</text>人才可以开始派对，请邀请好友或匹配路人玩家！
         </view>
         <view class="btns">
-            <view class="btn ok">知道了</view>
+            <view class="btn ok" bindtap="closePop">知道了</view>
         </view>
     </view>
 </block>
@@ -134,13 +139,14 @@
 <block wx:if="{{kickPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
-        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop" data-pop="kickPopStatus"></image>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
+            bindtap="closePop" data-pop="kickPopStatus"></image>
         <view class="person">
-            <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
-            <view class="name">路人1</view>
+            <image class="ico" src="{{kickPlayer.avatar}}"></image>
+            <view class="name">{{kickPlayer.nick}}</view>
         </view>
         <view class="btns">
-            <view class="btn close">踢出房间</view>
+            <view class="btn close" bindtap="handleKickDone">踢出房间</view>
         </view>
     </view>
 </block>
@@ -153,8 +159,8 @@
             匹配路人参与者则不能再邀请好友，请先邀请好友！
         </view>
         <view class="btns">
-            <view class="btn  close">取消</view>
-            <view class="btn ok">确认匹配</view>
+            <view class="btn  close" bindtap="closePop">取消</view>
+            <view class="btn ok" bindtap="handleInviRoadDone">确认匹配</view>
         </view>
     </view>
 </block>
@@ -175,32 +181,29 @@
             <view class="item">
                 <text class="name">发言时间</text>
                 <view class="process">
-                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle" selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7" show-value=
-                    "true" value="30" max="60"/>
+                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"
+                        selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7" show-value="true"
+                        value="30" max="60" />
                     <text class="sec">s</text>
                 </view>
             </view>
             <view class="item">
                 <text class="name">结束自由交流时间</text>
                 <view class="process">
-                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle" selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7" show-value=
-                    "true" value="30" max="60"/>
+                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"
+                        selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7" show-value="true"
+                        value="30" max="60" />
                     <text class="sec">s</text>
                 </view>
             </view>
             <view class="line"></view>
             <view class="item">
                 <text class="name">音乐</text>
-                <switch
-                size="small"
-                color="#7461E7"
-                />
+                <switch size="small" color="#7461E7" />
             </view>
             <view class="item">
                 <text class="name">音效</text>
-                <switch
-                color="#7461E7"
-                />
+                <switch color="#7461E7" />
             </view>
         </view>
         <view class="btns">
