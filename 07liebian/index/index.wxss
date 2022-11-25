@@ -11,7 +11,8 @@
 	border-radius: 16rpx;
 	margin-bottom: 24rpx;
 	height: 240rpx;
-	padding: 24rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
 }
 .z-list1 .pic{
 	flex: 0 0 66px;

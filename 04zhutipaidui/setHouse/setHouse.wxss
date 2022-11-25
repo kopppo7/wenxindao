@@ -1,8 +1,8 @@
 /* 04zhutipaidui/setHouse/setHouse.wxss */
-.setHouse{padding: 48rpx 40rpx;}
+.setHouse{padding: 48rpx 40rpx;box-sizing: border-box;}
 .setHouse .top{margin-bottom: 96rpx;}
 .setHouse .top .pic{display: block;width: 224rpx;height: 224rpx;border-radius: 8px 8px 8px 8px;margin: 0 auto 48rpx;}
-.setHouse .top .txt{font-size: 28rpx;color: rgba(255,255,255,.7);padding: 0 16rpx;text-align: center;}
+.setHouse .top .txt{font-size: 28rpx;color: rgba(255,255,255,.7);padding: 0 16rpx;text-align: center;box-sizing: border-box;}
 .setHouse .bot{}
 .setHouse .bot .qx{
     border: 1px solid rgba(255,255,255,0.2);
@@ -10,6 +10,7 @@
     border-radius: 12px 12px 12px 12px;
     margin-top: 60rpx;
     padding: 24rpx 24rpx 44rpx;
+    box-sizing: border-box;
     margin-bottom: 100rpx;
 }
 .setHouse .bot .qx .img{text-align: center;margin-bottom: 20rpx;margin-top: -60rpx;}
@@ -32,6 +33,7 @@
     border-radius: 24rpx;
     height: 92rpx;
     padding: 0 20rpx;
+    box-sizing: border-box;
     opacity: 1;
     border: 1px solid rgba(255,255,255,0.2);
 }
@@ -52,6 +54,7 @@
 	color: #ffffff;
 	margin-bottom: 32rpx;
     padding: 0 0 0 22rpx;
+    box-sizing: border-box;
 }
 .z-tit1:before{
 	content: '';

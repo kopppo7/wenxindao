@@ -49,7 +49,7 @@ export const phoneLogin = function (params) {
 
 // 修改当前手机号
 export const updatePhone = function (params) {
-    return http.get(handleURL('/updatePhone'), params);
+    return http.post(handleURL('/updatePhone'), params);
 };
 
 // 更改用户IM基础信息
@@ -105,8 +105,19 @@ export const getProDetail = function (id) {
 export const getProEvaList = function (data) {
   return http.post(handleURL('/probe/evaluateList'),data);
 }
-
 // 生命探索详情 提交评价
 export const submitScore = function (data) {
     return http.post(handleURL('/probe/insertEvaluate'),data);
-  }
+}
+// 生命探索详情 获取继续探索id
+export const getExpId = function (data) {
+  return http.post(handleURL('/userprobe/init'),data);
+}
+// 生命继续探索详情 
+export const getProExpDetail = function (data) {
+  return http.post(handleURL('/userprobe/readInfo'),data);
+}
+// 生命继续探索 提交答案
+export const submitContent = function (data) {
+  return http.post(handleURL('/userprobe/answer'),data);
+}

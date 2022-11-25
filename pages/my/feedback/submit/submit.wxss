@@ -1,6 +1,7 @@
 /* 06wode/fankuixiangqingye/fankuixiangqingye.wxss */
 .form-fk {
   padding: 32rpx 0 204rpx;
+  box-sizing: border-box;
 }
 
 .form-fk textarea {
@@ -12,6 +13,7 @@
   backdrop-filter: blur(12.2323px);
   border-radius: 12px;
   padding: 24rpx;
+  box-sizing: border-box;
 }
 
 .photo-box {
@@ -47,6 +49,7 @@
   display: block;
   margin-bottom: 64rpx;
   padding: 0 24rpx;
+  box-sizing: border-box;
 }
 
 .form-fk .submit {
@@ -94,6 +97,7 @@
 
 .del-img {
   padding: 60rpx 0rpx;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;

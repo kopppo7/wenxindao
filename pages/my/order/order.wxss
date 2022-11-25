@@ -6,7 +6,8 @@
 	background: rgba(182, 178, 207, 0.12);
 	backdrop-filter: blur(12px);
 	border-radius: 16rpx;
-	padding: 24rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
 }
 .order-list .s1{
 	display: flex;
@@ -32,6 +33,7 @@
   color: #ffffff;
   background: linear-gradient(to right, #82EAEA,#5C76FE);
   padding: 2rpx 4rpx;
+  box-sizing: border-box;
   font-size: 24rpx;
   border-radius: 6rpx;
   margin-right: 10rpx;
@@ -40,6 +42,7 @@
   color: #ffffff;
   background: linear-gradient(to right, #FDB988,#FE5C5C);
   padding: 2rpx 4rpx;
+  box-sizing: border-box;
   font-size: 24rpx;
   border-radius: 6rpx;
   margin-right: 10rpx;
@@ -88,7 +91,8 @@
 	margin-left: 24rpx;
 }
 .order-list .s4{
-	padding: 24rpx 0;
+  padding: 24rpx 0;
+  box-sizing: border-box;
 	border-top: 1px dashed rgba(255, 255, 255, 0.2);
 	margin-top: 24rpx;
 }

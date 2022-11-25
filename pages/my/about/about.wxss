@@ -1,6 +1,7 @@
 /* 06wode/guanyu/guanyu.wxss */
 .z-about{
-	padding: 120rpx 0 0;
+  padding: 120rpx 0 0;
+  box-sizing: border-box;
 	text-align: center;
 }
 .z-about .title1{

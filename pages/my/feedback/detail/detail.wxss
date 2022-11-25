@@ -1,13 +1,15 @@
 /* 06wode/bangzhuxiangqing/bangzhuxiangqing.wxss */
 .z-text{
 	color: #ffffff;
-	padding: 0px 40rpx 40rpx;
+  padding: 0px 40rpx 40rpx;
+  box-sizing: border-box;
 	background: rgba(182, 178, 207, 0.18);
 	backdrop-filter: blur(12px);
 }
 .z-text .title{
 	font-size: 36rpx;
-	padding: 32rpx 0;
+  padding: 32rpx 0;
+  box-sizing: border-box;
 	margin-bottom: 36rpx;
 	border-bottom: 1px solid rgba(182, 178, 207, 0.18);
 }

@@ -8,7 +8,7 @@
         <view class="item">
             <view class="l">手机号绑定</view>
             <view class="r">
-                25151518855
+                {{userInfo.phone}}
                 <view class="btn" catchtap="changeTel">更换</view>
             </view>
         </view>
@@ -19,7 +19,7 @@
     </view>
 </view>
 <view class="bot-btns">
-    <view class="btn btn1">退出登录</view>
+    <view class="btn btn1" catchtap="lagout">退出登录</view>
     <view class="btn btn2">注销账号</view>
 </view>
 
@@ -29,14 +29,15 @@
     <view class="pop-mask"></view>
     <view class="pop-win2" style="height: 594rpx">
         <view class="error-box" wx:if="{{errorStatus}}">
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/close-x.png"></image>
-            {{errorTxt}}
+            <image catchtap="closeError" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/close-x.png"></image>
+            <text >{{errorTxt}}</text>
         </view>
         <view class="pop-tit">验证当前手机号</view>
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <view class="desc">换绑新的手机号后，可以用新手机号登录</view>
-        <input type="number" placeholder="输入手机号" class="inp-tel"/>
-        <view class="btn-code">获取短信验证码</view>
+        <input bindblur="getPhone" value="{{phone}}" type="number" placeholder="输入手机号" class="inp-tel"/>
+        <view class="btn-code" catchtap="send" wx:if="{{!sending}}">获取短信验证码</view>
+        <view class="btn-code disabled" wx:else>{{countdown}}s后重新获取信</view>
     </view>
 </block>
 <!--输入验证码-->
@@ -45,9 +46,9 @@
     <view class="pop-win2" style="height: 482rpx">
         <view class="pop-tit">输入验证码</view>
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
-        <input type="number" placeholder="输入验证码" placeholder-style="color: #ffffff;opacity: .6;letter-spacing: 0px;"
+        <input type="number" bindinput="getCode" placeholder="输入验证码" placeholder-style="color: #ffffff;opacity: .6;letter-spacing: 0px;"
                class="inp-tel inp-code"/>
-        <view bindtap="send" class="btn-code {{isShow ? '' : 'hide'}}">重新获取
-            <text wx:if="{{!isShow}}">{{countdown}}″</text></view>
+        <view bindtap="send" class="btn-code {{!sending ? '' : 'hide'}}">重新获取
+            <text wx:if="{{sending}}">{{countdown}}″</text></view>
     </view>
 </block>

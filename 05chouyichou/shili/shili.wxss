@@ -1,6 +1,7 @@
 /* 05chouyichou/shili/shili.wxss */
 page{
     padding: 50rpx 0 80rpx;
+    box-sizing: border-box;
 }
 .example-box{
     text-align: center;
@@ -29,7 +30,8 @@ page{
 	border-radius: 24rpx;
 	display: block;
 	margin-bottom: 24rpx;
-	padding: 0 24rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
 }
 .example-form .textarea-box{
 	position: relative;
@@ -43,7 +45,8 @@ page{
 	border: 0.5px solid rgba(255, 255, 255, 0.2);
 	backdrop-filter: blur(12.2323px);
 	border-radius: 24rpx;
-	padding: 24rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
 }
 .example-form .textarea-box .btn-yuyin{
 	position: absolute;
@@ -80,7 +83,7 @@ page{
 }
 .label-radio{
 	position: relative;
-	padding-left: 56rpx;
+	padding-left: 56rpx;box-sizing: border-box;
 	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAANRSURBVHgB7ZhPctMwFMY/SZ6wzQ0wJyBZsI67BAYmOUF7g8IJmp6A9gb0BO6008KuzooFAwknIEfosmRiifcS/6tLkWLHhQH/VpFjS/r0np70HtDS0tLS8j8jsCXCcNrtQA+lkgNt0BMCPj3uJn9fG4O5FJhp6MkilqejUf8aW6C2gA/h1DdK7gN6D/mEXQZ+fxPjkITMUYPKAnjFHykc0M83qMfRj7WQShapJGC96riin37pr4hcZaI1oiUwT1eXxXpATyndM0buknv1St/NScROFWtsLOAinPaEQliafBTTKr4a9SOXPs7DaaDW1gsKj+cmxujlqD/DBmwk4Bcrz2Y/fPG6f4QKXJ5N2f1YSLp3NraEs4DE56fIJ19pxcqsLCrJoiLvl0T0XfeEhCPJhvWT5vU2Js9wH0ZjhLU1GT8ZywknCySu873w6G1Vt7mPxJ3epW2ywhMXV3KzgBLFFYm2PXkm6TNK2x2pncKzVQD7voHZS9scbdAQxb6FkLs8tu0bq4AOMMwaBjPXUFmFpO8oaXY7Sg9t31gFSCUGWUPoEzSMMXqSjQ05sL1vFaCFyU7NOJa1o451PC2j9Ded6j3b+1YBwuQnLl0PGhdAV455Pvidq8odXKJQtpG2dQX+Hc9vh876m/hvx0VAtuoXF18fo2FKodNqcasAI3Kf1AvxBA3jYZlvXFPYD/dg38TafMteljpAwyglMwGUN1iDht0CWkR5h/a4XBdDJ3D6m/Nn2/tWAQvgFLkvBpyMoCHOw8+BKMR+Tv5t31gFcOik0zE7gdUGV91NUcrL+uak3yVsO4VRqWXx9hlcnn2pm8jf4eP5dB+FFPPG8dLoJIAPF7LCceGzA86ksCW4L6oljdM2XSGOXdNK54NsoeW4ENa6nNhvQ0ShSJDlxQudi7HhLID9UWjsFET4NPBVHXditxG3iwRpUu98ZalWVrmdhDNUVllSWeVZ5NIHR5tkwwaFx82XVVJWObKklSvdFsl3Z4JyhjjWsyW8WbqSYfjJ9+D5nucN6J2gNPHV5B+ssJWyKuZKPabDbR814A3LPv+gpcUiiTXG1NPuBp9xtfqEJn70x4q7ZdbldQxpfwQGeHpveT3GhE/3h8gtWlpaWlr+fX4CVmNuVXC0fEAAAAAASUVORK5CYII=) no-repeat left center;
 	-webkit-background-size: 48rpx auto;background-size: 48rpx auto;
 	margin-right: 32rpx;
@@ -111,6 +114,7 @@ page{
 }
 .pop-win2 .p1{
     padding: 0 48rpx;
+    box-sizing: border-box;
     text-align: center;
 }
 

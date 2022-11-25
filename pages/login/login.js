@@ -98,31 +98,32 @@ Page({
      */
     onLoad(options) {
         var that = this;
-        if (wx.getStorageSync('tokenKey')) {
-          wx.redirectTo({
-            url: '/pages/index/index',
-          })
-        } else {
-          wx.getSetting({
-              success(res) {
-                  if (res.authSetting['scope.userInfo']) {
-                      // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-                      let user = {};
-                      wx.getUserInfo({
-                          success: function(res) {
-                              console.log(res.userInfo)
-                              user.nickname = res.userInfo.nickName
-                              user.headimgurl = res.userInfo.avatarUrl
-                              user.citys = res.userInfo.city
-                              that.setData({
-                                  useInfor: user
-                              })
-                          }
-                      })
-                  }
+        // if (wx.getStorageSync('tokenKey')) {
+        //   debugger
+        //   wx.redirectTo({
+        //     url: '/pages/index/index',
+        //   })
+        // } else {
+        // }
+        wx.getSetting({
+          success(res) {
+              if (res.authSetting['scope.userInfo']) {
+                  // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+                  let user = {};
+                  wx.getUserInfo({
+                      success: function(res) {
+                          console.log(res.userInfo)
+                          user.nickname = res.userInfo.nickName
+                          user.headimgurl = res.userInfo.avatarUrl
+                          user.citys = res.userInfo.city
+                          that.setData({
+                              useInfor: user
+                          })
+                      }
+                  })
               }
-          })
-        }
+          }
+      })
     },
 
     /**

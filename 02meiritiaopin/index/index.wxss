@@ -1,6 +1,7 @@
 /* 02meiritiaopin/index/index.wxss */
 page {
-	padding: 20rpx 0 88rpx;
+  padding: 20rpx 0 88rpx;
+  box-sizing: border-box;
 }
 
 .m-p1 {
@@ -35,7 +36,8 @@ page {
 }
 
 .date-count .count {
-	padding: 40rpx 0 0;
+  padding: 40rpx 0 0;
+  box-sizing: border-box;
 }
 
 .date-count .count .s1 {
@@ -61,7 +63,8 @@ page {
 }
 .m-ask .item.dian{
 	position: relative;
-	padding-left: 40rpx;
+  padding-left: 40rpx;
+  box-sizing: border-box;
 }
 .m-ask .item.dian::before{
 	content: "";
@@ -95,7 +98,8 @@ page {
 	border: 0.5px solid rgba(255, 255, 255, 0.2);
 	backdrop-filter: blur(12.2323px);
 	border-radius: 24rpx;
-	padding: 24rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
 }
 
 .form-z .textarea-box textarea {
@@ -222,7 +226,8 @@ page {
 	border-radius: 24rpx;
 	height: 320rpx;
 	padding: 4rpx;
-	clip-path: inset(0 0 round 5px);
+  clip-path: inset(0 0 round 5px);
+  box-sizing: border-box;
 }
 
 .card-list .item .pic image {

@@ -37,6 +37,7 @@
 }
 .tag-list .tag{
   padding: 8rpx 16rpx;
+  box-sizing: border-box;
   border-radius: 8rpx;
   background: linear-gradient(224.5deg, rgba(137, 235, 241, 0.2) 1.92%, rgba(137, 235, 241, 0.08) 92.09%);
 backdrop-filter: blur(12.2323px);

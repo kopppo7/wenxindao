@@ -25,7 +25,8 @@ page{
 .intro-row1 .txt .s2 span{color: #fff;background-color: transparent;}
 .intro-row1 .txt .s3{
 	font-size: 24rpx;
-	padding-left: 40rpx;
+  padding-left: 40rpx;
+  box-sizing: border-box;
 	margin-bottom: 26rpx;
 	color: #ffb58c;
 	background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIHZpZXdCb3g9IjAgMCAxNiAxNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iOCIgY3k9IjguNSIgcj0iNS41IiBzdHJva2U9IiNGRkI1OEMiLz4KPHBhdGggZD0iTTExIDguNTQ1NDZIOFY0LjU0NTQ2IiBzdHJva2U9IiNGRkI1OEMiLz4KPC9zdmc+Cg==) no-repeat left center;
@@ -37,7 +38,8 @@ page{
 .intro-row1 .txt .s4 text{
 	font-size: 22rpx;
 	min-width: 120rpx;
-	padding: 0 10rpx;
+  padding: 0 10rpx;
+  box-sizing: border-box;
 	height: 48rpx;
 	line-height: 48rpx;
 	text-align: center;
@@ -51,13 +53,15 @@ page{
 	background: rgba(182, 178, 207, 0.12) url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyLjY2NjcgOEw3LjQ4MTIxIDIuODE0NTVDNy4yMjA4NiAyLjU1NDIgNi43OTg3NSAyLjU1NDIgNi41Mzg0IDIuODE0NTVDNi4yNzgwNSAzLjA3NDkgNi4yNzgwNSAzLjQ5NzAxIDYuNTM4NCAzLjc1NzM2TDExLjcyMzggOC45NDI4MUwxMi42NjY3IDhaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTEuNzIzOCA3LjA1NzE5TDYuNTM4NCAxMi4yNDI2QzYuMjc4MDUgMTIuNTAzIDYuMjc4MDUgMTIuOTI1MSA2LjUzODQgMTMuMTg1NEM2Ljc5ODc1IDEzLjQ0NTggNy4yMjA4NiAxMy40NDU4IDcuNDgxMjEgMTMuMTg1NEwxMi42NjY3IDhMMTEuNzIzOCA3LjA1NzE5WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==) no-repeat right 24rpx center;
 	-webkit-background-size: 32rpx auto;background-size: 32rpx auto;
 	border-radius: 8px;
-	padding: 0 24rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
 	margin-bottom: 48rpx;
 }
 .intro-row2 text{
 	font-size: 28rpx;
 	line-height: 88rpx;
-	padding-left: 44rpx;
+  padding-left: 44rpx;
+  box-sizing: border-box;
 	background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTguMTQyODYgMTUuMjg1N0MxMi4wODc3IDE1LjI4NTcgMTUuMjg1NyAxMi4wODc3IDE1LjI4NTcgOC4xNDI4NkMxNS4yODU3IDQuMTk4IDEyLjA4NzcgMSA4LjE0Mjg2IDFDNC4xOTggMSAxIDQuMTk4IDEgOC4xNDI4NkMxIDEyLjA4NzcgNC4xOTggMTUuMjg1NyA4LjE0Mjg2IDE1LjI4NTdaTTguMTQyODYgMTMuODU3MUM0Ljk4Njg2IDEzLjg1NzEgMi40Mjg1NyAxMS4yOTg5IDIuNDI4NTcgOC4xNDI4NkMyLjQyODU3IDQuOTg2ODYgNC45ODY4NiAyLjQyODU3IDguMTQyODYgMi40Mjg1N0MxMS4yOTg5IDIuNDI4NTcgMTMuODU3MSA0Ljk4Njg2IDEzLjg1NzEgOC4xNDI4NkMxMy44NTcxIDExLjI5ODkgMTEuMjk4OSAxMy44NTcxIDguMTQyODYgMTMuODU3MVoiIGZpbGw9IiNGRkI1OEMiLz4KPHBhdGggZD0iTTcuNDQ2NSA5LjMzMDI5TDcuMzY1OTMgNS4zOTI4NlY1LjIzMkM3LjM5Mjc5IDQuNzUgNy42MzM5MyA0LjQ4MjI5IDguMDg5MzYgNC40Mjg1N0M4LjU0NDUgNC40ODIyOSA4Ljc4NTY0IDQuNzUgOC44MTIyMiA1LjIzMjI5VjUuMzkyODZMOC43MzIyMiA5LjI5QzguNjc4NSA5LjY2NTE1IDguNDY0MjIgOS44Nzk0MyA4LjA4OTM2IDkuOTMyODZDNy42ODczNiA5LjkwNjI5IDcuNDczMDcgOS43MDU0MyA3LjQ0NjUgOS4zMzAyOVpNOC4wNDkwNyAxMC4zNzUxQzguNTU3OTMgMTAuNDAxNyA4LjgyNTkzIDEwLjY2OTQgOC44NTI1IDExLjE3ODZDOC44MjU5MyAxMS42NjA5IDguNTU4MjIgMTEuOTE1MSA4LjA0OTA3IDExLjk0MkM3LjU2Njc5IDExLjkxNTEgNy4zMTI1IDExLjY2MDkgNy4yODU2NCAxMS4xNzg2QzcuMzEyNSAxMC42Njk3IDcuNTY2NzkgMTAuNDAxNyA4LjA0OTA3IDEwLjM3NDlWMTAuMzc1MVoiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl81MF8xMDg3KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJwYWludDBfbGluZWFyXzUwXzEwODciIHgxPSI4IiB5MT0iMTIuNzg1NyIgeDI9IjkiIHkyPSIzLjc4NTcyIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIG9mZnNldD0iMC4wMzIzNzUxIiBzdG9wLWNvbG9yPSIjRkZGNENEIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0ZGNTgzMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjwvc3ZnPgo=) no-repeat left center;
 	-webkit-background-size: 32rpx auto;background-size: 32rpx auto;
 }
@@ -65,7 +69,8 @@ page{
 	position: relative;
 	font-size: 36rpx;
 	color: #ffffff;
-	padding-left: 22rpx;
+  padding-left: 22rpx;
+  box-sizing: border-box;
 	margin-bottom: 32rpx;
 }
 .z-tit1:before{
@@ -85,7 +90,8 @@ page{
 .z-tit2{
 	position: relative;
 	font-size: 30rpx;
-	padding-left: 20rpx;
+  padding-left: 20rpx;
+  box-sizing: border-box;
 	margin-bottom: 24rpx;
 }
 .z-tit2:before{
@@ -103,7 +109,8 @@ page{
 	background: rgba(182, 178, 207, 0.12);
 	border-radius: 16rpx;
 	padding: 24rpx;
-	margin-bottom: 24rpx;
+  margin-bottom: 24rpx;
+  box-sizing: border-box;
 }
 .intro-row3 .desc{
 	font-size: 26rpx;
@@ -172,7 +179,8 @@ page{
 	z-index: 100;
 }
 .bottom-box .box{
-	padding: 0 40rpx;
+  padding: 0 40rpx;
+  box-sizing: border-box;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
