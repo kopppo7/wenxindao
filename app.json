@@ -15,12 +15,12 @@
       ]
     },
     {
-      "root": "03shenmingtansuo",
+      "root": "probe",
       "name": "生命探索",
       "pages": [
         "index/index",
-        "zhutijieshao/zhutijieshao",
-        "tansuo/tansuo",
+        "detail/detail",
+        "play/play",
         "voince/index"
       ]
     },

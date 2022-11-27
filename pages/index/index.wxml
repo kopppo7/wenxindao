@@ -4,7 +4,7 @@
         <navigator url="/02meiritiaopin/index/index" hover-class="none" class="item">
             <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title1.png"></image>
         </navigator>
-        <navigator url="/03shenmingtansuo/index/index" hover-class="none" class="item">
+        <navigator url="/probe/index/index" hover-class="none" class="item">
             <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title2.png"></image>
         </navigator>
         <navigator url="/04zhutipaidui/index/index" hover-class="none" class="item">
