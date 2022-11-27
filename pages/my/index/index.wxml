@@ -18,41 +18,80 @@
             我的动态
         </navigator>
     </view>
+    <!-- 切换 -->
+    <view class="h-dt-tab">
+        <view class="h-dt-tab-item {{cur_tab === index ? 'on' : ''}}"
+              bindtap="changeCurTab"
+              data-index="{{index}}"
+              data-type="{{item.type}}"
+              wx:for="{{tab}}" wx:key="index">
+            <view class="title">{{item.title}}</view>
+            <view class="num">{{index == 0 ?totalSum :item.num}}</view>
+        </view>
+    </view>
     <view class="mine-row3">
         <view class="title-box">
             <view class="title">我的动态</view>
             <!-- <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-filter.svg"></image> -->
         </view>
-        <view class="trend-list">
-          
+        <view class="trend-list">     
             <view class="trend-item" wx:for="{{list}}"  wx:for-item="item" wx:key="id">
+               <!-- 每日调频  wx:if="{{item.category==0}}" -->
+            <view class="trend-item" wx:if="{{item.category==0}}" >
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
-                     <view class="dot">
+                     <view class="dot" data-index="{{index}}" bindtap="openPop">
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
-                    <view class="title">每日调频</view>
-                    <view class="type-list">
-                        <view class="type-item c1">情绪调节</view>
-                        <view class="type-item c2">小结</view>
+                    <view class="title title0">{{item.categoryText}}</view>
+                    <view class="type-list" wx:if="{{item.target.length > 0}}">
+                        <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
                     <view class="pictxt">
-                        <image class="pic" src="{{item.cardUrl}}"></image>
                         <view class="txt">
-                            图片行是一个人打着一个管子，努力平衡走在钢丝上。相信目标的重要性，就算是走在钢丝上，找到好的平衡点。一天里可能需要处理的东西很多，可以通过专注力训练，轻而易举获得好本领。
+                          {{item.contents.data[0].txt}}
                         </view>
+                        <image class="pic"  src="{{item.contents.imgUrl}}"></image>
                     </view>
                 </view>
             </view>
-            <!-- <view class="trend-item">
-                <view class="time mb12">2022/3/4 23:33</view>
+            <!-- 生命探索 wx:if="{{item.category==2}}" -->
+            <view class="trend-item"  wx:if="{{item.category==2}}">
+                <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
-                     <view class="dot">
+                    <view class="dot" data-index="{{index}}"bindtap="openPop">
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
-                    <view class="title">主题派对</view>
-                    <view class="type-list">
-                        <view class="type-item c3">原生家庭-性格探索</view>
+                    <view class="title title1">{{item.categoryText}}生命探索</view>
+                    <view class="type-list" wx:if="{{item.target.length > 0}}">
+                        <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
+                    </view>
+                    <view class="imgtxt">
+                        <image mode="widthFix" class="" src="{{item.contents.imgUrl}}"></image>
+                        <view class="txt">
+                            {{item.contents[0].txt}}
+                        </view>
+                    </view>
+                    <!-- <view class="count-box">
+                        <view class="avatar-box">
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
+                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
+                        </view>
+                        <view class="txt"><text>3</text>人已参与</view>
+                    </view> -->
+                </view>
+            </view>
+            <!-- 主题派对 wx:if="{{item.category==1}}" -->
+            <view class="trend-item" wx:if="{{item.category==1}}" >
+                <view class="time mb12">{{item.addTime}}</view>
+                <view class="box">
+                    <view class="dot" data-index="{{index}}" bindtap="openPop">
+                        <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
+                    </view>
+                    <view class="title title2">{{item.categoryText}}主题派对</view>
+                    <view class="type-list" wx:if="{{item.target.length > 0}}">
+                        <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
                     <view class="pic-list">
                         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
@@ -67,36 +106,11 @@
                             <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
                             <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
                         </view>
-                        <view class="txt"><text>3</text>人已参与</view>
+                        <!-- <view class="txt"><text>3</text>人已参与</view> -->
                     </view>
-                </view>
+                </view> 
+              </view>
             </view>
-            <view class="trend-item">
-                <view class="time mb12">2022/3/4 23:33</view>
-                <view class="box">
-                     <view class="dot">
-                        <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
-                    </view>
-                    <view class="title">生命探索</view>
-                    <view class="type-list">
-                        <view class="type-item c3">原生家庭-性格探索</view>
-                    </view>
-                    <view class="imgtxt">
-                        <image mode="widthFix" class="mb24" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
-                        <view class="txt">
-                            今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这种性格给我们带来什么样的影响！
-                        </view>
-                    </view>
-                    <view class="count-box">
-                        <view class="avatar-box">
-                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
-                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
-                            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
-                        </view>
-                        <view class="txt"><text>3</text>人已参与</view>
-                    </view>
-                </view>
-            </view> -->
         </view>
     </view>
 </view>
@@ -109,5 +123,13 @@
     <view class="item" bindtap="Init()">
         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-nav2.png"></image>
         <view class="txt">我的</view>
+    </view>
+</view>
+
+<view class="page-bot" wx:if="{{showPop}}">
+    <view class="page-mask" bindtap="closePop"></view>
+    <view class="page-bot-btn">
+        <view class="btn" catchtap="deleteItem">删除</view>
+        <view class="btn" bindtap="closePop">取消</view>
     </view>
 </view>

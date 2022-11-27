@@ -180,6 +180,25 @@ Page({
     })
     getProDetail(id).then((res) => {
       wx.hideLoading()
+      let info = wx.getSystemInfo()
+      // debugger
+      res.data.data.activity = res.data.data.activity.replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
+.replace(/<p>/ig, '<p style="font-size: 15px; line-height: 25px;">')
+.replace(/<img([\s\w"-=\/\.:;]+)((?:(height="[^"]+")))/ig, '<img$1')
+.replace(/<img([\s\w"-=\/\.:;]+)((?:(width="[^"]+")))/ig, '<img$1')
+.replace(/<img([\s\w"-=\/\.:;]+)((?:(style="[^"]+")))/ig, '<img$1')
+.replace(/<img([\s\w"-=\/\.:;]+)((?:(alt="[^"]+")))/ig, '<img$1')
+.replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="width: 100px;height:auto" $1');
+
+res.data.data.introduce = res.data.data.introduce.replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
+.replace(/<p>/ig, '<p style="font-size: 15px; line-height: 25px;">')
+.replace(/<img([\s\w"-=\/\.:;]+)((?:(height="[^"]+")))/ig, '<img$1')
+.replace(/<img([\s\w"-=\/\.:;]+)((?:(width="[^"]+")))/ig, '<img$1')
+.replace(/<img([\s\w"-=\/\.:;]+)((?:(style="[^"]+")))/ig, '<img$1')
+.replace(/<img([\s\w"-=\/\.:;]+)((?:(alt="[^"]+")))/ig, '<img$1')
+.replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="width: 200px;height:auto" $1');
+
+
       this.setData({
         product: res.data.data,
         labels: res.data.data.labels ? res.data.data.labels.split(',') : []

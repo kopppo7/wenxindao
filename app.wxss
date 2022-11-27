@@ -263,6 +263,15 @@ button::after{
 	color: #ffffff;
 	margin-bottom: 16rpx;
 }
+.trend-list .box .title0{
+  color:#B28BDE ;
+}
+.trend-list .box .title1{
+  color:#FFB58C ;
+}
+.trend-list .box .title2{
+  color:#71D7A0 ;
+}
 .trend-list .box .type-list{
 	display: flex;
 	margin-bottom: 32rpx;
@@ -274,7 +283,7 @@ button::after{
   box-sizing: border-box;
 	height: 56rpx;
 	backdrop-filter: blur(12.2323px);
-	border-radius: 66rpx;
+	border-radius: 8rpx;
 	margin-right: 16rpx;
 }
 .trend-list .box .type-list .type-item.c1{
@@ -290,17 +299,20 @@ button::after{
 	color: #62C9DC;
 }
 .trend-list .box .pictxt{
-	display: flex;
+	/* display: flex; */
 }
 .trend-list .box .pictxt .pic{
-	flex: 0 0 168rpx;
+	/* flex: 0 0 168rpx;
 	height: 248rpx;
-	margin-right: 24rpx;
+  margin-right: 24rpx; */
+  width: 168rpx ;
+  height: 248rpx;
 	border-radius: 16rpx;
 }
 .trend-list .box .pictxt .txt{
 	font-size: 24rpx;
-	line-height: 40rpx;
+  line-height: 32rpx;
+  margin-bottom: 16rpx;
 }
 .trend-list .pic-list{
 	display: flex;
@@ -340,11 +352,16 @@ button::after{
 .trend-list .box .imgtxt{
 	margin-bottom: 32rpx;
 }
+.trend-list .box .imgtxt image{
+  width: 100%;
+  border-radius: 24rpx;
+}
 
 
 /*底部操作*/
 .page-bot{
-	position: fixed;
+  position: fixed;
+  z-index: 1000;
 	bottom: 0;
 	left: 0;
 	width: 100%;

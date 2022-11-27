@@ -35,6 +35,12 @@ export const login = (callback) => {
 }
 export const checkLogInfo = (token,callback) => {
   getUserMsg(token).then(userInfo=>{
+    if(userInfo.data.ret == 201 ) {
+      wx.redirectTo({
+        url: '/pages/auth/auth',
+      })
+      return;
+    }
     var user = {
       phone:userInfo.data.data.phone,
       wechatName: userInfo.data.data.wechatName,

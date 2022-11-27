@@ -65,6 +65,14 @@ export const findByOrderList = function (params) {
 export const findMyTrends = function (params) {
   return http.post(handleURL('/my/mytrends'),params);
 }
+//查询我的动态 每日调频 生命探索 主题派对
+export const findMyUser = function (params) {
+  return http.post(handleURL('/my/findByLogCountForUser'),params);
+}
+//查询我的动态 删除
+export const deleteMyUser = function (params) {
+  return http.post(handleURL('/my/deleteLogForId'),params);
+}
 //查询公开的动态
 export const findPublicTrends = function (params) {
   return http.post(handleURL('/my/publictrends'),params);
