@@ -69,6 +69,9 @@ Page({
         page:this.data.page,
         pageSize:20
       }).then(res=>{
+        for(var i=0;i<res.data.data.list.length;i++){
+          res.data.data.list[i].data = JSON.parse(res.data.data.list[i].contents);
+        }
         if(this.data.page==1){
           this.data.list = res.data.data.list;
         }else{
@@ -78,6 +81,7 @@ Page({
           list:this.data.list,
           total:res.data.data.total
         })
+        console.log(this.data.list)
         wx.stopPullDownRefresh()
         wx.hideLoading();
       }).catch(err=>{

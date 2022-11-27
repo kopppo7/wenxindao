@@ -43,35 +43,34 @@ Page({
                 code:res.code
               }).then(res=>{
                 if(res.data.ret==200){
-                  login();
-                  // var json =JSON.parse(res.data.data);
-                  // var userInfo = getLoginInfo();
-                  // if (userInfo != null&&userInfo!='') {
-                  //   userInfo.phone = json.phoneNumber;
-                  // } else {
-                  //   userInfo = {
-                  //     phone: json.phoneNumber,
-                  //     wechatName: '',
-                  //     headImg: ''
-                  //   };
-                  // }
-                  // setLoginInfo(userInfo);
-                  // if(userInfo.wechatName==''||userInfo.wechatName==null){
-                  //   wx.redirectTo({
-                  //     url: '/pages/auth/auth',
-                  //   })
-                  // }else{
-                  //   updateUserMsg({
-                  //     phone:json.phoneNumber,
-                  //     nickname:userInfo.wechatName,
-                  //     headimgurl:userInfo.headImg
-                  //   }).then(up=>{
-                  //     wx.hideLoading();
-                  //     wx.redirectTo({
-                  //       url: '/pages/index/index',
-                  //     })
-                  //   })
-                  // }
+                  var json =JSON.parse(res.data.data);
+                  var userInfo = getLoginInfo();
+                  if (userInfo != null&&userInfo!='') {
+                    userInfo.phone = json.phoneNumber;
+                  } else {
+                    userInfo = {
+                      phone: json.phoneNumber,
+                      wechatName: '',
+                      headImg: ''
+                    };
+                  }
+                  setLoginInfo(userInfo);
+                  if(userInfo.wechatName==''||userInfo.wechatName==null){
+                    wx.redirectTo({
+                      url: '/pages/auth/auth',
+                    })
+                  }else{
+                    updateUserMsg({
+                      phone:json.phoneNumber,
+                      nickname:userInfo.wechatName,
+                      headimgurl:userInfo.headImg
+                    }).then(up=>{
+                      wx.hideLoading();
+                      wx.redirectTo({
+                        url: '/pages/index/index',
+                      })
+                    })
+                  }
                 }else{
                   wx.hideLoading();
                   wx.showToast({

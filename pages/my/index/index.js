@@ -1,6 +1,6 @@
 import { login } from '../../../utils/common'
 import {
-  findPublicTrends
+  findMyTrends
 } from "../../../utils/api";
 import {
   getLoginInfo
@@ -39,7 +39,7 @@ Page({
     wx.showLoading({
       title: '加载中...',
     });
-    findPublicTrends({
+    findMyTrends({
       page:this.data.page,
       pageSize:20
     }).then(res=>{

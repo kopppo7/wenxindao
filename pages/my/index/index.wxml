@@ -24,6 +24,7 @@
             <!-- <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-filter.svg"></image> -->
         </view>
         <view class="trend-list">
+          
             <view class="trend-item" wx:for="{{list}}"  wx:for-item="item" wx:key="id">
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
