@@ -49,7 +49,7 @@ export const phoneLogin = function (params) {
 
 // 修改当前手机号
 export const updatePhone = function (params) {
-    return http.get(handleURL('/updatePhone'), params);
+    return http.post(handleURL('/updatePhone'), params);
 };
 
 // 更改用户IM基础信息

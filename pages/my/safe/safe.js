@@ -21,12 +21,12 @@ Page({
         codePopStatus: false,
 
 
-        countdown: 3,
-        isShow: false,
+        countdown: 10,
         interval:'', // 定时器
         sending:false, // 发送中
         code: '', // 短信验证码
         phone: '',
+        key: '', // 接口返回的
         errorStatus: false,
         errorTxt: '手机号格式输入错误',
 
@@ -45,15 +45,15 @@ Page({
       if(e.detail.value.length == 6){
         updatePhone({
           phone: this.data.phone,
-          key: '',
+          key: this.data.key,
           code: e.detail.value
         }).then((res) => {
-
+          updateInfo()
         })
       }
     },
     // 更新信息
-    async updateInfi() {
+    async updateInfo() {
       await login();
       let info = getLoginInfo();
       this.setData({
@@ -87,21 +87,21 @@ Page({
     //倒计时
     count:function(){
         this.setData({
-          sending: true
+          sending: true,
+          codePopStatus:true,
+          telPopStatus:false,
         })
         this.data.sending = true
         let that = this
         this.interval = setInterval(function () {
           let countdown = that.data.countdown;
-          if(countdown >= 1) {
+          if(countdown > 1) {
             countdown--;
             that.setData({
-                isShow: false,
                 countdown: countdown
             })
           } else {
             that.setData({
-              isShow: true,
               countdown: 60,
               sending: false
             })
@@ -131,6 +131,9 @@ Page({
           phone: this.data.phone
         }).then((res) => {
           debugger
+          that.setData({
+            key: res.data.data
+          })
           that.count()
         })
     },

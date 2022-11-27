@@ -48,7 +48,7 @@
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <input type="number" bindinput="getCode" placeholder="输入验证码" placeholder-style="color: #ffffff;opacity: .6;letter-spacing: 0px;"
                class="inp-tel inp-code"/>
-        <view bindtap="send" class="btn-code {{isShow ? '' : 'hide'}}">重新获取
-            <text wx:if="{{!isShow}}">{{countdown}}″</text></view>
+        <view bindtap="send" class="btn-code {{!sending ? '' : 'hide'}}">重新获取
+            <text wx:if="{{sending}}">{{countdown}}″</text></view>
     </view>
 </block>
