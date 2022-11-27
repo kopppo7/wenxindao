@@ -152,7 +152,7 @@ Page({
   // 继续探索
   toExplore() {
     if (this.data.product.userProbeId) {
-      wx.navigateTo({
+      wx.redirectTo({
         url: '../play/play?id=' + this.data.product.userProbeId,
       })
     } else {
@@ -164,7 +164,7 @@ Page({
         probeId: this.data.product.id
       }).then((res) => {
         wx.hideLoading()
-        wx.navigateTo({
+        wx.redirectTo({
           url: '../play/play?id=' + res.data.data.id,
         })
       })

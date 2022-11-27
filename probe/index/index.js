@@ -99,13 +99,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    getCateList(0).then((res) => {
-      this.setData({
-        category: res.data,
-        categoryId: res.data[0].id
-      })
-      this.getList()
-    })
+    // getCateList(0).then((res) => {
+    //   this.setData({
+    //     category: res.data,
+    //     categoryId: res.data[0].id
+    //   })
+    //   this.getList()
+    // })
 
   },
 
@@ -120,7 +120,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    getCateList(0).then((res) => {
+      this.setData({
+        category: res.data,
+        categoryId: res.data[0].id
+      })
+      this.getList()
+    })
   },
 
   /**

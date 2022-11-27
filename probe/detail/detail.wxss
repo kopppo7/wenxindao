@@ -237,7 +237,8 @@ page{
 }
 .buyBox .progressNum{
   background: #7461E7;
-  width: 90%;
+  /* width: 90%; */
+  flex: 1;
   font-size: 26rpx;
 	height: 88rpx;
 	line-height: 88rpx;
