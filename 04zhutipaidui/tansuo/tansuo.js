@@ -1,5 +1,5 @@
 // 03shenmingtansuo/tansuo/tansuo.js
-// import SDK from '../../NERTC_Miniapp_SDK_v4.6.11'
+import NERTC from '../../NERTC_Miniapp_SDK_v4.6.11'
 import SDK from '../../NIM_Web_SDK_miniapp_v9.6.3'
 import {
     createBaoRoom,
@@ -140,7 +140,7 @@ Page({
         }
         nim = SDK.getInstance({
             debug: false, // 是否开启日志，将其打印到console。集成开发阶段建议打开。
-            appKey: '7bee3b2342a67bdcf975ce177a142dee',
+            appKey: '8ee2018b307664fbf79070ed4570ac26',
             account: account,
             token: token || '',
             db: false, //若不要开启数据库请设置false。SDK默认为true。
@@ -276,13 +276,14 @@ Page({
         }
     },
     // 发送消息
-    sendMsg () {
+    sendMsg (val) {
+        console.log(val.detail.value);
         var that = this;
         console.log(this.data.teamId);
         var msg = nim.sendText({
             scene: 'team',
             to: that.data.teamId,
-            text: 'hello',
+            text: val.detail.value,
             done: that.pushMsg
         });
         console.log('正在发送p2p text消息, ' + msg.idClient);
@@ -290,12 +291,17 @@ Page({
     pushMsg (error, msg) {
         console.log(msg);
         console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error ? '成功' : '失败') + ', id=' + msg.idClient);
+        var msgObj = {
+            fromNick:msg.fromNick,
+            text:msg.text,
+        }
+        APP.globalData.mesList.push(msgObj)
     },
     onDismissTeam () { },
     // 解散群
     dismissTeam () {
         nim.dismissTeam({
-            teamId: "7276217999",
+            teamId: "7357056590",
             done: yunApi.dismissTeamDone
         });
     },
@@ -413,7 +419,11 @@ Page({
                 roomId: that.data.roomData.id,
                 userIm
             }).then(res => {
-                this.isOwner = false
+                this.setData({
+                    isBeginPlay:true,
+                    voiceStatus:1,
+                    timePopStatus:true,
+                })
             })
         } else {
             this.setData({

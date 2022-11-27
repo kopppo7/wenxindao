@@ -1,7 +1,7 @@
 <!--03shenmingtansuo/tansuo/tansuo.wxml-->
 <view class="hourse-set">
     <view class="txt">
-        <text>房间ID：{{roomData.imGroup}}</text>
+        <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
         <text>人数：2-{{roomData.maxNumber}}人局</text>
     </view>
     <image src="../../static/h-set.png" mode="scaleToFill" />
@@ -45,9 +45,9 @@
         </view>
         <view class="content">
             <view class="item sys">已有5人，还差1人开始派对！</view>
-            <view class="item">
-                <text class="name">玩家2：</text>
-                <text class="con">怎么还不开始，1号准备一下</text>
+            <view class="item" wx:for="{{messageList}}" wx:for-item="item" class="{{item.type != 'sys'?'active tab-item':'tab-item'}}">
+                <text class="name">{{item.fromNick}}</text>
+                <text class="con">{{item.text}}</text>
             </view>
         </view>
     </view>
@@ -59,13 +59,13 @@
         <image class="img" src="../../static/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
     </view>
     <view class="inp">
-        <input type="text" placeholder="说点什么吧..." />
+        <input type="text" placeholder="说点什么吧..." 	bindconfirm="sendMsg"/>
     </view>
     <view class="btn" bindtap="handleReady" wx:if="{{!isOwner}}">
         准备
         <text>点击准备</text>
     </view>
-    <view class="own-btns" wx:if="{{isOwner && isBeginPlay}}">
+    <view class="own-btns" wx:if="{{isOwner && !isBeginPlay}}">
         <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
         <view class="btn" bindtap="handleInviRoad">匹配路人</view>
         <view class="btn" bindtap="handleBegin">快速开始</view>

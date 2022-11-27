@@ -311,8 +311,8 @@
 .theme-bot .play{width: 80rpx;height: 80rpx;border-radius: 50%;background: rgba(255,255,255,0.1);flex-shrink: 0;overflow: hidden;margin-right: 32rpx;}
 .theme-bot .play .img{width: 80rpx;height: 80rpx;display: block;}
 .theme-bot .inp{flex-grow: 1;}
-.theme-bot .inp input{width: 100%;height: 80rpx;line-height: 80rpx;border: 1px solid rgba(255,255,255,0.2);background: rgba(29,31,48,0.8);border-radius: 40rpx;padding: 0 20rpx;}
-.theme-bot .inp input{width: 400rpx;height: 80rpx;line-height: 80rpx;border: 1px solid rgba(255,255,255,0.2);background: rgba(29,31,48,0.8);border-radius: 40rpx;padding: 0 20rpx;box-sizing: border-box;}
+.theme-bot .inp input{width: 100%;height: 80rpx;line-height: 80rpx;border: 1px solid rgba(255,255,255,0.2);background: rgba(29,31,48,0.8);border-radius: 40rpx;padding: 0 20rpx;box-sizing: border-box;}
+
 .theme-bot .btn{margin-left: 16rpx;width: 160rpx;
 	height: 80rpx;
 	background: #7461E7;
