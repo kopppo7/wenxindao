@@ -34,6 +34,7 @@
             wx:for-item="item">
                 <view class="people" bindlongpress="handleKick" data-item="{{item}}">
                     <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
+                    <image class="ready" src="../../static/play-status1.png" wx:if="{{item.isReady}}"></image>
                     </image>
                     <view class="ico2" wx:else>
                         <image src="../../static/room-kong.png">
@@ -45,8 +46,8 @@
         </view>
         <view class="content">
             <view class="item sys">已有5人，还差1人开始派对！</view>
-            <view class="item" wx:for="{{messageList}}" wx:for-item="item" class="{{item.type != 'sys'?'active tab-item':'tab-item'}}">
-                <text class="name">{{item.fromNick}}</text>
+            <view wx:for="{{mesList}}" wx:for-item="item" class="{{item.sysType != 'sys'?'active item':'item'}}">
+                <text class="name">{{item.fromNick}}：</text>
                 <text class="con">{{item.text}}</text>
             </view>
         </view>
@@ -61,7 +62,7 @@
     <view class="inp">
         <input type="text" placeholder="说点什么吧..." 	bindconfirm="sendMsg"/>
     </view>
-    <view class="btn" bindtap="handleReady" wx:if="{{!isOwner}}">
+    <view class="btn" bindtap="handleReady" wx:if="{{!isReady && !isOwner}}">
         准备
         <text>点击准备</text>
     </view>
