@@ -37,12 +37,13 @@ Page({
         voiceStatus: 0,//1可以说话2开始点击0禁止说话
         activeStatus: true,//活动提示
         playerList: [],
-        messageList: [],
+        mesList: [],
         isfriend: false,
         roomData: {},
         timeOut1: null, //匹配房间倒计时
         isOwner: false,
         isBeginPlay: false,//是否开始游戏
+        isReady: false,//是否准备
     },
     // 活动提示
     activityChange () {
@@ -264,13 +265,31 @@ Page({
 
     },
     onTeamNotificationMsg (msg) {
+        var msgList = APP.globalData.mesList
+        msg.attach.users.forEach(item=>{
+            if (item.account == msg.attach.accounts[0]) {
+                msg.name = item.nick
+            }
+        })
         if (msg.attach.type == 'addTeamMembers') {
             // 拉人入群
-            getApp().globalData.mesList.push({
-
-            })
+            var msgObj = {
+                fromNick: msg.name,
+                text: '加入派对',
+                sysType:'sys'
+            }
+            msgList.push(msgObj)
+            getApp().globalData.mesList = msgList
         } else if (msg.attach.type == 'removeTeamMembers') {
             // 踢人出群
+            var msgObj = {
+                fromNick: msg.name,
+                text: '被踢出派对',
+                sysType:'sys'
+            }
+            msgList.push(msgObj)
+            getApp().globalData.mesList = msgList
+            console.log(getApp().globalData.mesList);
         } else if (msg.attach.type == 'dismissTeam') {
 
         }
@@ -288,14 +307,62 @@ Page({
         });
         console.log('正在发送p2p text消息, ' + msg.idClient);
     },
+    // 发送自定义消息
+    sendCustomMsg (type, val) {
+        console.log(val);
+        var that = this;
+        var content = {
+            type: type,
+            data: {
+                value: val
+            }
+        };
+        var msg = nim.sendCustomMsg({
+            scene: 'team',
+            to: that.data.teamId,
+            content: JSON.stringify(content),
+            done: that.pushMsg
+        });
+        console.log('正在发送自定义消息, ' + msg.idClient);
+    },
     pushMsg (error, msg) {
+        console.log(error);
         console.log(msg);
         console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error ? '成功' : '失败') + ', id=' + msg.idClient);
-        var msgObj = {
-            fromNick:msg.fromNick,
-            text:msg.text,
+        if (msg.content) {
+            var content = JSON.parse(msg.content)
+            if (content.type == 1) {
+                // 自定义消息type为1的时候 玩家准备
+                var play = APP.globalData.playerList;
+                play.forEach(item => {
+                    if (item.account == msg.from) {
+                        item.isReady = content.data.value
+                    }
+                })
+                APP.globalData.playerList = play;
+                console.log(APP.globalData.playerList);
+            } else if (content.type == 2) {
+                // 自定义消息type为2的时候 玩家是否轮到发言
+                APP.globalData.playerList.forEach(item => {
+                    if (item.account == msg.from) {
+                        item.isActive = content.data.value
+                    }
+                })
+            } else if (content.type == 3) {
+                // 自定义消息type为3的时候 玩家是否在线
+                APP.globalData.playerList.forEach(item => {
+                    if (item.account == msg.from) {
+                        item.isActive = content.data.value
+                    }
+                })
+            }
+        } else {
+            var msgObj = {
+                fromNick: msg.fromNick,
+                text: msg.text,
+            }
+            APP.globalData.mesList.push(msgObj)
         }
-        APP.globalData.mesList.push(msgObj)
     },
     onDismissTeam () { },
     // 解散群
@@ -375,15 +442,10 @@ Page({
         }, 1000);
     },
     handleReady () {
-        var num = 0;
-        this.data.playerList.forEach(item => {
-            item.account ? num++ : ''
+        this.setData({
+            isReady: !this.data.isReady
         })
-        if (num > 1) {
-
-        } else {
-
-        }
+        this.sendCustomMsg(1, this.data.isReady)
     },
     handleInviFriend () {
 
@@ -420,9 +482,9 @@ Page({
                 userIm
             }).then(res => {
                 this.setData({
-                    isBeginPlay:true,
-                    voiceStatus:1,
-                    timePopStatus:true,
+                    isBeginPlay: true,
+                    voiceStatus: 1,
+                    timePopStatus: true,
                 })
             })
         } else {
