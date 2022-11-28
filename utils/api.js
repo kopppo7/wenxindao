@@ -129,3 +129,7 @@ export const getProExpDetail = function (data) {
 export const submitContent = function (data) {
   return http.post(handleURL('/userprobe/answer'),data);
 }
+// 生命探索 抽取X张卡牌
+export const cardRandom = function (data) {
+  return http.post(handleURL('/userprobe/card/random'),data);
+}

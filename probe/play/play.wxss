@@ -403,3 +403,27 @@
   border-radius: 68rpx;
   margin: 40rpx auto;
 }
+.randomCard{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.randomCard image{
+  width: 100% !important;
+}
+.randomCard .cardSelected{
+  flex: 7;
+  border-radius: 5px;
+}
+.randomCard .cardPool{
+  flex: 3;
+  display:flex;
+  flex-flow:column;
+}
+.randomCard .cardPool image{
+  margin: 4px;
+  border-radius: 5px;
+}
+.randomCard .cardPool .selected{
+  border: 2px solid #FFB58C;
+}

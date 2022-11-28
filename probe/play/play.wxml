@@ -1,5 +1,5 @@
 <!--03shenmingtansuo/tansuo/tansuo.wxml-->
-<view class="jdt-box"><text style="width: {{(step + 1) * stepBg }}%;"></text></view>
+<view class="jdt-box"><text style="width: {{(step + 1) * stepBg }}%"></text></view>
 <scroll-view class="z-tab2" scroll-x="true">
     <view data-idx="0"  class="item {{step == 0 ? 'active' : ''}}">引言</view>
     <view wx:for="{{stepList}}"  data-idx="{{index + 1}}" wx:for-item="item" wx:for-index="index" wx:key="*this"  class="item {{step == index + 1 ? 'active' : ''}}">第{{index + 1}}轮</view>
@@ -20,7 +20,7 @@
                 <view class="s2-item active">
                     <view class="avatar-box">
                         <text>1</text>
-                        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
+                        <image class="avatar" src="{{userInfo.headImg}}"></image>
                     </view>
                     <view class="name">我</view>
                 </view>
@@ -43,12 +43,10 @@
         </view>
     </view>
     <view class="tansuo-row" wx:if="{{step > 0 && step <= stepList.length}}">
-       <!-- 循环 -->
-       <view wx:for="{{stepList}}" wx:for-item="item"
-        wx:key="*this" wx:for-index="index">
+       <view>
           <view class="box1">
               <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
-              <view class="txt">{{item.content}}</view>
+              <view class="txt">{{stepItem.content}}</view>
           </view>
           <view class="box2">
               <view class="box2-l">
@@ -56,15 +54,15 @@
                   data-item="1"  bindtap="changeCard">
                       <view class="avatar-box">
                           <text></text>
-                          <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
+                          <image class="avatar" src="{{userInfo.headImg}}"></image>
                       </view>
                       <view class="name">我</view>
                   </view>
-                  <view class="box2-l-item {{selectCard ? 'active':''}}"  wx:for="{{item.answers}}" wx:for-item="item1"  wx:key="*this" wx:for-index="index1" data-item="{{item1}}"
+                  <view class="box2-l-item {{selectCard ? 'active':''}}"  wx:for="{{stepItem.answers}}" wx:for-item="item1"  wx:key="*this" wx:for-index="index1" data-item="{{item1}}"
                   bindtap="changeCard">
                       <view class="avatar-box">
                           <text></text>
-                          <image class="avatar" src="{{userInfo.headImg}}"></image>
+                          <image class="avatar" src="{{item1.headImg}}"></image>
                       </view>
                       <view class="name">{{item1.cardMaster}}</view>
                   </view>
@@ -72,11 +70,19 @@
               <view class="box2-r">
                   <view class="tit">链接卡牌，回答问心精灵的问题。</view>
                   <view class="cardContent">
+                  <view class="randomCard">
+                    <view class="cardSelected">
+                      <image src="{{randomCard[randomCardIndex].imgUrl}}" mode="widthFix"></image>
+                    </view>
+                    <view class="cardPool">
+                      <image class="{{randomCardIndex == index?'selected':''}}" wx:for="{{randomCard}}" wx:for-item="item1"  wx:key="*this"  src="{{item1.imgUrl}}" mode="widthFix"></image>
+                    </view>
+                  </view>
                     <image class="cardImg" src="{{selectCard.imgUrl}}" mode="widthFix"></image>
                     <!-- 有内容 -->
                     <view class="cardTxt">{{selectCard.answer}}</view>
                     <!-- 没有内容 -->
-                    <view class="form-z">
+                    <view class="form-z" wx:if="{{!selectCard}}">
                       <view class="textarea-box" wx:if="{{putType != 5}}">
                           <textarea wx:if="{{putType == 1}}" bindblur="inspectText" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;"  value="{{content.txt}}"/>
                           <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{putType == 1}}">
@@ -118,7 +124,7 @@
                   </view>
               </view>
           </view>
-          <view data-idx="{{index + 1}}"  class="nextSubmit" catchtap="nextStep">下一步</view>
+          <view class="nextSubmit" catchtap="nextStep">下一步</view>
         </view>
     </view>
     <view class="yinyan-box yinyan-box5" wx:if="{{step == stepList.length + 1}}">
