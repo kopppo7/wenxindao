@@ -57,6 +57,7 @@ Page({
     robot: ['https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg', 'https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg'],
     randomCard:[],//每一轮随机的卡牌池
     randomCardIndex:0,//卡牌池选择序号
+    activity: '', // 结束语
   },
   openSharePop() {
     var that = this;
@@ -297,6 +298,12 @@ Page({
       })
     }
   },
+  // 切换图片
+  changeImg(e) {
+    this.setData({
+      randomCardIndex: e.currentTarget.dataset.idx
+    })
+  },
   // 切换卡片
   changeCard(e) {
     console.log('e.target.dataset.item', e)
@@ -311,8 +318,7 @@ Page({
     }
   },
   // 下一步
-  nextStep() {
-    debugger;
+  nextStep(e) {
     if(this.data.step>0&&this.data.step<this.data.stepList.length+2){
       //step>0<最后一个为循环
       //需要判断是否填写内容
@@ -331,14 +337,13 @@ Page({
       submitContent({
         answerText: this.data.contents.txt,
         answerVoice: this.data.contents.voice,
-        cardId: '',
-        id: this.data.stepList[e.currentTarget.dataset.idx - 1].id,
-        imgUrl: '',
+        cardId: this.data.randomCard[this.data.randomCardIndex].id,
+        id: this.data.stepList[this.data.step - 1].id,
+        imgUrl: this.data.randomCard[this.data.randomCardIndex].imgUrl,
         userProbeId: this.data.id,
       }).then((res) => {
         wx.hideLoading()
         this.setData({
-          step: this.data.step + 1,
           // 录音相关
           bigPopStatus: false, // 放大卡牌
           putType: 1,
@@ -358,7 +363,7 @@ Page({
       })
     }
     //引导-最后一轮，进入下一轮的时候需要更新下一轮的内容到stepItem，并且获取3张卡牌
-    if(this.data.step<this.data.stepList.length+1){
+    if(this.data.step<this.data.stepList.length){
       var sItem = this.data.stepList[this.data.step];
       var answers = []
       for (var j = 0; j < sItem.answers.length && j < this.data.robot.length; j++) {
@@ -395,8 +400,12 @@ Page({
     getProExpDetail({
       id: id
     }).then((res) => {
+      res.data.data.activity = res.data.data.activity.replace(/style/g,'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
+      .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
       this.setData({
         stepList: res.data.data.details,
+        step: res.data.data.current,
+        activity: res.data.data.activity,
         stepBg: Math.floor(100 / (res.data.data.details.length + 2)),
         probeId:res.data.data.probeId
       })

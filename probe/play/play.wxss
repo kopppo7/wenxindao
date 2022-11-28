@@ -198,7 +198,8 @@
 }
 .tansuo-row .box2 .box2-r .tit{
 	font-size: 26rpx;
-	color: #ffb58c;
+  color: #ffb58c;
+  margin-bottom: 16rpx;
 }
 .yinyan-box5 .box3{
   padding: 80rpx 0 24rpx;
@@ -268,7 +269,7 @@
 }
 .cardContent .cardImg{
   width: 70%;
-  border-radius: 32rpx;
+  border-radius: 16rpx;
 }
 
 /* 语音录入相关 */
@@ -407,6 +408,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 16rpx;
 }
 .randomCard image{
   width: 100% !important;

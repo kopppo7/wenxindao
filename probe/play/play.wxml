@@ -58,7 +58,7 @@
                       </view>
                       <view class="name">我</view>
                   </view>
-                  <view class="box2-l-item {{selectCard ? 'active':''}}"  wx:for="{{stepItem.answers}}" wx:for-item="item1"  wx:key="*this" wx:for-index="index1" data-item="{{item1}}"
+                  <view class="box2-l-item {{selectCard.id ==item1.id  ? 'active':''}}"  wx:for="{{stepItem.answers}}" wx:for-item="item1"  wx:key="*this" wx:for-index="index1" data-item="{{item1}}"
                   bindtap="changeCard">
                       <view class="avatar-box">
                           <text></text>
@@ -70,18 +70,18 @@
               <view class="box2-r">
                   <view class="tit">链接卡牌，回答问心精灵的问题。</view>
                   <view class="cardContent">
-                  <view class="randomCard">
+                  <view class="randomCard" wx:if="{{!selectCard}}">
                     <view class="cardSelected">
                       <image src="{{randomCard[randomCardIndex].imgUrl}}" mode="widthFix"></image>
                     </view>
                     <view class="cardPool">
-                      <image class="{{randomCardIndex == index?'selected':''}}" wx:for="{{randomCard}}" wx:for-item="item1"  wx:key="*this"  src="{{item1.imgUrl}}" mode="widthFix"></image>
+                      <image class="{{randomCardIndex == index?'selected':''}}" wx:for="{{randomCard}}" wx:for-item="item1"  wx:for-index="index" wx:key="*this" data-idx="{{index}}"  catchtap="changeImg" src="{{item1.imgUrl}}" mode="widthFix"></image>
                     </view>
                   </view>
-                    <image class="cardImg" src="{{selectCard.imgUrl}}" mode="widthFix"></image>
-                    <!-- 有内容 -->
-                    <view class="cardTxt">{{selectCard.answer}}</view>
-                    <!-- 没有内容 -->
+                    <!-- 如果选中了卡片 不是自己 -->
+                    <image class="cardImg" wx:if="{{selectCard}}" src="{{selectCard.imgUrl}}" mode="widthFix"></image>
+                    <view class="cardTxt" wx:if="{{selectCard}}">{{selectCard.answer}}</view>
+                    <!-- 文字输入 语音录入 -->
                     <view class="form-z" wx:if="{{!selectCard}}">
                       <view class="textarea-box" wx:if="{{putType != 5}}">
                           <textarea wx:if="{{putType == 1}}" bindblur="inspectText" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;"  value="{{content.txt}}"/>
@@ -131,10 +131,13 @@
         <view class="box1">
             <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
             <view class="txt">
+              <rich-text nodes="{{activity}}"></rich-text>
+            </view>
+            <!-- <view class="txt">
                 本次生命探索正式结束啦。
                 探索完父母的性格对你的影响，是不是对自己有很多新的看见呢？或许，你对父母也有很多新的看见。
                 我们都听过一句话，性格决定命运。我们这些遗传或者被父母影响塑造而成的性格，没有绝对的好坏。看见它，用好它，和它好好相处，也是我们自我接纳的重要课题。
-            </view>
+            </view> -->
         </view>
         <view class="box3">
             <view class="box3-item">
