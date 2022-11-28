@@ -64,18 +64,6 @@
           "scene": null
         },
         {
-          "name": "每日调频 详情页",
-          "pathName": "06wode/det-tiaopin/det-tiaopin",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "生命探索详情页",
-          "pathName": "06wode/det-tansuo/det-tansuo",
-          "query": "生命探索 详情页",
-          "scene": null
-        },
-        {
           "name": "设置",
           "pathName": "06wode/shezhi/shezhi",
           "query": "",

@@ -21,7 +21,7 @@
             <view class="s2">{{nowDate2}}</view>
         </view>
         <view class="count">
-            <view class="s1">历史记录</view>
+            <navigator url="/pages/my/trends/trends?type=1" class="s1">历史记录</navigator>
             <view class="s2">{{signNum}}人已打卡</view>
         </view>
     </view>

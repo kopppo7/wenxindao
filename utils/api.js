@@ -69,6 +69,10 @@ export const findMyTrends = function (params) {
 export const findMyUser = function (params) {
   return http.post(handleURL('/my/findByLogCountForUser'),params);
 }
+//根据id查询每日调频详情
+export const findByFmOne = function (id) {
+  return http.get(handleURL('/askfm/findByFmOne?id='+id));
+}
 //查询我的动态 删除
 export const deleteMyUser = function (params) {
   return http.post(handleURL('/my/deleteLogForId'),params);

@@ -1,6 +1,10 @@
-import { login } from '../../../utils/common'
 import {
-  findMyTrends,findMyUser,deleteMyUser
+  login
+} from '../../../utils/common'
+import {
+  findMyTrends,
+  findMyUser,
+  deleteMyUser
 } from "../../../utils/api";
 import {
   getLoginInfo
@@ -11,89 +15,86 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo:{
-      headImg:'',
-      wechatName:''
+    userInfo: {
+      headImg: '',
+      wechatName: ''
     },
-    page:1,
-    list:[],
-    total:0,
-    tab: [
-      {
-          title: '全部',
-          num: 0,
-          type: '',
+    page: 1,
+    list: [],
+    total: 0,
+    tab: [{
+        title: '全部',
+        num: 0,
+        type: '',
       },
       {
-          title: '每日调频',
-          num: '',
-          type:'0',
+        title: '每日调频',
+        num: '',
+        type: '0',
       },
       {
-          title: '生命探索',
-          num: '',
-          type: '2',
+        title: '生命探索',
+        num: '',
+        type: '2',
       },
       {
-          title: '主题派对',
-          num: '',
-          type: '1'
+        title: '主题派对',
+        num: '',
+        type: '1'
       }
     ],
     seType: '',
     cur_tab: 0,
     showPop: false,
     delIdx: '',
-    totalSum:'' // 头部的全部数量
+    totalSum: '' // 头部的全部数量
   },
-   // 显示弹窗
-   openPop: function (e) {
+  // 显示弹窗
+  openPop: function (e) {
     this.setData({
-        showPop: true,
-        delIdx:e.target.dataset.index
+      showPop: true,
+      delIdx: e.currentTarget.dataset.index
     })
   },
   // 隐藏弹窗
   closePop: function () {
-      this.setData({
-          showPop: false,
-          delIdx:''
-      })
+    this.setData({
+      showPop: false,
+      delIdx: ''
+    })
   },
   deleteItem() {
     let that = this
     wx.showModal({
       title: '提示',
       content: '确认删除吗？',
-      success (res) {
+      success(res) {
         if (res.confirm) {
-          this.conDel()
+          wx.showLoading({
+            title: '删除中...',
+          });
+          deleteMyUser({
+            type: that.data.list[that.data.delIdx].category,
+            id: that.data.list[that.data.delIdx].id,
+          }).then(res => {
+            wx.hideLoading()
+            that.closePop()
+            that.getData()
+            that.getTopData()
+          }).catch(err => {
+            wx.hideLoading()
+          })
         } else if (res.cancel) {
-          console.log('用户点击取消')
-          this.closePop()
+          that.closePop()
         }
       }
-    })
-  },
-  conDel() {
-    wx.showLoading({
-      title: '删除中...',
-    });
-    deleteMyUser({
-      category: this.data.list[this.data.delIdx].category,
-      id: this.data.list[this.data.delIdx].id,
-    }).then(res=>{
-      this.getData()
-      this.findMyUser()
-    }).catch(err => {
-      wx.hideLoading()
     })
   },
   // 切换tab
   changeCurTab: function (e) {
     this.setData({
-        cur_tab: e.currentTarget.dataset.index,
-        seType: e.currentTarget.dataset.type,
+      cur_tab: e.currentTarget.dataset.index,
+      seType: e.currentTarget.dataset.type,
     })
     this.getData();
   },
@@ -101,48 +102,48 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    login(res=>{
+    login(res => {
       this.Init()
       this.getData();
       this.getTopData()
     })
   },
-  Init(){
+  Init() {
     var info = getLoginInfo();
     this.setData({
-      userInfo:info
+      userInfo: info
     });
   },
-  getData(){
+  getData() {
     wx.showLoading({
       title: '加载中...',
     });
     findMyTrends({
-      page:this.data.page,
-      pageSize:20,
+      page: this.data.page,
+      pageSize: 20,
       type: this.data.seType
-    }).then(res=>{
-      for(var i=0;i<res.data.data.list.length;i++){
+    }).then(res => {
+      for (var i = 0; i < res.data.data.list.length; i++) {
         res.data.data.list[i].contents = JSON.parse(res.data.data.list[i].contents);
       }
-      if(this.data.page==1){
+      if (this.data.page == 1) {
         this.data.list = res.data.data.list;
-      }else{
+      } else {
         this.data.list.concat(res.data.data.list);
       }
       this.data.list.map((item) => {
         item.target = item.target ? item.target.split(',') : []
       })
       this.setData({
-        list:this.data.list,
-        total:res.data.data.total
+        list: this.data.list,
+        total: res.data.data.total
       })
       wx.stopPullDownRefresh()
       wx.hideLoading();
-    }).catch(err=>{
+    }).catch(err => {
       wx.showToast({
         title: '网络异常，请稍后重试',
-        icon:'none'
+        icon: 'none'
       })
       wx.hideLoading();
     })
@@ -152,18 +153,18 @@ Page({
     wx.showLoading({
       title: '加载中...',
     });
-    findMyUser().then(res=>{
+    findMyUser().then(res => {
       this.data.tab[1].num = res.data.data.afNum
       this.data.tab[2].num = res.data.data.probeNum
       this.data.tab[3].num = res.data.data.partyNum
-      let afNum =  res.data.data.afNum ?  res.data.data.afNum  : 0
-      let probeNum =  res.data.data.probeNum ? res.data.data.probeNum: 0
-      let partyNum =  res.data.data.partyNum ? res.data.data.partyNum : 0
+      let afNum = res.data.data.afNum ? res.data.data.afNum : 0
+      let probeNum = res.data.data.probeNum ? res.data.data.probeNum : 0
+      let partyNum = res.data.data.partyNum ? res.data.data.partyNum : 0
       let totalSum = afNum + probeNum + partyNum
-        this.setData({
-          tab: this.data.tab,
-          totalSum: totalSum
-        })
+      this.setData({
+        tab: this.data.tab,
+        totalSum: totalSum
+      })
       wx.hideLoading()
     }).catch(err => {
       wx.hideLoading()
@@ -173,7 +174,10 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    this.data.page=1;
+    this.setData({
+      page:1
+    });
+    this.getTopData()
     this.getData();
   },
 
@@ -181,14 +185,30 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom() {
-    if(this.data.list.length<this.data.total){
-      this.data.page+=1;
+    if (this.data.list.length < this.data.total) {
+      this.data.page += 1;
       this.getData();
     }
   },
-  setting(){
+  setting() {
     wx.navigateTo({
       url: '/pages/my/setting/setting',
     })
+  },
+  detail(e) {
+    switch (e.currentTarget.dataset.type) {
+      case '0':
+        wx.navigateTo({
+          url: '/pages/my/fmdetail/fmdetail?id='+e.currentTarget.dataset.id,
+        })
+        break;
+      case '1':
+        break;
+      case '2':
+        wx.navigateTo({
+          url: '/pages/my/probedetail/probedetail?id='+e.currentTarget.dataset.id,
+        })
+        break;
+    }
   }
 })

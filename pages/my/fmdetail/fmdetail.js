@@ -1,18 +1,27 @@
-// 06wode/det-tiaopin/det-tiaopin.js
+
+import {
+  findByFmOne
+} from "../../../utils/api";
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    info:{}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    findByFmOne(options.id).then(res=>{
+      let info = res.data.data;
+      info.contents = JSON.parse(info.contents);
+      this.setData({
+        info:info
+      })
+    })
   },
 
   /**

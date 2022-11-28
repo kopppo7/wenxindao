@@ -1,0 +1,4 @@
+<!--03shenmingtansuo/voince/index.wxml-->
+<view class="box">
+    <rich-text nodes="{{detail}}"></rich-text>
+</view>

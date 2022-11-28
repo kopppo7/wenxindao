@@ -1,0 +1,38 @@
+<!--03shenmingtansuo/index/index.wxml-->
+<view class="wp">
+    <view class="z-tab">
+        <view bindtap='change' wx:for="{{category}}" data-id="{{item.id}}" wx:for-item="item" class="tab-item {{item.id == categoryId ? 'active' : ''}}" wx:key="id">
+          {{item.typeName}}
+        </view>
+        <navigator url="" hover-class="none" class="detail">玩法详情</navigator>
+    </view>
+    <view class="z-list1" wx:if="{{list.length > 0}}">
+        <view class="item"  wx:for="{{list}}" data-id="{{item.id}}" wx:for-item="item"
+        wx:key="id" bindtap="toDetail">
+            <image class="pic" src="{{item.imgUrl}}"></image>
+            <view class="txt">
+                <view class="s1">
+                    <view class="title">{{item.title}}</view>
+                    <!-- <view class="tags" wx:if="{{item.isSpecial == 1}}">最新</view> -->
+                    <view class="tags hots-tag" wx:if="{{item.isHot == 1}}">热门</view>
+                </view>
+                <view class="s2">
+                    <text>约{{item.meanTime}}分钟</text>
+                    <text>已探索{{item.learnNum}}次</text>
+                </view>
+                <view class="s3">
+                    <view class="s3-l">
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/People.png"></image>
+                        {{item.playerNum}}人已学习
+                    </view>
+                    <view class="s3-r s3-r1" wx:if="{{item.isPower == 1 && !item.userProbeId}}">第{{item.learnNum + 1 }}次探索</view>
+                    <view class="s3-r s3-r2" wx:if="{{item.isPower == 1 && item.userProbeId }}"><text style="width:{{item.progress}}%;"></text>继续 {{item.progress}}%</view>
+                    <!-- <view data-id="{{item.id}}" catchtap="toPay" class="s3-r s3-r3" wx:if="{{item.isPower == 0}}">{{item.specialPrice}}元 开始探索</view> -->
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="nodata" wx:else>暂无数据</view>
+</view>

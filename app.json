@@ -52,8 +52,8 @@
         "setting/setting",
         "about/about",
         "feedback/feedback",
-        "det-tiaopin/det-tiaopin",
-        "det-tansuo/det-tansuo",
+        "fmdetail/fmdetail",
+        "probedetail/probedetail",
         "safe/safe",
         "feedback/detail/detail",
         "feedback/submit/submit"
