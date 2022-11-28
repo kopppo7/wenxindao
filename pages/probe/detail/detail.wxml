@@ -1,0 +1,105 @@
+<!--03shenmingtansuo/zhutijieshao/zhutijieshao.wxml-->
+<view class="wp">
+    <view class="intro-row1">
+        <image class="pic" src="{{product.imgUrl}}"></image>
+        <view class="txt">
+            <view class="s1">{{product.title}}</view>
+            <view class="s2">探索生命意义与使命，为自己的人生注入全新的生命活力</view>
+            <view class="s3">预计{{product.meanTime}}分钟</view>
+            <view class="s4">
+                <text wx:for="{{labels}}" wx:for-item="item" wx:key="*this">{{item}}</text>
+            </view>
+        </view>
+    </view>
+    <view class="intro-row2"  bindtap="toDetail">
+        <text>语音参与须知</text>
+    </view>
+    <view class="intro-row3">
+        <view class="z-tit1">活动流程</view>
+        <view class="g-box">
+            <!-- <view class="z-tit2">语音参与者</view> -->
+            <view class="desc">
+                <rich-text nodes="{{product.activity}}"></rich-text>
+            </view>
+        </view>
+        <view class="g-box">
+            <!-- <view class="z-tit2">茶话会环节</view> -->
+            <view class="z-list2">
+                <rich-text nodes="{{product.introduce}}"></rich-text>
+            </view>
+        </view>
+    </view>
+    <view class="intro-row4">
+        <view class="z-tit1">探索感悟</view>
+        <view class="z-list3">
+            <view class="item g-box" wx:for="{{evaluateList}}" data-id="{{item.id}}" wx:for-item="item">
+                <view class="tit-box">
+                    <image class="avatar" src="{{item.userHeadImg}}"></image>
+                    <view class="name-time">
+                        <view class="name">{{item.wechatName}}</view>
+                        <view class="time">{{item.addTime}}</view>
+                    </view>
+                </view>
+                <view class="desc">{{item.evaluate}}</view>
+                <!-- ...<text>更多</text> -->  
+            </view>
+        </view>
+    </view>
+</view>
+<view class="bottom-box">
+    <!-- 没有购买过 product.isPower == 0 -->
+    <view class="box" wx:if="{{product.isPower == 0}}">
+        <view class="bottom-l">
+            <view class="money">¥<text>{{product.amount}}</text></view>
+            <view class="year">/使用期1年</view>
+            <image class="tip" bindtap="closeYearPop" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-tip.png"></image>
+        </view>
+        <view wx:if="{{product.isPower != 1 }}" class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
+    </view>
+    <view class="buyBox" wx:if="{{product.isPower == 1 }}">
+       <view class="percep "  wx:if="{{product.learnNum > 0}}" bindtap="openPercepPop">写感悟</view>
+       <view class="{{product.learnNum > 0 ? 'progress' : 'progressNum'}}" wx:if="{{product.userProbeId}}" catchtap="toExplore">
+          <text class="inner" style="width:{{product.progress }}%"></text>
+          继续 {{product.progress}}%
+       </view>
+       <view class="{{product.learnNum > 0 ? 'progress' : 'progressNum'}}" wx:if="{{!product.userProbeId}}" catchtap="toExplore">
+        第{{product.learnNum + 1 }}次探索
+       </view>
+    </view>
+</view>
+<!--购买本探索-->
+<block wx:if="{{buyPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win">
+        <view class="pop-tit">购买本探索</view>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
+        <view class="pop-cont">
+            <image class="pic" src="{{product.imgUrl}}"></image>
+            <view class="title">{{product.title}}</view>
+            <view class="time">购买使用期：1年</view>
+            <view class="money">¥<text>{{product.amount}}</text></view>
+        </view>
+        <view class="btn-buy" catchtap="toPay">确认购买</view>
+    </view>
+</block>
+<!--使用期1年弹窗-->
+<block wx:if="{{yearPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">购买本探索</view>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
+        <view class="desc">生命探索活动中的1年使用权指用户以当前价格购买后可免费此本子1年。</view>
+        <view class="btn-know" bindtap="closePop">知道了</view>
+    </view>
+</block>
+<!--写感悟弹窗-->
+<block wx:if="{{gwPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win">
+        <view class="pop-tit">给本次的生命探索引导打分</view>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
+        <rating showRating  rating="{{score}}" bind:click="change"></rating>
+        <textarea bindinput="getValue" maxlength="150" class="content" placeholder="您认为本次的引导设计如何？您收获了什么？您的感受如何？可以记录下来..." />
+        <view class="btn-buy" bindtap="addPercep">提交</view>
+    </view>
+</block>

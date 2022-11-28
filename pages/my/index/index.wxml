@@ -37,10 +37,10 @@
         <view class="trend-list">     
             <view class="trend-item" wx:for="{{list}}"  wx:for-item="item" wx:key="id">
                <!-- 每日调频  wx:if="{{item.category==0}}" -->
-            <view class="trend-item" wx:if="{{item.category==0}}" >
+            <view class="trend-item" wx:if="{{item.category==0}}" bindtap="detail" data-type="0" data-id="{{item.id}}">
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
-                     <view class="dot" data-index="{{index}}" bindtap="openPop">
+                     <view class="dot" data-index="{{index}}" catchtap="openPop">
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
                     <view class="title title0">{{item.categoryText}}</view>
@@ -56,13 +56,13 @@
                 </view>
             </view>
             <!-- 生命探索 wx:if="{{item.category==2}}" -->
-            <view class="trend-item"  wx:if="{{item.category==2}}">
+            <view class="trend-item"  wx:if="{{item.category==2}}" bindtap="detail" data-type="2" data-id="{{item.id}}">
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
-                    <view class="dot" data-index="{{index}}"bindtap="openPop">
+                    <view class="dot" data-index="{{index}}" catchtap="openPop">
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
-                    <view class="title title1">{{item.categoryText}}生命探索</view>
+                    <view class="title title1">{{item.categoryText}}</view>
                     <view class="type-list" wx:if="{{item.target.length > 0}}">
                         <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
@@ -86,7 +86,7 @@
             <view class="trend-item" wx:if="{{item.category==1}}" >
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
-                    <view class="dot" data-index="{{index}}" bindtap="openPop">
+                    <view class="dot" data-index="{{index}}" catchtap="openPop">
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
                     <view class="title title2">{{item.categoryText}}主题派对</view>

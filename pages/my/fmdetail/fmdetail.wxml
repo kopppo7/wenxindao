@@ -1,0 +1,28 @@
+<view class="wp">
+  <view class="face">
+    <view class="pic">
+      <image src="{{info.userHeadImg}}"></image>
+    </view>
+    <view class="txt">
+      <view class="name">{{info.userName}}</view>
+      <view class="date">记录于{{info.addTime}}</view>
+    </view>
+  </view>
+
+  <view class="tag-list">
+    <view class="tag blue">{{info.target}}</view>
+  </view>
+
+  <view class="content">
+    <image class="fakeImg" mode="widthFix" src="{{info.cardUrl}}"></image>
+    <view class="desc" wx:for="{{info.contents}}" wx:for-item="item" wx:key="id">
+     {{item.txt}}
+    </view>
+  </view>
+
+</view>
+
+<view class="btn-share-g">
+  <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share.svg"></image>
+  <text>分享</text>
+</view>

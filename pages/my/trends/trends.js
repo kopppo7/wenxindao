@@ -1,6 +1,6 @@
 import { login } from '../../../utils/common'
 import {
-  findMyTrends,findMyUser
+  findMyTrends,findMyUser,deleteMyUser 
 } from "../../../utils/api";
 import {
   getLoginInfo
@@ -39,8 +39,8 @@ Page({
         page:1,
         list:[],
         total:0,
-        delId: '',
-        totalSum: ''
+        delIdx: '',
+        totalSum: '',
     },
     // 切换tab
     changeCurTab: function (e) {
@@ -54,14 +54,14 @@ Page({
     openPop: function (e) {
         this.setData({
             showPop: true,
-            delId:e.target.dataset.id
+            delIdx:e.currentTarget.dataset.index
         })
     },
     // 隐藏弹窗
     closePop: function () {
         this.setData({
             showPop: false,
-            delId:''
+            delIdx:''
         })
     },
     deleteItem() {
@@ -71,10 +71,9 @@ Page({
         content: '确认删除吗？',
         success (res) {
           if (res.confirm) {
-            this.conDel()
+            that.conDel()
           } else if (res.cancel) {
-            console.log('用户点击取消')
-            this.closePop()
+            that.closePop()
           }
         }
       })
@@ -84,12 +83,18 @@ Page({
         title: '删除中...',
       });
       deleteMyUser({
-        category: this.data.list[this.data.delIdx].category,
+        type: this.data.list[this.data.delIdx].category,
         id: this.data.list[this.data.delIdx].id,
       }).then(res=>{
         this.getData()
+        this.getTopData()
         this.findMyUser()
+        this.closePop()
       }).catch(err => {
+        wx.showLoading({
+          title: '网络连接异常，请稍后再试',
+        })
+        this.closePop()
         wx.hideLoading()
       })
     },
@@ -97,6 +102,12 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+      if(Number(options.type)>0&&Number(options.type)<4){
+        this.setData({
+            cur_tab: Number(options.type),
+            seType: this.data.tab[Number(options.type)].type,
+        })
+      }
       login(res=>{
         this.getData();
         this.getTopData()
@@ -126,7 +137,6 @@ Page({
           list:this.data.list,
           total:res.data.data.total
         })
-        console.log(this.data.list)
         wx.stopPullDownRefresh()
         wx.hideLoading();
       }).catch(err=>{
@@ -163,14 +173,21 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh() {
-
+      this.setData({
+        page:1
+      });
+      this.getTopData()
+      this.getData();
     },
-
+  
     /**
      * 页面上拉触底事件的处理函数
      */
     onReachBottom() {
-
+      if (this.data.list.length < this.data.total) {
+        this.data.page += 1;
+        this.getData();
+      }
     },
 
 })

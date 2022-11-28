@@ -19,7 +19,7 @@
             <view class="trend-item" wx:if="{{item.category==0}}" >
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
-                     <view class="dot" data-id="{{item.id}}" bindtap="openPop">
+                     <view class="dot" data-id="{{item.id}}" data-index="{{index}}"  catchtap="openPop">
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
                     <view class="title title0">{{item.categoryText}}</view>
@@ -38,7 +38,7 @@
             <view class="trend-item"  wx:if="{{item.category==2}}">
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
-                    <view class="dot" data-id="{{item.id}}" bindtap="openPop">
+                    <view class="dot" data-id="{{item.id}}" data-index="{{index}}"  catchtap="openPop">
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
                     <view class="title title1">{{item.categoryText}}生命探索</view>
@@ -65,7 +65,7 @@
             <view class="trend-item" wx:if="{{item.category==1}}" >
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
-                    <view class="dot" data-id="{{item.id}}" bindtap="openPop">
+                    <view class="dot" data-id="{{item.id}}" data-index="{{index}}"  catchtap="openPop">
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
                     <view class="title title2">{{item.categoryText}}主题派对</view>
