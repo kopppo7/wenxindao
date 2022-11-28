@@ -1,4 +1,6 @@
-// 06wode/det-tansuo/det-tansuo.js
+import {
+  getProExpDetail
+} from '../../../utils/api'
 Page({
 
   /**
@@ -23,7 +25,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    getProExpDetail({
+      id:options.id
+    }).then(res=>{
 
+    })
+    debugger;
   },
 
   /**
