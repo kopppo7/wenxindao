@@ -270,7 +270,17 @@
 .cardContent .cardImg{
   width: 70%;
   border-radius: 16rpx;
+  position: relative;
 }
+.cardContent .cardImg .iconImg{
+    bottom: 8rpx;
+    right: 8rpx;
+    width: 48rpx;
+    height: 48rpx;
+    position: absolute;
+    z-index: 1;
+  }
+
 
 /* 语音录入相关 */
 .form-z .textarea-box {
@@ -411,11 +421,19 @@
   margin-bottom: 16rpx;
 }
 .randomCard image{
-  width: 100% !important;
+  width: 100%;
 }
 .randomCard .cardSelected{
   flex: 7;
   border-radius: 5px;
+  position: relative;
+}
+.randomCard .cardSelected .iconImg{
+    position: absolute;
+    bottom: 8rpx;
+    right: 8rpx;
+    width: 48rpx;
+    height: 48rpx;
 }
 .randomCard .cardPool{
   flex: 3;
@@ -425,7 +443,35 @@
 .randomCard .cardPool image{
   margin: 4px;
   border-radius: 5px;
+  border: 2px solid transparent;
 }
 .randomCard .cardPool .selected{
   border: 2px solid #FFB58C;
+}
+
+.pop-big {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	z-index: 801;
+}
+
+.pop-big .big-pic {
+	width: 670rpx;
+	height: 998rpx;
+}
+
+.pop-close-bot {
+	position: absolute;
+	bottom: -116rpx;
+	left: 50%;
+	margin-left: -48rpx;
+	width: 96rpx;
+	height: 96rpx;
+	z-index: 801;
 }
