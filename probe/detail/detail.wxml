@@ -32,7 +32,7 @@
     <view class="intro-row4">
         <view class="z-tit1">探索感悟</view>
         <view class="z-list3">
-            <view class="item g-box" wx:for="{{evaluateList}}" data-id="{{item.id}}" wx:for-item="item">
+            <view class="item g-box" wx:for="{{evaluateList}}" data-id="{{item.id}}" wx:for-item="item" wx:key="id">
                 <view class="tit-box">
                     <image class="avatar" src="{{item.userHeadImg}}"></image>
                     <view class="name-time">

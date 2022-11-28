@@ -73,18 +73,21 @@
                   <view class="randomCard" wx:if="{{!selectCard}}">
                     <view class="cardSelected">
                       <image src="{{randomCard[randomCardIndex].imgUrl}}" mode="widthFix"></image>
+                      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{randomCard[randomCardIndex].imgUrl}}" catchtap="showImg"> </image>
                     </view>
                     <view class="cardPool">
-                      <image class="{{randomCardIndex == index?'selected':''}}" wx:for="{{randomCard}}" wx:for-item="item1"  wx:for-index="index" wx:key="*this" data-idx="{{index}}"  catchtap="changeImg" src="{{item1.imgUrl}}" mode="widthFix"></image>
+                      <image class="{{randomCardIndex == index?'selected':''}}" wx:for="{{randomCard}}" wx:for-item="item1"  wx:for-index="index" wx:key="id" data-idx="{{index}}"  catchtap="changeImg" src="{{item1.imgUrl}}" mode="widthFix"></image>
                     </view>
                   </view>
                     <!-- 如果选中了卡片 不是自己 -->
-                    <image class="cardImg" wx:if="{{selectCard}}" src="{{selectCard.imgUrl}}" mode="widthFix"></image>
+                    <image class="cardImg" wx:if="{{selectCard}}" src="{{selectCard.imgUrl}}" mode="widthFix">
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{selectCard.imgUrl}}" catchtap="showImg"> </image>
+                    </image>
                     <view class="cardTxt" wx:if="{{selectCard}}">{{selectCard.answer}}</view>
                     <!-- 文字输入 语音录入 -->
                     <view class="form-z" wx:if="{{!selectCard}}">
                       <view class="textarea-box" wx:if="{{putType != 5}}">
-                          <textarea wx:if="{{putType == 1}}" bindblur="inspectText" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;"  value="{{content.txt}}"/>
+                          <textarea wx:if="{{putType == 1}}" bindinput="inspectText" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;"  value="{{content.txt}}"/>
                           <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{putType == 1}}">
                               <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>语音输入
                           </view>
@@ -170,16 +173,15 @@
             <view class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</view>
         </view>
     </view>
+</block>
 
     <!--放大卡牌-->
-  <block wx:if="{{bigPopStatus}}">
-      <view class="pop-mask"></view>
-      <view class="pop-big">
-          <image class="big-pic" src="{{activeCard.imgUrl}}"></image>
-          <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png"
-              bindtap="closePop"></image>
-      </view>
+<block wx:if="{{bigPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-big">
+        <image class="big-pic" src="{{selectImgUrl}}"></image>
+        <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png"
+            bindtap="closeImgPop"></image>
+    </view>
   </block>
-
-</block>
 

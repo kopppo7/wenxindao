@@ -58,7 +58,20 @@ Page({
     randomCard:[],//每一轮随机的卡牌池
     randomCardIndex:0,//卡牌池选择序号
     activity: '', // 结束语
+    selectImgUrl:'', // 选中的图片地址
   },
+  // 放大看卡片
+  showImg(e) {
+     this.setData({
+        bigPopStatus: true,
+        selectImgUrl: e.currentTarget.dataset.img
+     })
+  },
+  closeImgPop(e) {
+    this.setData({
+       bigPopStatus: false
+    })
+ },
   openSharePop() {
     var that = this;
     that.setData({
@@ -74,6 +87,10 @@ Page({
   // 语音输入相关
   // 检查文档是否合规
   inspectText(e) {
+    this.setData({
+      'contents.txt': e.detail.value
+    })
+    return
     let param = {
       text: e.detail.value
     }
@@ -405,7 +422,7 @@ Page({
       this.setData({
         stepList: res.data.data.details,
         step: res.data.data.current,
-        activity: res.data.data.activity,
+        activity: res.data.data.tags,
         stepBg: Math.floor(100 / (res.data.data.details.length + 2)),
         probeId:res.data.data.probeId
       })
