@@ -156,7 +156,7 @@
             <image class="box4-r" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
         </view>
         <view class="box5">
-            <view class="g-submit">查看本次记录</view>
+            <view class="g-submit" bindtap="lookLog">查看本次记录</view>
             <view class="share" bindtap="openSharePop">分享</view>
         </view>
     </view>

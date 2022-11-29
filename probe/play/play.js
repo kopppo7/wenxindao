@@ -323,7 +323,6 @@ Page({
   },
   // 切换卡片
   changeCard(e) {
-    console.log('e.target.dataset.item', e)
     if (e.currentTarget.dataset.item == 1) {
       this.setData({
         selectCard: ''
@@ -466,7 +465,11 @@ Page({
     }
 
   },
-
+  lookLog(){
+    wx.redirectTo({
+      url: '/pages/my/probedetail/probedetail?id='+this.data.id,
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
