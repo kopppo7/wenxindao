@@ -8,6 +8,7 @@ Page({
    */
   data: {
     showShare:false,
+    info:{}
   },
 
   openShare:function(){
@@ -28,9 +29,8 @@ Page({
     getProExpDetail({
       id:options.id
     }).then(res=>{
-
+      
     })
-    debugger;
   },
 
   /**
