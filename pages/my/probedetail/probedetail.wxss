@@ -1,5 +1,6 @@
 .wp{
   padding-top: 40rpx;
+  padding-bottom: 240rpx;
 }
 .page-title{
   margin-bottom: 40rpx;
@@ -10,6 +11,7 @@
 .face{
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .face .pic{
   flex:0 0 96rpx;
@@ -64,9 +66,44 @@
   height: 100%;
 }
 .list .item .audio{
-  height: 72rpx;
-  background: #000;
-  margin-top: 32rpx;
+  /* height: 72rpx; */
+  margin-top: 12rpx;
+  /* display: flex;
+  align-items: center; */
+}
+.audio .audioImg{
+    width: 300rpx;
+    position: relative;
+}
+.audio .audioImg .voiceImg{
+   position: absolute;
+   width: 60rpx;
+   left: 20rpx;
+   top: 4rpx;
+}
+.audio .audioImg .voiceImg2{
+  animation: wave 0.5s linear infinite;
+}
+.audio .audioImg .voiceImg1{
+    position: absolute;
+    width: 60rpx;
+    left: 40rpx;
+    top: 4rpx;
+    animation: wave1 0.5s linear infinite;
+    /* animation-delay:0.1s; */
+ }
+@keyframes wave {
+    0% {transform: translateX(0px);}
+    100% {transform: translateX(4px);}
+}
+@keyframes wave1 {
+    0% {transform: translateX(0px);}
+    100% {transform: translateX(-4px);}
+}
+.audio .texts{
+    font-size: 28rpx;
+    margin-left: 12rpx;
+    color: #ccc;
 }
 
 

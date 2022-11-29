@@ -79,7 +79,6 @@
                       <image class="{{randomCardIndex == index?'selected':''}}" wx:for="{{randomCard}}" wx:for-item="item1"  wx:for-index="index" wx:key="id" data-idx="{{index}}"  catchtap="changeImg" src="{{item1.imgUrl}}" mode="widthFix"></image>
                     </view>
                   </view>
-                    <!-- 如果选中了卡片 不是自己 -->
                     <image class="cardImg" wx:if="{{selectCard}}" src="{{selectCard.imgUrl}}" mode="widthFix">
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{selectCard.imgUrl}}" catchtap="showImg"> </image>
                     </image>
