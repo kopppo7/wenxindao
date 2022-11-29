@@ -75,11 +75,13 @@ Page({
     wx.getUserProfile({
       desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (e) => {
+        console.log('getUserProfile eee', e)
         updateUserMsg({
           nickname: e.userInfo.nickName,
           headimgurl: e.userInfo.avatarUrl,
           citys: e.userInfo.city
         }).then(res => {
+          console.log('getUserProfile res', res)
           var userInfo = getLoginInfo();
           if (userInfo != null&&userInfo!='') {
             userInfo.wechatName = e.userInfo.nickName;

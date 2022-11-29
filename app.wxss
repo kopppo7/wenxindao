@@ -350,11 +350,13 @@ button::after{
 	opacity: .9;
 }
 .trend-list .box .imgtxt{
-	margin-bottom: 32rpx;
+  margin-bottom: 32rpx;
+  font-size: 28rpx;
 }
 .trend-list .box .imgtxt image{
-  width: 100%;
+  width: 168rpx;
   border-radius: 24rpx;
+  margin-bottom: 16rpx;
 }
 
 
