@@ -81,6 +81,8 @@ Page({
               })
             }
           })
+        }else{
+          wx.hideLoading();
         }
     },
     telLogin() {

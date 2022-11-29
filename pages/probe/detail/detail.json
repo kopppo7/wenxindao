@@ -1,6 +1,0 @@
-{
-    "usingComponents": {
-        "rating":"../../components/rating/index"
-    },
-    "navigationStyle": "default"
-}
