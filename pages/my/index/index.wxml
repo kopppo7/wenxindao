@@ -69,7 +69,7 @@
                     <view class="imgtxt">
                         <image mode="widthFix" class="" src="{{item.contents.imgUrl}}"></image>
                         <view class="txt">
-                            {{item.contents[0].txt}}
+                            {{item.contents.tags}}
                         </view>
                     </view>
                     <!-- <view class="count-box">
