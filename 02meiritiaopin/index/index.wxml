@@ -65,7 +65,7 @@
 
     <form catchsubmit="addFm" class="form-z">
         <view class="textarea-box" wx:for="{{contentsArray}}" wx:for-index="idx" wx:for-item="content" wx:key="idx">
-            <textarea bindblur="inspectText" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;"
+            <textarea bindinput="bindTextVal" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;"
                 wx:if="{{content.putType == 1 || content.putType == 5}}" value="{{content.txt}}" 
                 data-iid="{{idx}}"/>
             <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{content.putType == 1}}"
