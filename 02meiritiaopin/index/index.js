@@ -1,4 +1,3 @@
-// 02meiritiaopin/index/index.js
 import {
   addFm,
   findByFmForUser,
@@ -20,7 +19,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isOpen: 0,
+    isOpen: 1,
     playPopStatus: false,
     bigPopStatus: false,
     tabs: ['每日意图', '要事规划', '复盘'],
@@ -28,7 +27,7 @@ Page({
     cardList: [],
     cardShow: false,
     cardIndex: 1,
-    activeCard: {},
+    bigCardImgUrl: {},
     signNum: 0,
     putType: 1,
     content: [],
@@ -50,6 +49,10 @@ Page({
       autioStatus: 1,
       cardShow: false,
       tempFilePath: '',
+      imgUrl:'',
+      cards:[],
+      showCards:false,
+      cardIndex:0
     }],
     initContentsArray: [{
       txt: "",
@@ -77,6 +80,10 @@ Page({
       autioStatus: 1,
       cardShow: false,
       tempFilePath: '',
+      imgUrl:'',
+      cards:[],
+      showCards:false,
+      cardIndex:0
     })
     this.setData({
       contentsArray: arr
@@ -103,6 +110,7 @@ Page({
   openBig(e) {
     this.setData({
       bigPopStatus: true,
+      bigCardImgUrl:this.data.contentsArray[e.currentTarget.dataset.pindex].cards[e.currentTarget.dataset.index].imgUrl
     })
   },
   closePop() {
@@ -113,26 +121,43 @@ Page({
     })
   },
   changeTab(e) {
-    this.setData({
-      activeIndex: e.currentTarget.dataset.ind,
-      types: e.currentTarget.dataset.ind + 1
-    })
-    this.initAudio()
-
+    var that = this;
+    if(that.data.types==2&&that.data.contentsArray.length>1){
+      wx.showModal({
+        title:'切换每日调频选项会移除第一条之后的事，是否确认切换',
+        success:function (res) {
+          let contentArr = that.data.contentsArray.splice(0,1);
+          if(res.confirm){
+            that.setData({
+              activeIndex: e.currentTarget.dataset.ind,
+              types: e.currentTarget.dataset.ind + 1,
+              contentsArray:contentArr
+            })
+            
+            that.initAudio()
+          }
+        }
+      })
+    }else{
+      that.setData({
+        activeIndex: e.currentTarget.dataset.ind,
+        types: e.currentTarget.dataset.ind + 1
+      })
+      that.initAudio()
+    }
   },
   changeCard(e) {
-    let active = this.data.cardList[e.currentTarget.dataset.ind]
+    this.data.contentsArray[e.currentTarget.dataset.pindex].cardIndex = e.currentTarget.dataset.ind
+    this.data.contentsArray[e.currentTarget.dataset.pindex].imgUrl = this.data.contentsArray[e.currentTarget.dataset.pindex].cards[e.currentTarget.dataset.ind].imgUrl;
     this.setData({
-      cardIndex: e.currentTarget.dataset.ind,
-      activeCard: active
+      contentsArray: this.data.contentsArray
     })
   },
   initData() {
     this.setData({
       nowDate: formatTime(new Date())
     })
-    console.log(this.data.nowDate);
-    this.getDayCard()
+    // this.getDayCard()
     this.dayForSignNumber()
   },
   // 新增每日调频
@@ -140,6 +165,9 @@ Page({
     var isGoOn=true;
     for (var i = 0; i < this.data.contentsArray.length; i++) {
       await new Promise((resolve)=>{
+        if(this.data.contentsArray[i].imgUrl==''){
+          resolve({ret:false,msg:'请抽取一张卡牌'});
+        }
         if (this.data.contentsArray[i].txt != '' || this.data.contentsArray[i].voice != '') {
           if (this.data.contentsArray[i].txt != '') {
             inspectText({
@@ -172,17 +200,9 @@ Page({
       return false;
     }
     let params = {
-      cardUrl: this.data.activeCard.imgUrl,
       contents: JSON.stringify(this.data.contentsArray),
       types: this.data.types,
-      isOpen: this.data.isOpen
-    }
-    if (!this.data.cardShow) {
-      wx.showToast({
-        title: '请抽取并选择一张卡牌',
-        icon: 'none'
-      });
-      return false;
+      isOpen:this.data.isOpen
     }
     var that = this;
     addFm(params).then(res => {
@@ -208,13 +228,17 @@ Page({
   // 查询自己每日调频记录
   findByFmForUser() {},
   // 随机查询今日随机卡牌
-  getDayCard() {
+  getDayCard(e) {
     let that = this;
     getDayCard().then(res => {
-      console.log(res.data.data);
+      if(this.data.contentsArray[e.currentTarget.dataset.index].cards.length=0){
+        this.data.contentsArray[e.currentTarget.dataset.index].cardIndex=0
+      }
+      this.data.contentsArray[e.currentTarget.dataset.index].cards=res.data.data;
+      this.data.contentsArray[e.currentTarget.dataset.index].showCards=true;
+      this.data.contentsArray[e.currentTarget.dataset.index].imgUrl= this.data.contentsArray[e.currentTarget.dataset.index].cards[e.currentTarget.dataset.index].imgUrl
       that.setData({
-        cardList: res.data.data,
-        activeCard: res.data.data[1]
+        contentsArray:this.data.contentsArray
       })
     })
   },
@@ -236,7 +260,7 @@ Page({
   },
   // 查询本人连续签到次数
   findByIsFlagNumber() {},
-  showCard() {
+  showCard(e) {
     let show = this.data.cardShow
     this.setData({
       cardShow: !show
@@ -257,7 +281,6 @@ Page({
     wx.authorize({
       scope: 'scope.record',
       success() {
-        console.log("录音授权成功");
         //第一次成功授权后 状态切换为2
         var arr = that.data.contentsArray;
         arr[e.currentTarget.dataset.iid]['autioStatus'] = 2
@@ -286,7 +309,6 @@ Page({
               //确认则打开设置页面（重点）
               wx.openSetting({
                 success: (res) => {
-                  console.log(res.authSetting);
                   if (!res.authSetting['scope.record']) {
                     //未设置录音授权
                     console.log("未设置录音授权");
@@ -299,8 +321,6 @@ Page({
                       },
                     })
                   } else {
-                    //第二次才成功授权
-                    console.log("设置录音授权成功");
                     var arr = that.data.contentsArray;
                     arr[e.currentTarget.dataset.iid]['autioStatus'] = 2
                     that.setData({
@@ -309,24 +329,19 @@ Page({
 
                     recorderManager.start(options);
                     recorderManager.onStart(() => {
-                      console.log('recorder start')
                     });
                     //错误回调
                     recorderManager.onError((res) => {
-                      console.log(res);
                     })
                   }
                 },
                 fail: function () {
-                  console.log("授权设置录音失败");
                 }
               })
             } else if (res.cancel) {
-              console.log("cancel");
             }
           },
           fail: function () {
-            console.log("openfail");
           }
         })
       }
@@ -354,11 +369,9 @@ Page({
   resume: function () {
     recorderManager.resume();
     recorderManager.onStart(() => {
-      console.log('重新开始录音')
     });
     //错误回调
     recorderManager.onError((res) => {
-      console.log(res);
     })
   },
   //停止录音
@@ -372,7 +385,6 @@ Page({
       that.setData({
         contentsArray: arr
       })
-      console.log('停止录音', res.tempFilePath)
       const {
         tempFilePath
       } = res
@@ -384,19 +396,16 @@ Page({
 
     innerAudioContext.src = this.data.contentsArray[e.currentTarget.dataset.iid].tempFilePath,
       innerAudioContext.onPlay(() => {
-        console.log('开始播放')
       })
     innerAudioContext.onError((res) => {
-      console.log(res.errMsg)
-      console.log(res.errCode)
     })
   },
   closeAudio(e) {
-    var arr = that.data.contentsArray;
+    var arr = this.data.contentsArray;
     arr[e.currentTarget.dataset.iid]['putType'] = 1
     arr[e.currentTarget.dataset.iid]['tempFilePath'] = ''
     arr[e.currentTarget.dataset.iid]['autioStatus'] = 1
-    that.setData({
+    this.setData({
       contentsArray: arr
     })
   },
@@ -444,14 +453,6 @@ Page({
   onLoad(options) {
     this.initData()
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -459,33 +460,6 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
 
   /**
    * 用户点击右上角分享

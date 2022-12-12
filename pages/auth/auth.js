@@ -28,6 +28,11 @@ Page({
       headimgurl: 'https://img2.woyaogexing.com/2022/11/28/bf554d5b02b84477868eebae2ad48930.jpg',
       citys:''
     }).then(res => {
+      if(res.data.ret!=200){
+        wx.showToast({
+          title: res.data.msg,
+        })
+      }
       var userInfo = getLoginInfo();
       if (userInfo != null&&userInfo!='') {
         userInfo.wechatName = '体验用户';//e.userInfo.nickName;

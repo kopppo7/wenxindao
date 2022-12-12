@@ -83,7 +83,7 @@
                 </view>
             </view>
             <!-- 主题派对 wx:if="{{item.category==1}}" -->
-            <view class="trend-item" wx:if="{{item.category==1}}" >
+            <view class="trend-item" wx:if="{{item.category==1}}"  bindtap="detail" data-type="1" data-id="{{item.id}}">
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
                     <view class="dot" data-index="{{index}}" catchtap="openPop">

@@ -97,7 +97,8 @@
     <view class="pop-win2">
         <view class="pop-tit">语音参与须知</view>
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closeVoice"></image>
-        <view class="desc">{{product.voiceNotice}}</view>
+        <!-- <view class="desc">{{product.voiceNotice}}</view> -->
+        <view class="desc">语音参与须知</view>
         <view class="btn-know" bindtap="closeVoice">知道了</view>
     </view>
 </block>
