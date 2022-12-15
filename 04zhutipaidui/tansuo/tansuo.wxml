@@ -2,11 +2,11 @@
 <view class="hourse-set">
     <view class="txt">
         <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
-        <text>人数：2-{{roomData.maxNumber}}人局</text>
+        <text>人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
     </view>
     <image src="../../static/h-set.png" mode="scaleToFill" />
 </view>
-<scroll-view class="z-tab2" scroll-x="true">
+<scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
     <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
     <view class="item {{step == 1 ? 'active' : ''}}">第1轮</view>
     <view class="item {{step == 2 ? 'active' : ''}}">第2轮</view>
@@ -26,7 +26,7 @@
                 </view>
             </view>
             <view class="right">
-                大家好欢迎来到问心岛的生命探索活动现场，今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这...
+                <rich-text nodes="{{themeDetail.detailsText}}"></rich-text>
             </view>
         </view>
         <view class="peoples">
@@ -45,7 +45,6 @@
             </view>
         </view>
         <view class="content">
-            <view class="item sys">已有5人，还差1人开始派对！</view>
             <view wx:for="{{mesList}}" wx:for-item="item" class="{{item.sysType != 'sys'?'active item':'item'}}">
                 <text class="name">{{item.fromNick}}：</text>
                 <text class="con">{{item.text}}</text>
@@ -73,7 +72,7 @@
     </view>
 </view>
 <!-- 倒计时 -->
-<view class="timeDown" wx:if="{{ timePopStatus}}">10</view>
+<view class="timeDown" wx:if="{{ timePopStatus}}">{{waitTime}}</view>
 <!--分享到-->
 <block wx:if="{{sharePopStatus}}">
     <view class="pop-mask"></view>

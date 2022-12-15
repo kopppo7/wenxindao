@@ -5,11 +5,13 @@ import {
     createBaoRoom,
     startPlayRoom,
     kickingPlayer,
-    openBaoRoomMate
+    openBaoRoomMate,
+    findByAskPartyOne
 } from "../api";
 import yunApi from "../../utils/yun";
 var nim = null;
 var downTime = Math.random() * 10 + 5;
+var downTime2 = Math.random() * 10;
 var APP = getApp();
 Page({
 
@@ -44,6 +46,8 @@ Page({
         isOwner: false,
         isBeginPlay: false,//是否开始游戏
         isReady: false,//是否准备
+        askId: '',//主题ID
+        themeDetail: {}
     },
     // 活动提示
     activityChange () {
@@ -266,7 +270,7 @@ Page({
     },
     onTeamNotificationMsg (msg) {
         var msgList = APP.globalData.mesList
-        msg.attach.users.forEach(item=>{
+        msg.attach.users.forEach(item => {
             if (item.account == msg.attach.accounts[0]) {
                 msg.name = item.nick
             }
@@ -276,7 +280,7 @@ Page({
             var msgObj = {
                 fromNick: msg.name,
                 text: '加入派对',
-                sysType:'sys'
+                sysType: 'sys'
             }
             msgList.push(msgObj)
             getApp().globalData.mesList = msgList
@@ -285,7 +289,7 @@ Page({
             var msgObj = {
                 fromNick: msg.name,
                 text: '被踢出派对',
-                sysType:'sys'
+                sysType: 'sys'
             }
             msgList.push(msgObj)
             getApp().globalData.mesList = msgList
@@ -380,7 +384,7 @@ Page({
     // 创建房间
     creatRoom () {
         let params = {
-            askId: '9'
+            askId: this.askId
         }
         var that = this;
         var roomData = wx.getStorageSync('roomData') || ''
@@ -420,26 +424,45 @@ Page({
             })
         }
     },
-    getDownTime () {
+    getDownTime (downtimes) {
         var time1 = 0;
         var that = this;
-        var time = setInterval(() => {
-            if (time1 > downTime) {
-                that.setData({
-                    matePopStatus: false,
-                })
-                clearInterval(time)
-                this.initRoom()
-            } else {
-                time1++
-                if (time1 < 10) {
-                    time1 = '0' + time1
+        if (downtime) {
+            var time = setInterval(() => {
+                if (downtime < 1) {
+                    that.setData({
+                        timePopStatus: false,
+                    })
+                    clearInterval(time)
+                } else {
+                    downtime--
+                    if (downtime < 10) {
+                        downtime = '0' + downtime
+                    }
+                    that.setData({
+                        waitTime: downtime
+                    })
                 }
-                that.setData({
-                    waitTime: time1
-                })
-            }
-        }, 1000);
+            }, 1000);
+        } else {
+            var time = setInterval(() => {
+                if (time1 > downTime) {
+                    that.setData({
+                        matePopStatus: false,
+                    })
+                    clearInterval(time)
+                    this.initRoom()
+                } else {
+                    time1++
+                    if (time1 < 10) {
+                        time1 = '0' + time1
+                    }
+                    that.setData({
+                        waitTime: time1
+                    })
+                }
+            }, 1000);
+        }
     },
     handleReady () {
         this.setData({
@@ -486,6 +509,7 @@ Page({
                     voiceStatus: 1,
                     timePopStatus: true,
                 })
+                that.getDownTime('10')
             })
         } else {
             this.setData({
@@ -527,8 +551,28 @@ Page({
         getApp().watch('playerList', that.watchBack);
         getApp().watch('mesList', that.watchBack);
         this.setData({
-            isfriend: options.isfriend || false
+            isfriend: options.isfriend || false,
+            askId: options.askId || ''
         })
+        findByAskPartyOne({
+            id: that.data.askId
+        }).then(res => {
+            console.log(res);
+            let richText = res.data.data.detailsText
+            res.data.data.detailsText = richText
+                .replace(/\<img/gi, '<img style="width:100%;height:auto;"')
+                .replace(/\<p/gi, '<p class="p_class"')
+                .replace(/\<span/gi, '<span class="span_class"')
+            that.setData({
+                themeDetail: res.data.data
+            })
+            wx.setNavigationBarTitle({
+                title: res.data.data.title
+            })
+
+        })
+        console.log('this.data.theme', this.data.themeDetail);
+        console.log(this.askId);
         if (wx.getStorageSync('activeStatus')) {
             this.setData({
                 activityPopStatus: false

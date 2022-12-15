@@ -287,6 +287,8 @@
 	overflow-y: scroll;background: linear-gradient(217deg, rgba(98,201,220,0.2) 0%, rgba(255,255,255,0.08) 100%);border-radius: 24rpx;
 	font-size: 28rpx;color: #62C9DC;
 }
+.room-theme .help .right .span_class,.room-theme .help .right .p_class{color: #62C9DC!important;background-color: transparent!important;}
+
 .room-theme .peoples{display: flex;justify-content: space-between;flex-wrap: wrap;}
 .room-theme .peoples .item{width: 50%;}
 .room-theme .peoples .item:nth-child(2n){
