@@ -32,7 +32,7 @@
         <view class="peoples">
             <view class="item" wx:for="{{playerList}}" wx:for-index="index"
             wx:for-item="item">
-                <view class="people" bindlongpress="handleKick" data-item="{{item}}">
+                <view class="{{personInd == index?'people active':'people' }}" bindlongpress="handleKick" data-item="{{item}}">
                     <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
                     <image class="ready" src="../../static/play-status1.png" wx:if="{{item.isReady}}"></image>
                     </image>

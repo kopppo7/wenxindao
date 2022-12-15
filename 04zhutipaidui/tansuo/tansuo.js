@@ -31,7 +31,7 @@ Page({
         roomSetPopStatus: false, //房间设置
         payMatching: false, //付费or匹配
         step: 0,
-        waitTime: '00',
+        waitTime: '10',
         chatroom: null,
         account: "",
         teamId: "",
@@ -47,7 +47,8 @@ Page({
         isBeginPlay: false,//是否开始游戏
         isReady: false,//是否准备
         askId: '',//主题ID
-        themeDetail: {}
+        themeDetail: {},
+        personInd:''
     },
     // 活动提示
     activityChange () {
@@ -359,6 +360,13 @@ Page({
                         item.isActive = content.data.value
                     }
                 })
+            } else if (content.type == 4) {
+                // 自定义消息type为4的时候 为系统消息
+                var msgObj = {
+                    text:content.data.value,
+                }
+                APP.globalData.mesList.push(msgObj)
+                console.log(APP.globalData.mesList);
             }
         } else {
             var msgObj = {
@@ -427,26 +435,26 @@ Page({
     getDownTime (downtimes) {
         var time1 = 0;
         var that = this;
-        if (downtime) {
+        if (downtimes) {
             var time = setInterval(() => {
-                if (downtime < 1) {
+                if (downtimes <= 1) {
                     that.setData({
                         timePopStatus: false,
                     })
                     clearInterval(time)
                 } else {
-                    downtime--
-                    if (downtime < 10) {
-                        downtime = '0' + downtime
+                    downtimes--
+                    if (downtimes < 10) {
+                        downtimes = '0' + downtimes
                     }
                     that.setData({
-                        waitTime: downtime
+                        waitTime: downtimes
                     })
                 }
             }, 1000);
         } else {
             var time = setInterval(() => {
-                if (time1 > downTime) {
+                if (time1 > 9) {
                     that.setData({
                         matePopStatus: false,
                     })
@@ -508,8 +516,10 @@ Page({
                     isBeginPlay: true,
                     voiceStatus: 1,
                     timePopStatus: true,
+                    personInd:0
                 })
-                that.getDownTime('10')
+                that.sendCustomMsg(4,'派对游戏开始，发牌中...')
+                that.getDownTime(10)
             })
         } else {
             this.setData({
