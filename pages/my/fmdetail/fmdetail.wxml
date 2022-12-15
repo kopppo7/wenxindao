@@ -22,7 +22,7 @@
 
 </view>
 
-<view class="btn-share-g">
+<button class="btn-share-g" open-type="share">
   <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share.svg"></image>
   <text>分享</text>
-</view>
+</button>

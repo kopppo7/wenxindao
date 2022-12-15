@@ -22,7 +22,8 @@ Page({
     score: 5, // 提交的评分
     evaluate: '', // 提交的评价
     page: 1,
-    total: 0
+    total: 0,
+    isShowVoice:false
   },
   // 打开购买本探索弹窗
   openBuyPop() {
@@ -38,7 +39,11 @@ Page({
       gwPopStatus: false
     })
   },
-
+  closeVoice(){
+    this.setData({
+      isShowVoice:false
+    })
+  },
   // 打开购买本探索弹窗
   openYearPop() {
     this.setData({
@@ -95,9 +100,9 @@ Page({
     })
   },
   // 语音参与须知
-  toDetail() {
-    wx.navigateTo({
-      url: '../voince/index?detail=' + this.data.product.voiceNotice,
+  showNotice() {
+    this.setData({
+      isShowVoice:true
     })
   },
   // 支付

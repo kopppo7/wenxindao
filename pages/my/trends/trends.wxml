@@ -16,7 +16,7 @@
         <view class="trend-list">
         <view wx:for="{{list}}"  wx:for-item="item" wx:key="id">
              <!-- 每日调频  wx:if="{{item.category==0}}" -->
-            <view class="trend-item" wx:if="{{item.category==0}}" >
+            <view class="trend-item" wx:if="{{item.category==0}}"  bindtap="detail" data-type="0" data-id="{{item.id}}">
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
                      <view class="dot" data-id="{{item.id}}" data-index="{{index}}"  catchtap="openPop">
@@ -35,7 +35,7 @@
                 </view>
             </view>
             <!-- 生命探索 wx:if="{{item.category==2}}" -->
-            <view class="trend-item"  wx:if="{{item.category==2}}">
+            <view class="trend-item"  wx:if="{{item.category==2}}"  bindtap="detail" data-type="2" data-id="{{item.id}}">
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
                     <view class="dot" data-id="{{item.id}}" data-index="{{index}}"  catchtap="openPop">
@@ -48,7 +48,7 @@
                     <view class="imgtxt">
                         <image mode="widthFix" class="" src="{{item.contents.imgUrl}}"></image>
                         <view class="txt">
-                            {{item.contents[0].txt}}
+                          {{item.contents.tags}}
                         </view>
                     </view>
                     <!-- <view class="count-box">
@@ -62,7 +62,7 @@
                 </view>
             </view>
             <!-- 主题派对 wx:if="{{item.category==1}}" -->
-            <view class="trend-item" wx:if="{{item.category==1}}" >
+            <view class="trend-item" wx:if="{{item.category==1}}"  bindtap="detail" data-type="1" data-id="{{item.id}}">
                 <view class="time mb12">{{item.addTime}}</view>
                 <view class="box">
                     <view class="dot" data-id="{{item.id}}" data-index="{{index}}"  catchtap="openPop">

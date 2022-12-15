@@ -125,6 +125,9 @@ Page({
     }).then(res => {
       for (var i = 0; i < res.data.data.list.length; i++) {
         res.data.data.list[i].contents = JSON.parse(res.data.data.list[i].contents);
+        if (res.data.data.list[i].category == 0) {
+          res.data.data.list[i].contents.imgUrl = res.data.data.list[i].contents.data[0].imgUrl;
+        }
       }
       if (this.data.page == 1) {
         this.data.list = res.data.data.list;
@@ -175,7 +178,7 @@ Page({
    */
   onPullDownRefresh() {
     this.setData({
-      page:1
+      page: 1
     });
     this.getTopData()
     this.getData();
@@ -199,14 +202,14 @@ Page({
     switch (e.currentTarget.dataset.type) {
       case '0':
         wx.navigateTo({
-          url: '/pages/my/fmdetail/fmdetail?id='+e.currentTarget.dataset.id,
+          url: '/pages/my/fmdetail/fmdetail?id=' + e.currentTarget.dataset.id,
         })
         break;
       case '1':
         break;
       case '2':
         wx.navigateTo({
-          url: '/pages/my/probedetail/probedetail?id='+e.currentTarget.dataset.id,
+          url: '/pages/my/probedetail/probedetail?id=' + e.currentTarget.dataset.id,
         })
         break;
     }

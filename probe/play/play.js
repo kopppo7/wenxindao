@@ -323,7 +323,6 @@ Page({
   },
   // 切换卡片
   changeCard(e) {
-    console.log('e.target.dataset.item', e)
     if (e.currentTarget.dataset.item == 1) {
       this.setData({
         selectCard: ''
@@ -381,10 +380,10 @@ Page({
     }
     //引导-最后一轮，进入下一轮的时候需要更新下一轮的内容到stepItem，并且获取3张卡牌
     if(this.data.step<this.data.stepList.length){
-      var sItem = this.data.stepList[this.data.step];
-      var answers = []
+      let sItem = this.data.stepList[this.data.step];
+      let answers = []
       for (var j = 0; j < sItem.answers.length && j < this.data.robot.length; j++) {
-        var answerItem = sItem.answers[j];
+        let answerItem = sItem.answers[j];
         answerItem.headImg = this.data.robot[j];
         answers.push(answerItem);
       }
@@ -426,6 +425,28 @@ Page({
         stepBg: Math.floor(100 / (res.data.data.details.length + 2)),
         probeId:res.data.data.probeId
       })
+      if(this.data.step > 0 && this.data.step < this.data.stepList.length ){
+        let sItem = this.data.stepList[this.data.step];
+        let answers = []
+        for (var j = 0; j < sItem.answers.length && j < this.data.robot.length; j++) {
+          let answerItem = sItem.answers[j];
+          answerItem.headImg = this.data.robot[j];
+          answers.push(answerItem);
+        }
+        sItem.answers = answers;
+        this.setData({
+          stepItem: sItem
+        });
+        cardRandom({
+          id:this.data.probeId,
+          cardNum:sItem.cardNum
+        }).then(res=>{
+          this.setData({
+            randomCard:res.data.data,
+            randomCardIndex:0
+          })
+        });
+      }
     })
   },
   /**
@@ -444,7 +465,11 @@ Page({
     }
 
   },
-
+  lookLog(){
+    wx.redirectTo({
+      url: '/pages/my/probedetail/probedetail?id='+this.data.id,
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -7,9 +7,9 @@
         <navigator url="/probe/index/index" hover-class="none" class="item">
             <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title2.png"></image>
         </navigator>
-        <navigator url="/04zhutipaidui/index/index" hover-class="none" class="item">
+        <view bindtap="goParty" hover-class="none" class="item">
             <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title3.png"></image>
-        </navigator>
+        </view>
     </view>
     <view class="index-row2">
          <view class="item item1">

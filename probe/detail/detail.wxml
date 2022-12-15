@@ -4,14 +4,14 @@
         <image class="pic" src="{{product.imgUrl}}"></image>
         <view class="txt">
             <view class="s1">{{product.title}}</view>
-            <view class="s2">探索生命意义与使命，为自己的人生注入全新的生命活力</view>
+            <view class="s2"><rich-text nodes="{{product.introduce}}"></rich-text></view>
             <view class="s3">预计{{product.meanTime}}分钟</view>
             <view class="s4">
                 <text wx:for="{{labels}}" wx:for-item="item" wx:key="*this">{{item}}</text>
             </view>
         </view>
     </view>
-    <view class="intro-row2"  bindtap="toDetail">
+    <view class="intro-row2"  bindtap="showNotice">
         <text>语音参与须知</text>
     </view>
     <view class="intro-row3">
@@ -22,12 +22,11 @@
                 <rich-text nodes="{{product.activity}}"></rich-text>
             </view>
         </view>
-        <view class="g-box">
-            <!-- <view class="z-tit2">茶话会环节</view> -->
+        <!-- <view class="g-box">
             <view class="z-list2">
                 <rich-text nodes="{{product.introduce}}"></rich-text>
             </view>
-        </view>
+        </view> -->
     </view>
     <view class="intro-row4">
         <view class="z-tit1">探索感悟</view>
@@ -90,6 +89,17 @@
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <view class="desc">生命探索活动中的1年使用权指用户以当前价格购买后可免费此本子1年。</view>
         <view class="btn-know" bindtap="closePop">知道了</view>
+    </view>
+</block>
+<!--使用期1年弹窗-->
+<block wx:if="{{isShowVoice}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">语音参与须知</view>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closeVoice"></image>
+        <!-- <view class="desc">{{product.voiceNotice}}</view> -->
+        <view class="desc">语音参与须知</view>
+        <view class="btn-know" bindtap="closeVoice">知道了</view>
     </view>
 </block>
 <!--写感悟弹窗-->
