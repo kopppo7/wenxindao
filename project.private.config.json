@@ -235,6 +235,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "probe/play/play",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

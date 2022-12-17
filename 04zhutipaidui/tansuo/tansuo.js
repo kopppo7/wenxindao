@@ -319,7 +319,12 @@ Page({
         var content = {
             type: type,
             data: {
-                value: val
+                status:val.status,
+                value: val.text,
+                cardList:val.list,
+                audio:val.audio,
+                video:val.video,
+                img:val.imgUrl
             }
         };
         var msg = nim.sendCustomMsg({
@@ -334,6 +339,7 @@ Page({
         console.log(error);
         console.log(msg);
         console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error ? '成功' : '失败') + ', id=' + msg.idClient);
+        var msgList = APP.globalData.mesList
         if (msg.content) {
             var content = JSON.parse(msg.content)
             if (content.type == 1) {
@@ -341,7 +347,7 @@ Page({
                 var play = APP.globalData.playerList;
                 play.forEach(item => {
                     if (item.account == msg.from) {
-                        item.isReady = content.data.value
+                        item.isReady = content.data.status
                     }
                 })
                 APP.globalData.playerList = play;
@@ -350,22 +356,33 @@ Page({
                 // 自定义消息type为2的时候 玩家是否轮到发言
                 APP.globalData.playerList.forEach(item => {
                     if (item.account == msg.from) {
-                        item.isActive = content.data.value
+                        item.isActive = content.data.status
                     }
                 })
             } else if (content.type == 3) {
                 // 自定义消息type为3的时候 玩家是否在线
                 APP.globalData.playerList.forEach(item => {
                     if (item.account == msg.from) {
-                        item.isActive = content.data.value
+                        item.isActive = content.data.status
                     }
                 })
             } else if (content.type == 4) {
-                // 自定义消息type为4的时候 为系统消息
+                // 自定义消息type为4的时候 为系统文字消息
                 var msgObj = {
+                    sysType:'sys',
                     text:content.data.value,
                 }
-                APP.globalData.mesList.push(msgObj)
+                msgList.push(msgObj)
+                APP.globalData.mesList = msgList
+                console.log(APP.globalData.mesList);
+            } else if (content.type == 5) {
+                // 自定义消息type为5的时候 为系统发牌消息
+                var msgObj = {
+                    sysType:'sys',
+                    cardList:content.data.cardList,
+                }
+                msgList.push(msgObj)
+                APP.globalData.mesList = msgList
                 console.log(APP.globalData.mesList);
             }
         } else {
@@ -373,7 +390,8 @@ Page({
                 fromNick: msg.fromNick,
                 text: msg.text,
             }
-            APP.globalData.mesList.push(msgObj)
+            msgList.push(msgObj)
+            APP.globalData.mesList = msgList
         }
     },
     onDismissTeam () { },
@@ -476,7 +494,7 @@ Page({
         this.setData({
             isReady: !this.data.isReady
         })
-        this.sendCustomMsg(1, this.data.isReady)
+        this.sendCustomMsg(1, {status:this.data.isReady})
     },
     handleInviFriend () {
 
@@ -518,8 +536,11 @@ Page({
                     timePopStatus: true,
                     personInd:0
                 })
-                that.sendCustomMsg(4,'派对游戏开始，发牌中...')
+                that.sendCustomMsg(4,{text:'派对游戏开始，发牌中...'})
                 that.getDownTime(10)
+                this.setData({
+                    step:1
+                })
             })
         } else {
             this.setData({

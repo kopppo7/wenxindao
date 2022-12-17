@@ -45,9 +45,45 @@
             </view>
         </view>
         <view class="content">
-            <view wx:for="{{mesList}}" wx:for-item="item" class="{{item.sysType != 'sys'?'active item':'item'}}">
-                <text class="name">{{item.fromNick}}：</text>
-                <text class="con">{{item.text}}</text>
+            <view wx:for="{{mesList}}" wx:for-item="item" class="{{item.sysType != 'sys'?'item':'item sys'}}">
+                <view class="text" wx:if="item.text">
+                    <text class="name" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick}}：</text>
+                    <text class="con">{{item.text}}</text>
+                </view>
+                <view class="cardList">
+                    <view class="left">
+                        <image
+                            src="../../static/room-kong.png"
+                            mode="scaleToFill"
+                        />
+                    </view>
+                    <view class="right">
+                        <image
+                            src="../../static/room-kong.png"
+                            mode="scaleToFill"
+                        />
+                        <image
+                            src="../../static/room-kong.png"
+                            mode="scaleToFill"
+                        />
+                        <image
+                            src="../../static/room-kong.png"
+                            mode="scaleToFill"
+                        />
+                    </view>
+                </view>
+                <view class="card">
+                    <image
+                        src="../../static/room-kong.png"
+                        mode="scaleToFill"
+                    />
+                    <view class="icon">
+                        <image
+                        src="../../static/room-kong.png"
+                        mode="scaleToFill"
+                    />
+                    </view>
+                </view>
             </view>
         </view>
     </view>
