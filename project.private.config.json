@@ -242,6 +242,20 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/fupan/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tousu/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

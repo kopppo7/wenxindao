@@ -53,35 +53,37 @@
                 <view class="cardList">
                     <view class="left">
                         <image
-                            src="../../static/room-kong.png"
+                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
                             mode="scaleToFill"
                         />
                     </view>
                     <view class="right">
                         <image
-                            src="../../static/room-kong.png"
+                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
                             mode="scaleToFill"
                         />
                         <image
-                            src="../../static/room-kong.png"
+                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
                             mode="scaleToFill"
                         />
                         <image
-                            src="../../static/room-kong.png"
+                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
                             mode="scaleToFill"
                         />
                     </view>
                 </view>
                 <view class="card">
-                    <image
-                        src="../../static/room-kong.png"
-                        mode="scaleToFill"
-                    />
-                    <view class="icon">
+                    <view class="img">
                         <image
-                        src="../../static/room-kong.png"
-                        mode="scaleToFill"
-                    />
+                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
+                            mode="scaleToFill"
+                        />
+                        <view class="icon">
+                            <image
+                            src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                            mode="scaleToFill"
+                        />
+                        </view>
                     </view>
                 </view>
             </view>

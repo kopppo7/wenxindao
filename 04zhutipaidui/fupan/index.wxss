@@ -1,0 +1,33 @@
+ /* 04zhutipaidui/fupan/index.wxss */
+.fupan{padding-bottom: 200rpx;}
+.fupan .title{display: -webkit-flex;display: flex;justify-content: center;align-items:center;background: rgba(255,191,95,0.12);margin-bottom: 24rpx;}
+.fupan .title image{width: 44rpx;height: 44rpx;margin-right: 8rpx;}
+.fupan .title .txt{font-size: 28rpx;font-weight: 500;
+  color: #FFB58C;line-height: 92rpx;height: 92rpx;}
+.fupan .list{padding: 0 40rpx;}
+.fupan .list .person{padding: 24rpx 24rpx 34rpx;border-radius: 8rpx;background: rgba(182,178,207,0.12);border: 24rpx;display: -webkit-flex;display: flex;justify-content: center;align-items:center;margin-bottom: 24rpx;}
+.fupan .list .person .avatar{flex-shrink: 0;width: 96rpx;margin-right: 24rpx;position: relative;}
+.fupan .list .person .avatar image{display: block;width: 96rpx;height: 96rpx;border-radius: 50%;}
+.fupan .list .person .avatar .num{position: absolute;left: 0;top: 0;width: 32rpx;height: 32rpx;border-radius: 50%;background: linear-gradient(225deg, #F0273F 0%, #BC61E7 100%);
+  box-shadow: 0px 2px 2px 0px rgba(188,97,231,0.2);font-size: 12px;color: #fff;font-weight: 500;text-align: center;line-height: 32rpx;}
+.fupan .list .person .avatar .tx{position: absolute;width: 72rpx;line-height: 40rpx;text-align: center;background: rgba(116,97,231,0.6);border-radius: 8rpx;font-size: 24rpx;color: #fff;bottom: -10rpx;left: 50%;margin-left: -36rpx;}
+
+.fupan .list .name{font-size: 32rpx;color: #fff;font-weight: 500;flex-grow: 1;}
+.fupan .list .zan{flex-shrink: 0;display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;/* 垂直居中 */align-content:center;/* 多行一起垂直居中 */flex-direction: column;}
+.fupan .list .zan image{width: 48rpx;height: 48rpx;}
+.fupan .list .zan .txt{font-size: 28rpx;color: #ffb58c;font-weight: 500;}
+.bot-fix{position: fixed;left: 0;bottom: 0;width: 100%;z-index: 99;text-align: center;}
+.bot-fix .countdown{display: inline-block;background: rgba(255,181,140,0.2);border-radius: 24rpx;padding: 0 10rpx;font-size: 12px;line-height: 48rpx;margin-bottom: 12px;}
+.bot-fix .countdown .time{color: #ffb58c;margin-right: 6rpx;}
+.bot-fix .countdown text{color: #fff;}
+.bot-fix .btns{text-align: center;background: #222537;display: -webkit-flex;display: flex;justify-content: center;align-items:center;padding: 20rpx 40rpx;}
+.bot-fix .btns .lx{width: 160rpx;line-height: 80rpx;text-align: center;border-radius: 40rpx;background-color: rgba(182,178,207,0.18);font-size: 28rpx;font-weight: 500;color: #fff;}
+.bot-fix .btns .speak{display: -webkit-flex;display: flex;justify-content: center;align-items:center;width: 286rpx;background: #7461E7;
+  border-radius: 74rpx;line-height: 80rpx;margin: 0 32rpx;}
+.bot-fix .btns .speak image{width: 40rpx;height: 40rpx;margin-right: 8rpx;}
+.bot-fix .btns .speak text{color: #fff;font-size: 32rpx;line-height: 80rpx;}
+.bot-fix .btns .leave{width: 160rpx;line-height: 80rpx;text-align: center;border-radius: 40rpx;background-color: rgba(182,178,207,0.18);font-size: 28rpx;font-weight: 500;color: #ffb58c;}
+.bot-fix .btns{}
+.bot-fix{}
+.bot-fix{}
+.bot-fix{}
