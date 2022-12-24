@@ -11,16 +11,20 @@
             </view>
         </view>
     </view>
-    <view class="intro-row2">
+    <!-- <view class="intro-row2">
         <text>语音参与须知</text>
-    </view>
+    </view> -->
     <view class="intro-row3">
+        <view class="z-tit1">探索简介</view>
+        <view class="g-box">
+            <rich-text nodes="{{detailObj.detailsText}}" type="text" class="desc"></rich-text>
+        </view>
         <view class="z-tit1">活动流程</view>
         <view class="g-box">
             <view class="z-tit2">语音参与者</view>
             <rich-text nodes="{{detailObj.flowText}}" type="text" class="desc"></rich-text>
         </view>
-        <view class="g-box">
+        <!-- <view class="g-box">
             <view class="z-tit2">茶话会环节</view>
             <view class="z-list2">
                 <view class="item">
@@ -48,22 +52,12 @@
                     <view class="desc">资源公开身份，互关成为好友，开启新的友谊。</view>
                 </view>
             </view>
-        </view>
+        </view> -->
     </view>
     <view class="intro-row4">
         <view class="z-tit1">探索感悟</view>
         <view class="z-list3">
-            <view class="item g-box">
-                <view class="tit-box">
-                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
-                    <view class="name-time">
-                        <view class="name">飞飞图</view>
-                        <view class="time">2022-07-25 21:05:00</view>
-                    </view>
-                </view>
-                <view class="desc">学习完了整个主题的来训练，收获颇多！也会将学习应用到日常生活中去。不断的修炼自我，成为更好的自己。期待参加下一个主题探索。期待...<text>更多</text></view>
-            </view>
-            <view class="item g-box">
+            <view class="item g-box" wx:for="{{evalList}}">
                 <view class="tit-box">
                     <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
                     <view class="name-time">

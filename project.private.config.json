@@ -218,7 +218,7 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "isfriend=false",
+          "query": "isfriend=false&askId=9",
           "launchMode": "default",
           "scene": null
         },
@@ -232,6 +232,34 @@
         {
           "name": "",
           "pathName": "pages/telLogin/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "probe/play/play",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/fupan/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tousu/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/my/order/order",
           "query": "",
           "launchMode": "default",
           "scene": null

@@ -5,11 +5,13 @@ import {
     createBaoRoom,
     startPlayRoom,
     kickingPlayer,
-    openBaoRoomMate
+    openBaoRoomMate,
+    findByAskPartyOne
 } from "../api";
 import yunApi from "../../utils/yun";
 var nim = null;
 var downTime = Math.random() * 10 + 5;
+var downTime2 = Math.random() * 10;
 var APP = getApp();
 Page({
 
@@ -29,7 +31,7 @@ Page({
         roomSetPopStatus: false, //房间设置
         payMatching: false, //付费or匹配
         step: 0,
-        waitTime: '00',
+        waitTime: '10',
         chatroom: null,
         account: "",
         teamId: "",
@@ -44,6 +46,9 @@ Page({
         isOwner: false,
         isBeginPlay: false,//是否开始游戏
         isReady: false,//是否准备
+        askId: '',//主题ID
+        themeDetail: {},
+        personInd:''
     },
     // 活动提示
     activityChange () {
@@ -266,7 +271,7 @@ Page({
     },
     onTeamNotificationMsg (msg) {
         var msgList = APP.globalData.mesList
-        msg.attach.users.forEach(item=>{
+        msg.attach.users.forEach(item => {
             if (item.account == msg.attach.accounts[0]) {
                 msg.name = item.nick
             }
@@ -276,7 +281,7 @@ Page({
             var msgObj = {
                 fromNick: msg.name,
                 text: '加入派对',
-                sysType:'sys'
+                sysType: 'sys'
             }
             msgList.push(msgObj)
             getApp().globalData.mesList = msgList
@@ -285,7 +290,7 @@ Page({
             var msgObj = {
                 fromNick: msg.name,
                 text: '被踢出派对',
-                sysType:'sys'
+                sysType: 'sys'
             }
             msgList.push(msgObj)
             getApp().globalData.mesList = msgList
@@ -314,7 +319,12 @@ Page({
         var content = {
             type: type,
             data: {
-                value: val
+                status:val.status,
+                value: val.text,
+                cardList:val.list,
+                audio:val.audio,
+                video:val.video,
+                img:val.imgUrl
             }
         };
         var msg = nim.sendCustomMsg({
@@ -329,6 +339,7 @@ Page({
         console.log(error);
         console.log(msg);
         console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error ? '成功' : '失败') + ', id=' + msg.idClient);
+        var msgList = APP.globalData.mesList
         if (msg.content) {
             var content = JSON.parse(msg.content)
             if (content.type == 1) {
@@ -336,7 +347,7 @@ Page({
                 var play = APP.globalData.playerList;
                 play.forEach(item => {
                     if (item.account == msg.from) {
-                        item.isReady = content.data.value
+                        item.isReady = content.data.status
                     }
                 })
                 APP.globalData.playerList = play;
@@ -345,23 +356,42 @@ Page({
                 // 自定义消息type为2的时候 玩家是否轮到发言
                 APP.globalData.playerList.forEach(item => {
                     if (item.account == msg.from) {
-                        item.isActive = content.data.value
+                        item.isActive = content.data.status
                     }
                 })
             } else if (content.type == 3) {
                 // 自定义消息type为3的时候 玩家是否在线
                 APP.globalData.playerList.forEach(item => {
                     if (item.account == msg.from) {
-                        item.isActive = content.data.value
+                        item.isActive = content.data.status
                     }
                 })
+            } else if (content.type == 4) {
+                // 自定义消息type为4的时候 为系统文字消息
+                var msgObj = {
+                    sysType:'sys',
+                    text:content.data.value,
+                }
+                msgList.push(msgObj)
+                APP.globalData.mesList = msgList
+                console.log(APP.globalData.mesList);
+            } else if (content.type == 5) {
+                // 自定义消息type为5的时候 为系统发牌消息
+                var msgObj = {
+                    sysType:'sys',
+                    cardList:content.data.cardList,
+                }
+                msgList.push(msgObj)
+                APP.globalData.mesList = msgList
+                console.log(APP.globalData.mesList);
             }
         } else {
             var msgObj = {
                 fromNick: msg.fromNick,
                 text: msg.text,
             }
-            APP.globalData.mesList.push(msgObj)
+            msgList.push(msgObj)
+            APP.globalData.mesList = msgList
         }
     },
     onDismissTeam () { },
@@ -380,7 +410,7 @@ Page({
     // 创建房间
     creatRoom () {
         let params = {
-            askId: '9'
+            askId: this.askId
         }
         var that = this;
         var roomData = wx.getStorageSync('roomData') || ''
@@ -420,32 +450,51 @@ Page({
             })
         }
     },
-    getDownTime () {
+    getDownTime (downtimes) {
         var time1 = 0;
         var that = this;
-        var time = setInterval(() => {
-            if (time1 > downTime) {
-                that.setData({
-                    matePopStatus: false,
-                })
-                clearInterval(time)
-                this.initRoom()
-            } else {
-                time1++
-                if (time1 < 10) {
-                    time1 = '0' + time1
+        if (downtimes) {
+            var time = setInterval(() => {
+                if (downtimes <= 1) {
+                    that.setData({
+                        timePopStatus: false,
+                    })
+                    clearInterval(time)
+                } else {
+                    downtimes--
+                    if (downtimes < 10) {
+                        downtimes = '0' + downtimes
+                    }
+                    that.setData({
+                        waitTime: downtimes
+                    })
                 }
-                that.setData({
-                    waitTime: time1
-                })
-            }
-        }, 1000);
+            }, 1000);
+        } else {
+            var time = setInterval(() => {
+                if (time1 > 9) {
+                    that.setData({
+                        matePopStatus: false,
+                    })
+                    clearInterval(time)
+                    this.initRoom()
+                } else {
+                    time1++
+                    if (time1 < 10) {
+                        time1 = '0' + time1
+                    }
+                    that.setData({
+                        waitTime: time1
+                    })
+                }
+            }, 1000);
+        }
     },
     handleReady () {
         this.setData({
             isReady: !this.data.isReady
         })
-        this.sendCustomMsg(1, this.data.isReady)
+        this.sendCustomMsg(1, {status:this.data.isReady})
     },
     handleInviFriend () {
 
@@ -485,6 +534,12 @@ Page({
                     isBeginPlay: true,
                     voiceStatus: 1,
                     timePopStatus: true,
+                    personInd:0
+                })
+                that.sendCustomMsg(4,{text:'派对游戏开始，发牌中...'})
+                that.getDownTime(10)
+                this.setData({
+                    step:1
                 })
             })
         } else {
@@ -527,8 +582,28 @@ Page({
         getApp().watch('playerList', that.watchBack);
         getApp().watch('mesList', that.watchBack);
         this.setData({
-            isfriend: options.isfriend || false
+            isfriend: options.isfriend || false,
+            askId: options.askId || ''
         })
+        findByAskPartyOne({
+            id: that.data.askId
+        }).then(res => {
+            console.log(res);
+            let richText = res.data.data.detailsText
+            res.data.data.detailsText = richText
+                .replace(/\<img/gi, '<img style="width:100%;height:auto;"')
+                .replace(/\<p/gi, '<p class="p_class"')
+                .replace(/\<span/gi, '<span class="span_class"')
+            that.setData({
+                themeDetail: res.data.data
+            })
+            wx.setNavigationBarTitle({
+                title: res.data.data.title
+            })
+
+        })
+        console.log('this.data.theme', this.data.themeDetail);
+        console.log(this.askId);
         if (wx.getStorageSync('activeStatus')) {
             this.setData({
                 activityPopStatus: false

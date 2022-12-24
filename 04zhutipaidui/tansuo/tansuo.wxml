@@ -2,11 +2,11 @@
 <view class="hourse-set">
     <view class="txt">
         <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
-        <text>人数：2-{{roomData.maxNumber}}人局</text>
+        <text>人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
     </view>
     <image src="../../static/h-set.png" mode="scaleToFill" />
 </view>
-<scroll-view class="z-tab2" scroll-x="true">
+<scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
     <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
     <view class="item {{step == 1 ? 'active' : ''}}">第1轮</view>
     <view class="item {{step == 2 ? 'active' : ''}}">第2轮</view>
@@ -26,13 +26,13 @@
                 </view>
             </view>
             <view class="right">
-                大家好欢迎来到问心岛的生命探索活动现场，今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这...
+                <rich-text nodes="{{themeDetail.detailsText}}"></rich-text>
             </view>
         </view>
         <view class="peoples">
             <view class="item" wx:for="{{playerList}}" wx:for-index="index"
             wx:for-item="item">
-                <view class="people" bindlongpress="handleKick" data-item="{{item}}">
+                <view class="{{personInd == index?'people active':'people' }}" bindlongpress="handleKick" data-item="{{item}}">
                     <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
                     <image class="ready" src="../../static/play-status1.png" wx:if="{{item.isReady}}"></image>
                     </image>
@@ -45,10 +45,47 @@
             </view>
         </view>
         <view class="content">
-            <view class="item sys">已有5人，还差1人开始派对！</view>
-            <view wx:for="{{mesList}}" wx:for-item="item" class="{{item.sysType != 'sys'?'active item':'item'}}">
-                <text class="name">{{item.fromNick}}：</text>
-                <text class="con">{{item.text}}</text>
+            <view wx:for="{{mesList}}" wx:for-item="item" class="{{item.sysType != 'sys'?'item':'item sys'}}">
+                <view class="text" wx:if="item.text">
+                    <text class="name" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick}}：</text>
+                    <text class="con">{{item.text}}</text>
+                </view>
+                <view class="cardList">
+                    <view class="left">
+                        <image
+                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
+                            mode="scaleToFill"
+                        />
+                    </view>
+                    <view class="right">
+                        <image
+                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
+                            mode="scaleToFill"
+                        />
+                        <image
+                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
+                            mode="scaleToFill"
+                        />
+                        <image
+                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
+                            mode="scaleToFill"
+                        />
+                    </view>
+                </view>
+                <view class="card">
+                    <view class="img">
+                        <image
+                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
+                            mode="scaleToFill"
+                        />
+                        <view class="icon">
+                            <image
+                            src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                            mode="scaleToFill"
+                        />
+                        </view>
+                    </view>
+                </view>
             </view>
         </view>
     </view>
@@ -73,7 +110,7 @@
     </view>
 </view>
 <!-- 倒计时 -->
-<view class="timeDown" wx:if="{{ timePopStatus}}">10</view>
+<view class="timeDown" wx:if="{{ timePopStatus}}">{{waitTime}}</view>
 <!--分享到-->
 <block wx:if="{{sharePopStatus}}">
     <view class="pop-mask"></view>

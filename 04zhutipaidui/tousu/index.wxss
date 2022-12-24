@@ -1,0 +1,17 @@
+/* 04zhutipaidui/tousu/index.wxss */
+.tousu{padding: 20rpx 40rpx;}
+.tousu .title{font-size: 32rpx;line-height: 42rpx;margin-bottom: 20rpx;}
+.tousu .person{background: rgba(182,178,207,0.18);
+  border-radius: 24rpx;padding: 24rpx;display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;margin-bottom: 48rpx;}
+.tousu .person image{width: 96rpx;height: 96rpx;margin-right: 24rpx;flex-shrink: 0;}
+.tousu .person .txt{flex-grow: 1;font-size: 32rpx;line-height: 42rpx;font-weight: 500;color: #fff;}
+.tousu .radio-box{margin-bottom: 48rpx;}
+.tousu .radio-box .label-radio{display: block;padding-right: 56rpx;padding-left: 0;background-position: right center;margin-bottom: 10rpx;}
+.tousu .upload{margin-bottom: 48rpx;}
+.tousu .upload image{width: 128rpx;height: 128rpx;}
+.tousu .textarea{margin-bottom: 48rpx;}
+.tousu .textarea .area{height: 228rpx;background: #191B2D;
+  border-radius: 24rpx;
+  opacity: 1;
+  border: 1px solid rgba(255,255,255,0.2);width: 100%;padding: 20rpx;}
+.btn-submit{text-align: center;}

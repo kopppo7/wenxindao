@@ -1,0 +1,44 @@
+<!--04zhutipaidui/tousu/index.wxml-->
+<view class="tousu">
+  <view class="title">要投诉的岛民</view>
+  <view class="person">
+    <image
+      src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"
+      mode="scaleToFill"
+    />
+    <view class="txt">
+      非凡的轮
+    </view>
+  </view>
+  <view class="title">投诉理由</view>
+  <view class="radio-box">
+    <radio-group bindchange="radioChange">
+      <label class="label-radio">
+        <radio value="1" checked="true"/>语音一直跳过
+      </label>
+      <label class="label-radio">
+        <radio value="0"  />内容过于阴暗、暴力、涉黄
+      </label>
+      <label class="label-radio">
+        <radio value="0"  />推送广告
+      </label>
+      <label class="label-radio">
+        <radio value="0"  />骂人
+      </label>
+    </radio-group>
+  </view>
+  <view class="title">上传图片</view>
+  <view class="upload">
+    <image bindtap="callGetPic" class="add" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/upload.png"></image>
+  </view>
+  <view class="title">文字描述</view>
+  <view class="textarea">
+    <textarea
+      v-model="textarea"
+      placeholder="请用文字描述投诉内容..."
+      placeholder-class="textarea-placeholder"
+      class="area"
+    />
+  </view>
+  <view class="btn-submit" catchtap="nextStep">提交</view>
+</view>
