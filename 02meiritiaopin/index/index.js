@@ -42,7 +42,7 @@ Page({
     nowDate2: "",
     audioStr: "",
     isPlay: false,
-    contentsArray: [{
+    contentsArray: [[{
       txt: "",
       voice: "",
       putType: 1,
@@ -53,15 +53,63 @@ Page({
       cards:[],
       showCards:false,
       cardIndex:0
-    }],
-    initContentsArray: [{
+    }],[{
       txt: "",
       voice: "",
       putType: 1,
       autioStatus: 1,
       cardShow: false,
       tempFilePath: '',
-    }]
+      imgUrl:'',
+      cards:[],
+      showCards:false,
+      cardIndex:0
+    }],[{
+      txt: "",
+      voice: "",
+      putType: 1,
+      autioStatus: 1,
+      cardShow: false,
+      tempFilePath: '',
+      imgUrl:'',
+      cards:[],
+      showCards:false,
+      cardIndex:0
+    }]],
+    initContentsArray:  [[{
+      txt: "",
+      voice: "",
+      putType: 1,
+      autioStatus: 1,
+      cardShow: false,
+      tempFilePath: '',
+      imgUrl:'',
+      cards:[],
+      showCards:false,
+      cardIndex:0
+    }],[{
+      txt: "",
+      voice: "",
+      putType: 1,
+      autioStatus: 1,
+      cardShow: false,
+      tempFilePath: '',
+      imgUrl:'',
+      cards:[],
+      showCards:false,
+      cardIndex:0
+    }],[{
+      txt: "",
+      voice: "",
+      putType: 1,
+      autioStatus: 1,
+      cardShow: false,
+      tempFilePath: '',
+      imgUrl:'',
+      cards:[],
+      showCards:false,
+      cardIndex:0
+    }]]
   },
   initAudio() {
     this.setData({
@@ -73,7 +121,7 @@ Page({
   },
   addThing() {
     var arr = this.data.contentsArray;
-    arr.push({
+    arr[this.data.activeIndex].push({
       txt: "",
       voice: "",
       putType: 1,
@@ -91,7 +139,7 @@ Page({
   },
   changePutType(e) {
     var arr = this.data.contentsArray;
-    arr[e.currentTarget.dataset.iid]['putType'] = e.currentTarget.dataset.type
+    arr[this.data.activeIndex][e.currentTarget.dataset.iid]['putType'] = e.currentTarget.dataset.type
     this.setData({
       contentsArray: arr
     })
@@ -110,7 +158,7 @@ Page({
   openBig(e) {
     this.setData({
       bigPopStatus: true,
-      bigCardImgUrl:this.data.contentsArray[e.currentTarget.dataset.pindex].cards[e.currentTarget.dataset.index].imgUrl
+      bigCardImgUrl:this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.pindex].cards[e.currentTarget.dataset.index].imgUrl
     })
   },
   closePop() {
@@ -122,33 +170,15 @@ Page({
   },
   changeTab(e) {
     var that = this;
-    if(that.data.types==2&&that.data.contentsArray.length>1){
-      wx.showModal({
-        title:'切换每日调频选项会移除第一条之后的事，是否确认切换',
-        success:function (res) {
-          let contentArr = that.data.contentsArray.splice(0,1);
-          if(res.confirm){
-            that.setData({
-              activeIndex: e.currentTarget.dataset.ind,
-              types: e.currentTarget.dataset.ind + 1,
-              contentsArray:contentArr
-            })
-            
-            that.initAudio()
-          }
-        }
-      })
-    }else{
-      that.setData({
-        activeIndex: e.currentTarget.dataset.ind,
-        types: e.currentTarget.dataset.ind + 1
-      })
-      that.initAudio()
-    }
+    that.setData({
+      activeIndex: e.currentTarget.dataset.ind,
+      types: e.currentTarget.dataset.ind + 1
+    })
+    that.initAudio()
   },
   changeCard(e) {
-    this.data.contentsArray[e.currentTarget.dataset.pindex].cardIndex = e.currentTarget.dataset.ind
-    this.data.contentsArray[e.currentTarget.dataset.pindex].imgUrl = this.data.contentsArray[e.currentTarget.dataset.pindex].cards[e.currentTarget.dataset.ind].imgUrl;
+    this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.pindex].cardIndex = e.currentTarget.dataset.ind
+    this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.pindex].imgUrl = this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.pindex].cards[e.currentTarget.dataset.ind].imgUrl;
     this.setData({
       contentsArray: this.data.contentsArray
     })
@@ -163,15 +193,15 @@ Page({
   // 新增每日调频
   async addFm() {
     var isGoOn=true;
-    for (var i = 0; i < this.data.contentsArray.length; i++) {
+    for (var i = 0; i < this.data.contentsArray[this.data.activeIndex].length; i++) {
       await new Promise((resolve)=>{
-        if(this.data.contentsArray[i].imgUrl==''){
+        if(this.data.contentsArray[this.data.activeIndex][i].imgUrl==''){
           resolve({ret:false,msg:'请抽取一张卡牌'});
         }
-        if (this.data.contentsArray[i].txt != '' || this.data.contentsArray[i].voice != '') {
-          if (this.data.contentsArray[i].txt != '') {
+        if (this.data.contentsArray[this.data.activeIndex][i].txt != '' || this.data.contentsArray[this.data.activeIndex][i].voice != '') {
+          if (this.data.contentsArray[this.data.activeIndex][i].txt != '') {
             inspectText({
-              text: this.data.contentsArray[i].txt
+              text: this.data.contentsArray[this.data.activeIndex][i].txt
             }).then(res => {
               if (!res.data.data) {
                 resolve({ret:false,msg:res.data.msg});
@@ -200,7 +230,7 @@ Page({
       return false;
     }
     let params = {
-      contents: JSON.stringify(this.data.contentsArray),
+      contents: JSON.stringify(this.data.contentsArray[this.data.activeIndex]),
       types: this.data.types,
       isOpen:this.data.isOpen
     }
@@ -231,12 +261,12 @@ Page({
   getDayCard(e) {
     let that = this;
     getDayCard().then(res => {
-      if(this.data.contentsArray[e.currentTarget.dataset.index].cards.length=0){
-        this.data.contentsArray[e.currentTarget.dataset.index].cardIndex=0
+      if(this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards.length=0){
+        this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardIndex=0
       }
-      this.data.contentsArray[e.currentTarget.dataset.index].cards=res.data.data;
-      this.data.contentsArray[e.currentTarget.dataset.index].showCards=true;
-      this.data.contentsArray[e.currentTarget.dataset.index].imgUrl= this.data.contentsArray[e.currentTarget.dataset.index].cards[e.currentTarget.dataset.index].imgUrl
+      this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards=res.data.data;
+      this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].showCards=true;
+      this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].imgUrl= this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards[e.currentTarget.dataset.index].imgUrl
       that.setData({
         contentsArray:this.data.contentsArray
       })
@@ -244,7 +274,7 @@ Page({
   },
   bindTextVal(e) {
     var arr = this.data.contentsArray;
-    arr[e.currentTarget.dataset.iid]['txt'] = e.detail.value
+    arr[this.data.activeIndex][e.currentTarget.dataset.iid]['txt'] = e.detail.value
     this.setData({
       contentsArray: arr
     })
@@ -283,7 +313,7 @@ Page({
       success() {
         //第一次成功授权后 状态切换为2
         var arr = that.data.contentsArray;
-        arr[e.currentTarget.dataset.iid]['autioStatus'] = 2
+        arr[that.data.activeIndex][e.currentTarget.dataset.iid]['autioStatus'] = 2
         that.setData({
           contentsArray: arr
         })
@@ -322,7 +352,7 @@ Page({
                     })
                   } else {
                     var arr = that.data.contentsArray;
-                    arr[e.currentTarget.dataset.iid]['autioStatus'] = 2
+                    arr[that.data.activeIndex][e.currentTarget.dataset.iid]['autioStatus'] = 2
                     that.setData({
                       contentsArray: arr
                     })
@@ -356,8 +386,8 @@ Page({
     recorderManager.onPause((res) => {
       console.log(res);
       var arr = that.data.contentsArray;
-      arr[e.currentTarget.dataset.iid]['autioStatus'] = 3
-      arr[e.currentTarget.dataset.iid]['tempFilePath'] = res.tempFilePath
+      arr[that.data.activeIndex][e.currentTarget.dataset.iid]['autioStatus'] = 3
+      arr[that.data.activeIndex][e.currentTarget.dataset.iid]['tempFilePath'] = res.tempFilePath
       that.setData({
         contentsArray: arr
       })
@@ -380,8 +410,8 @@ Page({
     recorderManager.stop();
     recorderManager.onStop((res) => {
       var arr = that.data.contentsArray;
-      arr[e.currentTarget.dataset.iid]['autioStatus'] = 3
-      arr[e.currentTarget.dataset.iid]['tempFilePath'] = res.tempFilePath
+      arr[that.data.activeIndex][e.currentTarget.dataset.iid]['autioStatus'] = 3
+      arr[that.data.activeIndex][e.currentTarget.dataset.iid]['tempFilePath'] = res.tempFilePath
       that.setData({
         contentsArray: arr
       })
@@ -394,7 +424,7 @@ Page({
   play: function (e) {
     innerAudioContext.autoplay = true
 
-    innerAudioContext.src = this.data.contentsArray[e.currentTarget.dataset.iid].tempFilePath,
+    innerAudioContext.src = this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.iid].tempFilePath,
       innerAudioContext.onPlay(() => {
       })
     innerAudioContext.onError((res) => {
@@ -402,9 +432,9 @@ Page({
   },
   closeAudio(e) {
     var arr = this.data.contentsArray;
-    arr[e.currentTarget.dataset.iid]['putType'] = 1
-    arr[e.currentTarget.dataset.iid]['tempFilePath'] = ''
-    arr[e.currentTarget.dataset.iid]['autioStatus'] = 1
+    arr[this.data.activeIndex][e.currentTarget.dataset.iid]['putType'] = 1
+    arr[this.data.activeIndex][e.currentTarget.dataset.iid]['tempFilePath'] = ''
+    arr[this.data.activeIndex][e.currentTarget.dataset.iid]['autioStatus'] = 1
     this.setData({
       contentsArray: arr
     })
@@ -414,7 +444,7 @@ Page({
     recorderManager.stop();
     wx.uploadFile({
       url: config.getDomain + '/oss/upload/uploadFile',
-      filePath: that.data.contentsArray[e.currentTarget.dataset.iid].tempFilePath,
+      filePath: that.data.contentsArray[that.data.activeIndex][e.currentTarget.dataset.iid].tempFilePath,
       name: 'file',
       header: {
         'content-type': 'multipart/form-data',
@@ -422,11 +452,11 @@ Page({
       },
       success(res) {
         var arr = that.data.contentsArray;
-        arr[e.currentTarget.dataset.iid]['autioStatus'] = 0
-        arr[e.currentTarget.dataset.iid]['putType'] = 5
-        arr[e.currentTarget.dataset.iid]['tempFilePath'] = ''
-        arr[e.currentTarget.dataset.iid]['audioStr'] = JSON.parse(res.data).data
-        arr[e.currentTarget.dataset.iid]['voice'] = JSON.parse(res.data).data
+        arr[that.data.activeIndex][e.currentTarget.dataset.iid]['autioStatus'] = 0
+        arr[that.data.activeIndex][e.currentTarget.dataset.iid]['putType'] = 5
+        arr[that.data.activeIndex][e.currentTarget.dataset.iid]['tempFilePath'] = ''
+        arr[that.data.activeIndex][e.currentTarget.dataset.iid]['audioStr'] = JSON.parse(res.data).data
+        arr[that.data.activeIndex][e.currentTarget.dataset.iid]['voice'] = JSON.parse(res.data).data
         that.setData({
           contentsArray: arr
         })

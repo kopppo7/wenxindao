@@ -150,10 +150,13 @@
 }
 .tansuo-row .box2 .box2-l{
 	flex: 0 0 96rpx;
-	margin-right: 26rpx;
+	margin-left: 26rpx;
 }
 .tansuo-row .box2 .box2-l .box2-l-item{
 	margin-bottom: 24rpx;
+}
+.tansuo-row .box2 .box2-l .box2-l-item .avatar-box{
+	border: 2px solid transparent;
 }
 .tansuo-row .box2 .box2-l .box2-l-item.active .avatar-box{
 	border: 2px solid #FFB58C;
@@ -172,14 +175,14 @@
 	overflow: hidden;
 }
 .tansuo-row .box2 .avatar-box text{
-	position: absolute;
+	/* position: absolute;
 	top: 4rpx;
 	right: 12rpx;
 	width: 16rpx;
 	height: 16rpx;
 	background: linear-gradient(225deg, #F0273F 0%, #BC61E7 100%);
 	box-shadow: 0px 2px 2px rgba(188, 97, 231, 0.2);
-	border-radius: 50%;
+	border-radius: 50%; */
 }
 .tansuo-row .box2 .name{
 	text-align: center;
@@ -463,7 +466,7 @@
 
 .pop-big .big-pic {
 	width: 670rpx;
-	height: 998rpx;
+	/* height: 998rpx; */
 }
 
 .pop-close-bot {

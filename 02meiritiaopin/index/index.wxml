@@ -38,7 +38,7 @@
     <view class="item dian">更多的复盘，可以自己设定哦</view>
   </view>
   <form catchsubmit="addFm" class="form-z">
-    <view wx:for="{{contentsArray}}" wx:for-index="idx" wx:for-item="content" wx:key="idx">
+    <view wx:for="{{contentsArray[activeIndex]}}" wx:for-index="idx" wx:for-item="content" wx:key="idx">
       <view class="z-btn" wx:if="{{!content.showCards}}" bindtap="getDayCard" data-index="{{idx}}">
         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fanpai.png"></image>
         抽牌获得启示
@@ -94,7 +94,7 @@
       </view>
     </view>
 
-    <view class="addThing" bindtap="addThing" wx:if="{{activeIndex == 1}}">
+    <view class="addThing" bindtap="addThing" wx:if="{{activeIndex == 1&&contentsArray[activeIndex].length<3}}">
       <image class="m-p1" src="../../static/plus.png"></image>
       <text class="name">添加一件事</text>
     </view>
@@ -133,7 +133,7 @@
 <block wx:if="{{bigPopStatus}}">
   <view class="pop-mask"></view>
   <view class="pop-big">
-    <image class="big-pic" src="{{bigCardImgUrl}}"></image>
+    <image class="big-pic" src="{{bigCardImgUrl}}" mode="widthFix"></image>
     <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closePop"></image>
   </view>
 </block>

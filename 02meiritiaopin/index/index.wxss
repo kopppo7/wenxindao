@@ -245,13 +245,16 @@ page {
 	height: 48rpx;
 }
 
-.card-list .item.active {}
-
-.card-list .item.active .pic {
+.card-list .item .pic{
 	height: 340rpx;
 	margin-top: -10rpx;
-	background: #ffffff;
-	border: 1px solid #ffffff;
+	background: transparent;
+	border: 2px solid transparent;
+}
+
+.card-list .item.active .pic {
+	background: #FFB58C;
+	border: 2px solid #FFB58C;
 }
 
 .pop-intro {}
@@ -283,7 +286,7 @@ page {
 
 .pop-big .big-pic {
 	width: 670rpx;
-	height: 998rpx;
+	/* height: 998rpx; */
 }
 
 .pop-close-bot {

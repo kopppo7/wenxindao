@@ -1,5 +1,6 @@
 .wp{
   padding-top: 24rpx;
+  padding-bottom:204rpx;
 }
 .face{
   display: flex;
@@ -62,4 +63,18 @@ color: #FFB58C;
   font-size: 28rpx;
   color: #ffffff;
   line-height: 40rpx;
+}
+.content{
+  background: rgba(182, 178, 207, 0.12);
+  padding: 20rpx;
+  border-radius: 40rpx;
+  margin-bottom: 40rpx;
+}
+.foot{
+  background-color: #010206;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 184rpx;
+  position: fixed;
 }

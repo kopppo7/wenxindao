@@ -13,16 +13,18 @@
     <view class="tag blue">{{info.target}}</view>
   </view>
 
-  <view class="content">
-    <image class="fakeImg" mode="widthFix" src="{{info.cardUrl}}"></image>
-    <view class="desc" wx:for="{{info.contents}}" wx:for-item="item" wx:key="id">
-     {{item.txt}}
+  <view class="content" wx:for="{{info.contents}}" wx:for-item="item" wx:key="id">
+    <image class="fakeImg" mode="widthFix" src="{{item.imgUrl}}"></image>
+    <view class="desc">
+      {{item.txt}}
     </view>
   </view>
 
 </view>
 
-<button class="btn-share-g" open-type="share">
-  <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share.svg"></image>
-  <text>分享</text>
-</button>
+<view class="foot">
+  <button class="btn-share-g" open-type="share">
+    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share.svg"></image>
+    <text>分享</text>
+  </button>
+</view>

@@ -15,7 +15,7 @@
             </view>
         </view>
         <view class="box2">
-            <view class="s1">阅读引言后，点击下一步。在之后的探索中，点击模拟1 和 模拟2的头像会看到他们的回答。 </view>
+            <view class="s1">阅读引言后，点击下一步。在之后的探索中，点击参考1 和 参考2的头像会看到他们的回答。 </view>
             <view class="s2">
                 <view class="s2-item active">
                     <view class="avatar-box">
@@ -29,14 +29,14 @@
                         <text>2</text>
                         <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
                     </view>
-                    <view class="name">模拟1</view>
+                    <view class="name">参考1</view>
                 </view>
                 <view class="s2-item">
                     <view class="avatar-box">
                         <text>3</text>
                         <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
                     </view>
-                    <view class="name">模拟2</view>
+                    <view class="name">参考2</view>
                 </view>
             </view>
             <view class="g-submit" catchtap="nextStep">下一步</view>
@@ -49,24 +49,6 @@
               <view class="txt">{{stepItem.content}}</view>
           </view>
           <view class="box2">
-              <view class="box2-l">
-                  <view class="box2-l-item {{selectCard ? '':'active'}}"
-                  data-item="1"  bindtap="changeCard">
-                      <view class="avatar-box">
-                          <text></text>
-                          <image class="avatar" src="{{userInfo.headImg}}"></image>
-                      </view>
-                      <view class="name">我</view>
-                  </view>
-                  <view class="box2-l-item {{selectCard.id ==item1.id  ? 'active':''}}"  wx:for="{{stepItem.answers}}" wx:for-item="item1"  wx:key="*this" wx:for-index="index1" data-item="{{item1}}"
-                  bindtap="changeCard">
-                      <view class="avatar-box">
-                          <text></text>
-                          <image class="avatar" src="{{item1.headImg}}"></image>
-                      </view>
-                      <view class="name">{{item1.cardMaster}}</view>
-                  </view>
-              </view>
               <view class="box2-r">
                   <view class="tit">链接卡牌，回答问心精灵的问题。</view>
                   <view class="cardContent">
@@ -125,6 +107,25 @@
                     </view>
                   </view>
               </view>
+              
+              <view class="box2-l">
+                  <view class="box2-l-item {{selectCard ? '':'active'}}"
+                  data-item="1"  bindtap="changeCard">
+                      <view class="avatar-box">
+                          <text></text>
+                          <image class="avatar" src="{{userInfo.headImg}}"></image>
+                      </view>
+                      <view class="name">我</view>
+                  </view>
+                  <view class="box2-l-item {{selectCard.id ==item1.id  ? 'active':''}}"  wx:for="{{stepItem.answers}}" wx:for-item="item1"  wx:key="id" wx:for-index="index1" data-item="{{item1}}"
+                  bindtap="changeCard">
+                      <view class="avatar-box">
+                          <text></text>
+                          <image class="avatar" src="{{item1.headImg}}"></image>
+                      </view>
+                      <view class="name">{{item1.cardMaster}}</view>
+                  </view>
+              </view>
           </view>
           <view class="nextSubmit" catchtap="nextStep">下一步</view>
         </view>
@@ -178,7 +179,7 @@
 <block wx:if="{{bigPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-big">
-        <image class="big-pic" src="{{selectImgUrl}}"></image>
+        <image class="big-pic" src="{{selectImgUrl}}" mode="widthFix"></image>
         <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png"
             bindtap="closeImgPop"></image>
     </view>
