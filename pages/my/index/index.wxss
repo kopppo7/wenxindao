@@ -27,7 +27,7 @@ page{
 .mine-row2 {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 80rpx;
+	margin-bottom: 40rpx;
 }
 
 .mine-row2 .item {

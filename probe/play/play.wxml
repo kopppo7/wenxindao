@@ -68,7 +68,7 @@
                     <!-- 文字输入 语音录入 -->
                     <view class="form-z" wx:if="{{!selectCard}}">
                       <view class="textarea-box" wx:if="{{putType != 5}}">
-                          <textarea wx:if="{{putType == 1}}" bindinput="inspectText" placeholder="链接卡片回答问题..." placeholder-style="color: #B6B2CF;"  value="{{content.txt}}"/>
+                          <textarea wx:if="{{putType == 1}}" bindinput="inspectText" placeholder="链接卡片回答问题...（最多500字）" maxlength="500" placeholder-style="color: #B6B2CF;"  value="{{content.txt}}"/>
                           <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{putType == 1}}">
                               <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>语音输入
                           </view>

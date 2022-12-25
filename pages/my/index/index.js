@@ -115,9 +115,9 @@ Page({
     });
   },
   getData() {
-    wx.showLoading({
-      title: '加载中...',
-    });
+    // wx.showLoading({
+    //   title: '加载中...',
+    // });
     findMyTrends({
       page: this.data.page,
       pageSize: 20,
@@ -142,7 +142,7 @@ Page({
         total: res.data.data.total
       })
       wx.stopPullDownRefresh()
-      wx.hideLoading();
+      // wx.hideLoading();
     }).catch(err => {
       wx.showToast({
         title: '网络异常，请稍后重试',
