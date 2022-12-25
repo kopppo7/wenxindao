@@ -65,8 +65,8 @@
         </view>
         <view class="btn-audio" bindtap="playAudio" data-type="0" wx:if="{{content.putType == 5}}">
           <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image>
-          <text>43'</text>
-          <image src="../../static/audio-del.png" class="close" bindtap="closeAudio"></image>
+          <text>{{content.times}}'</text>
+          <image data-iid="{{idx}}" src="../../static/audio-del.png" class="close" bindtap="closeAudio"></image>
         </view>
         <view class="btn-yuyin" bindtap="changePutType" data-type="1" wx:if="{{content.putType == 0}}" data-iid="{{idx}}">
           <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>文字输入

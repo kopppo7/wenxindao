@@ -52,7 +52,10 @@ Page({
       imgUrl:'',
       cards:[],
       showCards:false,
-      cardIndex:0
+      cardIndex:0,
+      times: '',
+      startTime: '',
+      endTime: ''
     }],[{
       txt: "",
       voice: "",
@@ -63,7 +66,10 @@ Page({
       imgUrl:'',
       cards:[],
       showCards:false,
-      cardIndex:0
+      cardIndex:0,
+      times: '',
+      startTime: '',
+      endTime: ''
     }],[{
       txt: "",
       voice: "",
@@ -74,7 +80,10 @@ Page({
       imgUrl:'',
       cards:[],
       showCards:false,
-      cardIndex:0
+      cardIndex:0,
+      times: '',
+      startTime: '',
+      endTime: ''
     }]],
     initContentsArray:  [[{
       txt: "",
@@ -86,7 +95,10 @@ Page({
       imgUrl:'',
       cards:[],
       showCards:false,
-      cardIndex:0
+      cardIndex:0,
+      times: '',
+      startTime: '',
+      endTime: ''
     }],[{
       txt: "",
       voice: "",
@@ -97,7 +109,10 @@ Page({
       imgUrl:'',
       cards:[],
       showCards:false,
-      cardIndex:0
+      cardIndex:0,
+      times: '',
+      startTime: '',
+      endTime: ''
     }],[{
       txt: "",
       voice: "",
@@ -108,7 +123,10 @@ Page({
       imgUrl:'',
       cards:[],
       showCards:false,
-      cardIndex:0
+      cardIndex:0,
+      times: '',
+      startTime: '',
+      endTime: ''
     }]]
   },
   initAudio() {
@@ -131,7 +149,10 @@ Page({
       imgUrl:'',
       cards:[],
       showCards:false,
-      cardIndex:0
+      cardIndex:0,
+      times: '',
+      startTime: '',
+      endTime: ''
     })
     this.setData({
       contentsArray: arr
@@ -314,6 +335,7 @@ Page({
         //第一次成功授权后 状态切换为2
         var arr = that.data.contentsArray;
         arr[that.data.activeIndex][e.currentTarget.dataset.iid]['autioStatus'] = 2
+        arr[that.data.activeIndex][e.currentTarget.dataset.iid]['startTime'] = e.timeStamp
         that.setData({
           contentsArray: arr
         })
@@ -412,6 +434,9 @@ Page({
       var arr = that.data.contentsArray;
       arr[that.data.activeIndex][e.currentTarget.dataset.iid]['autioStatus'] = 3
       arr[that.data.activeIndex][e.currentTarget.dataset.iid]['tempFilePath'] = res.tempFilePath
+      arr[that.data.activeIndex][e.currentTarget.dataset.iid]['endTime'] = e.timeStamp
+      arr[that.data.activeIndex][e.currentTarget.dataset.iid]['times'] = 
+      Math.ceil((arr[that.data.activeIndex][e.currentTarget.dataset.iid]['endTime'] - arr[that.data.activeIndex][e.currentTarget.dataset.iid]['startTime']) / 1000)
       that.setData({
         contentsArray: arr
       })
