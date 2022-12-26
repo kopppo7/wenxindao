@@ -23,8 +23,21 @@
 </view>
 
 <view class="foot">
-  <button class="btn-share-g" open-type="share">
+  <button class="btn-share-g" bindtap="showShare">
     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share.svg"></image>
     <text>分享</text>
   </button>
 </view>
+
+<!--分享到-->
+<block wx:if="{{showShare}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win">
+        <view class="pop-tit">分享到</view>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closeShare"></image>
+        <view class="pop-share">
+            <button open-type="share" class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>微信好友</button>
+            <view class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</view>
+        </view>
+    </view>
+</block>

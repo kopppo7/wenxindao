@@ -7,8 +7,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    info: {}
+    info: {},
+    showShare: false
   },
+  showShare() {
+     this.setData({
+      showShare: true
+     })
+  },
+  closeShare() {
+    this.setData({
+     showShare: false
+    })
+ },
 
   /**
    * 生命周期函数--监听页面加载

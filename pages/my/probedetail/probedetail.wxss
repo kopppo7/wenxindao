@@ -72,8 +72,11 @@
 .list .item .audio{
   /* height: 72rpx; */
   margin-top: 12rpx;
-  /* display: flex;
-  align-items: center; */
+  display: flex;
+  align-items: center;
+}
+.audio .times{
+  margin-left: 16rpx;
 }
 .audio .audioImg{
     width: 300rpx;
