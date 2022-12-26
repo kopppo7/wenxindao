@@ -137,3 +137,7 @@ export const submitContent = function (data) {
 export const cardRandom = function (data) {
   return http.post(handleURL('/userprobe/card/random'),data);
 }
+// 首页流
+export const indexFlow = function (data) {
+  return http.post(handleURL('/my/flow'),data);
+}

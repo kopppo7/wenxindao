@@ -1,6 +1,6 @@
 <view class="wp">
   <view class="face">
-      <view class="name">房间号：{{id}}</view>
+      <view class="name">探索号：{{id}}</view>
       <view class="date">记录于：{{time}}</view>
   </view>
   <view class="list">
@@ -9,7 +9,9 @@
         <text>【第{{index + 1}}轮】</text>{{item.content}}
       </view>
       <view class="pic">
-        <image src="{{item.imgUrl}}"></image>
+      <block wx:for="{{item.cards}}" wx:for-item="card" wx:for-index="index2" wx:key="id">
+        <image src="{{card.imgUrl}}" mode="widthFix"></image>
+      </block>
       </view>
       <view class="audio">
         <image catchtap="play" data-idx="{{index}}" wx:if="{{item.answerVoice}}" class="audioImg" mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png">
@@ -19,7 +21,7 @@
            <image wx:if="{{item.playVoice}}" mode="widthFix" class="voiceImg voiceImg2" src="/static/voice.png"></image>
            <image  wx:if="{{item.playVoice}}" mode="widthFix" class="voiceImg1" src="/static/voice.png"></image>
         </image>
-        <view wx:else class='texts'>转换文字</view>
+        <view wx:else class='texts'>{{item.answerText}}</view>
       </view>
     </view>
   </view>

@@ -12,6 +12,7 @@
         </view>
     </view>
     <view class="index-row2">
+      <block wx:for="{{list}}" wx:for-item="item" wx:key="id">
          <view class="item item1">
              <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-avatar1.png"></image>
              <view class="txt">
@@ -30,6 +31,7 @@
                 </view>
             </view>
         </view>
+      </block>
     </view>
 </view>
 <view class="nav">

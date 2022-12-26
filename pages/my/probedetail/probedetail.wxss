@@ -55,15 +55,19 @@
   color: #FFB58C;
 }
 .list .item .pic{
-  width: 178rpx;
+  /* width: 178rpx;
   height: 248rpx;
   border-radius: 10rpx;
-  overflow: hidden;
+  overflow: hidden; */
+  display: flex;
+  align-items: center;
 }
 .list .item .pic image{
   display: block;
-  width: 100%;
+  width: 33%;
   height: 100%;
+  margin: 10rpx;
+  border-radius: 10rpx;
 }
 .list .item .audio{
   /* height: 72rpx; */
