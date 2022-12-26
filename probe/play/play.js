@@ -332,7 +332,7 @@ Page({
         list[idx].autioStatus = 0
         list[idx].putType = 5
         list[idx].audioStr = JSON.parse(res.data).data
-        list[idx]['contents.voice'] = JSON.parse(res.data).data
+        list[idx].contents.voice = JSON.parse(res.data).data
         that.setData({
           list: list,
           tempFilePath: '',
@@ -402,6 +402,16 @@ Page({
         title: '提交中',
         mask: true,
       })
+      let cards = [];
+      for(var i=0;i< list[e.currentTarget.dataset.idx].randomCard.length;i++){
+        cards.push({
+          cardId: list[e.currentTarget.dataset.idx].randomCard[i].id,
+          imgUrl: list[e.currentTarget.dataset.idx].randomCard[i].imgUrl,
+          detailsId: this.data.stepList[this.data.step - 1].id,
+          userProbeId: this.data.id,
+          isCheck: list[e.currentTarget.dataset.idx].randomCardIndex==i?1:0
+        });
+      }
       submitContent({
         answerText: list[e.currentTarget.dataset.idx].contents.txt,
         answerVoice: list[e.currentTarget.dataset.idx].contents.voice,
@@ -409,6 +419,8 @@ Page({
         id: list[e.currentTarget.dataset.idx].id,
         imgUrl: list[e.currentTarget.dataset.idx].randomCard[list[e.currentTarget.dataset.idx].randomCardIndex].imgUrl,
         userProbeId: this.data.id,
+        cards:cards,
+        answerVoiceTime: list[e.currentTarget.dataset.idx].totalTime,
       }).then((res) => {
         wx.hideLoading()
       })
@@ -441,14 +453,14 @@ Page({
         }
         this.setData({
           list: arr,
-          step: this.data.step + 1
+          step: Number(this.data.step) + 1
           // randomCard:res.data.data,
           // randomCardIndex:0
         })
       });
     } else  {
       this.setData({
-        step: this.data.step + 1
+        step: Number(this.data.step) + 1
       });
     }
     
@@ -479,21 +491,31 @@ Page({
       })
       let arr = res.data.data.details
       for(let i=0;i< arr.length;i++ ){
-        arr[i].randomCard = []
+        arr[i].randomCard = arr[i].cards
         arr[i].randomCardIndex = 0
-        arr[i].stepItem = ''
-        arr[i].putType = 1
+        arr[i].cards.map((item,index) => {
+          if(item.cardId == arr[i].cardId){
+            arr[i].randomCardIndex = index
+          }
+        })
+        // arr[i].stepItem = ''
+        if(arr[i].answerVoice){
+          arr[i].putType  = 5
+        }  else {
+          arr[i].putType  = 1
+        }
+        // arr[i].putType = arr[i].answerText ? 1 : 5
         arr[i].contents = {
-          txt: '',
-          voice: ''
+          txt: arr[i].answerText ? arr[i].answerText : '',
+          voice: arr[i].answerVoice ? arr[i].answerVoice : ''
         }
         arr[i].autioStatus = 1
-        arr[i].tempFilePath = ''
+        arr[i].tempFilePath = arr[i].answerVoice ? arr[i].answerVoice : ''
         arr[i].audioStr = ''
         arr[i].isPlay = false
         arr[i].startTime = 0
         arr[i].endTime = 0
-        arr[i].totalTime = 0
+        arr[i].totalTime = arr[i].answerVoiceTime ? arr[i].answerVoiceTime : 0 
       }
       this.setData({
         list: arr
