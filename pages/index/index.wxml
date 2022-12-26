@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="wp">
+<view class="wp" >
     <view class="index-row1">
         <navigator url="/02meiritiaopin/index/index" hover-class="none" class="item">
             <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title1.png"></image>
@@ -13,14 +13,16 @@
     </view>
     <view class="index-row2">
       <block wx:for="{{list}}" wx:for-item="item" wx:key="id">
-         <view class="item item1">
-             <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-avatar1.png"></image>
+         <view class="item item1" >
+             <image class="avatar" src="{{item.userHeadImg}}"></image>
              <view class="txt">
-                 <view class="title title1">#主题派对#</view>
-                 <view class="desc">在遥远的时空之外，有一座神奇的岛屿-问心岛。据说，每个人的灵魂，都会在这里被看见。</view>
+                 <view class="title title2" wx:if="{{item.category==0}}">#每日调频#</view>
+                 <view class="title title2" wx:if="{{item.category==1}}">#生命探索#</view>
+                 <view class="title title1" wx:if="{{item.category==2}}">#主题派对#</view>
+                 <view class="desc">{{item.content}}</view>
              </view>
          </view>
-        <view class="item item2">
+        <!-- <view class="item item2"  wx:if="{{item.category==1}}">
             <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-avatar2.png"></image>
             <view class="txt">
                 <view class="title title2">#每日调频#</view>
@@ -30,7 +32,7 @@
                     <view class="more">查看更多</view>
                 </view>
             </view>
-        </view>
+        </view> -->
       </block>
     </view>
 </view>

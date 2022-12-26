@@ -44,14 +44,10 @@ Page({
     },
     
     getData(){
-      wx.showLoading({
-        title: '加载中...',
-      });
       indexFlow({
         page:this.data.page,
         pageSize:10
       }).then(res=>{
-        debugger
         if(this.data.page==1){
           this.data.list = res.data.data.list;
         }else{
@@ -61,9 +57,7 @@ Page({
           list:this.data.list,
           total:res.data.data.total
         })
-        console.log(this.data.list);
         wx.stopPullDownRefresh()
-        wx.hideLoading();
       }).catch(err=>{
         wx.showToast({
           title: '网络异常，请稍后重试',
