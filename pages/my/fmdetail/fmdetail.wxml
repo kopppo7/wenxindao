@@ -14,10 +14,10 @@
   </view>
 
   <view class="content" wx:for="{{info.contents}}" wx:for-item="item" wx:key="id">
-    <image class="fakeImg" mode="widthFix" src="{{item.imgUrl}}"></image>
     <view class="desc">
       {{item.txt}}
     </view>
+    <image class="fakeImg" mode="widthFix" src="{{item.imgUrl}}"></image>
   </view>
 
 </view>
