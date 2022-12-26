@@ -389,6 +389,7 @@
   display: -webkit-flex;display: flex;
   align-items:center;
   font-size: 32rpx;color: #fff;
+  position: relative;
 }
 .btn-audio text{
   /* position: absolute;right: 48rpx;top: 0; */
@@ -398,7 +399,8 @@
 	position: absolute;left: 48rpx;top: 0;
 }
 .btn-audio .close{
-	position: absolute;right: -50rpx;width: 32rpx;height: 32rpx;top: 50%;margin-top: -16rpx;
+  position: absolute;right: 100rpx;width: 32rpx;height: 32rpx;
+  bottom: 20rpx;margin-top: -16rpx;
 }
 .btn-audio image{
 	width: 290rpx;

@@ -28,6 +28,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    list:[], // 需要循环的数据
+
     sharePopStatus: false,
     step: 0,
     stepBg: 20,
@@ -73,13 +75,13 @@ Page({
     })
  },
   openSharePop() {
-    var that = this;
+    let that = this;
     that.setData({
       sharePopStatus: true
     })
   },
   closePop() {
-    var that = this;
+    let that = this;
     that.setData({
       sharePopStatus: false
     })
@@ -87,8 +89,11 @@ Page({
   // 语音输入相关
   // 检查文档是否合规
   inspectText(e) {
+    let list = this.data.list
+    let idx = e.target.dataset.idx
+    list[idx].contents.txt = e.detail.value
     this.setData({
-      'contents.txt': e.detail.value
+      list: list
     })
     return
     let param = {
@@ -115,18 +120,28 @@ Page({
   },
   // 切换语音 文字输入
   changePutType(e) {
-    console.log(this.data.putType);
+    let list = this.data.list
+    let idx = e.target.dataset.idx
+    list[idx].putType = e.currentTarget.dataset.type
     this.setData({
-      putType: e.currentTarget.dataset.type
+      list: list
     })
   },
   // 录音
   start(e) {
     console.log('开始录音开始录音开始录音', e)
-    var that = this
+    let that = this
+    // this.setData({
+    //   startTime: e.timeStamp, // 开始录音时间
+    // })
+
+    let list = this.data.list
+    let idx = e.currentTarget.dataset.idx
+    list[idx].startTime = e.timeStamp
     this.setData({
-      startTime: e.timeStamp, // 开始录音时间
+      list: list
     })
+
     const options = {
       duration: 60000, //指定录音的时长，单位 ms
       sampleRate: 16000, //采样率
@@ -141,8 +156,9 @@ Page({
       success() {
         console.log("录音授权成功");
         //第一次成功授权后 状态切换为2
+        list[idx].autioStatus = 2
         that.setData({
-          autioStatus: 2,
+          list: list
         })
         recorderManager.start(options);
         recorderManager.onStart(() => {
@@ -181,8 +197,12 @@ Page({
                   } else {
                     //第二次才成功授权
                     console.log("设置录音授权成功");
+                    // that.setData({
+                    //   autioStatus: 2,
+                    // })
+                    list[idx].autioStatus = 2
                     that.setData({
-                      autioStatus: 2,
+                      list: list
                     })
 
                     recorderManager.start(options);
@@ -212,44 +232,57 @@ Page({
 
   },
   //暂停录音
-  pause() {
-    var that = this;
-    recorderManager.pause();
-    recorderManager.onPause((res) => {
-      console.log(res);
-      that.setData({
-        autioStatus: 3,
-        tempFilePath: res.tempFilePath
-      })
-      console.log('暂停录音')
+  // pause() {
+  //   let that = this;
+  //   recorderManager.pause();
+  //   recorderManager.onPause((res) => {
+  //     console.log(res);
+  //     that.setData({
+  //       autioStatus: 3,
+  //       tempFilePath: res.tempFilePath
+  //     })
+  //     console.log('暂停录音')
 
-    })
-  },
+  //   })
+  // },
   //继续录音
-  resume() {
-    recorderManager.resume();
-    recorderManager.onStart(() => {
-      console.log('重新开始录音')
-    });
-    //错误回调
-    recorderManager.onError((res) => {
-      console.log(res);
-    })
-  },
+  // resume() {
+  //   recorderManager.resume();
+  //   recorderManager.onStart(() => {
+  //     console.log('重新开始录音')
+  //   });
+  //   //错误回调
+  //   recorderManager.onError((res) => {
+  //     console.log(res);
+  //   })
+  // },
   //停止录音
   stop(e) {
-    console.log('停止录音停止录音', e)
+    let list = this.data.list
+    let idx = e.currentTarget.dataset.idx
+    list[idx].endTime = e.timeStamp
     this.setData({
-      endTime: e.timeStamp, // 结束录音时间
+      list: list
     })
-    var that = this;
+    console.log('停止录音停止录音', e)
+    // this.setData({
+    //   endTime: e.timeStamp, // 结束录音时间
+    // })
+    let that = this;
     recorderManager.stop();
     recorderManager.onStop((res) => {
-      that.setData({
-        autioStatus: 3,
+      list[idx].autioStatus = 3
+      list[idx].tempFilePath = res.tempFilePath
+      list[idx].totalTime = Math.ceil((list[idx].endTime - list[idx].startTime) / 1000)
+     that.setData({
         tempFilePath: res.tempFilePath,
-        totalTime: Math.ceil((this.data.endTime - this.data.startTime) / 1000)
+        list: list
       })
+      // that.setData({
+      //   autioStatus: 3,
+      //   tempFilePath: res.tempFilePath,
+      //   totalTime: Math.ceil((this.data.endTime - this.data.startTime) / 1000)
+      // })
       console.log('停止录音', res.tempFilePath)
       const {
         tempFilePath
@@ -270,16 +303,20 @@ Page({
     })
   },
   // 关闭
-  closeAudio() {
+  closeAudio(e) {
+    let list = this.data.list
+    let idx = e.currentTarget.dataset.idx
+    list[idx].autioStatus = 1
+    list[idx].putType = 1
+    list[idx].tempFilePath = ''
     this.setData({
-      putType: 1,
+      list: list,
       tempFilePath: '',
-      autioStatus: 1
     })
   },
   // 保存语音
-  saveAudio() {
-    var that = this
+  saveAudio(e) {
+    let that = this
     // recorderManager.stop();
     wx.uploadFile({
       url: config.getDomain + '/oss/upload/uploadFile',
@@ -290,12 +327,17 @@ Page({
         'token': wx.getStorageSync('tokenKey') || ''
       },
       success(res) {
+        let list = that.data.list
+        let idx = e.currentTarget.dataset.idx
+        list[idx].autioStatus = 0
+        list[idx].putType = 5
+        list[idx].audioStr = JSON.parse(res.data).data
+        list[idx]['contents.voice'] = JSON.parse(res.data).data
         that.setData({
-          autioStatus: 0,
-          putType: 5,
+          list: list,
           tempFilePath: '',
-          audioStr: JSON.parse(res.data).data,
-          'contents.voice': JSON.parse(res.data).data,
+          // audioStr: JSON.parse(res.data).data,
+          // 'contents.voice': JSON.parse(res.data).data,
         })
         audioCtx.src = JSON.parse(res.data).data;
       }
@@ -317,19 +359,28 @@ Page({
   },
   // 切换图片
   changeImg(e) {
+    let idxp = e.currentTarget.dataset.idxp
+    let idx = e.currentTarget.dataset.idx
+    let list = this.data.list
+    list[idxp].randomCardIndex = idx
     this.setData({
-      randomCardIndex: e.currentTarget.dataset.idx
+      // randomCardIndex: e.currentTarget.dataset.idx,
+      list: list
     })
   },
   // 切换卡片
   changeCard(e) {
+    let list = this.data.list
+    
     if (e.currentTarget.dataset.item == 1) {
+      list[e.currentTarget.dataset.idx].selectCard = ''
       this.setData({
-        selectCard: ''
+        list: list
       })
     } else {
+      list[e.currentTarget.dataset.idx].selectCard = e.currentTarget.dataset.item
       this.setData({
-        selectCard: e.currentTarget.dataset.item
+        list: list
       })
     }
   },
@@ -338,7 +389,8 @@ Page({
     if(this.data.step>0&&this.data.step<this.data.stepList.length+2){
       //step>0<最后一个为循环
       //需要判断是否填写内容
-      if (!this.data.contents.txt && !this.data.contents.voice) {
+      let list = this.data.list
+      if (!list[e.currentTarget.dataset.idx].contents.txt && !list[e.currentTarget.dataset.idx].contents.voice) {
         wx.showToast({
           title: '请先录音或输入内容',
           icon: 'none',
@@ -351,65 +403,64 @@ Page({
         mask: true,
       })
       submitContent({
-        answerText: this.data.contents.txt,
-        answerVoice: this.data.contents.voice,
-        cardId: this.data.randomCard[this.data.randomCardIndex].id,
-        id: this.data.stepList[this.data.step - 1].id,
-        imgUrl: this.data.randomCard[this.data.randomCardIndex].imgUrl,
+        answerText: list[e.currentTarget.dataset.idx].contents.txt,
+        answerVoice: list[e.currentTarget.dataset.idx].contents.voice,
+        cardId: list[e.currentTarget.dataset.idx].randomCard[list[e.currentTarget.dataset.idx].randomCardIndex].id,
+        id: list[e.currentTarget.dataset.idx].id,
+        imgUrl: list[e.currentTarget.dataset.idx].randomCard[list[e.currentTarget.dataset.idx].randomCardIndex].imgUrl,
         userProbeId: this.data.id,
       }).then((res) => {
         wx.hideLoading()
-        this.setData({
-          // 录音相关
-          bigPopStatus: false, // 放大卡牌
-          putType: 1,
-          content: [],
-          contents: {
-            txt: "",
-            voice: ""
-          },
-          autioStatus: 1,
-          tempFilePath: "",
-          audioStr: "",
-          isPlay: false,
-          startTime: 0, // 开始录音时间
-          endTime: 0, // 结束录音时间
-          totalTime: 0
-        })
       })
     }
     //引导-最后一轮，进入下一轮的时候需要更新下一轮的内容到stepItem，并且获取3张卡牌
     if(this.data.step<this.data.stepList.length){
       let sItem = this.data.stepList[this.data.step];
       let answers = []
-      for (var j = 0; j < sItem.answers.length && j < this.data.robot.length; j++) {
+      for (let j = 0; j < sItem.answers.length && j < this.data.robot.length; j++) {
         let answerItem = sItem.answers[j];
         answerItem.headImg = this.data.robot[j];
         answers.push(answerItem);
       }
       sItem.answers = answers;
-      this.setData({
-        stepItem: sItem
-      });
+      // this.setData({
+      //   stepItem: sItem
+      // });
       cardRandom({
         id:this.data.probeId,
         cardNum:sItem.cardNum
       }).then(res=>{
+        let arr = this.data.list
+        for(let k=0;k< arr.length;k++ ){
+          if(this.data.step  == k){
+            arr[k].randomCard = res.data.data
+            arr[k].randomCardIndex = 0
+            // arr[k].stepItem = sItem
+            break
+          } 
+        }
         this.setData({
-          randomCard:res.data.data,
-          randomCardIndex:0
+          list: arr,
+          step: this.data.step + 1
+          // randomCard:res.data.data,
+          // randomCardIndex:0
         })
       });
+    } else  {
+      this.setData({
+        step: this.data.step + 1
+      });
     }
-    this.setData({
-      step: this.data.step + 1
-    });
+    
   },
   // 切换第几部
   changeStep(e) {
-    this.setData({
-      step: e.target.dataset.idx,
-    })
+    if(e.target.dataset.idx <= this.data.step){
+      this.setData({
+        step: e.target.dataset.idx,
+      })
+    }
+
   },
   // 获取详情
   getDetail(id) {
@@ -423,30 +474,52 @@ Page({
         step: res.data.data.current,
         activity: res.data.data.tags,
         stepBg: Math.floor(100 / (res.data.data.details.length + 2)),
-        probeId:res.data.data.probeId
+        probeId:res.data.data.probeId,
+        list: []
       })
-      if(this.data.step > 0 && this.data.step < this.data.stepList.length ){
-        let sItem = this.data.stepList[this.data.step];
-        let answers = []
-        for (var j = 0; j < sItem.answers.length && j < this.data.robot.length; j++) {
-          let answerItem = sItem.answers[j];
-          answerItem.headImg = this.data.robot[j];
-          answers.push(answerItem);
+      let arr = res.data.data.details
+      for(let i=0;i< arr.length;i++ ){
+        arr[i].randomCard = []
+        arr[i].randomCardIndex = 0
+        arr[i].stepItem = ''
+        arr[i].putType = 1
+        arr[i].contents = {
+          txt: '',
+          voice: ''
         }
-        sItem.answers = answers;
-        this.setData({
-          stepItem: sItem
-        });
-        cardRandom({
-          id:this.data.probeId,
-          cardNum:sItem.cardNum
-        }).then(res=>{
-          this.setData({
-            randomCard:res.data.data,
-            randomCardIndex:0
-          })
-        });
+        arr[i].autioStatus = 1
+        arr[i].tempFilePath = ''
+        arr[i].audioStr = ''
+        arr[i].isPlay = false
+        arr[i].startTime = 0
+        arr[i].endTime = 0
+        arr[i].totalTime = 0
       }
+      this.setData({
+        list: arr
+      })
+      // if(this.data.step > 0 && this.data.step < this.data.stepList.length ){
+      //   let sItem = this.data.stepList[this.data.step];
+      //   let answers = []
+      //   for (let j = 0; j < sItem.answers.length && j < this.data.robot.length; j++) {
+      //     let answerItem = sItem.answers[j];
+      //     answerItem.headImg = this.data.robot[j];
+      //     answers.push(answerItem);
+      //   }
+      //   sItem.answers = answers;
+      //   this.setData({
+      //     stepItem: sItem
+      //   });
+      //   cardRandom({
+      //     id:this.data.probeId,
+      //     cardNum:sItem.cardNum
+      //   }).then(res=>{
+      //     this.setData({
+      //       randomCard:res.data.data,
+      //       randomCardIndex:0
+      //     })
+      //   });
+      // }
     })
   },
   /**
