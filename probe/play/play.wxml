@@ -1,9 +1,9 @@
 <!--03shenmingtansuo/tansuo/tansuo.wxml-->
 <view class="jdt-box"><text style="width: {{(step + 1) * stepBg }}%"></text></view>
 <scroll-view class="z-tab2" scroll-x="true">
-    <view data-idx="0"  class="item {{step == 0 ? 'active' : ''}}">引言</view>
-    <view wx:for="{{stepList}}"  data-idx="{{index + 1}}" wx:for-item="item" wx:for-index="index" wx:key="*this"  class="item {{step == index + 1 ? 'active' : ''}}">第{{index + 1}}轮</view>
-    <view data-idx="{{ stepList.length + 1}}"  class="item {{step == stepList.length + 1 ? 'active' : ''}}">结语</view>
+    <view data-idx="0" bindtap="changeStep"  class="item {{step == 0 ? 'active' : ''}}">引言</view>
+    <view bindtap="changeStep" wx:for="{{stepList}}"  data-idx="{{index + 1}}" wx:for-item="item" wx:for-index="index" wx:key="*this"  class="item {{step == index + 1 ? 'active' : ''}}">第{{index + 1}}轮</view>
+    <view bindtap="changeStep" data-idx="{{ stepList.length + 1}}"  class="item {{step == stepList.length + 1 ? 'active' : ''}}">结语</view>
 </scroll-view>
 <view class="wp">
     <view class="yinyan-box" wx:if="{{step == 0}}">
@@ -77,15 +77,15 @@
                           </view>
                           <view class="m-luyin" wx:if="{{putType == 0}}">
                           <!-- bindtap="start" -->
-                              <button class="btn-luyin" bindtouchstart="start" 
-                              bindtouchend="stop" bindtouchcancel="stop" wx:if="{{autioStatus == 1 || autioStatus == 2}}">
+                              <button class="btn-luyin"
+                              bindtap="start"  wx:if="{{autioStatus == 1 }}">
                                   <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-                                  <view class="txt">长按录音</view>
+                                  <view class="txt">点击录音</view>
                               </button>
-                              <!-- <view class="btn-luyin" bindtap="stop" wx:if="{{autioStatus == 2}}">
+                              <view class="btn-luyin" bindtap="stop" wx:if="{{autioStatus == 2}}">
                                   <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
                                   <view class="txt">点击暂停</view>
-                              </view> -->
+                              </view>
                               <view class="close"  bindtap="closeAudio"  wx:if="{{autioStatus == 3}}">
                                   <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
                               </view>

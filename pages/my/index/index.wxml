@@ -51,7 +51,11 @@
                         <view class="txt">
                           {{item.contents.data[0].txt}}
                         </view>
-                        <image class="pic"  src="{{item.contents.imgUrl}}"></image>
+                        <view class="picBox">
+                          <image class="pic"  src="{{item.contents.imgUrl}}">
+                          </image>
+                          <image catchtap="openBig" data-pinurl="{{item.contents.imgUrl}}" class="btn-fan" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
+                        </view>
                     </view>
                 </view>
             </view>
@@ -66,8 +70,13 @@
                     <view class="type-list" wx:if="{{item.target.length > 0}}">
                         <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
-                    <view class="imgtxt">
-                        <image mode="widthFix" class="" src="{{item.contents.imgUrl}}"></image>
+                    <view class="">
+                        <!-- <image mode="widthFix" class="" src="{{item.contents.imgUrl}}"></image> -->
+                        <view class="picBox">
+                          <image class="pic" mode="widthFix"  src="{{item.contents.imgUrl}}">
+                          </image>
+                          <image catchtap="openBig" data-pinurl="{{item.contents.imgUrl}}" class="btn-fan" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
+                        </view>
                         <view class="txt">
                             {{item.contents.tags}}
                         </view>
@@ -133,3 +142,13 @@
         <view class="btn" bindtap="closePop">取消</view>
     </view>
 </view>
+
+
+<!--放大卡牌-->
+<block wx:if="{{bigPopStatus}}">
+  <view class="pop-mask"></view>
+  <view class="pop-big">
+    <image class="big-pic" src="{{bigCardImgUrl}}" mode="widthFix"></image>
+    <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closePopBig"></image>
+  </view>
+</block>

@@ -47,7 +47,21 @@ Page({
     cur_tab: 0,
     showPop: false,
     delIdx: '',
-    totalSum: '' // 头部的全部数量
+    totalSum: '', // 头部的全部数量
+    bigPopStatus: false,
+    bigCardImgUrl: ''
+  },
+  openBig(e) {
+    this.setData({
+      bigPopStatus: true,
+      bigCardImgUrl: e.currentTarget.dataset.pinurl
+    })
+  },
+  closePopBig(){
+    this.setData({
+      bigPopStatus: false,
+      bigCardImgUrl: ''
+    })
   },
   // 显示弹窗
   openPop: function (e) {
