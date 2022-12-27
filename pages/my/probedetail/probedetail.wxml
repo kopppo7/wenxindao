@@ -13,16 +13,17 @@
         <image src="{{card.imgUrl}}" mode="widthFix"></image>
       </block>
       </view>
-      <view class="audio">
-        <image catchtap="play" data-idx="{{index}}" wx:if="{{item.answerVoice}}" class="audioImg" mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png">
+      <view class="audio" wx:if="{{item.answerVoice}}" >
+        <image catchtap="play" data-idx="{{index}}" class="audioImg" mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png">
             <!-- 静止状态 -->
             <image wx:if="{{!item.playVoice}}" mode="widthFix" class="voiceImg" src="/static/voice.png"></image>
             <!-- 播放状态 -->
            <image wx:if="{{item.playVoice}}" mode="widthFix" class="voiceImg voiceImg2" src="/static/voice.png"></image>
            <image  wx:if="{{item.playVoice}}" mode="widthFix" class="voiceImg1" src="/static/voice.png"></image>
         </image>
-        <view wx:else class='texts'>{{item.answerText}}</view>
+        <text class="times" wx:if="{{item.answerVoiceTime}}">{{item.answerVoiceTime}}'</text>
       </view>
+      <view wx:else class='texts'>{{item.answerText}}</view>
     </view>
   </view>
 </view>
@@ -39,7 +40,7 @@
         <view class="pop-tit">分享到</view>
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <view class="pop-share">
-            <view class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>微信好友</view>
+            <button open-type="share" class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>微信好友</button>
             <view class="share-item"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</view>
         </view>
     </view>

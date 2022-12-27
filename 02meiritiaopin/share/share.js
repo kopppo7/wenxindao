@@ -63,7 +63,7 @@ Page({
       size: true,
       scrollOffset: true
     }, data => {
-      let width = data.width;
+      let width = data.width + 56;
       let height = data.height;
       console.log(data);
       that.setData({
