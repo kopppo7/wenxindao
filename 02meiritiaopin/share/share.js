@@ -32,7 +32,7 @@ Page({
     }).then(res => {
       var content = JSON.parse(res.data.data.contents);
       that.setData({
-        content: JSON.parse(res.data.data.contents),
+        content: content[0],
         cardTime: res.data.data.addTime.substring(11, 16),
         cardImg: content[0].imgUrl
       })
@@ -65,7 +65,6 @@ Page({
     }, data => {
       let width = data.width + 56;
       let height = data.height;
-      console.log(data);
       that.setData({
         width,
         height

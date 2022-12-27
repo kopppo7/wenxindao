@@ -1,6 +1,8 @@
 import {
   findByFmOne
 } from "../../../utils/api";
+
+const audioCtx = wx.createInnerAudioContext();
 Page({
 
   /**
@@ -34,6 +36,38 @@ Page({
       this.setData({
         info: info
       })
+    })
+  },
+  play(e) {
+    audioCtx.pause()
+    audioCtx.src = this.data.info.contents[e.currentTarget.dataset.idx].voice;
+    let list = this.data.info.contents;
+    list[e.currentTarget.dataset.idx].playVoice = !list[e.currentTarget.dataset.idx].playVoice 
+    if(list[e.currentTarget.dataset.idx].playVoice) {
+        audioCtx.play()
+    } else {
+        audioCtx.pause()
+    }
+    audioCtx.onEnded(()=>{
+        list[e.currentTarget.dataset.idx].playVoice = false
+        this.setData({
+            list: list
+        })
+    });
+    audioCtx.onStop(()=>{
+        list[e.currentTarget.dataset.idx].playVoice = false
+        this.setData({
+            list: list
+        })
+    });
+
+    list.map((item,index) => {
+        if(index != e.currentTarget.dataset.idx) {
+            item.playVoice = false
+        }
+    })
+    this.setData({
+        list: list
     })
   },
   /**

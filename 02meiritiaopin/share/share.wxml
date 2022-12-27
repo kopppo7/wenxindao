@@ -38,6 +38,6 @@
 <canvas canvas-id="myCanvas" class="myCanvas"></canvas>
 <view class="tools-box">
     <view class="tools-item" bindtap="share1"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>微信好友</view>
-    <button class="tools-item" open-type="share"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</button>
+    <!-- <button class="tools-item" open-type="share"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</button> -->
     <view class="tools-item" bindtap="savePoster"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-download.png"></image>保存本地</view>
 </view>

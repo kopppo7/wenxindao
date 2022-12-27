@@ -214,6 +214,7 @@ Page({
   // 新增每日调频
   async addFm() {
     var isGoOn=true;
+    debugger
     for (var i = 0; i < this.data.contentsArray[this.data.activeIndex].length; i++) {
       await new Promise((resolve)=>{
         if(this.data.contentsArray[this.data.activeIndex][i].imgUrl==''){

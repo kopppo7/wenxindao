@@ -14,9 +14,17 @@
   </view>
 
   <view class="content" wx:for="{{info.contents}}" wx:for-item="item" wx:key="id">
-    <view class="desc">
-      {{item.txt}}
-    </view>
+    <view class="audio" wx:if="{{item.voice}}" >
+        <image catchtap="play" data-idx="{{index}}" class="audioImg" mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png">
+            <!-- 静止状态 -->
+            <image wx:if="{{!item.playVoice}}" mode="widthFix" class="voiceImg" src="/static/voice.png"></image>
+            <!-- 播放状态 -->
+           <image wx:if="{{item.playVoice}}" mode="widthFix" class="voiceImg voiceImg2" src="/static/voice.png"></image>
+           <image  wx:if="{{item.playVoice}}" mode="widthFix" class="voiceImg1" src="/static/voice.png"></image>
+        </image>
+        <text class="times" wx:if="{{item.times}}">{{item.times}}'</text>
+      </view>
+      <view wx:else class='desc'>{{item.txt}}</view>
     <image class="fakeImg" mode="widthFix" src="{{item.imgUrl}}"></image>
   </view>
 
