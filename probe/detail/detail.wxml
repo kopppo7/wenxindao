@@ -4,7 +4,7 @@
         <image class="pic" src="{{product.imgUrl}}"></image>
         <view class="txt">
             <view class="s1">{{product.title}}</view>
-            <view class="s2"><rich-text nodes="{{product.introduce}}"></rich-text></view>
+            <view class="s2"><rich-text nodes="{{product.abstract}}"></rich-text></view>
             <view class="s3">预计{{product.meanTime}}分钟</view>
             <view class="s4">
                 <text wx:for="{{labels}}" wx:for-item="item" wx:key="*this">{{item}}</text>
@@ -15,18 +15,20 @@
         <text>语音参与须知</text>
     </view> -->
     <view class="intro-row3">
+        <view class="z-tit1">探索简介</view>
+        <view class="g-box">
+            <view class="desc">
+                <rich-text nodes="{{product.introduce}}"></rich-text>
+            </view>
+        </view>
+    </view>
+    <view class="intro-row3">
         <view class="z-tit1">活动流程</view>
         <view class="g-box">
-            <!-- <view class="z-tit2">语音参与者</view> -->
             <view class="desc">
                 <rich-text nodes="{{product.activity}}"></rich-text>
             </view>
         </view>
-        <!-- <view class="g-box">
-            <view class="z-list2">
-                <rich-text nodes="{{product.introduce}}"></rich-text>
-            </view>
-        </view> -->
     </view>
     <view class="intro-row4">
         <view class="z-tit1">探索感悟</view>
