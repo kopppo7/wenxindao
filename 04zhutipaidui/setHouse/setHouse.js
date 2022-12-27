@@ -10,7 +10,8 @@ Page({
      */
     data: {
         useMes: {},
-        isShow: true
+        isShow: true,
+        themeId:''
     },
     //上传本地图片
     radioChange(e) {
@@ -73,13 +74,13 @@ Page({
               }
               updateImMsg(param).then(res => {
                   wx.navigateTo({
-                      url: '/04zhutipaidui/tansuo/tansuo',
+                      url: '/04zhutipaidui/tansuo/tansuo?id='+this.data.themeId,
                   })
               })
             }
           } else {
               wx.navigateTo({
-                  url: '/04zhutipaidui/tansuo/tansuo',
+                  url: '/04zhutipaidui/tansuo/tansuo?id='+this.data.themeId,
               })
           }
         } else {
@@ -100,6 +101,9 @@ Page({
                 useMes: wx.getStorageSync('loginInfo')
             })
         }
+        this.setData({
+            themeId: options.id,
+        })
     },
 
     /**

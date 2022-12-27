@@ -57,15 +57,18 @@
     <view class="intro-row4">
         <view class="z-tit1">探索感悟</view>
         <view class="z-list3">
-            <view class="item g-box" wx:for="{{evalList}}">
+            <view class="item g-box" wx:for="{{evalList}}" wx:for-item="item" wx:for-index="index">
                 <view class="tit-box">
-                    <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                    <image class="avatar" src="{{item.userHeadImg}}"></image>
                     <view class="name-time">
-                        <view class="name">飞飞图</view>
-                        <view class="time">2022-07-25 21:05:00</view>
+                        <view class="name">{{item.wechatName}}</view>
+                        <view class="time">{{item.addTime}}</view>
                     </view>
                 </view>
-                <view class="desc">学习完了整个主题的来训练，收获颇多！也会将学习应用到日常生活中去。不断的修炼自我，成为更好的自己。期待参加下一个主题探索。期待...<text>更多</text></view>
+                <view class="desc">
+                    {{item.evaluate}}
+                    <!-- <text>更多</text> -->
+                </view>
             </view>
         </view>
     </view>
@@ -85,21 +88,7 @@
         <view class="bottom-r bottom-r2" bindtap="openGwPop">写感悟</view>
     </view>
 </view>
-<!--购买本探索-->
-<block wx:if="{{buyPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win">
-        <view class="pop-tit">购买本探索</view>
-        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
-        <view class="pop-cont">
-            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
-            <view class="title">原生家庭-性格探索</view>
-            <view class="time">购买使用期：1年</view>
-            <view class="money">¥<text>20.00</text></view>
-        </view>
-        <view class="btn-buy">确认购买</view>
-    </view>
-</block>
+
 <!--使用期1年弹窗-->
 <block wx:if="{{yearPopStatus}}">
     <view class="pop-mask"></view>

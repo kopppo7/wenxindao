@@ -90,7 +90,7 @@ page{
     line-height: 42rpx;
     margin-bottom: 20rpx;
 }
-.buy-area .info{}
+.buy-area .info{flex-shrink: 0;margin-left: 10rpx;}
 .buy-area .info .price{
     display: inline-block;
 }
