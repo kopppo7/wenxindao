@@ -427,6 +427,7 @@
 }
 .randomCard image{
   width: 100%;
+  border-radius: 10rpx;
 }
 .randomCard .cardSelected{
   flex: 7;

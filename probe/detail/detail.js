@@ -6,6 +6,7 @@ import {
   submitScore,
   getExpId
 } from '../../utils/api'
+import{getLoginInfo} from '../../utils/stoage'
 Page({
 
   /**
@@ -258,7 +259,19 @@ res.data.data.introduce = res.data.data.introduce.replace(/style/g,'data').repla
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() {
-
+  onShareAppMessage(option) {
+    var shareId='';
+    if(option.target.dataset.type=='liebian'){
+      var loginInfo = getLoginInfo();
+      shareId = loginInfo.id;
+    }
+    debugger
+    var shareObj = {
+      path:'probe/detail/detail?id='+this.data.id+'&shareId='+shareId,
+      imageUrl:this.data.product.shareImgUrl,
+      title:'我发现了一个线上多人语音活动，一起探索《'+this.data.product.title+'》吧',
+      desc:'这是开启心灵对话的派对之旅'
+    }
+    return shareObj;
   }
 })

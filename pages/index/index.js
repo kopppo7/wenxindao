@@ -27,14 +27,16 @@ Page({
       })
     },
     onLoad: async function () {
-      await login();
+      var that = this;
+      await login(function(){
+        that.getData();
+      });
       if (wx.getStorageSync('loginInfo').relieveTime) {
         this.setData({
           relieveTime:wx.getStorageSync('loginInfo').relieveTime,
           stopUse:true
         })
       }
-      this.getData();
     },
     goParty(){
       wx.showModal({

@@ -206,11 +206,15 @@ page{
 	width: 28rpx;
 	height: 28rpx;
 }
+.bottom-box .share{
+  background: #ffb58c !important;
+  color: #333;
+}
 .bottom-box .bottom-r{
 	font-size: 28rpx;
-	width: 252rpx;
-	height: 88rpx;
-	line-height: 88rpx;
+	width: 160rpx;
+	height: 80rpx;
+	line-height: 80rpx;
 	background: #7461E7;
 	border-radius: 44rpx;
 	text-align: center;
@@ -256,4 +260,10 @@ page{
     left: 0;
     top: 0;
     z-index: -1;
+}
+.share-log{
+  display: flex;
+}
+.share-log>view{
+  flex:1;
 }
