@@ -1,18 +1,34 @@
 // 07liebian/goumaixiwei/goumaixiwei.js
+import {
+    findByAskPartyOne,
+    getPayParty
+} from "../../04zhutipaidui/api";
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-
+        themeId: '',
+        detailObj: {},
+        price:''
     },
-
+    initData () {
+        findByAskPartyOne({ id: this.data.themeId }).then(res => {
+            let obj = res.data.data;
+            this.setData({
+                detailObj: obj
+            })
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        this.setData({
+            themeId: options.id,
+        })
+        this.initData()
     },
 
     /**

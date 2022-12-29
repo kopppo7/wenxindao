@@ -146,7 +146,7 @@ Page({
         }
         nim = SDK.getInstance({
             debug: false, // 是否开启日志，将其打印到console。集成开发阶段建议打开。
-            appKey: '8ee2018b307664fbf79070ed4570ac26',
+            appKey: '820499c93e45806d2420d75aa9ce9846',
             account: account,
             token: token || '',
             db: false, //若不要开启数据库请设置false。SDK默认为true。
@@ -410,7 +410,7 @@ Page({
     // 创建房间
     creatRoom () {
         let params = {
-            askId: this.askId
+            askId: this.data.askId
         }
         var that = this;
         var roomData = wx.getStorageSync('roomData') || ''

@@ -2,37 +2,47 @@
 import {
     findByAskPartyOne,
     evaluateList,
-    insertEvaluate
-  } from "../api";
+    insertEvaluate,
+    roomMatchingPlay
+} from "../api";
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        buyPopStatus: false,
         yearPopStatus: false,
         gwPopStatus: false,
-        themeId:'',
-        detailObj:{},
-        evalParams:{
-            page:1,
-            pageSize:1,
-            category:1
+        themeId: '',
+        detailObj: {},
+        evalParams: {
+            page: 1,
+            pageSize: 1,
+            category: 1
         },
-        evalList:[],
-        rating:4,
-        area:'',
+        evalList: [],
+        rating: 4,
+        area: '',
     },
     // 打开购买本探索弹窗
-    openBuyPop() {
+    openBuyPop () {
         var that = this;
-        that.setData({
-            buyPopStatus: true
+        console.log(roomMatchingPlay);
+        roomMatchingPlay(that.data.themeId).then(res => {
+            if (res.data.ret === 201) {
+                wx.navigateTo({
+                  url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
+                })
+            }else{
+                wx.navigateTo({
+                    url: '04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId,
+                  })
+            }
         })
+
     },
     // 关闭弹窗
-    closePop() {
+    closePop () {
         var that = this;
         that.setData({
             buyPopStatus: false,
@@ -42,30 +52,30 @@ Page({
     },
 
     // 打开购买本探索弹窗
-    openYearPop() {
+    openYearPop () {
         var that = this;
         that.setData({
             yearPopStatus: true
         })
     },
-    openGwPop() {
+    openGwPop () {
         var that = this;
         that.setData({
             gwPopStatus: true
         })
     },
 
-    change(e){
+    change (e) {
         this.setData({
-            rating:e.detail
+            rating: e.detail
         })
     },
-    initData(){
+    initData () {
         this.getDetail()
         this.getEvaluateList()
     },
-    getDetail(){
-        findByAskPartyOne({id:this.data.themeId}).then(res=>{
+    getDetail () {
+        findByAskPartyOne({ id: this.data.themeId }).then(res => {
             let obj = res.data.data;
             obj.tips = obj.tips.split(' ');
             console.log(obj);
@@ -80,39 +90,39 @@ Page({
                 .replace(/\<p/gi, '<p class="p_class"')
                 .replace(/\<span/gi, '<span class="span_class"')
             this.setData({
-                detailObj:obj
+                detailObj: obj
             })
         })
     },
-    getEvaluateList(){
-        evaluateList(this.data.evalParams).then(res=>{
+    getEvaluateList () {
+        evaluateList(this.data.evalParams).then(res => {
             this.setData({
-                evalList:res.data.data.list
+                evalList: res.data.data.list
             })
         })
     },
-    bindFormSubmit(e){
+    bindFormSubmit (e) {
         let params = {
-            category:1,
-            objectId:this.data.themeId,
-            score:this.data.rating,
-            evaluate:e.detail.value.textarea,
+            category: 1,
+            objectId: this.data.themeId,
+            score: this.data.rating,
+            evaluate: e.detail.value.textarea,
         }
-        insertEvaluate(params).then(res=>{
+        insertEvaluate(params).then(res => {
             this.getEvaluateList()
             this.setData({
-                gwPopStatus:false
+                gwPopStatus: false
             })
         })
     },
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad(options) {
+    onLoad (options) {
         console.log(options);
         this.setData({
-            themeId:options.id,
-            'evalParams.id':options.id,
+            themeId: options.id,
+            'evalParams.id': options.id,
         })
         this.initData()
     },
@@ -120,49 +130,49 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady() {
+    onReady () {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow() {
+    onShow () {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide() {
+    onHide () {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload() {
+    onUnload () {
 
     },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh() {
+    onPullDownRefresh () {
 
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom() {
+    onReachBottom () {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage() {
+    onShareAppMessage () {
 
     }
 })

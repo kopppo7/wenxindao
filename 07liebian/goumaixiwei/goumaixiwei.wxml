@@ -5,11 +5,11 @@
             <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
         </view>
         <view class="buy-text">
-            <view class="title">原生家庭-性格探索</view>
-            <view class="text">参与人数：2-6人/场</view>
+            <view class="title">{{detailObj.title}}</view>
+            <view class="text">参与人数：{{detailObj.minNumber}}-{{detailObj.maxNumber}}人/场</view>
             <view class="seat">
                 <view class="price">
-                    ¥ <text>20</text> 
+                    ¥ <text>{{price}}</text> 
                 </view>
                 / 席位
             </view>
@@ -25,7 +25,7 @@
                 <view class="info">
                     <view class="seat">
                         <view class="price">
-                            ¥ <text>20</text> 
+                            ¥ <text>{{detailObj.soloPrice}}</text> 
                         </view>
                         / 席位
                     </view>
@@ -45,7 +45,7 @@
                 <view class="info">
                     <view class="seat">
                         <view class="price">
-                            ¥ <text>48</text> 
+                            ¥ <text>{{detailObj.allPrice}}</text> 
                         </view>
                         / 场
                     </view>
