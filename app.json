@@ -20,7 +20,8 @@
       "pages": [
         "index/index",
         "detail/detail",
-        "play/play"
+        "play/play",
+        "invitation/index"
       ]
     },
     {

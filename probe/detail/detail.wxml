@@ -15,13 +15,20 @@
   </view>
   <view class="share-log">
     <view>
-      <view>邀请好友 免费解锁</view>
-      <view>使用期一年</view>
+      <view class="btitle">邀请好友 免费解锁</view>
+      <view class="txt">使用期一年</view>
     </view>
-    <view>
-      <view>
+    <view class="hasNum">
+      <view class="invi-person">
+         <!-- 需要循环的 -->
+         <view class="invi-box">
+           <image src="" mode="widthFix"/>
+         </view>
+         <view class="invi-box">
+           <button open-type="share">+</button>
+         </view>
       </view>
-      <view>已邀请0位</view>
+      <view class="invi-num">已邀请0位</view>
     </view>
   </view>
 

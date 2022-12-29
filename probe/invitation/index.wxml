@@ -1,0 +1,30 @@
+<!--probe/invitation/index.wxml-->
+<view class="outerBox">
+    <view class="ititle">问心无限-一路欢喜</view>
+    <view class="box">
+      <view class="top">
+        <view class="user">
+           <image src="" mode="widthFix"></image>
+        </view>
+        <view class="txts">
+          xxx 邀请你参加 <text>主题派对-性格探索</text>
+        </view>
+      </view>
+      <view class="cardBox">
+        <image class="btn-fan" catchtap="openBig" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
+        <image class="cardimg" src="" mode="widthFix"/>
+      </view>
+      <view class="greentxt">解锁一年使用权</view>
+      <view class="yellowtxt">成功邀请4位新朋友，即可解锁！</view>
+      <button class="agreen">接受邀请</button>
+    </view>
+</view>
+
+<!--放大卡牌-->
+<block wx:if="{{bigPopStatus}}">
+  <view class="pop-mask"></view>
+  <view class="pop-big">
+    <image class="big-pic" src="{{bigCardImgUrl}}" mode="widthFix"></image>
+    <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closePopBig"></image>
+  </view>
+</block>
