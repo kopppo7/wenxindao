@@ -231,18 +231,32 @@ res.data.data.introduce = res.data.data.introduce.replace(/style/g,'data').repla
   // 获取邀请详情
   getReceiveDetail(id){
     receiveDetail(id).then((res) => {
-      for(let i=0;i<4;i++){
-        if(i < res.data.data.length ){
-          this.data.shareList[i] = res.data.data[i]
-        } else {
-          this.data.shareList[i] = {
-            rname: '', headImg: ''
+      let list = []
+      if(res.data.data){
+        for(let i=0;i<4;i++){
+          if(i < res.data.data.length ){
+            list[i] = res.data.data[i]
+          } else {
+            list[i] = {
+              rname: '', headImg: ''
+            }
           }
         }
+      } else {
+        list = [{
+          rname: '', headImg: ''
+        },{
+          rname: '', headImg: ''
+        },{
+          rname: '', headImg: ''
+        },{
+          rname: '', headImg: ''
+        }]
       }
+
       this.setData({
-        areadyShareList: res.data.data,
-        shareList: this.data.shareList
+        areadyShareList: res.data.data ? res.data.data : [],
+        shareList: list
       })
     })
   },
