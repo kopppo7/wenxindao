@@ -26,6 +26,8 @@
            <button wx:else open-type="share" data-type="liebian">+</button>
          </view>
       </view>
+
+      
       <view class="invi-num">已邀请{{areadyShareList.length}}位</view>
     </view>
   </view>
