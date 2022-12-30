@@ -21,14 +21,12 @@
     <view class="hasNum">
       <view class="invi-person">
          <!-- 需要循环的 -->
-         <view class="invi-box">
-           <image src="" mode="widthFix"/>
-         </view>
-         <view class="invi-box">
-           <button open-type="share">+</button>
+         <view class="invi-box" wx:for="{{shareList}}"  wx:for-item="item" wx:key="*this">
+           <image wx:if="{{item.headImg}}" src="{{item.headImg}}" mode="widthFix"/>
+           <button wx:else open-type="share" data-type="liebian">+</button>
          </view>
       </view>
-      <view class="invi-num">已邀请0位</view>
+      <view class="invi-num">已邀请{{areadyShareList.length}}位</view>
     </view>
   </view>
 

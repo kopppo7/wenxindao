@@ -5,7 +5,8 @@ import {
   submitScore,
   getExpId,
   sendAskInvite,
-  findInviteById
+  findInviteById,
+  receiveDetail
 } from '../../utils/api'
 import{getLoginInfo} from '../../utils/stoage'
 Page({
@@ -25,7 +26,9 @@ Page({
     evaluate: '', // 提交的评价
     page: 1,
     total: 0,
-    isShowVoice:false
+    isShowVoice:false,
+    shareList: [],
+    areadyShareList: [] // 已分享
   },
   // 打开购买本探索弹窗
   openBuyPop() {
@@ -225,6 +228,24 @@ res.data.data.introduce = res.data.data.introduce.replace(/style/g,'data').repla
   submitPercep() {
 
   },
+  // 获取邀请详情
+  getReceiveDetail(id){
+    receiveDetail(id).then((res) => {
+      for(let i=0;i<4;i++){
+        if(i < res.data.data.length ){
+          this.data.shareList[i] = res.data.data[i]
+        } else {
+          this.data.shareList[i] = {
+            rname: '', headImg: ''
+          }
+        }
+      }
+      this.setData({
+        areadyShareList: res.data.data,
+        shareList: this.data.shareList
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -246,6 +267,7 @@ res.data.data.introduce = res.data.data.introduce.replace(/style/g,'data').repla
         id: options.id
       })
       this.getDetail(options.id)
+      this.getReceiveDetail(options.id)
       this.getEvaList()
     }
   },

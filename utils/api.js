@@ -149,3 +149,15 @@ export const sendAskInvite = function (id) {
 export const findInviteById = function (id) {
   return http.post(handleURL('/askInvite/findInviteById'),{id:id});
 }
+// 接收裂变
+export const receiveInvite = function (id) {
+  return http.get(handleURL('/askInvite/helpAskInvite?id='+id));
+}
+// 获取邀请详情
+export const receiveDetail = function (id) {
+  return http.get(handleURL('/askInvite/getAskInviteUsers?id='+id));
+}
+
+
+
+

@@ -1,8 +1,15 @@
 import {
   findInviteById,
   appletsLogin,
-  getUserMsg
+  getUserMsg,
+  receiveInvite,
+   decodePhone,
+   updateUserMsg
 } from '../../utils/api'
+import {
+  getLoginInfo,
+  setLoginInfo
+} from "../../utils/stoage"
 Page({
 
   /**
@@ -43,6 +50,85 @@ Page({
       headImg:e.detail.avatarUrl
     })
   },
+  getNick(e){
+    this.setData({
+      nickName: e.detail.value
+    })
+  },
+  login() {
+    if(!this.data.headImg) {
+      wx.showToast({
+        title: '请先上传头像',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if(!this.data.nickName) {
+      wx.showToast({
+        title: '请输入昵称',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+  },
+  getPhone(e) {
+    wx.showLoading({
+      title: '授权中...',
+      mask:true
+    })
+    let that = this
+    if (e.detail.errMsg == "getPhoneNumber:ok") {
+      wx.login({
+        success: function (res) {
+          decodePhone({
+            iv: e.detail.iv,
+            encryptedData:e.detail.encryptedData,
+            code:res.code
+          }).then(res=>{
+            if(res.data.ret==200){
+              let json = JSON.parse(res.data.data);
+              let userInfo = getLoginInfo();
+              userInfo = {
+                phone: json.phoneNumber,
+                wechatName: that.data.nickName,
+                headImg: that.data.headImg,
+              };
+              setLoginInfo(userInfo);
+              updateUserMsg({
+                phone:json.phoneNumber,
+                nickname: userInfo.wechatName,
+                headimgurl: userInfo.headImg
+              }).then(up=>{
+                wx.hideLoading();
+                that.confirmLogin()
+              })
+            } else{
+              wx.hideLoading();
+              wx.showToast({
+                title: '授权失败，请稍后再试',
+                icon:'error'
+              });
+            }
+          })
+        }
+      })
+    }else{
+      wx.hideLoading();
+    }
+   },
+
+   confirmLogin(){
+    wx.showLoading({
+      title: '接受邀请中...',
+      mask:true
+    })
+    receiveInvite(this.data.shareId).then((res) => {
+      wx.navigateBack()
+    })
+   },
+   
   /**
    * 生命周期函数--监听页面加载
    */
