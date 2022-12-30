@@ -1,4 +1,8 @@
-// probe/invitation/index.js
+import {
+  findInviteById,
+  appletsLogin,
+  getUserMsg
+} from '../../utils/api'
 Page({
 
   /**
@@ -6,11 +10,27 @@ Page({
    */
   data: {
     bigPopStatus: false,
-    bigCardImgUrl: ''
+    isAuth:false,
+    bigCardImgUrl: '',
+    id:'',
+    shareId:'',
+    fissionInfo:{},
+    headImg:'',
+    nickName:''
   },
   openBig(e) {
     this.setData({
       bigPopStatus: true
+    })
+  },
+  showAuth(){
+    this.setData({
+      isAuth:true
+    })
+  },
+  closeAuth(){
+    this.setData({
+      isAuth:false
     })
   },
   closePopBig(){
@@ -18,60 +38,39 @@ Page({
       bigPopStatus: false
     })
   },
-
+  chooseAvatar(e){
+    this.setData({
+      headImg:e.detail.avatarUrl
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+    this.setData({
+      id:options.id,
+      shareId:options.shareId
+    })
+    findInviteById(options.shareId).then(res=>{
+      this.setData({
+        fissionInfo:res.data.data
+      })
+    })
+    wx.login({
+      success: function (res) {
+        var obj = {
+          code: res.code,
+          role: 1
+        };
+        appletsLogin(obj).then(res => {
+          wx.setStorageSync('tokenKey', res.data.data.token);
+          getUserMsg(res.data.data.token).then(userInfo=>{
+            if(userInfo.data.data.phone!=null&&userInfo.data.data.wechatName!=null){
+              wx.navigateBack();
+            }
+          })
+        })
+      }
+    });
   }
 })

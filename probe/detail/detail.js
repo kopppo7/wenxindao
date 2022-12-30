@@ -1,10 +1,11 @@
-// 03shenmingtansuo/zhutijieshao/zhutijieshao.js
 import {
   getProDetail,
   getPayProbe,
   getProEvaList,
   submitScore,
-  getExpId
+  getExpId,
+  sendAskInvite,
+  findInviteById
 } from '../../utils/api'
 import{getLoginInfo} from '../../utils/stoage'
 Page({
@@ -228,6 +229,18 @@ res.data.data.introduce = res.data.data.introduce.replace(/style/g,'data').repla
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    if(options.shareId){
+      var loginInfo = getLoginInfo();
+      if(loginInfo==''||loginInfo.phone==null){
+        findInviteById(options.shareId).then(res=>{
+          if(res.data.data.status==0){
+            wx.navigateTo({
+              url: '/probe/invitation/index?shareId='+options.shareId+'&id='+options.id,
+            })
+          }
+        })
+      }
+    }
     if (options.id) {
       this.setData({
         id: options.id
@@ -235,7 +248,6 @@ res.data.data.introduce = res.data.data.introduce.replace(/style/g,'data').repla
       this.getDetail(options.id)
       this.getEvaList()
     }
-
   },
 
   /**
@@ -259,13 +271,13 @@ res.data.data.introduce = res.data.data.introduce.replace(/style/g,'data').repla
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage(option) {
+  onShareAppMessage:async function(option) {
     var shareId='';
     if(option.target.dataset.type=='liebian'){
-      var loginInfo = getLoginInfo();
-      shareId = loginInfo.id;
+      await sendAskInvite(this.data.id).then(res=>{
+        shareId = res.data.data.id
+      })
     }
-    debugger
     var shareObj = {
       path:'probe/detail/detail?id='+this.data.id+'&shareId='+shareId,
       imageUrl:this.data.product.shareImgUrl,

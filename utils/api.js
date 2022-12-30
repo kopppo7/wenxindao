@@ -141,3 +141,11 @@ export const cardRandom = function (data) {
 export const indexFlow = function (data) {
   return http.post(handleURL('/my/flow'),data);
 }
+// 发起裂变
+export const sendAskInvite = function (id) {
+  return http.get(handleURL('/askInvite/sendAskInvite?id='+id));
+}
+// 发起裂变
+export const findInviteById = function (id) {
+  return http.post(handleURL('/askInvite/findInviteById'),{id:id});
+}

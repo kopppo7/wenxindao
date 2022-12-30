@@ -1,22 +1,22 @@
 <!--probe/invitation/index.wxml-->
 <view class="outerBox">
-    <view class="ititle">问心无限-一路欢喜</view>
+    <view class="ititle">{{fissionInfo.title}}</view>
     <view class="box">
       <view class="top">
         <view class="user">
-           <image src="" mode="widthFix"></image>
+           <image src="{{fissionInfo.headImg}}" mode="widthFix"></image>
         </view>
         <view class="txts">
-          xxx 邀请你参加 <text>主题派对-性格探索</text>
+          {{fissionInfo.rname}}邀请你参加<text>{{fissionInfo.title}}</text>
         </view>
       </view>
       <view class="cardBox">
         <image class="btn-fan" catchtap="openBig" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
-        <image class="cardimg" src="" mode="widthFix"/>
+        <image class="cardimg" src="{{fissionInfo.imgUrl}}" mode="widthFix"/>
       </view>
       <view class="greentxt">解锁一年使用权</view>
       <view class="yellowtxt">成功邀请4位新朋友，即可解锁！</view>
-      <button class="agreen">接受邀请</button>
+      <button class="agreen" bindtap="showAuth">接受邀请</button>
     </view>
 </view>
 
@@ -24,7 +24,26 @@
 <block wx:if="{{bigPopStatus}}">
   <view class="pop-mask"></view>
   <view class="pop-big">
-    <image class="big-pic" src="{{bigCardImgUrl}}" mode="widthFix"></image>
+    <image class="big-pic" src="{{fissionInfo.imgUrl}}" mode="widthFix"></image>
     <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closePopBig"></image>
   </view>
+</block>
+
+<!--使用期1年弹窗-->
+<block wx:if="{{isAuth}}">
+  <view class="pop-mask"></view>
+  <view class="tel-login">
+    <view class="tit">授权登陆</view>
+    <button class="portrait" open-type="chooseAvatar" bindchooseavatar="chooseAvatar">
+      <block wx:if="{{!headImg}}">
+        <image class="icon-xiangji" src="/static/xiangji.png"></image>
+        <text>设置头像</text>
+      </block>
+      <image class="avatar" wx:else src="{{headImg}}" ></image>
+    </button>
+    <view class="inp">
+        <input class="weui-input" auto-focus placeholder="请输入昵称" type="text"  maxlength="10"/>
+    </view>
+    <button class="btn-login" bindtap="login">授权登陆</button>
+</view>
 </block>

@@ -71,7 +71,7 @@ Page({
                       })
                     })
                   }
-                }else{
+                } else{
                   wx.hideLoading();
                   wx.showToast({
                     title: '授权失败，请稍后再试',

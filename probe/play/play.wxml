@@ -186,3 +186,12 @@
     <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closeImgPop"></image>
   </view>
 </block>
+
+<!--放大卡牌-->
+<block wx:if="{{bigPopStatus}}">
+  <view class="pop-mask"></view>
+  <view class="pop-big">
+    <image class="big-pic" src="{{selectImgUrl}}" mode="widthFix"></image>
+    <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closeImgPop"></image>
+  </view>
+</block>
