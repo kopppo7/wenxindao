@@ -154,8 +154,8 @@ export const receiveInvite = function (id) {
   return http.get(handleURL('/askInvite/helpAskInvite?id='+id));
 }
 // 获取邀请详情
-export const receiveDetail = function (id) {
-  return http.get(handleURL('/askInvite/getAskInviteUsers?id='+id));
+export const receiveDetail = function (id,askId) {
+  return http.get(handleURL('/askInvite/getAskInviteUsers?id='+id+'&askId='+askId));
 }
 
 

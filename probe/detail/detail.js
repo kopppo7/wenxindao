@@ -6,9 +6,14 @@ import {
   getExpId,
   sendAskInvite,
   findInviteById,
-  receiveDetail
+  receiveDetail,
+  appletsLogin,
+  getUserMsg
 } from '../../utils/api'
-import{getLoginInfo} from '../../utils/stoage'
+import {
+  getLoginInfo,
+  setLoginInfo
+} from '../../utils/stoage'
 Page({
 
   /**
@@ -26,7 +31,7 @@ Page({
     evaluate: '', // 提交的评价
     page: 1,
     total: 0,
-    isShowVoice:false,
+    isShowVoice: false,
     shareList: [],
     areadyShareList: [] // 已分享
   },
@@ -44,9 +49,9 @@ Page({
       gwPopStatus: false
     })
   },
-  closeVoice(){
+  closeVoice() {
     this.setData({
-      isShowVoice:false
+      isShowVoice: false
     })
   },
   // 打开购买本探索弹窗
@@ -107,7 +112,7 @@ Page({
   // 语音参与须知
   showNotice() {
     this.setData({
-      isShowVoice:true
+      isShowVoice: true
     })
   },
   // 支付
@@ -190,10 +195,10 @@ Page({
     })
     getProDetail(id).then((res) => {
       wx.hideLoading()
-      res.data.data.activity = res.data.data.activity.replace(/style/g,'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
-      .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
-res.data.data.introduce = res.data.data.introduce.replace(/style/g,'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
-.replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
+      res.data.data.activity = res.data.data.activity.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
+        .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
+      res.data.data.introduce = res.data.data.introduce.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
+        .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
       this.setData({
         product: res.data.data,
         labels: res.data.data.labels ? res.data.data.labels.split(',') : []
@@ -229,28 +234,33 @@ res.data.data.introduce = res.data.data.introduce.replace(/style/g,'data').repla
 
   },
   // 获取邀请详情
-  getReceiveDetail(id){
-    receiveDetail(id).then((res) => {
+  getReceiveDetail(shareId, id) {
+    receiveDetail(shareId, id).then((res) => {
       let list = []
-      if(res.data.data){
-        for(let i=0;i<4;i++){
-          if(i < res.data.data.length ){
+      if (res.data.data) {
+        for (let i = 0; i < 4; i++) {
+          if (i < res.data.data.length) {
             list[i] = res.data.data[i]
           } else {
             list[i] = {
-              rname: '', headImg: ''
+              rname: '',
+              headImg: ''
             }
           }
         }
       } else {
         list = [{
-          rname: '', headImg: ''
-        },{
-          rname: '', headImg: ''
-        },{
-          rname: '', headImg: ''
-        },{
-          rname: '', headImg: ''
+          rname: '',
+          headImg: ''
+        }, {
+          rname: '',
+          headImg: ''
+        }, {
+          rname: '',
+          headImg: ''
+        }, {
+          rname: '',
+          headImg: ''
         }]
       }
 
@@ -264,28 +274,43 @@ res.data.data.introduce = res.data.data.introduce.replace(/style/g,'data').repla
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    if(options.shareId){
-      var loginInfo = getLoginInfo();
-      if(loginInfo==''||loginInfo.phone==null){
-        findInviteById(options.shareId).then(res=>{
-          if(res.data.data.status==0){
-            wx.navigateTo({
-              url: '/probe/invitation/index?shareId='+options.shareId+'&id='+options.id,
-            })
-          }
-        })
-      }
-    }
-    if (options.id) {
-      this.setData({
-        id: options.id
-      })
-      this.getDetail(options.id)
-      this.getReceiveDetail(options.id)
-      this.getEvaList()
-    }
+    this.setData({
+      id: options.id,
+      shareId: options.shareId || 0
+    })
   },
-
+  onShow() {
+    var that = this;
+    if (that.data.shareId) {
+      wx.login({
+        success: function (res) {
+          var obj = {
+            code: res.code,
+            role: 1
+          };
+          appletsLogin(obj).then(res => {
+            wx.setStorageSync('tokenKey', res.data.data.token)
+            getUserMsg(res.data.data.token).then(userInfo => {
+              if (userInfo.data.data.phone == null || userInfo.data.data.wechatName == null) {
+                findInviteById(that.data.shareId).then(res => {
+                  if (res.data.data.status == 0) {
+                    wx.navigateTo({
+                      url: '/probe/invitation/index?shareId=' + that.data.shareId + '&id=' + that.data.id,
+                    })
+                  }
+                })
+              } else {
+                setLoginInfo(userInfo.data.data)
+              }
+            })
+          })
+        }
+      });
+    }
+    that.getDetail(that.data.id)
+    that.getReceiveDetail(that.data.shareId, that.data.id)
+    that.getEvaList()
+  },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
@@ -307,18 +332,18 @@ res.data.data.introduce = res.data.data.introduce.replace(/style/g,'data').repla
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage:async function(option) {
-    var shareId='';
-    if(option.target.dataset.type=='liebian'){
-      await sendAskInvite(this.data.id).then(res=>{
+  onShareAppMessage: async function (option) {
+    var shareId = '';
+    if (option.target.dataset.type == 'liebian') {
+      await sendAskInvite(this.data.id).then(res => {
         shareId = res.data.data.id
       })
     }
     var shareObj = {
-      path:'probe/detail/detail?id='+this.data.id+'&shareId='+shareId,
-      imageUrl:this.data.product.shareImgUrl,
-      title:'我发现了一个线上多人语音活动，一起探索《'+this.data.product.title+'》吧',
-      desc:'这是开启心灵对话的派对之旅'
+      path: 'probe/detail/detail?id=' + this.data.id + '&shareId=' + shareId,
+      imageUrl: this.data.product.shareImgUrl,
+      title: '我发现了一个线上多人语音活动，一起探索《' + this.data.product.title + '》吧',
+      desc: '这是开启心灵对话的派对之旅'
     }
     return shareObj;
   }

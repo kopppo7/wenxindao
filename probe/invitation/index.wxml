@@ -42,7 +42,7 @@
       <image class="avatar" wx:else src="{{headImg}}" ></image>
     </button>
     <view class="inp">
-        <input class="weui-input" auto-focus placeholder="请输入昵称" type="text" value="{{nickName}}" bindinput="getNick"  maxlength="10"/>
+        <input class="weui-input" placeholder="请输入昵称" type="nickname" value="{{nickName}}" bindinput="getNick" bindchange="getNickChange"  maxlength="10"/>
     </view>
     <button class="btn-login"  wx:if="{{headImg && nickName}}" open-type="getPhoneNumber" bindgetphonenumber="getPhone">授权登陆</button>
     <button class="btn-login"  wx:else bindtap="login"  bindgetphonenumber="getPhone">授权登陆</button>

@@ -46,11 +46,34 @@ Page({
     })
   },
   chooseAvatar(e){
-    this.setData({
-      headImg:e.detail.avatarUrl
+    var that = this;
+    wx.uploadFile({
+      url:'https://www.wxdao.net/user/oss/upload/uploadFile',
+      filePath:e.detail.avatarUrl,
+      name:'file',
+      header:{
+        "token":wx.getStorageSync('tokenKey')
+      },
+      success:function(res){
+        var uploadRet = JSON.parse(res.data);
+        if(uploadRet.ret==200){
+          that.setData({
+            headImg:uploadRet.data
+          })
+        }else{
+          wx.showToast({
+            title: '头像上传失败',
+          })
+        }
+      }
     })
   },
   getNick(e){
+    this.setData({
+      nickName: e.detail.value
+    })
+  },
+  getNickChange(e){
     this.setData({
       nickName: e.detail.value
     })
