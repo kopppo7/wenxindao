@@ -4,13 +4,15 @@
         <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
         <text>人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
     </view>
-    <image src="../../static/h-set.png" mode="scaleToFill" />
+    <image src="../../static/h-set.png" mode="scaleToFill"/>
 </view>
+<view class="end-test" bindtap="toEnd">结束</view>
+<view class="end-test" bindtap="dismissTeam">解散</view>
 <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
     <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
     <view class="item {{step == 1 ? 'active' : ''}}">第1轮</view>
     <view class="item {{step == 2 ? 'active' : ''}}">第2轮</view>
-        <view class="item {{step == 3 ? 'active' : ''}}">第3轮</view>
+    <view class="item {{step == 3 ? 'active' : ''}}">第3轮</view>
     <view class="item {{step == 4 ? 'active' : ''}}">第4轮</view>
     <view class="item {{step == 5 ? 'active' : ''}}">结语</view>
 </scroll-view>
@@ -31,10 +33,11 @@
         </view>
         <view class="peoples">
             <view class="item" wx:for="{{playerList}}" wx:for-index="index"
-            wx:for-item="item">
-                <view class="{{personInd == index?'people active':'people' }}" bindlongpress="handleKick" data-item="{{item}}">
+                  wx:for-item="item" wx:key="*this">
+                <view class="{{personInd == index?'people active':'people' }}" bindlongpress="handleKick"
+                      data-item="{{item}}">
                     <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
-                    <image class="ready" src="../../static/play-status1.png" wx:if="{{item.isReady}}"></image>
+                        <image class="ready" src="../../static/play-status1.png" wx:if="{{item.isReady}}"></image>
                     </image>
                     <view class="ico2" wx:else>
                         <image src="../../static/room-kong.png">
@@ -45,7 +48,8 @@
             </view>
         </view>
         <view class="content">
-            <view wx:for="{{mesList}}" wx:for-item="item" class="{{item.sysType != 'sys'?'item':'item sys'}}">
+            <view wx:for="{{mesList}}" wx:for-item="item" class="{{item.sysType != 'sys'?'item':'item sys'}}"
+                  wx:key="*this">
                 <view class="text" wx:if="item.text">
                     <text class="name" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick}}：</text>
                     <text class="con">{{item.text}}</text>
@@ -53,36 +57,36 @@
                 <view class="cardList">
                     <view class="left">
                         <image
-                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
-                            mode="scaleToFill"
+                                src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
+                                mode="scaleToFill"
                         />
                     </view>
                     <view class="right">
                         <image
-                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
-                            mode="scaleToFill"
+                                src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
+                                mode="scaleToFill"
                         />
                         <image
-                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
-                            mode="scaleToFill"
+                                src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
+                                mode="scaleToFill"
                         />
                         <image
-                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
-                            mode="scaleToFill"
+                                src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
+                                mode="scaleToFill"
                         />
                     </view>
                 </view>
                 <view class="card">
                     <view class="img">
                         <image
-                            src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
-                            mode="scaleToFill"
+                                src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
+                                mode="scaleToFill"
                         />
                         <view class="icon">
                             <image
-                            src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
-                            mode="scaleToFill"
-                        />
+                                    src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                    mode="scaleToFill"
+                            />
                         </view>
                     </view>
                 </view>
@@ -97,7 +101,7 @@
         <image class="img" src="../../static/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
     </view>
     <view class="inp">
-        <input type="text" placeholder="说点什么吧..." 	bindconfirm="sendMsg"/>
+        <input type="text" placeholder="说点什么吧..." bindconfirm="sendMsg"/>
     </view>
     <view class="btn" bindtap="handleReady" wx:if="{{!isReady && !isOwner}}">
         准备
@@ -117,13 +121,15 @@
     <view class="pop-win">
         <view class="pop-tit">分享到</view>
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
-            bindtap="closePop"></image>
+               bindtap="closePop"></image>
         <view class="pop-share">
             <view class="share-item">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>微信好友
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>
+                微信好友
             </view>
             <view class="share-item">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>
+                朋友圈
             </view>
         </view>
     </view>
@@ -134,11 +140,11 @@
     <view class="pop-win2">
         <view class="pop-tit">活动提示</view>
         <view class="desc">我是问心小精灵 , 是本场派对的活动主持人。请来到可以语音外放的环境 或 佩戴耳机。</view>
-        <div class="checkbox" bindtap="activityChange">
+        <view class="checkbox" bindtap="activityChange">
             <image class="ico" src="../../static/room-check1.png" wx:if="{{!activeStatus}}"></image>
             <image class="ico" src="../../static/room-check2.png" wx:else></image>
             <text>不再提示</text>
-        </div>
+        </view>
         <view class="btns">
             <view class="close btn" bindtap="concleActivityPop">退出</view>
             <view class="ok btn" bindtap="closeActivityPop">准备好了</view>
@@ -151,7 +157,7 @@
     <view class="pop-win2">
         <view class="pop-tit">原生家庭-性格探索</view>
         <view class="img">
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg" />
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"/>
         </view>
         <view class="wait">已等待00:{{waitTime}}</view>
         <view class="btns" bindtap="concleActivityPop">
@@ -165,8 +171,11 @@
     <view class="pop-win2">
         <view class="pop-tit">至少2人开始派对</view>
         <view class="desc">
-            至少<text
-                class="num">2</text>人才可以开始派对，请邀请好友或匹配路人玩家！
+            至少
+            <text
+                    class="num">2
+            </text>
+            人才可以开始派对，请邀请好友或匹配路人玩家！
         </view>
         <view class="btns">
             <view class="btn ok" bindtap="closePop">知道了</view>
@@ -178,13 +187,14 @@
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
-            bindtap="closePop" data-pop="kickPopStatus"></image>
+               bindtap="closePop" data-pop="kickPopStatus"></image>
         <view class="person">
             <image class="ico" src="{{kickPlayer.avatar}}"></image>
             <view class="name">{{kickPlayer.nick}}</view>
         </view>
         <view class="btns">
             <view class="btn close" bindtap="handleKickDone">踢出房间</view>
+            <view class="btn close" bindtap="handleTousu">投诉</view>
         </view>
     </view>
 </block>
@@ -220,8 +230,9 @@
                 <text class="name">发言时间</text>
                 <view class="process">
                     <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"
-                        selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7" show-value="true"
-                        value="30" max="60" />
+                            selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7"
+                            show-value="true"
+                            value="30" max="60"/>
                     <text class="sec">s</text>
                 </view>
             </view>
@@ -229,23 +240,101 @@
                 <text class="name">结束自由交流时间</text>
                 <view class="process">
                     <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"
-                        selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7" show-value="true"
-                        value="30" max="60" />
+                            selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7"
+                            show-value="true"
+                            value="30" max="60"/>
                     <text class="sec">s</text>
                 </view>
             </view>
             <view class="line"></view>
             <view class="item">
                 <text class="name">音乐</text>
-                <switch size="small" color="#7461E7" />
+                <switch size="small" color="#7461E7"/>
             </view>
             <view class="item">
                 <text class="name">音效</text>
-                <switch color="#7461E7" />
+                <switch color="#7461E7"/>
             </view>
         </view>
         <view class="btns">
             <view class="btn ok">确定</view>
+        </view>
+    </view>
+</block>
+<!--投诉-->
+<block>
+    <view class="tousu-wrap" wx:if="{{showTousuPop}}">
+        <view class="tousu-mask"></view>
+        <view class="tousu">
+            <view class="pop-tit">投诉</view>
+            <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
+                   bindtap="closePop" data-pop="showTousuPop"></image>
+            <view class="tousu-content">
+                <view class="title">要投诉的岛民</view>
+                <view class="person">
+                    <image
+                            src="{{kickPlayer.avatar}}"
+                            mode="scaleToFill"
+                    />
+                    <view class="txt">
+                        {{ kickPlayer.nick}}
+                    </view>
+                </view>
+                <view class="title">投诉理由</view>
+                <view class="radio-box">
+                    <radio-group bindchange="radioChange">
+                        <label class="label-radio">
+                            <radio value="1" checked="true"/>
+                            语音一直跳过
+                        </label>
+                        <label class="label-radio">
+                            <radio value="2"/>
+                            内容过于阴暗、暴力、涉黄
+                        </label>
+                        <label class="label-radio">
+                            <radio value="3"/>
+                            推送广告
+                        </label>
+                        <label class="label-radio">
+                            <radio value="4"/>
+                            骂人
+                        </label>
+                    </radio-group>
+                </view>
+                <view class="title">上传图片（{{tousuImage.length}}/4）</view>
+                <view class="upload">
+                    <block wx:if="{{tousuImage && tousuImage.length > 0}}">
+                        <view class="image"
+                              wx:key="index"
+                              wx:for="{{tousuImage}}">
+                            <image
+                                    bindtap="delPic"
+                                    data-index="{{index}}"
+                                    class="close"
+                                    src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
+                            <image
+                                    mode="widthFix"
+                                    src="{{item}}" ></image>
+                        </view>
+                    </block>
+                   
+                    <image
+                            wx:if="{{tousuImage.length < 4}}"
+                            bindtap="callGetPic" class="add"
+                           src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/upload.png"></image>
+                </view>
+                <view class="title">文字描述</view>
+                <view class="textarea">
+                    <textarea
+                            bindinput="textInput"
+                            v-model="tousuTextarea"
+                            placeholder="请用文字描述投诉内容..."
+                            placeholder-class="textarea-placeholder"
+                            class="area"
+                    />
+                </view>
+            </view>
+            <view class="btn-submit" catchtap="tousuSubmit">提交</view>
         </view>
     </view>
 </block>

@@ -1,12 +1,13 @@
 // 03shenmingtansuo/tansuo/tansuo.js
 import NERTC from '../../NERTC_Miniapp_SDK_v4.6.11'
 import SDK from '../../NIM_Web_SDK_miniapp_v9.6.3'
+import config from "../../utils/config";
 import {
     createBaoRoom,
     startPlayRoom,
     kickingPlayer,
     openBaoRoomMate,
-    findByAskPartyOne
+    findByAskPartyOne, complaintUser, dissolveGroup
 } from "../api";
 import yunApi from "../../utils/yun";
 var nim = null;
@@ -48,7 +49,11 @@ Page({
         isReady: false,//是否准备
         askId: '',//主题ID
         themeDetail: {},
-        personInd:''
+        personInd:'',
+        showTousuPop:false, //显示投诉弹窗
+        tousuTextarea:'',//投诉内容
+        tousuImage:[],//投诉图片
+        tousuResaon:'',//投诉理由
     },
     // 活动提示
     activityChange () {
@@ -89,7 +94,8 @@ Page({
             mixPopStatus: false,
             timePopStatus: false,
             kickPopStatus: false,
-            passerPopStatus: false
+            passerPopStatus: false,
+            showTousuPop:false
         })
     },
     // 连接成功
@@ -162,6 +168,7 @@ Page({
             onRemoveTeamMembers: that.onRemoveTeamMembers,
             onmsg: that.onMsg
         });
+        console.log(nim)
 
     },
     // 群组更新
@@ -314,26 +321,26 @@ Page({
     },
     // 发送自定义消息
     sendCustomMsg (type, val) {
-        console.log(val);
-        var that = this;
-        var content = {
-            type: type,
-            data: {
-                status:val.status,
-                value: val.text,
-                cardList:val.list,
-                audio:val.audio,
-                video:val.video,
-                img:val.imgUrl
-            }
-        };
-        var msg = nim.sendCustomMsg({
-            scene: 'team',
-            to: that.data.teamId,
-            content: JSON.stringify(content),
-            done: that.pushMsg
-        });
-        console.log('正在发送自定义消息, ' + msg.idClient);
+        // console.log(val);
+        // var that = this;
+        // var content = {
+        //     type: type,
+        //     data: {
+        //         status:val.status,
+        //         value: val.text,
+        //         cardList:val.list,
+        //         audio:val.audio,
+        //         video:val.video,
+        //         img:val.imgUrl
+        //     }
+        // };
+        // var msg = nim.sendCustomMsg({
+        //     scene: 'team',
+        //     to: that.data.teamId,
+        //     content: JSON.stringify(content),
+        //     done: that.pushMsg
+        // });
+        // console.log('正在发送自定义消息, ' + msg.idClient);
     },
     pushMsg (error, msg) {
         console.log(error);
@@ -394,13 +401,13 @@ Page({
             APP.globalData.mesList = msgList
         }
     },
-    onDismissTeam () { },
+    // onDismissTeam () { },
     // 解散群
     dismissTeam () {
-        nim.dismissTeam({
-            teamId: "7357056590",
-            done: yunApi.dismissTeamDone
-        });
+        dissolveGroup({
+            id:53,
+            token:'9f011c22-e886-4344-b450-ec546d52c0ba'
+        })
     },
     dismissTeamDone (error, obj) {
         console.log(error);
@@ -454,40 +461,40 @@ Page({
         var time1 = 0;
         var that = this;
         if (downtimes) {
-            var time = setInterval(() => {
-                if (downtimes <= 1) {
-                    that.setData({
-                        timePopStatus: false,
-                    })
-                    clearInterval(time)
-                } else {
-                    downtimes--
-                    if (downtimes < 10) {
-                        downtimes = '0' + downtimes
-                    }
-                    that.setData({
-                        waitTime: downtimes
-                    })
-                }
-            }, 1000);
+            // var time = setInterval(() => {
+            //     if (downtimes <= 1) {
+            //         that.setData({
+            //             timePopStatus: false,
+            //         })
+            //         clearInterval(time)
+            //     } else {
+            //         downtimes--
+            //         if (downtimes < 10) {
+            //             downtimes = '0' + downtimes
+            //         }
+            //         that.setData({
+            //             waitTime: downtimes
+            //         })
+            //     }
+            // }, 1000);
         } else {
-            var time = setInterval(() => {
-                if (time1 > 9) {
-                    that.setData({
-                        matePopStatus: false,
-                    })
-                    clearInterval(time)
-                    this.initRoom()
-                } else {
-                    time1++
-                    if (time1 < 10) {
-                        time1 = '0' + time1
-                    }
-                    that.setData({
-                        waitTime: time1
-                    })
-                }
-            }, 1000);
+            // var time = setInterval(() => {
+            //     if (time1 > 9) {
+            //         that.setData({
+            //             matePopStatus: false,
+            //         })
+            //         clearInterval(time)
+            //         this.initRoom()
+            //     } else {
+            //         time1++
+            //         if (time1 < 10) {
+            //             time1 = '0' + time1
+            //         }
+            //         that.setData({
+            //             waitTime: time1
+            //         })
+            //     }
+            // }, 1000);
         }
     },
     handleReady () {
@@ -525,7 +532,7 @@ Page({
             }
         })
         if (num > 1) {
-            //开始游戏 
+            //开始游戏
             startPlayRoom({
                 roomId: that.data.roomData.id,
                 userIm
@@ -679,4 +686,125 @@ Page({
     onShareAppMessage () {
 
     },
+
+    //投诉
+    handleTousu:function () {
+        this.setData({
+            showTousuPop:true,
+            tousuResaon:1
+        })
+    },
+    //选择投诉理由
+    radioChange:function (e) {
+        this.setData({
+            tousuResaon:e.detail.value
+        })
+
+    },
+    //上传投诉图片
+    callGetPic: function () {
+        let that = this;
+
+        if(this.data.tousuImage.length >= 4){
+            wx.showToast({
+                title: '最多上传9张图片',
+                icon: 'none'
+            })
+            return false
+        }
+
+        wx.chooseImage({
+            count: 4, // 最多上传4张
+            sizeType: ['compressed'],
+            sourceType: ['album', 'camera'],
+            success: res => {
+                let tempFilePaths = res.tempFilePaths;
+                console.log(res)
+                wx.showLoading({
+                    title: '正在上传...',
+                    mask: true
+                });
+                that.uploadImg(tempFilePaths,0)
+            }
+        })
+    },
+    //上传图片
+    uploadImg:function (tempFilePaths,index) {
+        var that = this;
+        let token = wx.getStorageSync('tokenKey');
+        wx.uploadFile({
+            url: config.getDomain + '/oss/upload/uploadFile',
+            filePath: tempFilePaths[index],
+            name: 'file',
+            header: { "Content-Type": "multipart/form-data", 'token': token },
+            formData: {
+                'file': 'file'
+            },
+            success (res) {
+                try {
+                    var data = JSON.parse(res.data);
+                    var image = that.data.tousuImage
+                    if (data.ret == 200) {
+                        image.push(data.data)
+                        that.setData({
+                            tousuImage: image
+                        })
+                        if (index === (tempFilePaths.length-1)){
+                            wx.hideLoading();
+                        } else {
+                            that.uploadImg(tempFilePaths,(index+1))
+                        }
+                    }
+                } catch {
+                    wx.showToast({
+                        title: data.msg,
+                        icon: 'none'
+                    })
+                }
+            },
+            fail () {
+                wx.hideLoading();
+            }
+        })
+    },
+    //删除图片
+    delPic:function (e) {
+        var index = e.currentTarget.dataset.index
+        var images = this.data.tousuImage
+        images.splice(index,1)
+        this.setData({
+            tousuImage:images
+        })
+    },
+    //输入投诉内容
+    textInput:function (e) {
+        this.setData({
+            tousuTextarea:e.detail.value
+        })
+    },
+    //提交投诉
+    tousuSubmit:function () {
+        var data = this.data
+        console.log(data.kickPlayer)
+        console.log(data.tousuResaon)
+        console.log(data.tousuImage)
+        console.log(data.tousuTextarea)
+        console.log(APP.globalData.truePlayerList )
+        var par = {
+            content:data.tousuTextarea,
+            roomId:data.roomData.id,
+            imgUrl:data.tousuImage.join(','),
+            type:data.tousuResaon,
+            yunId:data.kickPlayer.account
+        }
+        complaintUser(par).then(res => {
+            console.log(res)
+        })
+    },
+    //去结尾畅聊
+    toEnd:function () {
+        wx.redirectTo({
+            url: '/04zhutipaidui/fupan/index'
+        })
+    }
 })

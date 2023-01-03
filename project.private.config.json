@@ -15,6 +15,41 @@
           "query": "id=15&shareId=6",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "主题探索",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=9",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "投诉",
+          "pathName": "04zhutipaidui/tousu/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "列表",
+          "pathName": "04zhutipaidui/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "复盘畅聊",
+          "pathName": "04zhutipaidui/fupan/index",
+          "query": "roomId=65",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "支付",
+          "pathName": "07liebian/goumaixiwei/goumaixiwei",
+          "query": "id=9",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

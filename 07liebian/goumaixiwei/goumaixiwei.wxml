@@ -7,16 +7,22 @@
         <view class="buy-text">
             <view class="title">{{detailObj.title}}</view>
             <view class="text">参与人数：{{detailObj.minNumber}}-{{detailObj.maxNumber}}人/场</view>
-            <view class="seat">
+            <view class="seat" wx:if="{{type === 1}}">
                 <view class="price">
-                    ¥ <text>{{price}}</text> 
+                    ¥ <text>{{detailObj.soloPrice}}</text>
                 </view>
                 / 席位
+            </view>
+            <view class="seat" wx:if="{{type === 2}}">
+                <view class="price">
+                    ¥ <text>{{detailObj.allPrice}}</text>
+                </view>
+                / 场
             </view>
         </view>
     </view>
     <view class="buy-list">
-        <view class="item">
+        <view class="item" bindtap="pickType" data-type="1">
             <view class="buy-area">
                 <view class="text">
                     <view class="p1">快速匹配</view>
@@ -25,41 +31,56 @@
                 <view class="info">
                     <view class="seat">
                         <view class="price">
-                            ¥ <text>{{detailObj.soloPrice}}</text> 
+                            ¥ <text>{{detailObj.soloPrice}}</text>
                         </view>
                         / 席位
                     </view>
-                    <view class="tag">
-                        首单免费
-                    </view>
+<!--                    <view class="tag">-->
+<!--                        首单免费-->
+<!--                    </view>-->
                 </view>
             </view>
-            <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ClickBox-on.png"></image>
+            <view class="icon">
+                <image class="icon"
+                 wx:if="{{type === 1}}"
+                       src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ClickBox-on.png"></image>
+                <image class="icon"
+                       wx:else
+                       src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ClickBox.png"></image>
+            </view>
+            
         </view>
-        <view class="item item2">
+        <view class="item item2" bindtap="pickType" data-type="2">
             <view class="buy-area">
                 <view class="text">
                     <view class="p1">好友结伴</view>
-                    <view class="p2">包场，一场最多可容纳6个人</view>
+                    <view class="p2">包场，一场最多可容纳{{detailObj.maxNumber}}个人</view>
                 </view>
                 <view class="info">
                     <view class="seat">
                         <view class="price">
-                            ¥ <text>{{detailObj.allPrice}}</text> 
+                            ¥ <text>{{detailObj.allPrice}}</text>
                         </view>
                         / 场
                     </view>
-                    <view class="tag">
-                        首单免费
-                    </view>
+<!--                    <view class="tag">-->
+<!--                        首单免费-->
+<!--                    </view>-->
                 </view>
             </view>
-            <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ClickBox.png"></image>
+            <view class="icon">
+                <image class="icon"
+                       wx:if="{{type === 2}}"
+                       src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ClickBox-on.png"></image>
+                <image class="icon"
+                       wx:else
+                       src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ClickBox.png"></image>
+            </view>
         </view>
     </view>
 </view>
 <view class="bottom-box">
     <view class="wp">
-        <view class="btn-praise">去组队</view>
+        <view class="btn-praise" bindtap="pay">去组队</view>
     </view>
 </view>

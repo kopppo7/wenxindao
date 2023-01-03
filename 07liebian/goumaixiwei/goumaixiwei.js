@@ -2,7 +2,8 @@
 import {
     findByAskPartyOne,
     getPayParty
-} from "../../04zhutipaidui/api";
+} from "../../07liebian/api";
+import {getPayProbe} from "../../utils/api";
 Page({
 
     /**
@@ -11,7 +12,7 @@ Page({
     data: {
         themeId: '',
         detailObj: {},
-        price:''
+        type:1
     },
     initData () {
         findByAskPartyOne({ id: this.data.themeId }).then(res => {
@@ -29,6 +30,61 @@ Page({
             themeId: options.id,
         })
         this.initData()
+    },
+    //选择类型
+    pickType:function (e) {
+        console.log(e.currentTarget.dataset.type)
+        this.setData({
+            type:e.currentTarget.dataset.type*1
+        })
+    },
+    pay:function () {
+        let that = this
+        wx.showLoading({
+            title: '支付中',
+            mask: true,
+        })
+        getPayParty({
+            id: that.data.themeId*1,
+            types: that.data.type
+        }).then((res) => {
+            wx.requestPayment({
+                // 时间戳
+                appId: res.data.data.appId,
+                timeStamp: res.data.data.timeStamp,
+                // 随机字符串
+                nonceStr: res.data.data.nonceStr,
+                // 统一下单接口返回的 prepay_id 参数值
+                package: res.data.data.package,
+                // 签名类型
+                signType: res.data.data.signType,
+                // 签名
+                paySign: res.data.data.paySign,
+                // 调用成功回调
+                success() {
+                    wx.showLoading()
+                    wx.showToast({
+                        title: '付款成功',
+                        icon: 'success'
+                    })
+                    that.getDetail(that.data.product.id)
+                    that.closePop()
+                },
+                // 失败回调
+                fail(err) {
+                    that.getDetail(that.data.product.id)
+                    that.closePop()
+                    wx.showLoading()
+                    wx.showToast({
+                        title: '付款失败',
+                        icon: 'error'
+                    })
+                },
+                // 接口调用结束回调
+                complete() {}
+            })
+
+        })
     },
 
     /**

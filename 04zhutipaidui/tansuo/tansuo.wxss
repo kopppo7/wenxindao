@@ -364,3 +364,77 @@ image{object-fit: cover;}
 	text-align: center;color: #fff;font-size: 28rpx;border-radius: 72rpx;margin: 0 24rpx;
 	height: 72rpx;
 }
+
+
+
+/* 04zhutipaidui/tousu/index.wxss */
+.tousu{padding: 116rpx 40rpx;}
+.tousu .title{font-size: 32rpx;line-height: 42rpx;margin-bottom: 20rpx;}
+.tousu .person{background: rgba(182,178,207,0.18);
+	border-radius: 24rpx;padding: 24rpx;display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;margin-bottom: 48rpx;}
+.tousu .person image{width: 96rpx;height: 96rpx;margin-right: 24rpx;flex-shrink: 0;}
+.tousu .person .txt{flex-grow: 1;font-size: 32rpx;line-height: 42rpx;font-weight: 500;color: #fff;}
+.tousu .radio-box{margin-bottom: 48rpx;}
+.tousu .radio-box .label-radio{display: block;padding-right: 56rpx;padding-left: 0;background-position: right center;margin-bottom: 10rpx;}
+.tousu .upload{margin-bottom: 48rpx;display: flex;align-items: center;flex-wrap: wrap}
+.tousu .upload image{width: 128rpx;height: 128rpx;}
+.tousu .upload .image{width: 128rpx;height: 128rpx;margin: 0 20rpx;position: relative;}
+.tousu .upload .image .close{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 50rpx;
+	height: 50rpx;
+}
+.tousu .textarea{margin-bottom: 48rpx;}
+.tousu .textarea .area{height: 228rpx;background: #191B2D;
+	border-radius: 24rpx;
+	opacity: 1;
+	border: 1px solid rgba(255,255,255,0.2);width: 100%;padding: 20rpx;}
+.btn-submit{text-align: center;}
+
+.tousu-wrap{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 99999;
+}
+.tousu-mask{
+	display: block;width: 100%;height: 100%;
+	background: #000;
+	opacity: .8;
+}
+.tousu{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+
+	background: #222537;
+	border-radius: 48rpx 48rpx 0px 0px;
+	opacity: 1;
+}
+.tousu-content{
+	height: 70vh;
+	overflow-y: auto;
+	margin-bottom: 40rpx;
+}
+.tousu .pop-tit{
+	position: absolute;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	top: 0;
+	font-size: 36rpx;
+}
+
+.end-test{
+	width: 200rpx;
+	height: 100rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #000;
+}
