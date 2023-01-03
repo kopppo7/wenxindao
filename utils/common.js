@@ -41,17 +41,6 @@ export const checkLogInfo = (token,callback) => {
         url: '/pages/auth/auth',
       })
       return;
-      // userInfo.data={
-      //   data:{
-      //     wechatName:'体验用户',
-      //     headImg:'',
-      //   }
-      // }
-      // updateUserMsg({
-      //   nickname:'体验用户',
-      //   headimgurl:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.duoziwang.com%2Fuploads%2Fc160225%2F14563MJ1I0-14553.jpg&refer=http%3A%2F%2Fimg.duoziwang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1672299666&t=f4c4191bda572dcee5e726638aceac44',
-      //   citys: ''
-      // })
     }
     var user = {
       phone:userInfo.data.data.phone,

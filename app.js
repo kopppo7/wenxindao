@@ -25,6 +25,7 @@ App({
       }
     })
   },
-  onShow (options) {
+  onLaunch: async function() {
+    //await login()
   }
 });
