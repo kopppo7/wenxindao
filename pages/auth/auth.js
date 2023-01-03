@@ -2,7 +2,7 @@
 import {
   updateUserMsg,
   getUserMsg,
-  appletsLogin 
+  appletsLogin
 } from "../../utils/api";
 import {
   getLoginInfo,
@@ -14,8 +14,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    nickName:'',
-    headImg:''
+    nickName: '',
+    headImg: ''
   },
 
   /**
@@ -34,22 +34,22 @@ Page({
       }
     });
   },
-  chooseAvatar(e){
+  chooseAvatar(e) {
     var that = this;
     wx.uploadFile({
-      url:'https://www.wxdao.net/user/oss/upload/uploadFile',
-      filePath:e.detail.avatarUrl,
-      name:'file',
-      header:{
-        "token":wx.getStorageSync('tokenKey')
+      url: 'https://www.wxdao.net/user/oss/upload/uploadFile',
+      filePath: e.detail.avatarUrl,
+      name: 'file',
+      header: {
+        "token": wx.getStorageSync('tokenKey')
       },
-      success:function(res){
+      success: function (res) {
         var uploadRet = JSON.parse(res.data);
-        if(uploadRet.ret==200){
+        if (uploadRet.ret == 200) {
           that.setData({
-            headImg:uploadRet.data
+            headImg: uploadRet.data
           })
-        }else{
+        } else {
           wx.showToast({
             title: '头像上传失败',
           })
@@ -57,18 +57,18 @@ Page({
       }
     })
   },
-  getNick(e){
+  getNick(e) {
     this.setData({
       nickName: e.detail.value
     })
   },
-  getNickChange(e){
+  getNickChange(e) {
     this.setData({
       nickName: e.detail.value
     })
   },
   getUserInfo(e) {
-    if(!this.data.headImg) {
+    if (!this.data.headImg) {
       wx.showToast({
         title: '请先上传头像',
         icon: 'none',
@@ -76,7 +76,7 @@ Page({
       })
       return
     }
-    if(!this.data.nickName) {
+    if (!this.data.nickName) {
       wx.showToast({
         title: '请输入昵称',
         icon: 'none',
@@ -87,29 +87,30 @@ Page({
     updateUserMsg({
       nickname: this.data.nickName,
       headimgurl: this.data.headImg,
-      citys:''
+      citys: ''
     }).then(res => {
-      if(res.data.ret!=200){
+      if (res.data.ret != 200) {
         wx.showToast({
           title: res.data.msg,
         })
-      }
-      var userInfo = getLoginInfo();
-      if (userInfo != null&&userInfo!='') {
-        userInfo.wechatName = this.data.nickName;//e.userInfo.nickName;
-        userInfo.headImg = this.data.headImg;//e.userInfo.avatarUrl
       } else {
-        userInfo = {
-          phone: '',
-          wechatName: this.data.nickName,//e.userInfo.nickName,
-          headImg:this.data.headImg// e.userInfo.avatarUrl
+        var user = {
+          phone: userInfo.data.data.phone,
+          wechatName: userInfo.data.data.wechatName,
+          headImg: userInfo.data.data.headImg,
+          yunToken: userInfo.data.data.yunToken,
+          yunId: userInfo.data.data.yunId,
         };
-      }
-      setLoginInfo(userInfo);
-      if(userInfo.phone==''||userInfo.phone==null){
-        wx.redirectTo({
-          url: '/pages/login/login',
-        })
+        setLoginInfo(user);
+        if (res.data.data.phone == '' || res.data.data.phone == null) {
+          wx.redirectTo({
+            url: '/pages/login/login',
+          })
+        } else {
+          wx.redirectTo({
+            url: '/pages/index/index',
+          })
+        }
       }
     })
   }
