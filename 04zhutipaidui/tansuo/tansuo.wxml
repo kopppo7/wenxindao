@@ -103,6 +103,9 @@
         准备
         <text>点击准备</text>
     </view>
+    <view class="btn disabled" wx:if="{{isReady && !isOwner && waitTime == 10}}">
+        已准备
+    </view>
     <view class="own-btns" wx:if="{{isOwner && !isBeginPlay}}">
         <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
         <view class="btn" bindtap="handleInviRoad">匹配路人</view>

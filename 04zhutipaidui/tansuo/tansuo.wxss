@@ -348,6 +348,7 @@ image{object-fit: cover;}
 	height: 80rpx;
 	background: #7461E7;
 	border-radius: 37px 37px 37px 37px;text-align: center;line-height: 80rpx;font-size: 32rpx;color: #fff;position: relative;}
+	.theme-bot .btn.disabled{background: rgba(182,178,207,0.18);border: 1px solid rgba(255,255,255,0.24);}
 .theme-bot .btn text{position: absolute;width: 160rpx;
 	height:72rpx;
 	background: linear-gradient(225deg, #F0273F 0%, #E76171 100%);
