@@ -67,12 +67,18 @@ Page({
                         title: '付款成功',
                         icon: 'success'
                     })
-                    that.getDetail(that.data.product.id)
+                    setTimeout(function () {
+                        wx.redirectTo({
+                            url: '/04zhutipaidui/setHouse/setHouse?id=' + that.data.themeId,
+                        })
+                    },500)
+
+                    // that.getDetail(that.data.product.id)
                     that.closePop()
                 },
                 // 失败回调
                 fail(err) {
-                    that.getDetail(that.data.product.id)
+                    // that.getDetail(that.data.product.id)
                     that.closePop()
                     wx.showLoading()
                     wx.showToast({
