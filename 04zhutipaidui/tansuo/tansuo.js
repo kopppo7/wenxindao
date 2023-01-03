@@ -271,7 +271,7 @@ Page({
         // this.pushMsg(msg);
         switch (msg.type) {
             case 'custom':
-                this.onCustomMsg(msg);
+                this.pushMsg(null,msg);
                 break;
             case 'notification':
                 // 处理群通知消息
