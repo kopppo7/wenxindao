@@ -3,7 +3,20 @@
 <view class="login-txt">
   <view class="item">在遥远的时空之外，有一座神奇的岛屿-问心岛。据说，每个人的灵魂，都会在这里被看见。</view>
   <view class="item">岛上有一种神奇的问心精灵，会教我们如何与自己的心灵对话，照见灵魂的深处。</view>
+  <view class="form">
+    <button class="portrait" open-type="chooseAvatar" bindchooseavatar="chooseAvatar">
+      <block wx:if="{{!headImg}}">
+        <image class="icon-xiangji" src="/static/xiangji.png"></image>
+        <text>设置头像</text>
+      </block>
+      <image class="avatar" wx:else src="{{headImg}}" ></image>
+    </button>
+    <view class="inp">
+        <input class="weui-input" placeholder="请输入昵称" type="nickname" value="{{nickName}}" bindinput="getNick" bindchange="getNickChange"  maxlength="10"/>
+    </view>
+  </view>
 </view>
+
 <view class="login-bottom">
   <button class="btn-login"  bindtap="getUserInfo">
     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-weixin.png"></image>授权用户信息
