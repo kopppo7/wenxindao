@@ -57,6 +57,13 @@
           "query": "id=9",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "隐私设置",
+          "pathName": "04zhutipaidui/setHouse/setHouse",
+          "query": "id=9",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
