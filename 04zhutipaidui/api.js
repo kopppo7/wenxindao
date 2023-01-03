@@ -80,9 +80,14 @@ export const kickingPlayer = function (params) {
 }
 // 主题派对 支付
 export const getPayParty = function (data) {
-  return http.post(config.getOrder+'/payParty',data);
+    return http.post(config.getOrder + '/payParty', data);
 }
 // 主题派对 匹配游戏
 export const roomMatchingPlay = function (id) {
-  return http.get(handleURL('/room/matchingPlay?id='+id));
+    return http.get(handleURL('/room/matchingPlay?id=' + id));
+}
+
+// 主题派对 查询房间详情
+export const getRoomDetails = function (data) {
+    return http.post(handleURL('/room/getRoomDetails'), data);
 }

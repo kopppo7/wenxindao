@@ -6,7 +6,8 @@ import {
     startPlayRoom,
     kickingPlayer,
     openBaoRoomMate,
-    findByAskPartyOne
+    findByAskPartyOne,
+    getRoomDetails
 } from "../api";
 import yunApi from "../../utils/yun";
 var nim = null;
@@ -48,7 +49,7 @@ Page({
         isReady: false,//是否准备
         askId: '',//主题ID
         themeDetail: {},
-        personInd:''
+        personInd: ''
     },
     // 活动提示
     activityChange () {
@@ -319,12 +320,12 @@ Page({
         var content = {
             type: type,
             data: {
-                status:val.status,
+                status: val.status,
                 value: val.text,
-                cardList:val.list,
-                audio:val.audio,
-                video:val.video,
-                img:val.imgUrl
+                cardList: val.list,
+                audio: val.audio,
+                video: val.video,
+                img: val.imgUrl
             }
         };
         var msg = nim.sendCustomMsg({
@@ -369,8 +370,8 @@ Page({
             } else if (content.type == 4) {
                 // 自定义消息type为4的时候 为系统文字消息
                 var msgObj = {
-                    sysType:'sys',
-                    text:content.data.value,
+                    sysType: 'sys',
+                    text: content.data.value,
                 }
                 msgList.push(msgObj)
                 APP.globalData.mesList = msgList
@@ -378,8 +379,8 @@ Page({
             } else if (content.type == 5) {
                 // 自定义消息type为5的时候 为系统发牌消息
                 var msgObj = {
-                    sysType:'sys',
-                    cardList:content.data.cardList,
+                    sysType: 'sys',
+                    cardList: content.data.cardList,
                 }
                 msgList.push(msgObj)
                 APP.globalData.mesList = msgList
@@ -450,6 +451,19 @@ Page({
             })
         }
     },
+    // 获取房间详情
+    getRoomDetails (roomId) {
+        var that = this
+        getRoomDetails({ roomId: roomId }).then(res => {
+            that.setData({
+                teamId: res.data.data.imGroup,
+                audioId: res.data.data.audioGroup,
+                roomData: res.data.data
+            })
+            wx.setStorageSync('roomData', res.data.data)
+            that.initRoom()
+        })
+    },
     getDownTime (downtimes) {
         var time1 = 0;
         var that = this;
@@ -494,7 +508,7 @@ Page({
         this.setData({
             isReady: !this.data.isReady
         })
-        this.sendCustomMsg(1, {status:this.data.isReady})
+        this.sendCustomMsg(1, { status: this.data.isReady })
     },
     handleInviFriend () {
 
@@ -534,12 +548,12 @@ Page({
                     isBeginPlay: true,
                     voiceStatus: 1,
                     timePopStatus: true,
-                    personInd:0
+                    personInd: 0
                 })
-                that.sendCustomMsg(4,{text:'派对游戏开始，发牌中...'})
+                that.sendCustomMsg(4, { text: '派对游戏开始，发牌中...' })
                 that.getDownTime(10)
                 this.setData({
-                    step:1
+                    step: 1
                 })
             })
         } else {
@@ -608,13 +622,15 @@ Page({
             this.setData({
                 activityPopStatus: false
             })
-            this.creatRoom()
-
+            // 如果是邀请好友的话带isfriend参数直接初始化房间
             if (options.isfriend) {
+                this.getRoomDetails(options.roomId)
             } else {
                 // 倒计时等待
+                this.creatRoom()
                 this.getDownTime()
             }
+        } else {
 
         }
     },

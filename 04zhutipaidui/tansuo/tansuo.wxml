@@ -129,7 +129,7 @@
     </view>
 </block>
 <!-- 活动提示 -->
-<block wx:if="{{activityPopStatus && (isfriend == false || isfriend == 'false')}}">
+<block wx:if="{{activityPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <view class="pop-tit">活动提示</view>
