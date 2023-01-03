@@ -95,11 +95,11 @@ Page({
         })
       } else {
         var user = {
-          phone: userInfo.data.data.phone,
-          wechatName: userInfo.data.data.wechatName,
-          headImg: userInfo.data.data.headImg,
-          yunToken: userInfo.data.data.yunToken,
-          yunId: userInfo.data.data.yunId,
+          phone: res.data.data.phone,
+          wechatName: res.data.data.wechatName,
+          headImg: res.data.data.headImg,
+          yunToken: res.data.data.yunToken,
+          yunId: res.data.data.yunId,
         };
         setLoginInfo(user);
         if (res.data.data.phone == '' || res.data.data.phone == null) {
