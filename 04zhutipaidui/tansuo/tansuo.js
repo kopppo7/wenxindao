@@ -50,7 +50,8 @@ Page({
         isReady: false,//是否准备
         askId: '',//主题ID
         themeDetail: {},
-        personInd:'',
+        personInd: '',
+        roomId: '',
         showTousuPop:false, //显示投诉弹窗
         tousuTextarea:'',//投诉内容
         tousuImage:[],//投诉图片
@@ -168,7 +169,6 @@ Page({
             onRemoveTeamMembers: that.onRemoveTeamMembers,
             onmsg: that.onMsg
         });
-        console.log(nim)
 
     },
     // 群组更新
@@ -212,9 +212,9 @@ Page({
     getUsers (error, users) {
         var maxNum = this.data.roomData.maxNumber;
         if (APP.globalData.playerList[this.data.roomData.maxNumber - 1]?.account) {
-
+            // 如果包房人数已满的话，看是否需要下面处理一下
         } else {
-            APP.globalData.playerList[this.data.roomData.maxNumber - 1] = {};
+            APP.globalData.playerList[this.data.roomData.maxNumber - 1] = {};//就算包房只有一个人也要给其他的加空人
             var members = APP.globalData.playerList
             for (let i = 0; i < users.length; i++) {
                 for (let j = 0; j < members.length; j++) {
@@ -227,8 +227,18 @@ Page({
                 }
             }
         }
+        if (members[0].account != this.data.roomData.ownerUserIm) {
+            members.forEach((item,index)=>{
+                if (item.account == this.data.roomData.ownerUserIm) {
+                    let obj = members[0];
+                    members[0] = item;
+                    members[index] = obj;
+                }
+            })
+        }
         APP.globalData.playerList = members;
     },
+    // 判断是否是房主 如果是房主的话把房主排到第一位
     onUpdateTeamMember (teamMember) {
         console.log('群成员信息更新了', teamMember);
 
@@ -603,7 +613,8 @@ Page({
         getApp().watch('mesList', that.watchBack);
         this.setData({
             isfriend: options.isfriend || false,
-            askId: options.askId || ''
+            askId: options.askId || '',
+            roomId: options.roomId || '',
         })
         findByAskPartyOne({
             id: that.data.askId
