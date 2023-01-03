@@ -7,6 +7,7 @@ import {
     startPlayRoom,
     kickingPlayer,
     openBaoRoomMate,
+    getRoomDetails,
     findByAskPartyOne, complaintUser, dissolveGroup
 } from "../api";
 import yunApi from "../../utils/yun";
@@ -94,8 +95,7 @@ Page({
             mixPopStatus: false,
             timePopStatus: false,
             kickPopStatus: false,
-            passerPopStatus: false,
-            showTousuPop:false
+            passerPopStatus: false
         })
     },
     // 连接成功
@@ -321,26 +321,26 @@ Page({
     },
     // 发送自定义消息
     sendCustomMsg (type, val) {
-        // console.log(val);
-        // var that = this;
-        // var content = {
-        //     type: type,
-        //     data: {
-        //         status:val.status,
-        //         value: val.text,
-        //         cardList:val.list,
-        //         audio:val.audio,
-        //         video:val.video,
-        //         img:val.imgUrl
-        //     }
-        // };
-        // var msg = nim.sendCustomMsg({
-        //     scene: 'team',
-        //     to: that.data.teamId,
-        //     content: JSON.stringify(content),
-        //     done: that.pushMsg
-        // });
-        // console.log('正在发送自定义消息, ' + msg.idClient);
+        console.log(val);
+        var that = this;
+        var content = {
+            type: type,
+            data: {
+                status: val.status,
+                value: val.text,
+                cardList: val.list,
+                audio: val.audio,
+                video: val.video,
+                img: val.imgUrl
+            }
+        };
+        var msg = nim.sendCustomMsg({
+            scene: 'team',
+            to: that.data.teamId,
+            content: JSON.stringify(content),
+            done: that.pushMsg
+        });
+        console.log('正在发送自定义消息, ' + msg.idClient);
     },
     pushMsg (error, msg) {
         console.log(error);
@@ -376,8 +376,8 @@ Page({
             } else if (content.type == 4) {
                 // 自定义消息type为4的时候 为系统文字消息
                 var msgObj = {
-                    sysType:'sys',
-                    text:content.data.value,
+                    sysType: 'sys',
+                    text: content.data.value,
                 }
                 msgList.push(msgObj)
                 APP.globalData.mesList = msgList
@@ -385,8 +385,8 @@ Page({
             } else if (content.type == 5) {
                 // 自定义消息type为5的时候 为系统发牌消息
                 var msgObj = {
-                    sysType:'sys',
-                    cardList:content.data.cardList,
+                    sysType: 'sys',
+                    cardList: content.data.cardList,
                 }
                 msgList.push(msgObj)
                 APP.globalData.mesList = msgList
@@ -457,44 +457,57 @@ Page({
             })
         }
     },
+    // 获取房间详情
+    getRoomDetails (roomId) {
+        var that = this
+        getRoomDetails({ roomId: roomId }).then(res => {
+            that.setData({
+                teamId: res.data.data.imGroup,
+                audioId: res.data.data.audioGroup,
+                roomData: res.data.data
+            })
+            wx.setStorageSync('roomData', res.data.data)
+            that.initRoom()
+        })
+    },
     getDownTime (downtimes) {
         var time1 = 0;
         var that = this;
         if (downtimes) {
-            // var time = setInterval(() => {
-            //     if (downtimes <= 1) {
-            //         that.setData({
-            //             timePopStatus: false,
-            //         })
-            //         clearInterval(time)
-            //     } else {
-            //         downtimes--
-            //         if (downtimes < 10) {
-            //             downtimes = '0' + downtimes
-            //         }
-            //         that.setData({
-            //             waitTime: downtimes
-            //         })
-            //     }
-            // }, 1000);
+            var time = setInterval(() => {
+                if (downtimes <= 1) {
+                    that.setData({
+                        timePopStatus: false,
+                    })
+                    clearInterval(time)
+                } else {
+                    downtimes--
+                    if (downtimes < 10) {
+                        downtimes = '0' + downtimes
+                    }
+                    that.setData({
+                        waitTime: downtimes
+                    })
+                }
+            }, 1000);
         } else {
-            // var time = setInterval(() => {
-            //     if (time1 > 9) {
-            //         that.setData({
-            //             matePopStatus: false,
-            //         })
-            //         clearInterval(time)
-            //         this.initRoom()
-            //     } else {
-            //         time1++
-            //         if (time1 < 10) {
-            //             time1 = '0' + time1
-            //         }
-            //         that.setData({
-            //             waitTime: time1
-            //         })
-            //     }
-            // }, 1000);
+            var time = setInterval(() => {
+                if (time1 > 9) {
+                    that.setData({
+                        matePopStatus: false,
+                    })
+                    clearInterval(time)
+                    this.initRoom()
+                } else {
+                    time1++
+                    if (time1 < 10) {
+                        time1 = '0' + time1
+                    }
+                    that.setData({
+                        waitTime: time1
+                    })
+                }
+            }, 1000);
         }
     },
     handleReady () {
@@ -541,12 +554,12 @@ Page({
                     isBeginPlay: true,
                     voiceStatus: 1,
                     timePopStatus: true,
-                    personInd:0
+                    personInd: 0
                 })
-                that.sendCustomMsg(4,{text:'派对游戏开始，发牌中...'})
+                that.sendCustomMsg(4, { text: '派对游戏开始，发牌中...' })
                 that.getDownTime(10)
                 this.setData({
-                    step:1
+                    step: 1
                 })
             })
         } else {
@@ -615,13 +628,15 @@ Page({
             this.setData({
                 activityPopStatus: false
             })
-            this.creatRoom()
-
+            // 如果是邀请好友的话带isfriend参数直接初始化房间
             if (options.isfriend) {
+                this.getRoomDetails(options.roomId)
             } else {
                 // 倒计时等待
+                this.creatRoom()
                 this.getDownTime()
             }
+        } else {
 
         }
     },

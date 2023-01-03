@@ -86,3 +86,8 @@ export const getPayParty = function (data) {
 export const roomMatchingPlay = function (id) {
   return http.get(handleURL('/room/matchingPlay?id='+id));
 }
+
+// 主题派对 查询房间详情
+export const getRoomDetails = function (data) {
+    return http.post(handleURL('/room/getRoomDetails'), data);
+}

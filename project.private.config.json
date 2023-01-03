@@ -17,6 +17,13 @@
           "scene": null
         },
         {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=9&isfriend=1&roomId=73",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "主题探索",
           "pathName": "04zhutipaidui/tansuo/tansuo",
           "query": "askId=9",
