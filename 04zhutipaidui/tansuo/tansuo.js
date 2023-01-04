@@ -435,7 +435,7 @@ Page({
     // 解散群
     dismissTeam() {
         dissolveGroup({
-            id: 73,
+            id: 79,
             token: '9f011c22-e886-4344-b450-ec546d52c0ba'
         })
     },
@@ -699,10 +699,10 @@ Page({
         var guideWords = stepData.guideWords
         //思考时间
         // var thinkTime = stepData.thinkTime
-        var thinkTime = 2
+        var thinkTime = 5
         //说话时间
         // var speakTime = stepData.speakTime
-        var speakTime = 2
+        var speakTime = 30
 
         //显示引导语言
         if (that.data.isOwner) {
