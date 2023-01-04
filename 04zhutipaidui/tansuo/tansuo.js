@@ -170,16 +170,17 @@ Page({
             onRemoveTeamMembers: that.onRemoveTeamMembers,
             onmsg: that.onMsg
         });
-
     },
     // 群组更新
     onTeams (e) {
-        console.log('收到群组', e);
         var that = this;
+        console.log(that.data.teamId,);
+        console.log('收到群组', e);
         nim.getTeamMembers({
             teamId: that.data.teamId,
             done: that.getTeamMembersDone
         });
+        console.log(222);
     },
     getUserDone (error, user) {
         console.log(error);
@@ -653,16 +654,20 @@ Page({
             this.setData({
                 activityPopStatus: false
             })
-            // 如果是邀请好友的话带isfriend参数直接初始化房间
-            if (options.isfriend) {
+            if (wx.getStorageSync('roomData')) {
                 this.getRoomDetails(options.roomId)
-            } else {
-                // 倒计时等待
-                this.creatRoom()
-                this.getDownTime()
+            }else{
+            // 如果是邀请好友的话带isfriend参数直接初始化房间
+                if (options.isfriend) {
+                    this.getRoomDetails(options.roomId)
+                } else {
+                    // 倒计时等待
+                    this.creatRoom()
+                    this.getDownTime()
+                }
             }
         } else {
-
+            
         }
     },
 
