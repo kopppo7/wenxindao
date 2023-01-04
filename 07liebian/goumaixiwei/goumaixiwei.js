@@ -74,12 +74,13 @@ Page({
                     },500)
 
                     // that.getDetail(that.data.product.id)
-                    that.closePop()
+                    // that.closePop()
                 },
                 // 失败回调
                 fail(err) {
+                    console.log(err)
                     // that.getDetail(that.data.product.id)
-                    that.closePop()
+                    // that.closePop()
                     wx.showLoading()
                     wx.showToast({
                         title: '付款失败',

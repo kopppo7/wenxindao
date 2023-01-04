@@ -63,9 +63,9 @@ Page({
         show_speak_count_down: false,//显示发言倒计时
         show_think_count_down: false,//显示思考倒计时
         speak_time: '',
-        endId:'',
-        scrollTo:0,
-        bottomHeight:50
+        endId: '',
+        scrollTo: 0,
+        bottomHeight: 50
     },
     // 活动提示
     activityChange() {
@@ -81,9 +81,9 @@ Page({
         if (this.data.activeStatus == true) {
             wx.setStorageSync('activeStatus', this.data.activeStatus)
         }
-        this.initRoom()
+        this.creatRoom()
     },
-    concleActivityPop() {
+    cancelActivityPop() {
         wx.navigateBack({
             delta: 1,
         })
@@ -435,7 +435,7 @@ Page({
     // 解散群
     dismissTeam() {
         dissolveGroup({
-            id: 79,
+            id: 80,
             token: '9f011c22-e886-4344-b450-ec546d52c0ba'
         })
     },
@@ -573,21 +573,33 @@ Page({
         var num = 0;
         var that = this;
         var userIm = []
+        var readyNum = 0
         this.data.playerList.forEach(item => {
-            if (item.account) {
+            if (item && item.account) {
                 userIm.push(item.account)
                 num++
             }
+            if (item && item.isReady) {
+                readyNum++
+            }
         })
         if (num > 1) {
-            //开始游戏
-            startPlayRoom({
-                roomId: that.data.roomData.id,
-                userIm
-            }).then(res => {
-                this.sendCustomMsg(4, {text: '开始'})
+            if (readyNum !== APP.globalData.truePlayerList.length - 1) {
+                wx.showToast({
+                    title: '还有成员未准备',
+                    icon: 'none'
+                })
+            } else {
+                //开始游戏
+                startPlayRoom({
+                    roomId: that.data.roomData.id,
+                    userIm
+                }).then(res => {
+                    this.sendCustomMsg(4, {text: '开始'})
 
-            })
+                })
+            }
+
         } else {
             this.setData({
                 mixPopStatus: true
@@ -759,9 +771,10 @@ Page({
             console.log('当前发言人：' + personInd)
             //发言倒计时，倒计时完后下个人发言
             that.getDownTime(speakTime, nextPerson)
+
             function nextPerson() {
                 that.setData({
-                    show_speak_count_down:false
+                    show_speak_count_down: false
                 })
                 if (that.data.personInd < (playerList.length - 1)) {
                     //发言人index 小于 成员数量，切换下个人发言
@@ -853,7 +866,7 @@ Page({
 
     },
     //content滚动
-    contentScroll:function () {
+    contentScroll: function () {
         let view_id = 'view_id_' + parseInt(Math.random() * 1000000)
         this.setData({
             scrollTo: ''

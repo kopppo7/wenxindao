@@ -7,7 +7,7 @@
     <image src="../../static/h-set.png" mode="scaleToFill" bindtap="openSet"/>
 </view>
 <!--<view class="end-test" bindtap="toEnd">结束</view>-->
-<!--<view class="end-test" bindtap="dismissTeam">解散</view>-->
+<view class="end-test" bindtap="dismissTeam">解散</view>
 <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
     <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
     <block wx:for="{{themeDetail.list}}" wx:key="index">
@@ -42,7 +42,7 @@
                         <image class="ready" src="../../static/play-status1.png" wx:if="{{item.isReady}}"></image>
                     </image>
                     <view class="ico2" wx:else>
-                        <image src="../../static/room-kong.png">
+                        <image src="../../static/room-suo.png">
                         </image>
                     </view>
                     <text class="name">{{item.nick}}</text>
@@ -177,7 +177,7 @@
             <text>不再提示</text>
         </view>
         <view class="btns">
-            <view class="close btn" bindtap="concleActivityPop">退出</view>
+            <view class="close btn" bindtap="cancelActivityPop">退出</view>
             <view class="ok btn" bindtap="closeActivityPop">准备好了</view>
         </view>
     </view>
