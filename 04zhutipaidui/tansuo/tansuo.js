@@ -435,7 +435,7 @@ Page({
     // 解散群
     dismissTeam() {
         dissolveGroup({
-            id: 80,
+            id: this.data.roomData.id,
             token: '9f011c22-e886-4344-b450-ec546d52c0ba'
         })
     },
@@ -463,10 +463,10 @@ Page({
             if (wx.getStorageSync('roomData').matchType == 1) {
                 that.initRoom()
             } else {
-                that.setData({
-                    matePopStatus: true,
-                })
-                that.getDownTime()
+                // that.setData({
+                //     matePopStatus: true,
+                // })
+                // that.getDownTime()
             }
         } else {
             createBaoRoom(params).then(res => {
@@ -565,8 +565,11 @@ Page({
             id: that.data.roomData.id
         }).then(res => {
             this.setData({
-                passerPopStatus: false
+                passerPopStatus: false,
+                matePopStatus:true,
+                waitTime:1
             })
+            this.getDownTime()
         })
     },
     handleBegin() {
@@ -687,7 +690,7 @@ Page({
             this.getRoomDetails(wx.getStorageSync('roomData').id)
         } else {
             // 如果是邀请好友的话带isfriend参数直接初始化房间
-            if (options.isfriend) {
+            if (options.isfriend || options.isMatch) {
                 this.getRoomDetails(options.roomId)
             } else {
                 // 倒计时等待

@@ -1,7 +1,7 @@
 <!--03shenmingtansuo/zhutijieshao/zhutijieshao.wxml-->
 <view class="wp">
     <view class="intro-row1">
-        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+        <image class="pic" src="{{detailObj.imgUrl}}"></image>
         <view class="txt">
             <view class="s1">{{detailObj.title}}</view>
             <rich-text nodes="{{detailObj.detailsText}}" type="text" class="s2"></rich-text>
@@ -83,8 +83,10 @@
         <view class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
     </view> -->
     <view class="btn-box">
-        <view class="bottom-r bottom-r1" bindtap="openBuyPop">快速匹配</view>
-        <view class="bottom-r bottom-r1" bindtap="openBuyPop">好友结伴</view>
+        <view class="bottom-r bottom-r1" bindtap="openBuyPop" data-type="pipei">快速匹配</view>
+        <view class="bottom-r bottom-r1" bindtap="openBuyPop"
+        data-type="haoyou"
+        >好友结伴</view>
         <view class="bottom-r bottom-r2" bindtap="openGwPop">写感悟</view>
     </view>
 </view>

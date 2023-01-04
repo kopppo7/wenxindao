@@ -13,7 +13,9 @@ Page({
         useMes: {},
         isShow: true,
         themeId:'',
-        detailObj:{}
+        detailObj:{},
+        roomId:'',
+        isMatch:''
     },
     //上传本地图片
     radioChange(e) {
@@ -82,7 +84,7 @@ Page({
             }
           } else {
               wx.navigateTo({
-                  url: '/04zhutipaidui/tansuo/tansuo?id='+this.data.themeId,
+                  url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch,
               })
           }
         } else {
@@ -127,6 +129,8 @@ Page({
         }
         this.setData({
             themeId: options.id,
+            roomId:options.roomId,
+            isMatch:options.isMatch,
         })
         this.getRoomDet()
     },

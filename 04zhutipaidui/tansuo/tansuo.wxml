@@ -186,9 +186,9 @@
 <block wx:if="{{matePopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
-        <view class="pop-tit">原生家庭-性格探索</view>
+        <view class="pop-tit">{{themeDetail.title}}</view>
         <view class="img">
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"/>
+            <image src="{{themeDetail.imgUrl}}"/>
         </view>
         <view class="wait">已等待00:{{waitTime}}</view>
         <view class="btns" bindtap="concleActivityPop">
