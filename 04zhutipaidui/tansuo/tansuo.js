@@ -28,6 +28,7 @@ Page({
         mixPopStatus: false, //至少两人开始派对
         timePopStatus: false, //倒计时
         kickPopStatus: false, //踢人
+        kickPopType:'',
         kickPlayer: {}, //要踢的人
         passerPopStatus: false, //匹配路人
         roomSetPopStatus: false, //房间设置
@@ -415,7 +416,7 @@ Page({
     // 解散群
     dismissTeam () {
         dissolveGroup({
-            id:53,
+            id:73,
             token:'9f011c22-e886-4344-b450-ec546d52c0ba'
         })
     },
@@ -582,14 +583,27 @@ Page({
     handleKick (e) {
         console.log(this.data.account);
         console.log(this.data.roomData.ownerUserIm);
-        if (this.data.roomData.ownerUserIm == this.data.account && e.currentTarget.dataset.item.account != this.data.account) {
-            this.setData({
-                kickPopStatus: true,
-                kickPlayer: e.currentTarget.dataset.item
-            })
+        if (e.currentTarget.dataset.item.account === this.data.account){
+            console.log('不能点自己');
         } else {
-            console.log('不能踢自己或者你不是房主');
+            if (this.data.roomData.ownerUserIm == this.data.account) {
+                //房主：踢人、投诉
+                this.setData({
+                    kickPopStatus: true,
+                    kickPlayer: e.currentTarget.dataset.item,
+                    kickPopType:1
+                })
+            } else {
+                //成员：投诉
+                this.setData({
+                    kickPopStatus: true,
+                    kickPlayer: e.currentTarget.dataset.item,
+                    kickPopType:2
+                })
+            }
         }
+
+
     },
     handleKickDone () {
         var that = this;

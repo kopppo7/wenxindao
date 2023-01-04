@@ -196,8 +196,9 @@
             <view class="name">{{kickPlayer.nick}}</view>
         </view>
         <view class="btns">
-            <view class="btn close" bindtap="handleKickDone">踢出房间</view>
-            <view class="btn close" bindtap="handleTousu">投诉</view>
+            <view class="btn close" bindtap="handleKickDone" wx:if="{{kickPopType === 1}}">踢出房间
+            </view>
+            <view class="btn close" bindtap="handleTousu" wx:if="{{kickPopType === 1 || kickPopType === 2}}">投诉</view>
         </view>
     </view>
 </block>
