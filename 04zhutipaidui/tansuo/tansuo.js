@@ -682,20 +682,18 @@ Page({
             this.setData({
                 activityPopStatus: false
             })
-            if (wx.getStorageSync('roomData')) {
-                this.getRoomDetails(wx.getStorageSync('roomData').id)
-            } else {
-                // 如果是邀请好友的话带isfriend参数直接初始化房间
-                if (options.isfriend) {
-                    this.getRoomDetails(options.roomId)
-                } else {
-                    // 倒计时等待
-                    this.creatRoom()
-                    this.getDownTime()
-                }
-            }
+        }
+        if (wx.getStorageSync('roomData')) {
+            this.getRoomDetails(wx.getStorageSync('roomData').id)
         } else {
-
+            // 如果是邀请好友的话带isfriend参数直接初始化房间
+            if (options.isfriend) {
+                this.getRoomDetails(options.roomId)
+            } else {
+                // 倒计时等待
+                this.creatRoom()
+                this.getDownTime()
+            }
         }
     },
 
