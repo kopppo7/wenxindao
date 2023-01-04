@@ -11,6 +11,8 @@ import {
     findByAskPartyOne, complaintUser, dissolveGroup
 } from "../api";
 import yunApi from "../../utils/yun";
+import {findByOrderList} from "../../utils/api";
+
 var nim = null;
 var downTime = Math.random() * 10 + 5;
 var downTime2 = Math.random() * 10;
@@ -28,7 +30,7 @@ Page({
         mixPopStatus: false, //至少两人开始派对
         timePopStatus: false, //倒计时
         kickPopStatus: false, //踢人
-        kickPopType:'',
+        kickPopType: '',
         kickPlayer: {}, //要踢的人
         passerPopStatus: false, //匹配路人
         roomSetPopStatus: false, //房间设置
@@ -40,6 +42,7 @@ Page({
         teamId: "",
         audioId: "",
         voiceStatus: 0,//1可以说话2开始点击0禁止说话
+        inputStatus: 0,//1可以输入 0 禁止输入
         activeStatus: true,//活动提示
         playerList: [],
         mesList: [],
@@ -53,19 +56,25 @@ Page({
         themeDetail: {},
         personInd: '',
         roomId: '',
-        showTousuPop:false, //显示投诉弹窗
-        tousuTextarea:'',//投诉内容
-        tousuImage:[],//投诉图片
-        tousuResaon:'',//投诉理由
+        showTousuPop: false, //显示投诉弹窗
+        tousuTextarea: '',//投诉内容
+        tousuImage: [],//投诉图片
+        tousuResaon: '',//投诉理由,
+        show_speak_count_down: false,//显示发言倒计时
+        show_think_count_down: false,//显示思考倒计时
+        speak_time: '',
+        endId:'',
+        scrollTo:0,
+        bottomHeight:50
     },
     // 活动提示
-    activityChange () {
+    activityChange() {
         var active = this.data.activeStatus
         this.setData({
             activeStatus: !active
         })
     },
-    closeActivityPop () {
+    closeActivityPop() {
         this.setData({
             activityPopStatus: false
         })
@@ -74,20 +83,20 @@ Page({
         }
         this.initRoom()
     },
-    concleActivityPop () {
+    concleActivityPop() {
         wx.navigateBack({
             delta: 1,
         })
     },
     // 活动提示end
 
-    openSharePop () {
+    openSharePop() {
         var that = this;
         that.setData({
             sharePopStatus: true
         })
     },
-    closePop () {
+    closePop() {
         var that = this;
         that.setData({
             sharePopStatus: false,
@@ -101,16 +110,16 @@ Page({
         })
     },
     // 连接成功
-    onConnect () {
+    onConnect() {
         console.log('连接成功111');
     },
     // // 此时说明 SDK 已经断开连接, 请开发者在界面上提示用户连接已断开, 而且正在重新建立连接
-    onWillReconnect (obj) {
+    onWillReconnect(obj) {
         console.log('即将重连');
         console.log(obj.retryCount);
         console.log(obj.duration);
     },
-    onDisconnect (error) {
+    onDisconnect(error) {
         // 此时说明 SDK 处于断开状态, 开发者此时应该根据错误码提示相应的错误信息, 并且跳转到登录页面
         console.log('丢失连接');
         console.log(error);
@@ -130,10 +139,10 @@ Page({
             }
         }
     },
-    onError (error) {
+    onError(error) {
         console.log(error);
     },
-    initRoom () {
+    initRoom() {
         var token = wx.getStorageSync('loginInfo').yunToken;
         var account = wx.getStorageSync('loginInfo').yunId;
         var that = this;
@@ -172,7 +181,7 @@ Page({
         });
     },
     // 群组更新
-    onTeams (e) {
+    onTeams(e) {
         var that = this;
         console.log(that.data.teamId,);
         console.log('收到群组', e);
@@ -182,12 +191,12 @@ Page({
         });
         console.log(222);
     },
-    getUserDone (error, user) {
+    getUserDone(error, user) {
         console.log(error);
         console.log(user);
         console.log('获取用户资料' + (!error ? '成功' : '失败'));
     },
-    getTeamMembersDone (error, obj) {
+    getTeamMembersDone(error, obj) {
         console.log(error);
         console.log(obj);
         console.log('获取群成员' + (!error ? '成功' : '失败'));
@@ -196,7 +205,7 @@ Page({
         }
     },
     // 群成员更新
-    onTeamMembers (obj) {
+    onTeamMembers(obj) {
         console.log('收到群成员', obj);
         var that = this
         var accounts = []
@@ -211,7 +220,7 @@ Page({
             done: that.getUsers
         });
     },
-    getUsers (error, users) {
+    getUsers(error, users) {
         var maxNum = this.data.roomData.maxNumber;
         if (APP.globalData.playerList[this.data.roomData.maxNumber - 1]?.account) {
             // 如果包房人数已满的话，看是否需要下面处理一下
@@ -230,7 +239,7 @@ Page({
             }
         }
         if (members[0].account != this.data.roomData.ownerUserIm) {
-            members.forEach((item,index)=>{
+            members.forEach((item, index) => {
                 if (item.account == this.data.roomData.ownerUserIm) {
                     let obj = members[0];
                     members[0] = item;
@@ -241,15 +250,15 @@ Page({
         APP.globalData.playerList = members;
     },
     // 判断是否是房主 如果是房主的话把房主排到第一位
-    onUpdateTeamMember (teamMember) {
+    onUpdateTeamMember(teamMember) {
         console.log('群成员信息更新了', teamMember);
 
     },
-    onAddTeamMembers (obj) {
+    onAddTeamMembers(obj) {
         console.log('新人来了', obj);
         this.onTeamMembers(obj);
     },
-    onRemoveTeamMembers (teamMember) {
+    onRemoveTeamMembers(teamMember) {
         console.log('有人走了', teamMember.accounts[0]);
         var arr = APP.globalData.playerList;
         arr.forEach((item, index) => {
@@ -260,21 +269,21 @@ Page({
         APP.globalData.playerList = arr
 
     },
-    onDismissTeam (obj) {
+    onDismissTeam(obj) {
         console.log('群解散了', obj);
     },
-    onTransferTeam (team, newOrder, oldOrder) {
+    onTransferTeam(team, newOrder, oldOrder) {
         console.log('移交群', team);
         console.log('移交群', newOrder);
         console.log('移交群', oldOrder);
     },
     // 收到消息
-    onMsg (msg) {
+    onMsg(msg) {
         console.log('收到消息了', msg);
         // this.pushMsg(msg);
         switch (msg.type) {
             case 'custom':
-                this.pushMsg(null,msg);
+                this.pushMsg(null, msg);
                 break;
             case 'notification':
                 // 处理群通知消息
@@ -285,10 +294,9 @@ Page({
                 break;
         }
     },
-    onCustomMsg () {
-
+    onCustomMsg() {
     },
-    onTeamNotificationMsg (msg) {
+    onTeamNotificationMsg(msg) {
         var msgList = APP.globalData.mesList
         msg.attach.users.forEach(item => {
             if (item.account == msg.attach.accounts[0]) {
@@ -319,7 +327,7 @@ Page({
         }
     },
     // 发送消息
-    sendMsg (val) {
+    sendMsg(val) {
         console.log(val.detail.value);
         var that = this;
         console.log(this.data.teamId);
@@ -332,7 +340,7 @@ Page({
         console.log('正在发送p2p text消息, ' + msg.idClient);
     },
     // 发送自定义消息
-    sendCustomMsg (type, val) {
+    sendCustomMsg(type, val) {
         console.log(val);
         var that = this;
         var content = {
@@ -354,11 +362,13 @@ Page({
         });
         console.log('正在发送自定义消息, ' + msg.idClient);
     },
-    pushMsg (error, msg) {
+    pushMsg(error, msg) {
+        this.contentScroll()
         console.log(error);
         console.log(msg);
         console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error ? '成功' : '失败') + ', id=' + msg.idClient);
         var msgList = APP.globalData.mesList
+        var that = this;
         if (msg.content) {
             var content = JSON.parse(msg.content)
             if (content.type == 1) {
@@ -391,6 +401,14 @@ Page({
                     sysType: 'sys',
                     text: content.data.value,
                 }
+                if (content.data.value === '开始') {
+                    that.setData({
+                        personInd: 0,
+                        isBeginPlay: true
+                    })
+                    that.runStep()
+                }
+
                 msgList.push(msgObj)
                 APP.globalData.mesList = msgList
                 console.log(APP.globalData.mesList);
@@ -415,21 +433,22 @@ Page({
     },
     // onDismissTeam () { },
     // 解散群
-    dismissTeam () {
+    dismissTeam() {
         dissolveGroup({
-            id:73,
-            token:'9f011c22-e886-4344-b450-ec546d52c0ba'
+            id: 73,
+            token: '9f011c22-e886-4344-b450-ec546d52c0ba'
         })
     },
-    dismissTeamDone (error, obj) {
+    dismissTeamDone(error, obj) {
         console.log(error);
         console.log(obj);
         console.log('解散群' + (!error ? '成功' : '失败'));
     },
     // 创建房间
-    creatRoom () {
+    creatRoom() {
         let params = {
-            askId: this.data.askId
+            askId: this.data.askId,
+            payId: this.data.themeDetail.baoPayId
         }
         var that = this;
         var roomData = wx.getStorageSync('roomData') || ''
@@ -470,9 +489,9 @@ Page({
         }
     },
     // 获取房间详情
-    getRoomDetails (roomId) {
+    getRoomDetails(roomId) {
         var that = this
-        getRoomDetails({ roomId: roomId }).then(res => {
+        getRoomDetails({roomId: roomId}).then(res => {
             that.setData({
                 teamId: res.data.data.imGroup,
                 audioId: res.data.data.audioGroup,
@@ -482,7 +501,7 @@ Page({
             that.initRoom()
         })
     },
-    getDownTime (downtimes) {
+    getDownTime(downtimes, fun) {
         var time1 = 0;
         var that = this;
         if (downtimes) {
@@ -492,13 +511,17 @@ Page({
                         timePopStatus: false,
                     })
                     clearInterval(time)
+                    if (fun) {
+                        fun()
+                    }
                 } else {
                     downtimes--
                     if (downtimes < 10) {
                         downtimes = '0' + downtimes
                     }
                     that.setData({
-                        waitTime: downtimes
+                        waitTime: downtimes,
+                        speak_time: downtimes
                     })
                 }
             }, 1000);
@@ -522,21 +545,21 @@ Page({
             }, 1000);
         }
     },
-    handleReady () {
+    handleReady() {
         this.setData({
             isReady: !this.data.isReady
         })
-        this.sendCustomMsg(1, {status:this.data.isReady})
+        this.sendCustomMsg(1, {status: this.data.isReady})
     },
-    handleInviFriend () {
+    handleInviFriend() {
 
     },
-    handleInviRoad () {
+    handleInviRoad() {
         this.setData({
             passerPopStatus: true
         })
     },
-    handleInviRoadDone () {
+    handleInviRoadDone() {
         var that = this
         openBaoRoomMate({
             id: that.data.roomData.id
@@ -546,7 +569,7 @@ Page({
             })
         })
     },
-    handleBegin () {
+    handleBegin() {
         var num = 0;
         var that = this;
         var userIm = []
@@ -562,17 +585,8 @@ Page({
                 roomId: that.data.roomData.id,
                 userIm
             }).then(res => {
-                this.setData({
-                    isBeginPlay: true,
-                    voiceStatus: 1,
-                    timePopStatus: true,
-                    personInd: 0
-                })
-                that.sendCustomMsg(4, { text: '派对游戏开始，发牌中...' })
-                that.getDownTime(10)
-                this.setData({
-                    step: 1
-                })
+                this.sendCustomMsg(4, {text: '开始'})
+
             })
         } else {
             this.setData({
@@ -581,10 +595,10 @@ Page({
         }
     },
     // 踢人
-    handleKick (e) {
+    handleKick(e) {
         console.log(this.data.account);
         console.log(this.data.roomData.ownerUserIm);
-        if (e.currentTarget.dataset.item.account === this.data.account){
+        if (e.currentTarget.dataset.item.account === this.data.account) {
             console.log('不能点自己');
         } else {
             if (this.data.roomData.ownerUserIm == this.data.account) {
@@ -592,21 +606,21 @@ Page({
                 this.setData({
                     kickPopStatus: true,
                     kickPlayer: e.currentTarget.dataset.item,
-                    kickPopType:1
+                    kickPopType: 1
                 })
             } else {
                 //成员：投诉
                 this.setData({
                     kickPopStatus: true,
                     kickPlayer: e.currentTarget.dataset.item,
-                    kickPopType:2
+                    kickPopType: 2
                 })
             }
         }
 
 
     },
-    handleKickDone () {
+    handleKickDone() {
         var that = this;
         kickingPlayer({
             yunId: that.data.kickPlayer.account,
@@ -621,8 +635,10 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    async onLoad (options) {
+    async onLoad(options) {
         // this.creatRoom()
+        this.contentScroll()
+
         var that = this;
         getApp().watch('playerList', that.watchBack);
         getApp().watch('mesList', that.watchBack);
@@ -655,9 +671,9 @@ Page({
                 activityPopStatus: false
             })
             if (wx.getStorageSync('roomData')) {
-                this.getRoomDetails(options.roomId)
-            }else{
-            // 如果是邀请好友的话带isfriend参数直接初始化房间
+                this.getRoomDetails(wx.getStorageSync('roomData').id)
+            } else {
+                // 如果是邀请好友的话带isfriend参数直接初始化房间
                 if (options.isfriend) {
                     this.getRoomDetails(options.roomId)
                 } else {
@@ -667,8 +683,113 @@ Page({
                 }
             }
         } else {
-            
+
         }
+    },
+
+
+    //执行每一轮
+    runStep: function () {
+        var that = this;
+        var step = this.data.step
+        var stepData = this.data.themeDetail.list[step]
+
+
+        //话术
+        var guideWords = stepData.guideWords
+        //思考时间
+        // var thinkTime = stepData.thinkTime
+        var thinkTime = 2
+        //说话时间
+        // var speakTime = stepData.speakTime
+        var speakTime = 2
+
+        //显示引导语言
+        if (that.data.isOwner) {
+            that.sendCustomMsg(4, {text: guideWords})
+        }
+        //思考时间倒计时
+        this.setData({
+            // timePopStatus: true,
+            //思考倒计时
+            waitTime: thinkTime > 9 ? thinkTime : '0' + thinkTime,
+            show_think_count_down: true,
+            personInd: 0
+        })
+        this.getDownTime(thinkTime, speak)
+
+        //思考倒计时结束，开始发言
+        function speak() {
+
+            //隐藏思考倒计时
+            that.setData({
+                show_think_count_down: false
+            })
+
+            //当前发言人index
+            let personInd = that.data.personInd
+
+            //成员列表，去掉空的
+            var playerList = []
+            that.data.playerList.map(item => {
+                if (item && item.account) {
+                    playerList.push(item)
+                }
+            })
+            //是否轮到本人发言
+            //当前发言人账号
+            let curAcc = playerList[personInd].account
+            //我的账号
+            let myAcc = wx.getStorageSync('loginInfo').yunId
+            if (curAcc === myAcc) {
+                that.setData({
+                    inputStatus: 1,
+                    show_speak_count_down: true,
+                    waitTime: speakTime
+                })
+            } else {
+                that.setData({
+                    inputStatus: 0,
+                    show_speak_count_down: false
+                })
+            }
+            if (that.data.isOwner) {
+                that.sendCustomMsg(4, {text: '轮到' + playerList[personInd].nick + '发言'})
+            }
+            console.log('当前发言人：' + personInd)
+            //发言倒计时，倒计时完后下个人发言
+            that.getDownTime(speakTime, nextPerson)
+            function nextPerson() {
+                that.setData({
+                    show_speak_count_down:false
+                })
+                if (that.data.personInd < (playerList.length - 1)) {
+                    //发言人index 小于 成员数量，切换下个人发言
+                    that.setData({
+                        personInd: that.data.personInd + 1,
+                    })
+                    speak()
+                } else {
+                    console.log('全部人发言结束,进入下一轮')
+                    if (that.data.step < (that.data.themeDetail.list.length - 1)) {
+                        //轮数 小于 全部轮数，切换下一轮
+                        that.setData({
+                            step: that.data.step + 1,
+                        })
+                        that.runStep()
+                    } else {
+                        //全部结束
+                        console.log('全部结束')
+                        if (that.data.isOwner) {
+                            that.sendCustomMsg(4, {text: '全部结束'})
+                        }
+                    }
+
+                }
+
+            }
+        }
+
     },
 
     watchBack: function (name, value) {
@@ -682,28 +803,28 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady () {
+    onReady() {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow () {
+    onShow() {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide () {
+    onHide() {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload () {
+    onUnload() {
         // this.chatroom.destroy({
         //     done(err) {
         //         console.log('desctroy success', err)
@@ -714,35 +835,48 @@ Page({
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh () {
+    onPullDownRefresh() {
 
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom () {
+    onReachBottom() {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage () {
+    onShareAppMessage() {
 
+    },
+    //content滚动
+    contentScroll:function () {
+        let view_id = 'view_id_' + parseInt(Math.random() * 1000000)
+        this.setData({
+            scrollTo: ''
+        })
+        this.setData({
+            endId: view_id
+        })
+        this.setData({
+            scrollTo: view_id
+        })
     },
 
     //投诉
-    handleTousu:function () {
+    handleTousu: function () {
         this.setData({
-            showTousuPop:true,
-            tousuResaon:1
+            showTousuPop: true,
+            tousuResaon: 1
         })
     },
     //选择投诉理由
-    radioChange:function (e) {
+    radioChange: function (e) {
         this.setData({
-            tousuResaon:e.detail.value
+            tousuResaon: e.detail.value
         })
 
     },
@@ -750,7 +884,7 @@ Page({
     callGetPic: function () {
         let that = this;
 
-        if(this.data.tousuImage.length >= 4){
+        if (this.data.tousuImage.length >= 4) {
             wx.showToast({
                 title: '最多上传9张图片',
                 icon: 'none'
@@ -769,23 +903,23 @@ Page({
                     title: '正在上传...',
                     mask: true
                 });
-                that.uploadImg(tempFilePaths,0)
+                that.uploadImg(tempFilePaths, 0)
             }
         })
     },
     //上传图片
-    uploadImg:function (tempFilePaths,index) {
+    uploadImg: function (tempFilePaths, index) {
         var that = this;
         let token = wx.getStorageSync('tokenKey');
         wx.uploadFile({
             url: config.getDomain + '/oss/upload/uploadFile',
             filePath: tempFilePaths[index],
             name: 'file',
-            header: { "Content-Type": "multipart/form-data", 'token': token },
+            header: {"Content-Type": "multipart/form-data", 'token': token},
             formData: {
                 'file': 'file'
             },
-            success (res) {
+            success(res) {
                 try {
                     var data = JSON.parse(res.data);
                     var image = that.data.tousuImage
@@ -794,10 +928,10 @@ Page({
                         that.setData({
                             tousuImage: image
                         })
-                        if (index === (tempFilePaths.length-1)){
+                        if (index === (tempFilePaths.length - 1)) {
                             wx.hideLoading();
                         } else {
-                            that.uploadImg(tempFilePaths,(index+1))
+                            that.uploadImg(tempFilePaths, (index + 1))
                         }
                     }
                 } catch {
@@ -807,49 +941,67 @@ Page({
                     })
                 }
             },
-            fail () {
+            fail() {
                 wx.hideLoading();
             }
         })
     },
     //删除图片
-    delPic:function (e) {
+    delPic: function (e) {
         var index = e.currentTarget.dataset.index
         var images = this.data.tousuImage
-        images.splice(index,1)
+        images.splice(index, 1)
         this.setData({
-            tousuImage:images
+            tousuImage: images
         })
     },
     //输入投诉内容
-    textInput:function (e) {
+    textInput: function (e) {
         this.setData({
-            tousuTextarea:e.detail.value
+            tousuTextarea: e.detail.value
         })
     },
     //提交投诉
-    tousuSubmit:function () {
+    tousuSubmit: function () {
         var data = this.data
         console.log(data.kickPlayer)
         console.log(data.tousuResaon)
         console.log(data.tousuImage)
         console.log(data.tousuTextarea)
-        console.log(APP.globalData.truePlayerList )
+        console.log(APP.globalData.truePlayerList)
         var par = {
-            content:data.tousuTextarea,
-            roomId:data.roomData.id,
-            imgUrl:data.tousuImage.join(','),
-            type:data.tousuResaon,
-            yunId:data.kickPlayer.account
+            content: data.tousuTextarea,
+            roomId: data.roomData.id,
+            imgUrl: data.tousuImage.join(','),
+            type: data.tousuResaon,
+            yunId: data.kickPlayer.account
         }
         complaintUser(par).then(res => {
             console.log(res)
         })
     },
     //去结尾畅聊
-    toEnd:function () {
+    toEnd: function () {
         wx.redirectTo({
             url: '/04zhutipaidui/fupan/index'
+        })
+    },
+
+    //房间设置
+    openSet: function () {
+        this.setData({
+            roomSetPopStatus: true
+        })
+    },
+    //开启关闭音乐
+    changeMusic: function () {
+        this.setData({
+            playMusic: !this.data.playMusic
+        })
+    },
+    changeAudio: function () {
+        this.setData({
+            playAudio: !this.data.playAudio
         })
     }
 })

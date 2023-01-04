@@ -4,16 +4,18 @@
         <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
         <text>人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
     </view>
-    <image src="../../static/h-set.png" mode="scaleToFill"/>
+    <image src="../../static/h-set.png" mode="scaleToFill" bindtap="openSet"/>
 </view>
-<view class="end-test" bindtap="toEnd">结束</view>
-<view class="end-test" bindtap="dismissTeam">解散</view>
+<!--<view class="end-test" bindtap="toEnd">结束</view>-->
+<!--<view class="end-test" bindtap="dismissTeam">解散</view>-->
 <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
     <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
-    <view class="item {{step == 1 ? 'active' : ''}}">第1轮</view>
-    <view class="item {{step == 2 ? 'active' : ''}}">第2轮</view>
-    <view class="item {{step == 3 ? 'active' : ''}}">第3轮</view>
-    <view class="item {{step == 4 ? 'active' : ''}}">第4轮</view>
+    <block wx:for="{{themeDetail.list}}" wx:key="index">
+        <view wx:if="{{index > 0}}" class="item {{step == index ? 'active' : ''}}"  wx:key="index">第{{index }}轮</view>
+    </block>
+<!--    <view class="item {{step == 2 ? 'active' : ''}}">第2轮</view>-->
+<!--    <view class="item {{step == 3 ? 'active' : ''}}">第3轮</view>-->
+<!--    <view class="item {{step == 4 ? 'active' : ''}}">第4轮</view>-->
     <view class="item {{step == 5 ? 'active' : ''}}">结语</view>
 </scroll-view>
 <view class="wp">
@@ -33,7 +35,7 @@
         </view>
         <view class="peoples">
             <view class="item" wx:for="{{playerList}}" wx:for-index="index"
-                  wx:for-item="item" wx:key="*this">
+                  wx:for-item="item" wx:key="index">
                 <view class="{{personInd == index?'people active':'people' }}" bindlongpress="handleKick"
                       data-item="{{item}}">
                     <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
@@ -47,14 +49,20 @@
                 </view>
             </view>
         </view>
-        <view class="content">
-            <view wx:for="{{mesList}}" wx:for-item="item" class="{{item.sysType != 'sys'?'item':'item sys'}}"
-                  wx:key="*this">
+        <scroll-view
+                class="content"
+                scroll-into-view="{{scrollTo}}"
+                scroll-y="true"
+                bindscroll="messageListScrolling"
+        >
+            <view wx:for="{{mesList}}" wx:key="index" wx:for-item="item"
+                  class="{{item.sysType != 'sys'?'item':'item sys'}}"
+                  wx:key="index">
                 <view class="text" wx:if="item.text">
                     <text class="name" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick}}：</text>
                     <text class="con">{{item.text}}</text>
                 </view>
-                <view class="cardList">
+                <view class="cardList" wx:if="{{item.card}}">
                     <view class="left">
                         <image
                                 src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
@@ -76,7 +84,7 @@
                         />
                     </view>
                 </view>
-                <view class="card">
+                <view class="card" wx:if="{{item.card}}">
                     <view class="img">
                         <image
                                 src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
@@ -91,7 +99,9 @@
                     </view>
                 </view>
             </view>
-        </view>
+            <!-- 最后加一个垫底的节点 -->
+            <view class="last-view" id="{{endId}}" style="height:{{bottomHeight}}px;"></view>
+        </scroll-view>
     </view>
 </view>
 <view class="theme-bot">
@@ -101,7 +111,11 @@
         <image class="img" src="../../static/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
     </view>
     <view class="inp">
-        <input type="text" placeholder="说点什么吧..." bindconfirm="sendMsg"/>
+        <input type="text"
+               wx:if="{{inputStatus}}"
+               placeholder="说点什么吧..."
+               disabled="{{!inputStatus}}"
+               bindconfirm="sendMsg"/>
     </view>
     <view class="btn" bindtap="handleReady" wx:if="{{!isReady && !isOwner}}">
         准备
@@ -116,6 +130,20 @@
         <view class="btn" bindtap="handleBegin">快速开始</view>
     </view>
 </view>
+
+<!--思考倒计时-->
+<view class="count-down" wx:if="{{show_think_count_down}}">思考倒计时
+    <view>
+        {{waitTime}}s
+    </view>
+</view>
+<!--发言倒计时-->
+<view class="count-down" wx:if="{{show_speak_count_down}}">发言倒计时
+    <view>
+        {{waitTime}}s
+    </view>
+</view>
+
 <!-- 倒计时 -->
 <view class="timeDown" wx:if="{{ timePopStatus}}">{{waitTime}}</view>
 <!--分享到-->
@@ -220,44 +248,46 @@
 <block wx:if="{{roomSetPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
-        <view class="pop-tit">确认开始匹配路人吗？</view>
+        <view class="pop-tit">房间设置</view>
         <view class="roomset">
             <view class="item">
                 <text class="name">房间ID</text>
-                <text class="num">342222</text>
+                <text class="num">{{roomData.imGroup}}</text>
             </view>
             <view class="item">
                 <text class="name">开局人数</text>
-                <text class="num">4-6人</text>
+                <text class="num">{{themeDetail.minNumber}}-{{themeDetail.maxNumber}}人</text>
             </view>
-            <view class="item">
-                <text class="name">发言时间</text>
-                <view class="process">
-                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"
-                            selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7"
-                            show-value="true"
-                            value="30" max="60"/>
-                    <text class="sec">s</text>
-                </view>
-            </view>
-            <view class="item">
-                <text class="name">结束自由交流时间</text>
-                <view class="process">
-                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"
-                            selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7"
-                            show-value="true"
-                            value="30" max="60"/>
-                    <text class="sec">s</text>
-                </view>
-            </view>
+<!--            <view class="item">-->
+<!--                <text class="name">发言时间</text>-->
+<!--                <view class="process">-->
+<!--                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"-->
+<!--                            selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7"-->
+<!--                            show-value="true"-->
+<!--                            value="30" max="60"/>-->
+<!--                    <text class="sec">s</text>-->
+<!--                </view>-->
+<!--            </view>-->
+<!--            <view class="item">-->
+<!--                <text class="name">结束自由交流时间</text>-->
+<!--                <view class="process">-->
+<!--                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"-->
+<!--                            selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7"-->
+<!--                            show-value="true"-->
+<!--                            value="30" max="60"/>-->
+<!--                    <text class="sec">s</text>-->
+<!--                </view>-->
+<!--            </view>-->
             <view class="line"></view>
             <view class="item">
                 <text class="name">音乐</text>
-                <switch size="small" color="#7461E7"/>
+                <switch size="small" color="#7461E7" bindchange="changeMusic" checked="true"/>
             </view>
             <view class="item">
                 <text class="name">音效</text>
-                <switch color="#7461E7"/>
+                <switch color="#7461E7"
+                        bindchange="changeAudio"
+                        checked="true"/>
             </view>
         </view>
         <view class="btns">
