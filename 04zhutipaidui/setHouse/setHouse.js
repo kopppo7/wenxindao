@@ -78,7 +78,7 @@ Page({
               }
               updateImMsg(param).then(res => {
                   wx.navigateTo({
-                      url: '/04zhutipaidui/tansuo/tansuo?id='+this.data.themeId,
+                      url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch,
                   })
               })
             }
