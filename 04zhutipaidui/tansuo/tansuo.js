@@ -79,11 +79,11 @@ Page({
         stepMsgList:[],//其他轮信息内容
         viewAccount:'',//查看用户发言
         contPasserPopStatus: false, //继续等待路人
-		backgrooundMusic:'',
-
         showFupan:false,
         showPlayerList:[],
         sec: 60,//复盘倒计时
+		backgrooundMusic:null, //如果设置每一轮的
+		isPlayBgMusic:true
     },
     // 活动提示
     activityChange() {
@@ -92,7 +92,7 @@ Page({
             activeStatus: !active
         })
     },
-    closeActivityPop() {
+    closeActivityPop () {
         this.setData({
             activityPopStatus: false
         })
@@ -101,14 +101,14 @@ Page({
         }
         this.creatRoom()
     },
-    cancelActivityPop() {
+    cancelActivityPop () {
         wx.navigateBack({
             delta: 1,
         })
     },
     // 活动提示end
 
-    openSharePop() {
+    openSharePop () {
         var that = this;
         that.setData({
             sharePopStatus: true
@@ -128,6 +128,7 @@ Page({
             showTousuPop: false,
             jumpPopStatus: false,
             contPasserPopStatus: false,
+			roomSetPopStatus:false
         })
 		if (timeInt) {
 			clearInterval(timeInt)
@@ -595,10 +596,15 @@ Page({
                 .replace(/\<img/gi, '<img style="width:100%;height:auto;"')
                 .replace(/\<p/gi, '<p class="p_class"')
                 .replace(/\<span/gi, '<span class="span_class"')
+			let innerAudioContext = wx.createInnerAudioContext({useWebAudioImplement: false});
+			innerAudioContext.src = res.data.data.list[0].guideAudio || 'https://dl.stream.qqmusic.qq.com/C400003YY8ia0o76Cm.m4a?guid=4970673720&vkey=800C4A9A5815065BB85D4E0BA1D707BA74C459E3DE7F0D4676996A2C8496CB4830F103D20FC7C50D81EA1B5813C8258586EEF582E99DE083&uin=694750795&fromtag=120032'
+			innerAudioContext.autoplay = true
+			innerAudioContext.loop = true
             that.setData({
                 themeDetail: res.data.data,
                 helpText: res.data.data.detailsText,
                 stepList:res.data.data.list,
+				backgrooundMusic:innerAudioContext
             })
             wx.setNavigationBarTitle({
                 title: res.data.data.title
@@ -676,7 +682,7 @@ Page({
         var that = this;
         var step = this.data.step
         var stepData = this.data.themeDetail.list[step]
-
+		this.data.backgrooundMusic.src=this.data.themeDetail.list[step].guideAudio || 'https://dl.stream.qqmusic.qq.com/C400003YY8ia0o76Cm.m4a?guid=4970673720&vkey=800C4A9A5815065BB85D4E0BA1D707BA74C459E3DE7F0D4676996A2C8496CB4830F103D20FC7C50D81EA1B5813C8258586EEF582E99DE083&uin=694750795&fromtag=120032'
 
         //话术
         var guideWords = stepData.guideWords
@@ -1417,9 +1423,15 @@ Page({
     },
     //开启关闭音乐
     changeMusic: function () {
-        this.setData({
-            playMusic: !this.data.playMusic
-        })
+		console.log(this.data.isPlayBgMusic);
+		this.setData({
+			isPlayBgMusic:!this.data.isPlayBgMusic
+		})
+		if (this.data.isPlayBgMusic) {
+			this.data.backgrooundMusic.play()
+		} else{
+			this.data.backgrooundMusic.pause()
+		}
     },
     changeAudio: function () {
         this.setData({

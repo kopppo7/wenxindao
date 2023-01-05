@@ -506,7 +506,7 @@
             <view class="line"></view>
             <view class="item">
                 <text class="name">音乐</text>
-                <switch size="small" color="#7461E7" bindchange="changeMusic" checked="true"/>
+                <switch size="small" color="#7461E7" bindchange="changeMusic" checked="{{isPlayBgMusic}}"/>
             </view>
             <view class="item">
                 <text class="name">音效</text>
@@ -515,7 +515,7 @@
                         checked="true"/>
             </view>
         </view>
-        <view class="btns">
+        <view class="btns" bindtap="closePop">
             <view class="btn ok">确定</view>
         </view>
     </view>
