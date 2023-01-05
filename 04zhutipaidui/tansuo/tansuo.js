@@ -8,7 +8,7 @@ import {
     kickingPlayer,
     openBaoRoomMate,
     getRoomDetails,
-    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom
+    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate
 } from "../api";
 import yunApi from "../../utils/yun";
 import {findByOrderList} from "../../utils/api";
@@ -18,6 +18,7 @@ var downTime = Math.random() * 10 + 5;
 var downTime2 = Math.random() * 10;
 var APP = getApp();
 var timeInt = null
+var timeout = null
 Page({
 
     /**
@@ -79,6 +80,10 @@ Page({
         viewAccount:'',//查看用户发言
         contPasserPopStatus: false, //继续等待路人
 		backgrooundMusic:'',
+
+        showFupan:false,
+        showPlayerList:[],
+        sec: 60,//复盘倒计时
     },
     // 活动提示
     activityChange() {
@@ -265,6 +270,23 @@ Page({
             })
         }
         APP.globalData.playerList = members;
+
+
+        //结尾畅聊成员列表
+        var list = JSON.parse(JSON.stringify(APP.globalData.playerList))
+        var showPlayerList = []
+        list.map(item => {
+            if (item && item.account){
+                item.zan = 0
+                item.isZan = false
+                showPlayerList.push(item)
+            }
+
+        })
+        this.setData({
+            showPlayerList: showPlayerList
+        })
+
     },
     // 判断是否是房主 如果是房主的话把房主排到第一位
     onUpdateTeamMember (teamMember) {
@@ -347,17 +369,15 @@ Page({
         }
     },
     // 发送消息
-    sendMsg (val) {
-        console.log(val.detail.value);
+    sendMsg(index, type) {
         var that = this;
-        console.log(this.data.teamId);
         var msg = nim.sendText({
             scene: 'team',
             to: that.data.teamId,
-            text: val.detail.value,
+            text: JSON.stringify({index: index, type: type}),
             done: that.pushMsg
         });
-        console.log('正在发送p2p text消息, ' + msg);
+        console.log('正在发送p2p text消息, ' + msg.idClient);
     },
 
     // onDismissTeam () { },
@@ -500,9 +520,7 @@ Page({
                     roomId: that.data.roomData.id,
                     userIm
                 }).then(res => {
-                    that.setData({
-                        step: 1
-                    })
+
                     that.sendCustomMsg(4, {text: '开始'})
                 })
             }
@@ -579,7 +597,8 @@ Page({
                 .replace(/\<span/gi, '<span class="span_class"')
             that.setData({
                 themeDetail: res.data.data,
-                helpText: res.data.data.detailsText
+                helpText: res.data.data.detailsText,
+                stepList:res.data.data.list,
             })
             wx.setNavigationBarTitle({
                 title: res.data.data.title
@@ -663,7 +682,7 @@ Page({
         var guideWords = stepData.guideWords
         //思考时间
         // var thinkTime = stepData.thinkTime
-        var thinkTime = 5
+        var thinkTime = 3
 
         //显示引导语言
         this.setData({
@@ -691,7 +710,7 @@ Page({
         var stepData = this.data.themeDetail.list[step]
         //说话时间
         // var speakTime = stepData.speakTime
-        var speakTime = 10
+        var speakTime = 3
 
         //隐藏思考倒计时
         that.setData({
@@ -757,6 +776,11 @@ Page({
                     if (that.data.isOwner) {
                         that.sendCustomMsg(4, { text: '全部结束' })
                     }
+                    that.setData({
+                        showFupan:true
+                    })
+                    that.countDown()
+
                 }
             }
         }
@@ -957,7 +981,7 @@ Page({
             this.speak()
         } else {
             console.log('全部人发言结束,进入下一轮')
-            if (this.data.step < (this.data.themeDetail.list.length - 1)) {
+            if (this.data.step < this.data.themeDetail.list.length    ) {
                 //轮数 小于 全部轮数，切换下一轮
                 this.setData({
                     step: this.data.step + 1,
@@ -969,6 +993,10 @@ Page({
                 if (this.data.isOwner) {
                     this.sendCustomMsg(4, {text: '全部结束'})
                 }
+                this.setData({
+                    showFupan:true
+                })
+                this.countDown()
             }
 
         }
@@ -1047,6 +1075,7 @@ Page({
                 }
                 if (content.data.value === '开始') {
                     that.setData({
+                        step:1,
                         personInd: 0,
                         isBeginPlay: true
                     })
@@ -1078,6 +1107,22 @@ Page({
             } else if (content.type === 6) {
                 //跳过发言
                 that.handleJumpSpeak()
+
+            } else if(content.type === 7){
+                console.log(content)
+                var showPlayerList = that.data.showPlayerList
+                showPlayerList[content.data.value].zan++
+                that.setData({
+                    showPlayerList: showPlayerList
+                })
+                var msgObj = {
+                    fromNick: msg.fromNick,
+                    zan: 1,
+                    msgStep: that.data.step,
+                    fromAccount: msg.from
+                }
+                msgList.push(msgObj)
+                APP.globalData.mesList = msgList
 
             }
         } else {
@@ -1227,6 +1272,20 @@ Page({
             showTousuPop: true,
             tousuResaon: 1
         })
+
+        this.setData({
+            kickPopStatus: true,
+            kickPlayer: e.currentTarget.dataset.item,
+            kickPopType: 2
+        })
+    },
+    //结尾畅聊投诉
+    handleTousu2: function (e) {
+        this.setData({
+            showTousuPop: true,
+            tousuResaon: 1,
+            kickPlayer: e.currentTarget.dataset.item,
+        })
     },
     //选择投诉理由
     radioChange: function (e) {
@@ -1333,6 +1392,14 @@ Page({
         }
         complaintUser(par).then(res => {
             console.log(res)
+            wx.showToast({
+              title: '投诉成功',
+                icon:'none'
+
+            })
+            this.setData({
+                showTousuPop:false
+            })
         })
     },
     //去结尾畅聊
@@ -1363,5 +1430,76 @@ Page({
         wx.redirectTo({
             url: '/pages/my/probedetail/probedetail?id=' + this.data.themeDetail.id,
         })
-    }
+    },
+
+    //点赞
+    dianZan: function (e) {
+        console.log(this.data.showPlayerList)
+        var that = this;
+        var index = e.currentTarget.dataset.index
+        var item = this.data.showPlayerList[index]
+        var showPlayerList = this.data.showPlayerList
+        console.log(showPlayerList)
+        if (!item.isZan && item.account !== this.data.account) {
+            likeTeammate({
+                roomId:that.data.roomData.id,
+                yunId:item.account
+            }).then(res => {
+                that.sendCustomMsg(7, {text: index})
+                showPlayerList[index].isZan = true
+                // showPlayerList[index].zan++
+                this.setData({
+                    showPlayerList: showPlayerList
+                })
+            })
+
+
+
+        } else {
+            // this.sendMsg(index, 'reduce')
+            // playerList[index].isZan = false
+        }
+
+
+
+    },
+    //倒计时
+    countDown: function () {
+        var that = this;
+        timeout = setTimeout(function () {
+            that.setData({
+                sec:(that.data.sec-1)
+            })
+            if (that.data.sec > 0){
+                that.countDown()
+            } else {
+                that.quit()
+            }
+        },1000)
+    },
+    //离开
+    quit:function () {
+
+        console.log(this.data.isOwner)
+        // if (this.data.isOwner){
+        //     //解散房间
+        //     dissolveGroup({
+        //         id: this.data.roomData.id,
+        //         token: wx.getStorageSync('tokenKey')
+        //     })
+        // } else {
+        //    //退出房间
+        //     quitRoom({
+        //         id: this.data.roomData.id
+        //     })
+        // }
+        this.setData({
+            showFupan:false,
+            step:this.data.stepList.length+1
+        })
+
+
+
+        clearTimeout(timeout)
+    },
 })
