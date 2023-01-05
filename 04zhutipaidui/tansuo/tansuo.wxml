@@ -16,9 +16,9 @@
 <!--    <view class="item {{step == 2 ? 'active' : ''}}">第2轮</view>-->
 <!--    <view class="item {{step == 3 ? 'active' : ''}}">第3轮</view>-->
 <!--    <view class="item {{step == 4 ? 'active' : ''}}">第4轮</view>-->
-    <view class="item {{step == 5 ? 'active' : ''}}">结语</view>
+    <view class="item {{step == 6 ? 'active' : ''}}">结语</view>
 </scroll-view>
-<view class="wp">
+<view class="wp" wx:if="{{step !== 6}}">
     <view class="room-theme">
         <view class="help">
             <view class="left">
@@ -111,7 +111,7 @@
         </scroll-view>
     </view>
 </view>
-<view class="theme-bot">
+<view class="theme-bot" wx:if="{{step !== 6}}">
     <view class="play" bindtap="sendMsg">
         <image class="img" src="../../static/room-audio1.png" wx:if="{{voiceStatus == 1}}"></image>
         <image class="img" src="../../static/room-audio2.png" wx:if="{{voiceStatus == 0}}"></image>
@@ -411,3 +411,32 @@
         <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closeImgPop"></image>
     </view>
 </block>
+<!-- 结语 -->
+<view class="wp">
+    <view class="yinyan-box yinyan-box5" wx:if="{{step == 6}}">
+        <view class="box1">
+          <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+          <view class="txt">
+            {{themeDetail.tags}}
+          </view>
+        </view>
+        <view class="box3">
+          <view class="box3-item">
+            <view class="tit">心理学小课堂</view>
+            <view class="con">{{themeDetail.tips}}</view>
+          </view>
+          <view class="box3-item">
+            <view class="tit">想要收获更多反馈？ </view>
+            <view class="con">每个人都有自己认知的盲区。敞开自己，去拥抱其它小伙伴的角度和评论吧！</view>
+          </view>
+        </view>
+        <view class="box4">
+          <image class="box4-l" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrtxt.png"></image>
+          <image class="box4-r" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
+        </view>
+        <view class="box5">
+          <view class="g-submit" bindtap="lookLog">查看本次记录</view>
+          <view class="share" bindtap="openSharePop">分享</view>
+        </view>
+    </view>
+</view>
