@@ -309,15 +309,35 @@
 .room-theme .peoples.active{}
 .room-theme .peoples.active{}
 .room-theme .peoples.active{}
-.room-theme .content{position: absolute;left: 50%;top: 288rpx;width: 454rpx;margin-left: -227rpx;max-height: 500rpx;overflow-y: scroll;}
+.room-theme .content{position: absolute;left: 50%;top: 288rpx;width: 454rpx;margin-left: -227rpx;max-height: 700rpx;overflow-y: scroll;}
 .room-theme .content .item{padding: 16rpx 24rpx;margin-bottom: 12px;background: rgba(182,178,207,0.18);border-radius: 24rpx;font-size: 24rpx;line-height: 32rpx;box-sizing: border-box;}
 .room-theme .content .item .name{opacity: .6;font-size: 24rpx;line-height: 32rpx;}
 .room-theme .content .item .con{font-size: 24rpx;line-height: 32rpx;}
 .room-theme .content .item.sys{color: #FFB58C;}
-.room-theme .content .cardList{display: flex;margin: 16rpx 0 0;}
-.room-theme .content .cardList .left{width: 254rpx;flex-grow: 1;}
+.room-theme .content .cardList .con{display: flex;margin: 16rpx 0 0;align-items: center;}
+.room-theme .content .cardList .left{width: 254rpx;flex-grow: 1;position: relative;}
 .room-theme .content .cardList .left image{height: 360rpx;width: 254rpx;display: block;border-radius: 16rpx;}
-.room-theme .content .cardList .right{width: 128rpx;height: 360rpx;overflow-y: scroll;flex-shrink: 0;border-radius: 16rpx;}
+.room-theme .content .cardList .left .iconImg{
+	position: absolute;
+	bottom: 8rpx;
+	right: 32rpx;
+	width: 48rpx;
+	height: 48rpx;
+	border-radius: 10rpx;
+}
+.room-theme .content .cardList   .z-btn{
+	width: 160rpx;
+	height: 60rpx;
+	background: #7461E7;
+	border-radius: 37px 37px 37px 37px;
+	text-align: center;
+	line-height: 60rpx;
+	font-size: 28rpx;
+	color: #fff;
+	position: relative;
+	margin: 20rpx auto 0;
+}
+.room-theme .content .cardList .right{width: 128rpx;height: 360rpx;overflow-y: scroll;flex-shrink: 0;border-radius: 16rpx; }
 .room-theme .content .cardList .right image{display: block;width: 100%;height: 172rpx;margin-bottom: 16rpx;}
 .room-theme .content .cardList .right image:last-child{
 	margin-bottom: 0;
@@ -325,11 +345,16 @@
 image{object-fit: cover;}
 .room-theme .content .card{margin: 16rpx 0 0;}
 .room-theme .content .card image{height: 360rpx;width: 254rpx;display: block;border-radius: 16rpx;}
+
+.room-theme .content .card .img{position: relative;display: block;}
+.room-theme .content .card .img image{
+	display: block;
+	width: 100%;
+}
 .room-theme .content .card .icon{position: absolute;right: 12rpx;bottom: 12rpx;
 	display: -webkit-flex;display: flex;justify-content: center;align-items:center;align-content:center;
 }
 .room-theme .content .card .icon image{width: 38rpx;height: 40rpx;}
-.room-theme .content .card .img{position: relative;display: inline-block;}
 
 
 
@@ -460,4 +485,31 @@ image{object-fit: cover;}
 	display: block;
 	font-size: 24rpx;
 	margin-left: 20rpx;
+}
+
+.pop-big {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	z-index: 801;
+}
+
+.pop-big .big-pic {
+	width: 670rpx;
+	/* height: 998rpx; */
+}
+
+.pop-close-bot {
+	position: absolute;
+	bottom: -116rpx;
+	left: 50%;
+	margin-left: -48rpx;
+	width: 96rpx;
+	height: 96rpx;
+	z-index: 801;
 }

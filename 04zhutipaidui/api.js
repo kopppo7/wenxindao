@@ -91,3 +91,11 @@ export const roomMatchingPlay = function (id) {
 export const getRoomDetails = function (data) {
     return http.post(handleURL('/room/getRoomDetails'), data);
 }
+// 主题派对 查询当前轮次卡牌
+export const findByCard = function (data) {
+    return http.get(handleURL('/room/findByCard'), data);
+}
+// 主题派对 新增当前人当轮卡牌
+export const addCardForRoom = function (data) {
+    return http.post(handleURL('/room/addCardForRoom'), data);
+}

@@ -7,7 +7,7 @@
     <image src="../../static/h-set.png" mode="scaleToFill" bindtap="openSet"/>
 </view>
 <!--<view class="end-test" bindtap="toEnd">结束</view>-->
-<view class="end-test" bindtap="dismissTeam">解散</view>
+<!--<view class="end-test" bindtap="dismissTeam">解散</view>-->
 <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
     <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
     <block wx:for="{{themeDetail.list}}" wx:key="index">
@@ -25,12 +25,12 @@
                 <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg">
                 </image>
                 <view class="ico">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/room-wh.png"></image>
                     <text class="name">帮助</text>
                 </view>
             </view>
             <view class="right">
-                <rich-text nodes="{{themeDetail.detailsText}}"></rich-text>
+                <rich-text nodes="{{helpText}}"></rich-text>
             </view>
         </view>
         <view class="peoples">
@@ -53,7 +53,6 @@
                 class="content"
                 scroll-into-view="{{scrollTo}}"
                 scroll-y="true"
-                bindscroll="messageListScrolling"
         >
             <view wx:for="{{mesList}}" wx:key="index" wx:for-item="item"
                   class="{{item.sysType != 'sys'?'item':'item sys'}}"
@@ -62,35 +61,43 @@
                     <text class="name" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick}}：</text>
                     <text class="con">{{item.text}}</text>
                 </view>
-                <view class="cardList" wx:if="{{item.card}}">
-                    <view class="left">
+                <view class="cardList" wx:if="{{item.cardList}}" >
+                    <div class="con">
+                        <view class="left">
+                            <image
+                                    src="{{item.bigImage.url}}"
+                                    mode="widthFix"
+                            />
+                            <image
+                                    wx:if="{{item.bigImage.url}}"
+                                    src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{item.bigImage.url}}" catchtap="showImg"> </image>
+                        </view>
+                        <view class="right">
                         <image
-                                src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
-                                mode="scaleToFill"
+                                wx:for="{{item.cardList}}"
+                                wx:key="cardIndex"
+                                wx:for-item="card"
+                                wx:for-index="cardIndex"
+                                data-step="{{item.step}}"
+                                data-index="{{cardIndex}}"
+                                bindtap="clickSmallImage"
+                                src="{{card.imgUrl}}"
+                                mode="widthFix"
                         />
                     </view>
-                    <view class="right">
-                        <image
-                                src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
-                                mode="scaleToFill"
-                        />
-                        <image
-                                src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
-                                mode="scaleToFill"
-                        />
-                        <image
-                                src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
-                                mode="scaleToFill"
-                        />
-                    </view>
+                    </div>
+                    <view class="z-btn" wx:if="{{!item.selectImage.url}}" bindtap="selectCard"
+                          data-step="{{item.step}}">选择</view>
                 </view>
                 <view class="card" wx:if="{{item.card}}">
+                    <text class="name">（自己）</text>
+                    <text class="con">拿到的牌</text>
                     <view class="img">
                         <image
-                                src="https://file.wxdao.net/2022-10/fded9939-5efc-4653-9760-15f2d754afa2.png"
-                                mode="scaleToFill"
+                                src="{{item.card}}"
+                                mode="widthFix"
                         />
-                        <view class="icon">
+                        <view class="icon" data-img="{{item.card}}" catchtap="showImg">
                             <image
                                     src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
                                     mode="scaleToFill"
@@ -111,18 +118,25 @@
         <image class="img" src="../../static/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
     </view>
     <view class="inp">
+    
+<!--        wx:if="{{inputStatus}}"-->
+
+<!--        disabled="{{!inputStatus}}"-->
         <input type="text"
                wx:if="{{inputStatus}}"
-               placeholder="说点什么吧..."
                disabled="{{!inputStatus}}"
+               placeholder="说点什么吧..."
                bindconfirm="sendMsg"/>
     </view>
-    <view class="btn" bindtap="handleReady" wx:if="{{!isReady && !isOwner}}">
+    <view class="btn" bindtap="handleReady" wx:if="{{!isReady && !isOwner && !isBeginPlay}}">
         准备
         <text>点击准备</text>
     </view>
-    <view class="btn disabled" wx:if="{{isReady && !isOwner && waitTime == 10}}">
+    <view class="btn disabled" wx:if="{{isReady && !isOwner && waitTime == 10 && !isBeginPlay}}">
         已准备
+    </view>
+    <view class="btn disabled" bindtap="jumpSpeak" wx:if="{{isBeginPlay && inputStatus && !isJump}}">
+        跳过
     </view>
     <view class="own-btns" wx:if="{{isOwner && !isBeginPlay}}">
         <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
@@ -370,5 +384,13 @@
             </view>
             <view class="btn-submit" catchtap="tousuSubmit">提交</view>
         </view>
+    </view>
+</block>
+<!--放大卡牌-->
+<block wx:if="{{bigPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-big">
+        <image class="big-pic" src="{{selectImgUrl}}" mode="widthFix"></image>
+        <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closeImgPop"></image>
     </view>
 </block>

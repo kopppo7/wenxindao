@@ -19,7 +19,7 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "askId=9&isfriend=1&roomId=81",
+          "query": "askId=10&roomId=99&isMatch=true&isHaoyou=undefined",
           "launchMode": "default",
           "scene": null
         },

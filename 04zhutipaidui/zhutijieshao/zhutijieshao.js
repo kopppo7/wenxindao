@@ -38,7 +38,7 @@ Page({
             }else if (res.data.ret === 200){
                 if (type === 'haoyou'){
                     wx.navigateTo({
-                        url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId+'&roomId='+res.data.data,
+                        url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId+'&roomId='+res.data.data+'&isHaoyou=true',
                     })
                 } else {
                     wx.navigateTo({
