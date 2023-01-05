@@ -227,6 +227,23 @@
         </view>
     </view>
 </block>
+<!-- 跳过提示 -->
+<block wx:if="{{jumpPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">跳过本轮</view>
+        <view class="desc">
+            <view>
+                您已跳过<text class="num">1</text>轮
+            </view>
+            再次跳过将视为<text class="num">放弃</text>
+        </view>
+        <view class="btns">
+            <view class="btn close" bindtap="closePop">取消</view>
+            <view class="btn ok" bindtap="jumpConfirm">确定</view>
+        </view>
+    </view>
+</block>
 <!-- 踢人 -->
 <block wx:if="{{kickPopStatus}}">
     <view class="pop-mask"></view>

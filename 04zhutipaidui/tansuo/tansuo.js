@@ -8,7 +8,7 @@ import {
     kickingPlayer,
     openBaoRoomMate,
     getRoomDetails,
-    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom
+    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom
 } from "../api";
 import yunApi from "../../utils/yun";
 import {findByOrderList} from "../../utils/api";
@@ -71,6 +71,8 @@ Page({
         bigPopStatus: false,
         selectImgUrl: '',
         isJump:false,//是否跳过
+        jumpNum:0,//跳过次数
+        jumpPopStatus:false,
     },
     // 活动提示
     activityChange() {
@@ -112,7 +114,8 @@ Page({
             timePopStatus: false,
             kickPopStatus: false,
             passerPopStatus: false,
-            showTousuPop: false
+            showTousuPop: false,
+            jumpPopStatus:false,
         })
     },
     // 连接成功
@@ -632,7 +635,7 @@ Page({
         var guideWords = stepData.guideWords
         //思考时间
         // var thinkTime = stepData.thinkTime
-        var thinkTime = 10
+        var thinkTime = 5
 
         //显示引导语言
         this.setData({
@@ -660,7 +663,7 @@ Page({
         var stepData = this.data.themeDetail.list[step]
         //说话时间
         // var speakTime = stepData.speakTime
-        var speakTime = 2000000
+        var speakTime = 10
 
         //隐藏思考倒计时
         that.setData({
@@ -686,7 +689,8 @@ Page({
             that.setData({
                 inputStatus: 1,
                 show_speak_count_down: true,
-                waitTime: speakTime
+                waitTime: speakTime,
+                isJump:false
             })
         } else {
             that.setData({
@@ -871,7 +875,38 @@ Page({
     },
     //点击跳过发言
     jumpSpeak:function () {
+
+        if (this.data.jumpNum === 1){
+            this.setData({
+                jumpPopStatus:true
+            })
+        } else {
+            this.sendCustomMsg(6,{text:'跳过发言'})
+            this.setData({
+                isJump:true,
+                inputStatus:false,
+                jumpNum:this.data.jumpNum+1
+            })
+        }
+    },
+    //确认跳过
+    jumpConfirm:function () {
+
         this.sendCustomMsg(6,{text:'跳过发言'})
+        this.setData({
+            isJump:true,
+            inputStatus:false,
+            jumpNum:this.data.jumpNum+1
+        })
+        quitRoom({
+            roomId:this.data.roomData.id
+        }).then(res => {
+            if (res.data.ret === 200){
+                wx.redirectTo({
+                    url: '/pages/index/index',
+                })
+            }
+        })
     },
     //处理跳过发言
     handleJumpSpeak:function () {
@@ -891,7 +926,7 @@ Page({
             this.setData({
                 personInd: this.data.personInd + 1,
             })
-            speak()
+            this.speak()
         } else {
             console.log('全部人发言结束,进入下一轮')
             if (this.data.step < (this.data.themeDetail.list.length - 1)) {
