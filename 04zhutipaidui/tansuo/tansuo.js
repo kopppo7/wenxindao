@@ -71,8 +71,8 @@ Page({
         bigPopStatus: false,
         selectImgUrl: '',
         isJump: false,//是否跳过
-        jumpNum:0,//跳过次数
-        jumpPopStatus:false,
+        jumpNum: 0,//跳过次数
+        jumpPopStatus: false,
     },
     // 活动提示
     activityChange () {
@@ -115,7 +115,7 @@ Page({
             kickPopStatus: false,
             passerPopStatus: false,
             showTousuPop: false,
-            jumpPopStatus:false,
+            jumpPopStatus: false,
         })
     },
     // 连接成功
@@ -482,7 +482,7 @@ Page({
                     userIm
                 }).then(res => {
                     that.setData({
-                        step:1
+                        step: 6
                     })
                     that.sendCustomMsg(4, { text: '开始' })
                 })
@@ -698,7 +698,7 @@ Page({
                 inputStatus: 1,
                 show_speak_count_down: true,
                 waitTime: speakTime,
-                isJump:false
+                isJump: false
             })
         } else {
             that.setData({
@@ -882,34 +882,34 @@ Page({
 
     },
     //点击跳过发言
-    jumpSpeak:function () {
+    jumpSpeak: function () {
 
-        if (this.data.jumpNum === 1){
+        if (this.data.jumpNum === 1) {
             this.setData({
-                jumpPopStatus:true
+                jumpPopStatus: true
             })
         } else {
-            this.sendCustomMsg(6,{text:'跳过发言'})
+            this.sendCustomMsg(6, { text: '跳过发言' })
             this.setData({
-                isJump:true,
-                inputStatus:false,
-                jumpNum:this.data.jumpNum+1
+                isJump: true,
+                inputStatus: false,
+                jumpNum: this.data.jumpNum + 1
             })
         }
     },
     //确认跳过
-    jumpConfirm:function () {
+    jumpConfirm: function () {
 
-        this.sendCustomMsg(6,{text:'跳过发言'})
+        this.sendCustomMsg(6, { text: '跳过发言' })
         this.setData({
-            isJump:true,
-            inputStatus:false,
-            jumpNum:this.data.jumpNum+1
+            isJump: true,
+            inputStatus: false,
+            jumpNum: this.data.jumpNum + 1
         })
         quitRoom({
-            roomId:this.data.roomData.id
+            roomId: this.data.roomData.id
         }).then(res => {
-            if (res.data.ret === 200){
+            if (res.data.ret === 200) {
                 wx.redirectTo({
                     url: '/pages/index/index',
                 })
@@ -1275,6 +1275,11 @@ Page({
     changeAudio: function () {
         this.setData({
             playAudio: !this.data.playAudio
+        })
+    },
+    lookLog: function () {
+        wx.redirectTo({
+            url: '/pages/my/probedetail/probedetail?id=' + this.data.themeDetail.id,
         })
     }
 })
