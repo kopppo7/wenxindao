@@ -10,13 +10,16 @@
 <!--<view class="end-test" bindtap="dismissTeam">解散</view>-->
 <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
     <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
-    <block wx:for="{{themeDetail.list}}" wx:key="index">
-        <view wx:if="{{index > 0}}" class="item {{step == index ? 'active' : ''}}"  wx:key="index">第{{index }}轮</view>
+    <block wx:for="{{stepList}}" wx:key="index">
+        <view class="item {{step == (index+1) ? 'active' : ''}} {{item.view ? 'view' : ''}}"
+              bindtap="viewStep" data-step="{{index+1}}" wx:key="index">第{{index+1
+            }}轮
+        </view>
     </block>
-<!--    <view class="item {{step == 2 ? 'active' : ''}}">第2轮</view>-->
-<!--    <view class="item {{step == 3 ? 'active' : ''}}">第3轮</view>-->
-<!--    <view class="item {{step == 4 ? 'active' : ''}}">第4轮</view>-->
-    <view class="item {{step == 6 ? 'active' : ''}}">结语</view>
+    <!--    <view class="item {{step == 2 ? 'active' : ''}}">第2轮</view>-->
+    <!--    <view class="item {{step == 3 ? 'active' : ''}}">第3轮</view>-->
+    <!--    <view class="item {{step == 4 ? 'active' : ''}}">第4轮</view>-->
+    <view class="item {{step == (themeDetail.list.length+1) ? 'active' : ''}}">结语</view>
 </scroll-view>
 <view class="wp" wx:if="{{step !== 6}}">
     <view class="room-theme">
@@ -36,76 +39,155 @@
         <view class="peoples">
             <view class="item" wx:for="{{playerList}}" wx:for-index="index"
                   wx:for-item="item" wx:key="index">
-                <view class="{{personInd == index?'people active':'people' }}" bindlongpress="handleKick"
+                <view
+                        class="{{ (isBeginPlay && !show_think_count_down && personInd == index)?'people active':'people' }} {{viewAccount === item.account ? 'view' : ''}}"
+                      bindtap="viewPeopleMsg"
+                      bindlongpress="handleKick"
                       data-item="{{item}}">
-                    <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
-                        <image class="ready" src="../../static/play-status1.png" wx:if="{{item.isReady}}"></image>
-                    </image>
-                    <view class="ico2" wx:else>
-                        <image src="../../static/room-suo.png">
+                    <view class="face">
+                        <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
+                            <image class="ready" src="../../static/play-status1.png" wx:if="{{item.isReady}}"></image>
                         </image>
+                        <view class="ico2" wx:else>
+                            <image src="../../static/room-suo.png">
+                            </image>
+                        </view>
                     </view>
                     <text class="name">{{item.nick}}</text>
                 </view>
             </view>
         </view>
+        
+        
         <scroll-view
+                wx:if="{{showOtherStep}}"
                 class="content"
                 scroll-into-view="{{scrollTo}}"
                 scroll-y="true"
         >
-            <view wx:for="{{mesList}}" wx:key="index" wx:for-item="item"
-                  class="{{item.sysType != 'sys'?'item':'item sys'}}"
-                  wx:key="index">
-                <view class="text" wx:if="item.text">
-                    <text class="name" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick}}：</text>
-                    <text class="con">{{item.text}}</text>
-                </view>
-                <view class="cardList" wx:if="{{item.cardList}}" >
-                    <div class="con">
-                        <view class="left">
+            <block wx:for="{{stepMsgList}}">
+                <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
+                      wx:for-item="item"
+                      class="{{item.sysType != 'sys'?'item':'item sys'}}"
+                      wx:key="index">
+                    <view class="text" wx:if="item.text">
+                        <text class="name" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick}}：</text>
+                        <text class="con">{{item.text}}</text>
+                    </view>
+                    <view class="cardList" wx:if="{{item.cardList}}">
+                        <div class="con">
+                            <view class="left">
+                                <image
+                                        src="{{item.bigImage.url}}"
+                                        mode="widthFix"
+                                />
+                                <image
+                                        wx:if="{{item.bigImage.url}}"
+                                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                        class="iconImg" data-img="{{item.bigImage.url}}" catchtap="showImg"></image>
+                            </view>
+                            <view class="right">
+                                <image
+                                        wx:for="{{item.cardList}}"
+                                        wx:key="cardIndex"
+                                        wx:for-item="card"
+                                        wx:for-index="cardIndex"
+                                        data-step="{{item.step}}"
+                                        data-index="{{cardIndex}}"
+                                        bindtap="clickSmallImage"
+                                        src="{{card.imgUrl}}"
+                                        mode="widthFix"
+                                />
+                            </view>
+                        </div>
+                        <view class="z-btn" wx:if="{{!item.selectImage.url}}" bindtap="selectCard"
+                              data-step="{{item.step}}">选择
+                        </view>
+                    </view>
+                    <view class="card" wx:if="{{item.card}}">
+                        <text class="name">（自己）</text>
+                        <text class="con">拿到的牌</text>
+                        <view class="img">
                             <image
-                                    src="{{item.bigImage.url}}"
+                                    src="{{item.card}}"
                                     mode="widthFix"
                             />
-                            <image
-                                    wx:if="{{item.bigImage.url}}"
-                                    src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{item.bigImage.url}}" catchtap="showImg"> </image>
+                            <view class="icon" data-img="{{item.card}}" catchtap="showImg">
+                                <image
+                                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                        mode="scaleToFill"
+                                />
+                            </view>
                         </view>
-                        <view class="right">
-                        <image
-                                wx:for="{{item.cardList}}"
-                                wx:key="cardIndex"
-                                wx:for-item="card"
-                                wx:for-index="cardIndex"
-                                data-step="{{item.step}}"
-                                data-index="{{cardIndex}}"
-                                bindtap="clickSmallImage"
-                                src="{{card.imgUrl}}"
-                                mode="widthFix"
-                        />
                     </view>
-                    </div>
-                    <view class="z-btn" wx:if="{{!item.selectImage.url}}" bindtap="selectCard"
-                          data-step="{{item.step}}">选择</view>
                 </view>
-                <view class="card" wx:if="{{item.card}}">
-                    <text class="name">（自己）</text>
-                    <text class="con">拿到的牌</text>
-                    <view class="img">
-                        <image
-                                src="{{item.card}}"
-                                mode="widthFix"
-                        />
-                        <view class="icon" data-img="{{item.card}}" catchtap="showImg">
+            </block>
+            <!-- 最后加一个垫底的节点 -->
+            <view class="last-view" id="{{endId}}" style="height:{{bottomHeight}}px;"></view>
+        </scroll-view>
+        <scroll-view
+                wx:else
+                class="content"
+                scroll-into-view="{{scrollTo}}"
+                scroll-y="true"
+        >
+            <block wx:for="{{mesList}}">
+                <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
+                      wx:for-item="item"
+                      class="{{item.sysType != 'sys'?'item':'item sys'}}"
+                      wx:key="index">
+                    <view class="text" wx:if="item.text">
+                        <text class="name" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick}}：</text>
+                        <text class="con">{{item.text}}</text>
+                    </view>
+                    <view class="cardList" wx:if="{{item.cardList}}">
+                        <div class="con">
+                            <view class="left">
+                                <image
+                                        src="{{item.bigImage.url}}"
+                                        mode="widthFix"
+                                />
+                                <image
+                                        wx:if="{{item.bigImage.url}}"
+                                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                        class="iconImg" data-img="{{item.bigImage.url}}" catchtap="showImg"></image>
+                            </view>
+                            <view class="right">
+                                <image
+                                        wx:for="{{item.cardList}}"
+                                        wx:key="cardIndex"
+                                        wx:for-item="card"
+                                        wx:for-index="cardIndex"
+                                        data-step="{{item.step}}"
+                                        data-index="{{cardIndex}}"
+                                        bindtap="clickSmallImage"
+                                        src="{{card.imgUrl}}"
+                                        mode="widthFix"
+                                />
+                            </view>
+                        </div>
+                        <view class="z-btn" wx:if="{{!item.selectImage.url}}" bindtap="selectCard"
+                              data-step="{{item.step}}">选择
+                        </view>
+                    </view>
+                    <view class="card" wx:if="{{item.card}}">
+                        <text class="name">（自己）</text>
+                        <text class="con">拿到的牌</text>
+                        <view class="img">
                             <image
-                                    src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
-                                    mode="scaleToFill"
+                                    src="{{item.card}}"
+                                    mode="widthFix"
                             />
+                            <view class="icon" data-img="{{item.card}}" catchtap="showImg">
+                                <image
+                                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                        mode="scaleToFill"
+                                />
+                            </view>
                         </view>
                     </view>
                 </view>
-            </view>
+            </block>
             <!-- 最后加一个垫底的节点 -->
             <view class="last-view" id="{{endId}}" style="height:{{bottomHeight}}px;"></view>
         </scroll-view>
@@ -118,10 +200,10 @@
         <image class="img" src="../../static/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
     </view>
     <view class="inp">
-    
-<!--        wx:if="{{inputStatus}}"-->
-
-<!--        disabled="{{!inputStatus}}"-->
+        
+        <!--        wx:if="{{inputStatus}}"-->
+        
+        <!--        disabled="{{!inputStatus}}"-->
         <input type="text"
                wx:if="{{inputStatus}}"
                disabled="{{!inputStatus}}"
@@ -234,9 +316,12 @@
         <view class="pop-tit">跳过本轮</view>
         <view class="desc">
             <view>
-                您已跳过<text class="num">1</text>轮
+                您已跳过
+                <text class="num">1</text>
+                轮
             </view>
-            再次跳过将视为<text class="num">放弃</text>
+            再次跳过将视为
+            <text class="num">放弃</text>
         </view>
         <view class="btns">
             <view class="btn close" bindtap="closePop">取消</view>
@@ -289,26 +374,26 @@
                 <text class="name">开局人数</text>
                 <text class="num">{{themeDetail.minNumber}}-{{themeDetail.maxNumber}}人</text>
             </view>
-<!--            <view class="item">-->
-<!--                <text class="name">发言时间</text>-->
-<!--                <view class="process">-->
-<!--                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"-->
-<!--                            selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7"-->
-<!--                            show-value="true"-->
-<!--                            value="30" max="60"/>-->
-<!--                    <text class="sec">s</text>-->
-<!--                </view>-->
-<!--            </view>-->
-<!--            <view class="item">-->
-<!--                <text class="name">结束自由交流时间</text>-->
-<!--                <view class="process">-->
-<!--                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"-->
-<!--                            selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7"-->
-<!--                            show-value="true"-->
-<!--                            value="30" max="60"/>-->
-<!--                    <text class="sec">s</text>-->
-<!--                </view>-->
-<!--            </view>-->
+            <!--            <view class="item">-->
+            <!--                <text class="name">发言时间</text>-->
+            <!--                <view class="process">-->
+            <!--                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"-->
+            <!--                            selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7"-->
+            <!--                            show-value="true"-->
+            <!--                            value="30" max="60"/>-->
+            <!--                    <text class="sec">s</text>-->
+            <!--                </view>-->
+            <!--            </view>-->
+            <!--            <view class="item">-->
+            <!--                <text class="name">结束自由交流时间</text>-->
+            <!--                <view class="process">-->
+            <!--                    <slider bindchange="slider1change" left-icon="cancel" right-icon="success_no_circle"-->
+            <!--                            selected-color="#7461E7" color="#777488" block-size="12" block-color="#7461E7"-->
+            <!--                            show-value="true"-->
+            <!--                            value="30" max="60"/>-->
+            <!--                    <text class="sec">s</text>-->
+            <!--                </view>-->
+            <!--            </view>-->
             <view class="line"></view>
             <view class="item">
                 <text class="name">音乐</text>
@@ -379,14 +464,14 @@
                                     src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
                             <image
                                     mode="widthFix"
-                                    src="{{item}}" ></image>
+                                    src="{{item}}"></image>
                         </view>
                     </block>
-                   
+                    
                     <image
                             wx:if="{{tousuImage.length < 4}}"
                             bindtap="callGetPic" class="add"
-                           src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/upload.png"></image>
+                            src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/upload.png"></image>
                 </view>
                 <view class="title">文字描述</view>
                 <view class="textarea">
@@ -408,35 +493,38 @@
     <view class="pop-mask"></view>
     <view class="pop-big">
         <image class="big-pic" src="{{selectImgUrl}}" mode="widthFix"></image>
-        <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closeImgPop"></image>
+        <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png"
+               bindtap="closeImgPop"></image>
     </view>
 </block>
 <!-- 结语 -->
 <view class="wp">
-    <view class="yinyan-box yinyan-box5" wx:if="{{step == 6}}">
+    <view class="yinyan-box yinyan-box5" wx:if="{{step == (themeDetail.list.length+1)}}">
         <view class="box1">
-          <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
-          <view class="txt">
-            {{themeDetail.tags}}
-          </view>
+            <image class="avatar"
+                   src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+            <view class="txt">
+                {{themeDetail.tags}}
+            </view>
         </view>
         <view class="box3">
-          <view class="box3-item">
-            <view class="tit">心理学小课堂</view>
-            <view class="con">{{themeDetail.tips}}</view>
-          </view>
-          <view class="box3-item">
-            <view class="tit">想要收获更多反馈？ </view>
-            <view class="con">每个人都有自己认知的盲区。敞开自己，去拥抱其它小伙伴的角度和评论吧！</view>
-          </view>
+            <view class="box3-item">
+                <view class="tit">心理学小课堂</view>
+                <view class="con">{{themeDetail.tips}}</view>
+            </view>
+            <view class="box3-item">
+                <view class="tit">想要收获更多反馈？</view>
+                <view class="con">每个人都有自己认知的盲区。敞开自己，去拥抱其它小伙伴的角度和评论吧！</view>
+            </view>
         </view>
         <view class="box4">
-          <image class="box4-l" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrtxt.png"></image>
-          <image class="box4-r" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
+            <image class="box4-l" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrtxt.png"></image>
+            <image class="box4-r"
+                   src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
         </view>
         <view class="box5">
-          <view class="g-submit" bindtap="lookLog">查看本次记录</view>
-          <view class="share" bindtap="openSharePop">分享</view>
+            <view class="g-submit" bindtap="lookLog">查看本次记录</view>
+            <view class="share" bindtap="openSharePop">分享</view>
         </view>
     </view>
 </view>
