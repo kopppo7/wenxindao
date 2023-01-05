@@ -641,9 +641,6 @@ Page({
         //思考时间
         // var thinkTime = stepData.thinkTime
         var thinkTime = 10
-        //说话时间
-        // var speakTime = stepData.speakTime
-        var speakTime = 2000000
 
         //显示引导语言
         this.setData({
@@ -661,16 +658,18 @@ Page({
             show_think_count_down: true,
             personInd: 0
         })
-        this.getDownTime(thinkTime, speak)
-
-
-        //思考倒计时结束，开始发言
-        that.speak()
+        this.getDownTime(thinkTime, this.speak)
 
     },
     //思考倒计时结束，开始发言
     speak: function () {
         var that = this;
+        var step = this.data.step
+        var stepData = this.data.themeDetail.list[step]
+        //说话时间
+        // var speakTime = stepData.speakTime
+        var speakTime = 2000000
+
         //隐藏思考倒计时
         that.setData({
             show_think_count_down: false
@@ -735,9 +734,7 @@ Page({
                         that.sendCustomMsg(4, { text: '全部结束' })
                     }
                 }
-
             }
-
         }
     },
     //发牌
