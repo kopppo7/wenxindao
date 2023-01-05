@@ -73,6 +73,8 @@ Page({
         isJump: false,//是否跳过
         jumpNum: 0,//跳过次数
         jumpPopStatus: false,
+        contPasserPopStatus: false, //继续等待路人
+		backgrooundMusic:'',
     },
     // 活动提示
     activityChange () {
@@ -96,7 +98,7 @@ Page({
         })
     },
     // 活动提示end
-
+	
     openSharePop () {
         var that = this;
         that.setData({
@@ -116,7 +118,11 @@ Page({
             passerPopStatus: false,
             showTousuPop: false,
             jumpPopStatus: false,
+            contPasserPopStatus: false,
         })
+		if (timeInt) {
+			clearInterval(timeInt)
+		}	
     },
     // 连接成功
     onConnect () {
@@ -161,12 +167,10 @@ Page({
             that.setData({
                 // 是否是房主
                 isOwner: true,
-                nim: nim,
                 account: wx.getStorageSync('loginInfo').yunId
             })
         } else {
             that.setData({
-                nim: nim,
                 account: wx.getStorageSync('loginInfo').yunId
             })
         }
@@ -439,15 +443,25 @@ Page({
     },
     handleInviRoadDone () {
         var that = this
+		var num = APP.globalData.playerList.length
         openBaoRoomMate({
             id: that.data.roomData.id
         }).then(res => {
             this.setData({
                 passerPopStatus: false,
                 matePopStatus: true,
-                waitTime: 1
+				contPasserPopStatus:false,
+                waitTime: 10
             })
-            this.getDownTime()
+            this.getDownTime(10,contWait)
+			function contWait(){
+				if (APP.globalData.playerList.length <= num) {
+					that.setData({
+						contPasserPopStatus:true,
+						matePopStatus:false
+					})
+				}
+			}
         })
     },
     handleBegin () {
@@ -595,10 +609,10 @@ Page({
         if (downtimes) {
             timeInt = setInterval(() => {
                 if (downtimes <= 1) {
+					clearInterval(timeInt)
                     that.setData({
                         timePopStatus: false,
                     })
-                    clearInterval(timeInt)
                     if (fun) {
                         fun()
                     }
@@ -615,10 +629,10 @@ Page({
         } else {
             var time = setInterval(() => {
                 if (time1 > 9) {
+					clearInterval(time)
                     that.setData({
                         matePopStatus: false,
                     })
-                    clearInterval(time)
                     this.initRoom()
                 } else {
                     time1++
