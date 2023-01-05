@@ -1,4 +1,3 @@
-<!--03shenmingtansuo/tansuo/tansuo.wxml-->
 <view class="hourse-set">
     <view class="txt">
         <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
@@ -286,8 +285,8 @@
         <view class="img">
             <image src="{{themeDetail.imgUrl}}"/>
         </view>
-        <view class="wait">已等待00:{{waitTime}}</view>
-        <view class="btns" bindtap="concleActivityPop">
+        <view class="wait">00:{{waitTime}}</view>
+        <view class="btns" bindtap="closePop">
             <view class="close btn">取消匹配</view>
         </view>
     </view>
@@ -357,6 +356,20 @@
         <view class="btns">
             <view class="btn  close" bindtap="closePop">取消</view>
             <view class="btn ok" bindtap="handleInviRoadDone">确认匹配</view>
+        </view>
+    </view>
+</block>
+<!-- 继续匹配路人 -->
+<block wx:if="{{contPasserPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">是否继续等待路人</view>
+        <view class="desc">
+            没有路人参与者，可以邀请好友参与
+        </view>
+        <view class="btns">
+            <view class="btn  close" bindtap="closePop">知道了</view>
+            <view class="btn ok" bindtap="handleInviRoadDone">继续匹配</view>
         </view>
     </view>
 </block>
