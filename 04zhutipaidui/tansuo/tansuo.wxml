@@ -4,7 +4,7 @@
             <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
             <text>人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
         </view>
-        <image src="../../static/h-set.png" mode="scaleToFill" bindtap="openSet"/>
+        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet"/>
     </view>
     <!--<view class="end-test" bindtap="toEnd">结束</view>-->
     <!--<view class="end-test" bindtap="dismissTeam">解散</view>-->
@@ -28,7 +28,8 @@
                     <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg">
                     </image>
                     <view class="ico">
-                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/room-wh.png"></image>
+                        <image
+                                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-wh.png"></image>
                         <text class="name">帮助</text>
                     </view>
                 </view>
@@ -46,12 +47,15 @@
                             data-item="{{item}}">
                         <view class="face">
                             <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
-                                <image class="ready" src="../../static/play-status1.png"
+                                <image class="ready" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/play-status1.png"
                                        wx:if="{{item.isReady}}"></image>
                             </image>
                             <view class="ico2" wx:else>
-                                <image src="../../static/room-suo.png">
+                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-suo.png">
                                 </image>
+<!--                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs
+.com/system/images/hsy/room-kong.png">-->
+<!--                                </image>-->
                             </view>
                         </view>
                         <text class="name">{{item.nick}}</text>
@@ -66,7 +70,7 @@
                     scroll-into-view="{{scrollTo}}"
                     scroll-y="true"
             >
-                <block wx:for="{{stepMsgList}}">
+                <block wx:for="{{stepMsgList}}" wx:key="index">
                     <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
                           wx:for-item="item"
                           class="{{item.sysType != 'sys'?'item':'item sys'}}"
@@ -132,7 +136,7 @@
                     scroll-into-view="{{scrollTo}}"
                     scroll-y="true"
             >
-                <block wx:for="{{mesList}}">
+                <block wx:for="{{mesList}}" wx:key="index">
                     <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
                           wx:for-item="item"
                           class="{{item.sysType != 'sys'?'item':'item sys'}}"
@@ -196,9 +200,9 @@
     </view>
     <view class="theme-bot" wx:if="{{step !== (themeDetail.list.length+1)}}">
         <view class="play" bindtap="sendMsg">
-            <image class="img" src="../../static/room-audio1.png" wx:if="{{voiceStatus == 1}}"></image>
-            <image class="img" src="../../static/room-audio2.png" wx:if="{{voiceStatus == 0}}"></image>
-            <image class="img" src="../../static/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
+            <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png" wx:if="{{voiceStatus == 1}}"></image>
+            <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio2.png" wx:if="{{voiceStatus == 0}}"></image>
+            <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
         </view>
         <view class="inp">
             
@@ -206,9 +210,11 @@
             
             <!--        disabled="{{!inputStatus}}"-->
             <input type="text"
+                   value="{{inputText}}"
                    wx:if="{{inputStatus}}"
                    disabled="{{!inputStatus}}"
                    placeholder="说点什么吧..."
+                   confirm-type="send"
                    bindconfirm="sendMsg"/>
         </view>
         <view class="btn" bindtap="handleReady" wx:if="{{!isReady && !isOwner && !isBeginPlay}}">
@@ -267,7 +273,7 @@
 <view class="fupan" wx:if="{{showFupan}}">
     <view class="title">
         <image
-                src="../../static/zt-zan1.png"
+                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png"
                 mode="scaleToFill"
         />
         <view class="txt">
@@ -289,12 +295,12 @@
             <view class="name">{{item.nick}}</view>
             <view class="zan" bindtap="dianZan" data-index="{{index}}">
                 <image
-                        src="../../static/zt-zan2.png"
+                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan2.png"
                         mode="scaleToFill"
                         wx:if="{{!item.zan}}"
                 />
                 <image
-                        src="../../static/zt-zan1.png"
+                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png"
                         mode="scaleToFill"
                         wx:else
                 />
@@ -311,7 +317,7 @@
             <view class="lx">联系客服<button open-type="contact"></button></view>
             <view class="speak">
                 <image
-                        src="../../static/room-audio1.png"
+                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png"
                         mode="scaleToFill"
                 />
                 <text>点击说话</text>
@@ -362,8 +368,8 @@
         <view class="pop-tit">活动提示</view>
         <view class="desc">我是问心小精灵 , 是本场派对的活动主持人。请来到可以语音外放的环境 或 佩戴耳机。</view>
         <view class="checkbox" bindtap="activityChange">
-            <image class="ico" src="../../static/room-check1.png" wx:if="{{!activeStatus}}"></image>
-            <image class="ico" src="../../static/room-check2.png" wx:else></image>
+            <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-check1.png" wx:if="{{!activeStatus}}"></image>
+            <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-check2.png" wx:else></image>
             <text>不再提示</text>
         </view>
         <view class="btns">

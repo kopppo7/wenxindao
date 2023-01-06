@@ -78,13 +78,13 @@ Page({
                   nickname: val.input
               }
               updateImMsg(param).then(res => {
-                  wx.navigateTo({
+                  wx.redirectTo({
                       url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isHaoyou='+this.data.isHaoyou,
                   })
               })
             }
           } else {
-              wx.navigateTo({
+              wx.redirectTo({
                   url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isHaoyou='+this.data.isHaoyou,
               })
           }

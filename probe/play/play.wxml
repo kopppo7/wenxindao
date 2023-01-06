@@ -102,7 +102,7 @@
                   <image bindtap="playAudio" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image>
                   <text>{{itemlist.totalTime}}'</text>
 
-                  <image data-idx="{{indexlist}}" src="../../static/audio-del.png" class="close" bindtap="closeAudio"></image>
+                  <image data-idx="{{indexlist}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/audio-del.png" class="close" bindtap="closeAudio"></image>
                 </view>
               </view>
             </view>

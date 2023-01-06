@@ -8,7 +8,7 @@ import {
     kickingPlayer,
     openBaoRoomMate,
     getRoomDetails,
-    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate
+    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate, addRoomLog
 } from "../api";
 import yunApi from "../../utils/yun";
 import {findByOrderList} from "../../utils/api";
@@ -75,15 +75,16 @@ Page({
         jumpNum: 0,//跳过次数
         jumpPopStatus: false,
         stepList: [],//轮导航列表
-        showOtherStep:false,//显示其他轮
-        stepMsgList:[],//其他轮信息内容
-        viewAccount:'',//查看用户发言
+        showOtherStep: false,//显示其他轮
+        stepMsgList: [],//其他轮信息内容
+        viewAccount: '',//查看用户发言
         contPasserPopStatus: false, //继续等待路人
-        showFupan:false,
-        showPlayerList:[],
+        showFupan: false,
+        showPlayerList: [],
         sec: 60,//复盘倒计时
-		backgrooundMusic:null, //如果设置每一轮的
-		isPlayBgMusic:true
+        backgrooundMusic: null, //如果设置每一轮的
+        isPlayBgMusic: true,
+        inputText: ''
     },
     // 活动提示
     activityChange() {
@@ -92,7 +93,7 @@ Page({
             activeStatus: !active
         })
     },
-    closeActivityPop () {
+    closeActivityPop() {
         this.setData({
             activityPopStatus: false
         })
@@ -101,20 +102,20 @@ Page({
         }
         this.creatRoom()
     },
-    cancelActivityPop () {
+    cancelActivityPop() {
         wx.navigateBack({
             delta: 1,
         })
     },
     // 活动提示end
 
-    openSharePop () {
+    openSharePop() {
         var that = this;
         that.setData({
             sharePopStatus: true
         })
     },
-    closePop () {
+    closePop() {
         var that = this;
         that.setData({
             sharePopStatus: false,
@@ -128,23 +129,23 @@ Page({
             showTousuPop: false,
             jumpPopStatus: false,
             contPasserPopStatus: false,
-			roomSetPopStatus:false
+            roomSetPopStatus: false
         })
-		if (timeInt) {
-			clearInterval(timeInt)
-		}
+        if (timeInt) {
+            clearInterval(timeInt)
+        }
     },
     // 连接成功
-    onConnect () {
+    onConnect() {
         console.log('连接成功111');
     },
     // // 此时说明 SDK 已经断开连接, 请开发者在界面上提示用户连接已断开, 而且正在重新建立连接
-    onWillReconnect (obj) {
+    onWillReconnect(obj) {
         console.log('即将重连');
         console.log(obj.retryCount);
         console.log(obj.duration);
     },
-    onDisconnect (error) {
+    onDisconnect(error) {
         // 此时说明 SDK 处于断开状态, 开发者此时应该根据错误码提示相应的错误信息, 并且跳转到登录页面
         console.log('丢失连接');
         console.log(error);
@@ -164,10 +165,10 @@ Page({
             }
         }
     },
-    onError (error) {
+    onError(error) {
         console.log(error);
     },
-    initRoom () {
+    initRoom() {
         var token = wx.getStorageSync('loginInfo').yunToken;
         var account = wx.getStorageSync('loginInfo').yunId;
         var that = this;
@@ -204,7 +205,7 @@ Page({
         });
     },
     // 群组更新
-    onTeams (e) {
+    onTeams(e) {
         var that = this;
         console.log(that.data.teamId,);
         console.log('收到群组', e);
@@ -214,12 +215,12 @@ Page({
         });
         console.log(222);
     },
-    getUserDone (error, user) {
+    getUserDone(error, user) {
         console.log(error);
         console.log(user);
         console.log('获取用户资料' + (!error ? '成功' : '失败'));
     },
-    getTeamMembersDone (error, obj) {
+    getTeamMembersDone(error, obj) {
         console.log(error);
         console.log(obj);
         console.log('获取群成员' + (!error ? '成功' : '失败'));
@@ -228,7 +229,7 @@ Page({
         }
     },
     // 群成员更新
-    onTeamMembers (obj) {
+    onTeamMembers(obj) {
         console.log('收到群成员', obj);
         var that = this
         var accounts = []
@@ -243,7 +244,7 @@ Page({
             done: that.getUsers
         });
     },
-    getUsers (error, users) {
+    getUsers(error, users) {
         var maxNum = this.data.roomData.maxNumber;
         if (APP.globalData.playerList[this.data.roomData.maxNumber - 1]?.account) {
             // 如果包房人数已满的话，看是否需要下面处理一下
@@ -277,7 +278,7 @@ Page({
         var list = JSON.parse(JSON.stringify(APP.globalData.playerList))
         var showPlayerList = []
         list.map(item => {
-            if (item && item.account){
+            if (item && item.account) {
                 item.zan = 0
                 item.isZan = false
                 showPlayerList.push(item)
@@ -290,15 +291,15 @@ Page({
 
     },
     // 判断是否是房主 如果是房主的话把房主排到第一位
-    onUpdateTeamMember (teamMember) {
+    onUpdateTeamMember(teamMember) {
         console.log('群成员信息更新了', teamMember);
 
     },
-    onAddTeamMembers (obj) {
+    onAddTeamMembers(obj) {
         console.log('新人来了', obj);
         this.onTeamMembers(obj);
     },
-    onRemoveTeamMembers (teamMember) {
+    onRemoveTeamMembers(teamMember) {
         console.log('有人走了', teamMember.accounts[0]);
         var arr = APP.globalData.playerList;
         arr.forEach((item, index) => {
@@ -309,16 +310,16 @@ Page({
         APP.globalData.playerList = arr
 
     },
-    onDismissTeam (obj) {
+    onDismissTeam(obj) {
         console.log('群解散了', obj);
     },
-    onTransferTeam (team, newOrder, oldOrder) {
+    onTransferTeam(team, newOrder, oldOrder) {
         console.log('移交群', team);
         console.log('移交群', newOrder);
         console.log('移交群', oldOrder);
     },
     // 收到消息
-    onMsg (msg) {
+    onMsg(msg) {
         console.log('收到消息了', msg);
         // this.pushMsg(msg);
         switch (msg.type) {
@@ -337,9 +338,9 @@ Page({
                 break;
         }
     },
-    onCustomMsg () {
+    onCustomMsg() {
     },
-    onTeamNotificationMsg (msg) {
+    onTeamNotificationMsg(msg) {
         var msgList = APP.globalData.mesList
         msg.attach.users.forEach(item => {
             if (item.account == msg.attach.accounts[0]) {
@@ -370,32 +371,37 @@ Page({
         }
     },
     // 发送消息
-    sendMsg(index, type) {
+    sendMsg(val) {
+        console.log(val.detail.value);
         var that = this;
+        console.log(this.data.teamId);
         var msg = nim.sendText({
             scene: 'team',
             to: that.data.teamId,
-            text: JSON.stringify({index: index, type: type}),
+            text: val.detail.value,
             done: that.pushMsg
         });
+        this.setData({
+            inputText: ''
+        })
         console.log('正在发送p2p text消息, ' + msg.idClient);
     },
 
     // onDismissTeam () { },
     // 解散群
-    dismissTeam () {
+    dismissTeam() {
         dissolveGroup({
             id: 98,
             token: '9f011c22-e886-4344-b450-ec546d52c0ba'
         })
     },
-    dismissTeamDone (error, obj) {
+    dismissTeamDone(error, obj) {
         console.log(error);
         console.log(obj);
         console.log('解散群' + (!error ? '成功' : '失败'));
     },
     // 创建房间
-    creatRoom () {
+    creatRoom() {
         let params = {
             askId: this.data.askId,
             payId: this.data.themeDetail.baoPayId
@@ -439,9 +445,9 @@ Page({
         }
     },
     // 获取房间详情
-    getRoomDetails (roomId) {
+    getRoomDetails(roomId) {
         var that = this
-        getRoomDetails({ roomId: roomId }).then(res => {
+        getRoomDetails({roomId: roomId}).then(res => {
             that.setData({
                 teamId: res.data.data.imGroup,
                 audioId: res.data.data.audioGroup,
@@ -452,44 +458,45 @@ Page({
         })
     },
 
-    handleReady () {
+    handleReady() {
         this.setData({
             isReady: !this.data.isReady
         })
-        this.sendCustomMsg(1, { status: this.data.isReady })
+        this.sendCustomMsg(1, {status: this.data.isReady})
     },
-    handleInviFriend () {
+    handleInviFriend() {
 
     },
-    handleInviRoad () {
+    handleInviRoad() {
         this.setData({
             passerPopStatus: true
         })
     },
-    handleInviRoadDone () {
+    handleInviRoadDone() {
         var that = this
-		var num = APP.globalData.playerList.length
+        var num = APP.globalData.playerList.length
         openBaoRoomMate({
             id: that.data.roomData.id
         }).then(res => {
             this.setData({
                 passerPopStatus: false,
                 matePopStatus: true,
-				contPasserPopStatus:false,
+                contPasserPopStatus: false,
                 waitTime: 10
             })
-            this.getDownTime(10,contWait)
-			function contWait(){
-				if (APP.globalData.playerList.length <= num) {
-					that.setData({
-						contPasserPopStatus:true,
-						matePopStatus:false
-					})
-				}
-			}
+            this.getDownTime(10, contWait)
+
+            function contWait() {
+                if (APP.globalData.playerList.length <= num) {
+                    that.setData({
+                        contPasserPopStatus: true,
+                        matePopStatus: false
+                    })
+                }
+            }
         })
     },
-    handleBegin () {
+    handleBegin() {
         var num = 0;
         var that = this;
         var userIm = []
@@ -504,29 +511,27 @@ Page({
             }
         })
         if (num > 1) {
-            // if (readyNum !== APP.globalData.truePlayerList.length - 1) {
-            //     wx.showToast({
-            //         title: '还有成员未准备',
-            //         icon: 'none'
-            //     })
-            // } else {
-            //开始游戏
-            this.setData({
-                timePopStatus: true
-            })
-            this.getDownTime(2, startPlay)
-
-            function startPlay() {
-                startPlayRoom({
-                    roomId: that.data.roomData.id,
-                    userIm
-                }).then(res => {
-
-                    that.sendCustomMsg(4, {text: '开始'})
+            if (readyNum !== APP.globalData.truePlayerList.length - 1) {
+                wx.showToast({
+                    title: '还有成员未准备',
+                    icon: 'none'
                 })
-            }
+            } else {
+                //开始游戏
+                this.setData({
+                    timePopStatus: true
+                })
+                this.getDownTime(2, startPlay)
+                function startPlay() {
+                    startPlayRoom({
+                        roomId: that.data.roomData.id,
+                        userIm
+                    }).then(res => {
 
-            // }
+                        that.sendCustomMsg(4, {text: '开始'})
+                    })
+                }
+            }
 
         } else {
             this.setData({
@@ -535,7 +540,7 @@ Page({
         }
     },
     // 踢人
-    handleKick (e) {
+    handleKick(e) {
         console.log(this.data.account);
         console.log(this.data.roomData.ownerUserIm);
         if (e.currentTarget.dataset.item.account === this.data.account) {
@@ -560,7 +565,7 @@ Page({
 
 
     },
-    handleKickDone () {
+    handleKickDone() {
         var that = this;
         kickingPlayer({
             yunId: that.data.kickPlayer.account,
@@ -575,7 +580,7 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    async onLoad (options) {
+    async onLoad(options) {
         // this.creatRoom()
         this.contentScroll()
 
@@ -596,15 +601,15 @@ Page({
                 .replace(/\<img/gi, '<img style="width:100%;height:auto;"')
                 .replace(/\<p/gi, '<p class="p_class"')
                 .replace(/\<span/gi, '<span class="span_class"')
-			let innerAudioContext = wx.createInnerAudioContext({useWebAudioImplement: false});
-			innerAudioContext.src = res.data.data.list[0].guideAudio || 'https://dl.stream.qqmusic.qq.com/C400003YY8ia0o76Cm.m4a?guid=4970673720&vkey=800C4A9A5815065BB85D4E0BA1D707BA74C459E3DE7F0D4676996A2C8496CB4830F103D20FC7C50D81EA1B5813C8258586EEF582E99DE083&uin=694750795&fromtag=120032'
-			innerAudioContext.autoplay = true
-			innerAudioContext.loop = true
+            let innerAudioContext = wx.createInnerAudioContext({useWebAudioImplement: false});
+            innerAudioContext.src = res.data.data.list[0].guideAudio || 'https://dl.stream.qqmusic.qq.com/C400003YY8ia0o76Cm.m4a?guid=4970673720&vkey=800C4A9A5815065BB85D4E0BA1D707BA74C459E3DE7F0D4676996A2C8496CB4830F103D20FC7C50D81EA1B5813C8258586EEF582E99DE083&uin=694750795&fromtag=120032'
+            innerAudioContext.autoplay = true
+            innerAudioContext.loop = true
             that.setData({
                 themeDetail: res.data.data,
                 helpText: res.data.data.detailsText,
-                stepList:res.data.data.list,
-				backgrooundMusic:innerAudioContext
+                stepList: res.data.data.list,
+                backgrooundMusic: innerAudioContext
             })
             wx.setNavigationBarTitle({
                 title: res.data.data.title
@@ -612,7 +617,7 @@ Page({
 
         })
         console.log('this.data.theme', this.data.themeDetail);
-        console.log(this.askId);
+        console.log(this.data.askId);
         if (wx.getStorageSync('activeStatus')) {
             this.setData({
                 activityPopStatus: false
@@ -634,13 +639,13 @@ Page({
 
     //页面执行************************************************
     //倒计时
-    getDownTime (downtimes, fun) {
+    getDownTime(downtimes, fun) {
         var time1 = 0;
         var that = this;
         if (downtimes) {
             timeInt = setInterval(() => {
                 if (downtimes <= 1) {
-					clearInterval(timeInt)
+                    clearInterval(timeInt)
                     that.setData({
                         timePopStatus: false,
                     })
@@ -660,7 +665,7 @@ Page({
         } else {
             var time = setInterval(() => {
                 if (time1 > 9) {
-					clearInterval(time)
+                    clearInterval(time)
                     that.setData({
                         matePopStatus: false,
                     })
@@ -681,8 +686,8 @@ Page({
     runStep: function () {
         var that = this;
         var step = this.data.step
-        var stepData = this.data.themeDetail.list[step]
-		this.data.backgrooundMusic.src=this.data.themeDetail.list[step].guideAudio || 'https://dl.stream.qqmusic.qq.com/C400003YY8ia0o76Cm.m4a?guid=4970673720&vkey=800C4A9A5815065BB85D4E0BA1D707BA74C459E3DE7F0D4676996A2C8496CB4830F103D20FC7C50D81EA1B5813C8258586EEF582E99DE083&uin=694750795&fromtag=120032'
+        var stepData = this.data.themeDetail.list[step - 1]
+        this.data.backgrooundMusic.src = this.data.themeDetail.list[step - 1].guideAudio || 'https://dl.stream.qqmusic.qq.com/C400003YY8ia0o76Cm.m4a?guid=4970673720&vkey=800C4A9A5815065BB85D4E0BA1D707BA74C459E3DE7F0D4676996A2C8496CB4830F103D20FC7C50D81EA1B5813C8258586EEF582E99DE083&uin=694750795&fromtag=120032'
 
         //话术
         var guideWords = stepData.guideWords
@@ -713,10 +718,10 @@ Page({
     speak: function () {
         var that = this;
         var step = this.data.step
-        var stepData = this.data.themeDetail.list[step]
+        var stepData = this.data.themeDetail.list[step - 1]
         //说话时间
         // var speakTime = stepData.speakTime
-        var speakTime = 3
+        var speakTime = 10
 
         //隐藏思考倒计时
         that.setData({
@@ -752,13 +757,13 @@ Page({
             })
         }
         if (that.data.isOwner) {
-            that.sendCustomMsg(4, { text: '轮到' + playerList[personInd].nick + '发言' })
+            that.sendCustomMsg(4, {text: '轮到' + playerList[personInd].nick + '发言'})
         }
         console.log('当前发言人：' + personInd)
         //发言倒计时，倒计时完后下个人发言
         that.getDownTime(speakTime, nextPerson)
 
-        function nextPerson () {
+        function nextPerson() {
             that.setData({
                 show_speak_count_down: false
             })
@@ -769,8 +774,10 @@ Page({
                 })
                 that.speak()
             } else {
+                //记录本轮内容
+                that.addRecode()
                 console.log('全部人发言结束,进入下一轮')
-                if (that.data.step < (that.data.themeDetail.list.length - 1)) {
+                if (that.data.step < that.data.themeDetail.list.length) {
                     //轮数 小于 全部轮数，切换下一轮
                     that.setData({
                         step: that.data.step + 1,
@@ -780,10 +787,10 @@ Page({
                     //全部结束
                     console.log('全部结束')
                     if (that.data.isOwner) {
-                        that.sendCustomMsg(4, { text: '全部结束' })
+                        that.sendCustomMsg(4, {text: '全部结束'})
                     }
                     that.setData({
-                        showFupan:true
+                        showFupan: true
                     })
                     that.countDown()
 
@@ -791,12 +798,110 @@ Page({
             }
         }
     },
+    //点击跳过发言
+    jumpSpeak: function () {
+
+        if (this.data.jumpNum === 1) {
+            this.setData({
+                jumpPopStatus: true
+            })
+        } else {
+            this.sendCustomMsg(6, {text: '跳过发言'})
+            this.setData({
+                isJump: true,
+                inputStatus: false,
+                jumpNum: this.data.jumpNum + 1
+            })
+        }
+    },
+    //确认跳过
+    jumpConfirm: function () {
+
+        this.sendCustomMsg(6, {text: '跳过发言'})
+        this.setData({
+            isJump: true,
+            inputStatus: false,
+            jumpNum: this.data.jumpNum + 1
+        })
+        quitRoom({
+            roomId: this.data.roomData.id
+        }).then(res => {
+            if (res.data.ret === 200) {
+                wx.redirectTo({
+                    url: '/pages/index/index',
+                })
+            }
+        })
+    },
+    //处理跳过发言
+    handleJumpSpeak: function () {
+        clearInterval(timeInt)
+        //成员列表，去掉空的
+        var playerList = []
+        this.data.playerList.map(item => {
+            if (item && item.account) {
+                playerList.push(item)
+            }
+        })
+        this.setData({
+            show_speak_count_down: false
+        })
+        if (this.data.personInd < (playerList.length - 1)) {
+            //发言人index 小于 成员数量，切换下个人发言
+            this.setData({
+                personInd: this.data.personInd + 1,
+            })
+            this.speak()
+        } else {
+            //记录本轮内容
+            this.addRecode()
+            console.log('全部人发言结束,进入下一轮')
+            if (this.data.step < this.data.themeDetail.list.length) {
+                //轮数 小于 全部轮数，切换下一轮
+                this.setData({
+                    step: this.data.step + 1,
+                })
+                this.runStep()
+            } else {
+                //全部结束
+                console.log('全部结束')
+                if (this.data.isOwner) {
+                    this.sendCustomMsg(4, {text: '全部结束'})
+                }
+                this.setData({
+                    showFupan: true
+                })
+                this.countDown()
+            }
+
+        }
+
+    },
+    //添加游戏记录
+    addRecode: function () {
+        //记录本轮内容
+        if (this.data.isOwner) {
+            var msgList = APP.globalData.mesList;
+            var stepMsgList = []
+            msgList.map(item => {
+                if (item.msgStep === this.data.step) {
+                    stepMsgList.push(item)
+                }
+            })
+            addRoomLog({
+                roomId: this.data.roomData.id,
+                askId: this.data.askId,
+                detailsId: this.data.stepList[this.data.step - 1].id,
+                playText: JSON.stringify(stepMsgList)
+            })
+        }
+    },
+
     //发牌
     sendCard: function () {
         findByCard({
             id: this.data.roomData.id
         }).then(res => {
-            console.log(res)
             if (res.data.ret === 200) {
                 var list = res.data.data
 
@@ -817,7 +922,6 @@ Page({
                 }
                 msgList.push(msgObj)
                 APP.globalData.mesList = msgList
-                console.log(msgList)
 
                 //本地记录每轮卡牌
                 var stepCardList = this.data.stepCardList
@@ -907,16 +1011,16 @@ Page({
             }
         })
         //接口记录所选卡牌
-        // addCardForRoom({
-        //     roomId:this.data.roomData.id,
-        //     cardId:curStepCard.selectImage.id,
-        //     roundNumber:this.data.step,
-        //     discard:discard.join(',')
-        // }).then(res => {
-        //     if (res.code === 200){
-        //
-        //     }
-        // })
+        addCardForRoom({
+            roomId: this.data.roomData.id,
+            cardId: curStepCard.selectImage.id,
+            roundNumber: this.data.step,
+            discard: discard.join(',')
+        }).then(res => {
+            if (res.code === 200) {
+
+            }
+        })
 
         //选择卡牌放入内容列表，只有自己看到
         var msgList = APP.globalData.mesList
@@ -931,87 +1035,10 @@ Page({
         this.contentScroll()
 
     },
-    //点击跳过发言
-    jumpSpeak: function () {
 
-        if (this.data.jumpNum === 1) {
-            this.setData({
-                jumpPopStatus: true
-            })
-        } else {
-            this.sendCustomMsg(6, { text: '跳过发言' })
-            this.setData({
-                isJump: true,
-                inputStatus: false,
-                jumpNum: this.data.jumpNum + 1
-            })
-        }
-    },
-    //确认跳过
-    jumpConfirm: function () {
-
-        this.sendCustomMsg(6, { text: '跳过发言' })
-        this.setData({
-            isJump: true,
-            inputStatus: false,
-            jumpNum: this.data.jumpNum + 1
-        })
-        quitRoom({
-            roomId: this.data.roomData.id
-        }).then(res => {
-            if (res.data.ret === 200) {
-                wx.redirectTo({
-                    url: '/pages/index/index',
-                })
-            }
-        })
-    },
-    //处理跳过发言
-    handleJumpSpeak: function () {
-        clearInterval(timeInt)
-        //成员列表，去掉空的
-        var playerList = []
-        this.data.playerList.map(item => {
-            if (item && item.account) {
-                playerList.push(item)
-            }
-        })
-        this.setData({
-            show_speak_count_down: false
-        })
-        if (this.data.personInd < (playerList.length - 1)) {
-            //发言人index 小于 成员数量，切换下个人发言
-            this.setData({
-                personInd: this.data.personInd + 1,
-            })
-            this.speak()
-        } else {
-            console.log('全部人发言结束,进入下一轮')
-            if (this.data.step < this.data.themeDetail.list.length    ) {
-                //轮数 小于 全部轮数，切换下一轮
-                this.setData({
-                    step: this.data.step + 1,
-                })
-                this.runStep()
-            } else {
-                //全部结束
-                console.log('全部结束')
-                if (this.data.isOwner) {
-                    this.sendCustomMsg(4, {text: '全部结束'})
-                }
-                this.setData({
-                    showFupan:true
-                })
-                this.countDown()
-            }
-
-        }
-
-    },
 
     // 发送自定义消息
-    sendCustomMsg (type, val) {
-        console.log(val);
+    sendCustomMsg(type, val) {
         var that = this;
         var content = {
             type: type,
@@ -1030,12 +1057,12 @@ Page({
             content: content ? JSON.stringify(content) : '',
             done: that.pushMsg
         });
-        console.log(msg)
-        console.log('正在发送自定义消息, ' + msg);
+        // console.log(msg)
+        console.log('正在发送自定义消息');
     },
     //渲染消息
     pushMsg(error, msg) {
-        if (!this.data.showOtherStep){
+        if (!this.data.showOtherStep) {
             this.contentScroll()
         }
 
@@ -1044,7 +1071,7 @@ Page({
         // console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error ? '成功' : '失败') + ', id=' + msg.idClient);
         var msgList = APP.globalData.mesList
         var that = this;
-        console.log(msg)
+        console.log('渲染消息', msg)
         if (msg.content) {
             var content = JSON.parse(msg.content)
             if (content.type == 1) {
@@ -1056,7 +1083,6 @@ Page({
                     }
                 })
                 APP.globalData.playerList = play;
-                console.log(APP.globalData.playerList);
             } else if (content.type == 2) {
                 // 自定义消息type为2的时候 玩家是否轮到发言
                 APP.globalData.playerList.forEach(item => {
@@ -1081,7 +1107,7 @@ Page({
                 }
                 if (content.data.value === '开始') {
                     that.setData({
-                        step:1,
+                        step: 1,
                         personInd: 0,
                         isBeginPlay: true
                     })
@@ -1114,8 +1140,7 @@ Page({
                 //跳过发言
                 that.handleJumpSpeak()
 
-            } else if(content.type === 7){
-                console.log(content)
+            } else if (content.type === 7) {
                 var showPlayerList = that.data.showPlayerList
                 showPlayerList[content.data.value].zan++
                 that.setData({
@@ -1132,7 +1157,6 @@ Page({
 
             }
         } else {
-            console.log(msg)
             var msgObj = {
                 fromNick: msg.fromNick,
                 text: msg.text,
@@ -1142,7 +1166,7 @@ Page({
             msgList.push(msgObj)
             APP.globalData.mesList = msgList
         }
-        console.log(APP.globalData.mesList);
+        console.log('mesList', APP.globalData.mesList);
     },
 
     //查看往轮
@@ -1163,36 +1187,35 @@ Page({
             var msgList = APP.globalData.mesList
             var stepMsgList = []
             msgList.map(item => {
-                if (item.msgStep === step){
+                if (item.msgStep === step) {
                     stepMsgList.push(item)
                 }
             })
             this.setData({
-                stepMsgList:stepMsgList,
-                showOtherStep:true
+                stepMsgList: stepMsgList,
+                showOtherStep: true
             })
         }
         if (step === this.data.step) {
             this.setData({
-                showOtherStep:false
+                showOtherStep: false
             })
         }
     },
     //查看用户发言
-    viewPeopleMsg:function (e) {
+    viewPeopleMsg: function (e) {
         var item = e.currentTarget.dataset.item
         console.log(item.account)
-        if (this.data.viewAccount === item.account){
+        if (this.data.viewAccount === item.account) {
             this.setData({
-                viewAccount:''
+                viewAccount: ''
             })
         } else {
             this.setData({
-                viewAccount:item.account
+                viewAccount: item.account
             })
         }
         console.log(this.data.viewAccount)
-
 
 
     },
@@ -1209,28 +1232,30 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady () {
+    onReady() {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow () {
+    onShow() {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide () {
+    onHide() {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload () {
+    onUnload() {
+        this.data.backgrooundMusic.pause()
+        this.data.backgrooundMusic.src = ''
         // this.chatroom.destroy({
         //     done(err) {
         //         console.log('desctroy success', err)
@@ -1241,21 +1266,21 @@ Page({
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh () {
+    onPullDownRefresh() {
 
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom () {
+    onReachBottom() {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage () {
+    onShareAppMessage() {
 
     },
     //content滚动
@@ -1335,11 +1360,11 @@ Page({
             url: config.getDomain + '/oss/upload/uploadFile',
             filePath: tempFilePaths[index],
             name: 'file',
-            header: { "Content-Type": "multipart/form-data", 'token': token },
+            header: {"Content-Type": "multipart/form-data", 'token': token},
             formData: {
                 'file': 'file'
             },
-            success (res) {
+            success(res) {
                 try {
                     var data = JSON.parse(res.data);
                     var image = that.data.tousuImage
@@ -1361,7 +1386,7 @@ Page({
                     })
                 }
             },
-            fail () {
+            fail() {
                 wx.hideLoading();
             }
         })
@@ -1399,12 +1424,12 @@ Page({
         complaintUser(par).then(res => {
             console.log(res)
             wx.showToast({
-              title: '投诉成功',
-                icon:'none'
+                title: '投诉成功',
+                icon: 'none'
 
             })
             this.setData({
-                showTousuPop:false
+                showTousuPop: false
             })
         })
     },
@@ -1423,15 +1448,15 @@ Page({
     },
     //开启关闭音乐
     changeMusic: function () {
-		console.log(this.data.isPlayBgMusic);
-		this.setData({
-			isPlayBgMusic:!this.data.isPlayBgMusic
-		})
-		if (this.data.isPlayBgMusic) {
-			this.data.backgrooundMusic.play()
-		} else{
-			this.data.backgrooundMusic.pause()
-		}
+        console.log(this.data.isPlayBgMusic);
+        this.setData({
+            isPlayBgMusic: !this.data.isPlayBgMusic
+        })
+        if (this.data.isPlayBgMusic) {
+            this.data.backgrooundMusic.play()
+        } else {
+            this.data.backgrooundMusic.pause()
+        }
     },
     changeAudio: function () {
         this.setData({
@@ -1454,8 +1479,8 @@ Page({
         console.log(showPlayerList)
         if (!item.isZan && item.account !== this.data.account) {
             likeTeammate({
-                roomId:that.data.roomData.id,
-                yunId:item.account
+                roomId: that.data.roomData.id,
+                yunId: item.account
             }).then(res => {
                 that.sendCustomMsg(7, {text: index})
                 showPlayerList[index].isZan = true
@@ -1466,12 +1491,10 @@ Page({
             })
 
 
-
         } else {
             // this.sendMsg(index, 'reduce')
             // playerList[index].isZan = false
         }
-
 
 
     },
@@ -1480,38 +1503,40 @@ Page({
         var that = this;
         timeout = setTimeout(function () {
             that.setData({
-                sec:(that.data.sec-1)
+                sec: (that.data.sec - 1)
             })
-            if (that.data.sec > 0){
+            if (that.data.sec > 0) {
                 that.countDown()
             } else {
                 that.quit()
             }
-        },1000)
+        }, 1000)
     },
     //离开
-    quit:function () {
+    quit: function () {
 
         console.log(this.data.isOwner)
-        // if (this.data.isOwner){
-        //     //解散房间
-        //     dissolveGroup({
-        //         id: this.data.roomData.id,
-        //         token: wx.getStorageSync('tokenKey')
-        //     })
-        // } else {
-        //    //退出房间
-        //     quitRoom({
-        //         id: this.data.roomData.id
-        //     })
-        // }
+        if (this.data.isOwner) {
+            //解散房间
+            dissolveGroup({
+                id: this.data.roomData.id,
+                token: wx.getStorageSync('tokenKey')
+            })
+            wx.removeStorageSync('roomData')
+        } else {
+            //退出房间
+            quitRoom({
+                id: this.data.roomData.id
+            })
+            wx.removeStorageSync('roomData')
+        }
         this.setData({
-            showFupan:false,
-            step:this.data.stepList.length+1
+            showFupan: false,
+            step: this.data.stepList.length + 1
         })
-
-
-
+        this.data.backgrooundMusic.pause()
+        this.data.backgrooundMusic.src = ''
         clearTimeout(timeout)
     },
+
 })

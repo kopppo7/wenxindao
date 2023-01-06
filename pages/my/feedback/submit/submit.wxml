@@ -32,7 +32,7 @@
           </swiper-item>
         </swiper>
         <view class="del-img">
-         <image class="icon" src="../../../../static/audio-del.png" bindtap="deleteImg"></image>
+         <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/audio-del.png" bindtap="deleteImg"></image>
         </view>
     </view>
 </view>

@@ -34,7 +34,7 @@
             <view class="title">我的动态</view>
             <!-- <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-filter.svg"></image> -->
         </view>
-        <view class="trend-list">     
+        <view class="trend-list">
             <view class="trend-item" wx:for="{{list}}"  wx:for-item="item" wx:key="id">
                <!-- 每日调频  wx:if="{{item.category==0}}" -->
             <view class="trend-item" wx:if="{{item.category==0}}" bindtap="detail" data-type="0" data-id="{{item.id}}">
@@ -117,7 +117,7 @@
                         </view>
                         <!-- <view class="txt"><text>3</text>人已参与</view> -->
                     </view>
-                </view> 
+                </view>
               </view>
             </view>
         </view>
@@ -125,7 +125,7 @@
 </view>
 
 <view class="nav">
-    <navigator url="" hover-class="none" class="item active">
+    <navigator url="/pages/index/index" hover-class="none" class="item active">
         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-nav1.png"></image>
         <view class="txt">问心岛</view>
     </navigator>

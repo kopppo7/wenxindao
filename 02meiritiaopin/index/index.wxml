@@ -66,7 +66,7 @@
         <view class="btn-audio" bindtap="playAudio" data-type="0" wx:if="{{content.putType == 5}}">
           <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image>
           <text>{{content.times}}'</text>
-          <image data-iid="{{idx}}" src="../../static/audio-del.png" class="close" bindtap="closeAudio"></image>
+          <image data-iid="{{idx}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/audio-del.png" class="close" bindtap="closeAudio"></image>
         </view>
         <view class="btn-yuyin" bindtap="changePutType" data-type="1" wx:if="{{content.putType == 0}}" data-iid="{{idx}}">
           <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>文字输入
@@ -95,7 +95,7 @@
     </view>
 
     <view class="addThing" bindtap="addThing" wx:if="{{activeIndex == 1&&contentsArray[activeIndex].length<3}}">
-      <image class="m-p1" src="../../static/plus.png"></image>
+      <image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/plus.png"></image>
       <text class="name">添加一件事</text>
     </view>
     <radio-group bindchange="radioChange">

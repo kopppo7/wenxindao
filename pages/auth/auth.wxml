@@ -6,7 +6,7 @@
   <view class="form">
     <button class="portrait" open-type="chooseAvatar" bindchooseavatar="chooseAvatar">
       <block wx:if="{{!headImg}}">
-        <image class="icon-xiangji" src="/static/xiangji.png"></image>
+        <image class="icon-xiangji" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/xiangji.png"></image>
         <text>设置头像</text>
       </block>
       <image class="avatar" wx:else src="{{headImg}}" ></image>

@@ -7,9 +7,12 @@
         <navigator url="/probe/index/index" hover-class="none" class="item">
             <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title2.png"></image>
         </navigator>
-        <view bindtap="goParty" hover-class="none" class="item">
+        <navigator url="/04zhutipaidui/index/index" hover-class="none" class="item">
             <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title3.png"></image>
-        </view>
+        </navigator>
+<!--        <view bindtap="goParty" hover-class="none" class="item">-->
+<!--            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title3.png"></image>-->
+<!--        </view>-->
     </view>
     <view class="index-row2">
       <block wx:for="{{list}}" wx:for-item="item" wx:key="id">

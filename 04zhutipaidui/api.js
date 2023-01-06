@@ -99,3 +99,8 @@ export const findByCard = function (data) {
 export const addCardForRoom = function (data) {
     return http.post(handleURL('/room/addCardForRoom'), data);
 }
+// /room/addRoomLog
+// 主题派对 保存房间游玩记录
+export const addRoomLog = function (data) {
+    return http.post(handleURL('/room/addRoomLog'), data);
+}
