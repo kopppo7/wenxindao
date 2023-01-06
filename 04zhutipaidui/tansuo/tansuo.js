@@ -692,8 +692,8 @@ Page({
         //话术
         var guideWords = stepData.guideWords
         //思考时间
-        // var thinkTime = stepData.thinkTime
-        var thinkTime = 3
+        var thinkTime = stepData.thinkTime
+        // var thinkTime = 3
 
         //显示引导语言
         this.setData({
@@ -720,8 +720,8 @@ Page({
         var step = this.data.step
         var stepData = this.data.themeDetail.list[step - 1]
         //说话时间
-        // var speakTime = stepData.speakTime
-        var speakTime = 10
+        var speakTime = stepData.speakTime
+        // var speakTime = 30
 
         //隐藏思考倒计时
         that.setData({
