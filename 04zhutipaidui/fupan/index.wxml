@@ -1,55 +1,55 @@
 <!--04zhutipaidui/fupan/index.wxml-->
 <view class="fupan">
-  <view class="title">
-    <image
-      src="../../static/zt-zan1.png"
-      mode="scaleToFill"
-    />
-    <view class="txt">
-      为他点赞提升匹配到的概率
-    </view>
-  </view>
-  <view class="list">
-    <view class="person">
-      <view class="avatar">
+    <view class="title">
         <image
-          src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"
-          mode="scaleToFill"
+                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png"
+                mode="scaleToFill"
         />
-        <view class="num">1</view>
-        <view class="tx">投诉</view>
-      </view>
-      <view class="name">玩家啊1</view>
-      <view class="zan">
-        <image
-          src="../../static/zt-zan2.png"
-          mode="scaleToFill"
-          wx:if="{{noZan}}"
-        />
-        <image
-          src="../../static/zt-zan1.png"
-          mode="scaleToFill"
-          v-else
-        />
-        <view class="txt" wx:if="!noZan">2</view>
-      </view>
+        <view class="txt">
+            为他点赞提升匹配到的概率
+        </view>
     </view>
-  </view>
-  <view class="bot-fix">
-    <view class="countdown">
-      <text class="time">45s </text>
-      <text>后关闭复盘环节</text>
+    <view class="list">
+        <view class="person" wx:for="{{playerList}}" wx:key="index">
+            <view class="avatar">
+                <image
+                        src="{{item.avatar}}"
+                        mode="scaleToFill"
+                />
+                <view class="num">{{index+1}}</view>
+                <view class="tx">投诉</view>
+            </view>
+            <view class="name">{{item.nick}}</view>
+            <view class="zan" bindtap="dianZan" data-index="{{index}}">
+                <image
+                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan2.png"
+                        mode="scaleToFill"
+                        wx:if="{{!item.zan}}"
+                />
+                <image
+                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png"
+                        mode="scaleToFill"
+                        wx:else
+                />
+                <view class="txt" wx:if="{{item.zan}}">{{item.zan}}</view>
+            </view>
+        </view>
     </view>
-    <view class="btns">
-      <view class="lx">联系客服</view>
-      <view class="speak">
-        <image
-          src="../../static/room-audio1.png"
-          mode="scaleToFill"
-        />
-        <text>点击说话</text>
-      </view>
-      <view class="leave">离开</view>
+    <view class="bot-fix">
+        <view class="countdown">
+            <text class="time">{{sec}}s</text>
+            <text>后关闭复盘环节</text>
+        </view>
+        <view class="btns">
+            <view class="lx">联系客服</view>
+            <view class="speak">
+                <image
+                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png"
+                        mode="scaleToFill"
+                />
+                <text>点击说话</text>
+            </view>
+            <view class="leave" bindtap="quit">离开</view>
+        </view>
     </view>
-  </view>
 </view>

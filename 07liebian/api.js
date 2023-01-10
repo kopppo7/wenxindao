@@ -80,27 +80,9 @@ export const kickingPlayer = function (params) {
 }
 // 主题派对 支付
 export const getPayParty = function (data) {
-  return http.post(config.getOrder+'/payParty',data);
+    return http.post(config.getOrder+'/payParty',data);
 }
 // 主题派对 匹配游戏
 export const roomMatchingPlay = function (id) {
-  return http.get(handleURL('/room/matchingPlay?id='+id));
-}
-
-// 主题派对 查询房间详情
-export const getRoomDetails = function (data) {
-    return http.post(handleURL('/room/getRoomDetails'), data);
-}
-// 主题派对 查询当前轮次卡牌
-export const findByCard = function (data) {
-    return http.get(handleURL('/room/findByCard'), data);
-}
-// 主题派对 新增当前人当轮卡牌
-export const addCardForRoom = function (data) {
-    return http.post(handleURL('/room/addCardForRoom'), data);
-}
-// /room/addRoomLog
-// 主题派对 保存房间游玩记录
-export const addRoomLog = function (data) {
-    return http.post(handleURL('/room/addRoomLog'), data);
+    return http.get(handleURL('/room/matchingPlay?id='+id));
 }

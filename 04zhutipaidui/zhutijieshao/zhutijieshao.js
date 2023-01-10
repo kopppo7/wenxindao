@@ -25,18 +25,27 @@ Page({
         area: '',
     },
     // 打开购买本探索弹窗
-    openBuyPop () {
+    openBuyPop (e) {
+        var type = e.currentTarget.dataset.type
         var that = this;
         console.log(roomMatchingPlay);
         roomMatchingPlay(that.data.themeId).then(res => {
+            console.log(res.data)
             if (res.data.ret === 201) {
                 wx.navigateTo({
                   url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
                 })
-            }else{
-                wx.navigateTo({
-                    url: '04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId,
-                  })
+            }else if (res.data.ret === 200){
+                if (type === 'haoyou'){
+                    wx.navigateTo({
+                        url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId+'&roomId='+res.data.data+'&isHaoyou=true',
+                    })
+                } else {
+                    wx.navigateTo({
+                        url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId+'&roomId='+res.data.data+'&isMatch=true',
+                    })
+                }
+
             }
         })
 

@@ -5,6 +5,7 @@ page{
 .intro-row1{
 	display: flex;
 	margin-bottom: 48rpx;
+	padding-top: 30rpx;
 }
 .intro-row1 .pic{
 	flex: 0 0 180rpx;

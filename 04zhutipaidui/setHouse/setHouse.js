@@ -1,5 +1,6 @@
 // 04zhutipaidui/setHouse/setHouse.js
 import {
+    findByAskPartyOne,
     updateImMsg,
 } from "../api";
 import config from "../../utils/config";
@@ -11,7 +12,11 @@ Page({
     data: {
         useMes: {},
         isShow: true,
-        themeId:''
+        themeId:'',
+        detailObj:{},
+        roomId:'',
+        isMatch:'',
+        isHaoyou:''
     },
     //上传本地图片
     radioChange(e) {
@@ -73,14 +78,14 @@ Page({
                   nickname: val.input
               }
               updateImMsg(param).then(res => {
-                  wx.navigateTo({
-                      url: '/04zhutipaidui/tansuo/tansuo?id='+this.data.themeId,
+                  wx.redirectTo({
+                      url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isHaoyou='+this.data.isHaoyou,
                   })
               })
             }
           } else {
-              wx.navigateTo({
-                  url: '/04zhutipaidui/tansuo/tansuo?id='+this.data.themeId,
+              wx.redirectTo({
+                  url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isHaoyou='+this.data.isHaoyou,
               })
           }
         } else {
@@ -91,6 +96,28 @@ Page({
             })
         }
     },
+
+    getRoomDet:function () {
+        findByAskPartyOne({ id: this.data.themeId }).then(res => {
+            let obj = res.data.data;
+            obj.tips = obj.tips.split(' ');
+            console.log(obj);
+            let richText1 = obj.detailsText
+            let richText2 = obj.flowText
+            obj.detailsText = richText1
+                .replace(/\<img/gi, '<img style="width:100%;height:auto;"')
+                .replace(/\<p/gi, '<p class="p_class"')
+                .replace(/\<span/gi, '<span class="span_class"')
+            obj.flowText = richText2
+                .replace(/\<img/gi, '<img style="width:100%;height:auto;"')
+                .replace(/\<p/gi, '<p class="p_class"')
+                .replace(/\<span/gi, '<span class="span_class"')
+            this.setData({
+                detailObj: obj
+            })
+        })
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
@@ -103,7 +130,11 @@ Page({
         }
         this.setData({
             themeId: options.id,
+            roomId:options.roomId,
+            isMatch:options.isMatch,
+            isHaoyou:options.isHaoyou,
         })
+        this.getRoomDet()
     },
 
     /**

@@ -19,7 +19,56 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "askId=9&isfriend=1&roomId=73",
+          "query": "askId=10&roomId=93&isMatch=true&isHaoyou=true",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "主题探索",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=10",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "投诉",
+          "pathName": "04zhutipaidui/tousu/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "列表",
+          "pathName": "04zhutipaidui/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "复盘畅聊",
+          "pathName": "04zhutipaidui/fupan/index",
+          "query": "roomId=65",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "支付",
+          "pathName": "07liebian/goumaixiwei/goumaixiwei",
+          "query": "id=9",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "隐私设置",
+          "pathName": "04zhutipaidui/setHouse/setHouse",
+          "query": "id=9",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "主题介绍",
+          "pathName": "04zhutipaidui/zhutijieshao/zhutijieshao",
+          "query": "id=10",
           "launchMode": "default",
           "scene": null
         },
