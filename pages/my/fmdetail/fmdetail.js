@@ -10,7 +10,9 @@ Page({
    */
   data: {
     info: {},
-    showShare: false
+    showShare: false,
+    bigPopStatus: false,
+    bigCardImgUrl: ''
   },
   showShare() {
      this.setData({
@@ -36,6 +38,12 @@ Page({
       this.setData({
         info: info
       })
+    })
+  },
+  openBig(e) {
+    this.setData({
+      bigPopStatus: true,
+      bigCardImgUrl: e.currentTarget.dataset.pinurl
     })
   },
   play(e) {
@@ -68,6 +76,12 @@ Page({
     })
     this.setData({
         list: list
+    })
+  },
+  closePopBig(){
+    this.setData({
+      bigPopStatus: false,
+      bigCardImgUrl: ''
     })
   },
   /**

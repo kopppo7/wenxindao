@@ -14,6 +14,9 @@ import {
   getLoginInfo,
   setLoginInfo
 } from '../../utils/stoage'
+import {
+  formatTime
+} from '../../utils/util'
 Page({
 
   /**
@@ -33,7 +36,8 @@ Page({
     total: 0,
     isShowVoice: false,
     shareList: [],
-    areadyShareList: [] // 已分享
+    areadyShareList: [], // 已分享
+    shareNum: 0
   },
   // 打开购买本探索弹窗
   openBuyPop() {
@@ -199,6 +203,10 @@ Page({
         .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
       res.data.data.introduce = res.data.data.introduce.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
         .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
+      if (res.data.data.powerExpiratTime) {
+        let dateTime = formatTime(new Date(res.data.data.powerExpiratTime));
+        res.data.data.powerExpiratTime = dateTime.year + '年' + dateTime.month + '月' + dateTime.day + '日';
+      }
       this.setData({
         product: res.data.data,
         labels: res.data.data.labels ? res.data.data.labels.split(',') : []
@@ -238,6 +246,9 @@ Page({
     receiveDetail(shareId, id).then((res) => {
       let list = []
       if (res.data.data) {
+        this.setData({
+          shareNum: res.data.data.length
+        })
         for (let i = 0; i < 4; i++) {
           if (i < res.data.data.length) {
             list[i] = res.data.data[i]

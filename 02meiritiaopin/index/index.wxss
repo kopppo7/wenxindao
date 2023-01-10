@@ -59,7 +59,7 @@ page {
 .m-ask {
 	font-size: 30rpx;
 	line-height: 42rpx;
-	margin-bottom: 48rpx;
+	margin-bottom: 32rpx;
 }
 .m-ask .item.dian{
 	position: relative;
@@ -212,12 +212,13 @@ page {
 .card-list {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 54rpx;
+  margin-bottom: 48rpx;
+  align-items: center;
 }
 
 .card-list .item {
 	position: relative;
-	width: 212rpx;
+	width: 225rpx;
 }
 
 .card-list .item .pic {
@@ -246,15 +247,17 @@ page {
 }
 
 .card-list .item .pic{
-	height: 340rpx;
-	margin-top: -10rpx;
-	background: transparent;
-	border: 2px solid transparent;
+	height: 334rpx;
+  background: transparent;
+  border: none;
 }
-
+.card-list .item.active{
+  width: 235rpx;
+}
 .card-list .item.active .pic {
-	background: #FFB58C;
-	border: 2px solid #FFB58C;
+	background: #fff;
+  border: none;
+  height: 348rpx;
 }
 
 .pop-intro {}

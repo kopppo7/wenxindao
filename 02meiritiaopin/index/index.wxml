@@ -44,7 +44,7 @@
         抽牌获得启示
       </view>
       <view wx:else>
-        <view class="z-btn" bindtap="getDayCard" data-index="{{idx}}">
+        <view class="z-btn" bindtap="getChangeCard" data-index="{{idx}}">
           <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/refresh-cw-01.svg"></image>
           换一换卡牌
         </view>

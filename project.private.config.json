@@ -12,7 +12,7 @@
         {
           "name": "裂变分享",
           "pathName": "probe/detail/detail",
-          "query": "id=15&shareId=6",
+          "query": "id=15&shareId=12",
           "launchMode": "default",
           "scene": null
         },
@@ -20,6 +20,13 @@
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
           "query": "askId=9&isfriend=1&roomId=73",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "分享海报页面调试",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "id=82",
           "launchMode": "default",
           "scene": null
         }

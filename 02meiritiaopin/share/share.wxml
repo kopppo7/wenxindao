@@ -1,7 +1,7 @@
 <!--02meiritiaopin/share/share.wxml-->
 <view class="canvas-box my_canvas" id="my-canvas">
     <view class="s1 my_draw_canvas">
-        <image class="s1-l my_draw_canvas"src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-avatar2.png" data-type="image" data-url="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-avatar2.png"></image>
+        <image class="s1-l my_draw_canvas" src="{{headImg}}" data-type="image" data-url="{{headImg}}"></image>
         <view class="s1-r">
             <view class="days my_draw_canvas" data-type="text" data-text="{{nowDate.gregorianDay}}">{{nowDate.gregorianDay}}</view>
             <view class="date-box my_draw_canvas" data-type="text">

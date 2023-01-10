@@ -2,6 +2,8 @@ import {
   addFm,
   findByFmForUser,
   getDayCard,
+  getChangeCard,
+  findMyTemp,
   inspectText,
   dayForSignNumber,
   uploadFile
@@ -35,7 +37,7 @@ Page({
       txt: "",
       voice: ""
     },
-    types: 0, // 类型1每日调频,2每日事件,3复盘
+    types: 0, // 类型0每日调频,1每日事件,2复盘
     autioStatus: 1,
     tempFilePath: "",
     nowDate: null,
@@ -193,8 +195,9 @@ Page({
     var that = this;
     that.setData({
       activeIndex: e.currentTarget.dataset.ind,
-      types: e.currentTarget.dataset.ind + 1
+      types: e.currentTarget.dataset.ind 
     })
+    this.findMyTemp();
     that.initAudio()
   },
   changeCard(e) {
@@ -208,13 +211,37 @@ Page({
     this.setData({
       nowDate: formatTime(new Date())
     })
+    this.findMyTemp();
     // this.getDayCard()
     this.dayForSignNumber()
+  },
+  findMyTemp(){
+    findMyTemp(this.data.types).then(res=>{
+      if(res.data.ret==200){
+        if(this.data.contentsArray[this.data.activeIndex][0].cards.length=0){
+          this.data.contentsArray[this.data.activeIndex][0].cardIndex=0
+        }
+        var cards = JSON.parse(res.data.data.contents);
+        if(cards.length>3){
+          cards = cards.splice(0,3);
+        }
+        this.data.contentsArray[this.data.activeIndex][0].cards=cards;
+        this.data.contentsArray[this.data.activeIndex][0].showCards=true;
+        this.data.contentsArray[this.data.activeIndex][0].imgUrl= this.data.contentsArray[this.data.activeIndex][0].cards[0].imgUrl
+        this.setData({
+          contentsArray:this.data.contentsArray
+        })
+      }else{
+        wx.showToast({
+          title: res.data.msg,
+          icon:'none'
+        })
+      }
+    });
   },
   // 新增每日调频
   async addFm() {
     var isGoOn=true;
-    debugger
     for (var i = 0; i < this.data.contentsArray[this.data.activeIndex].length; i++) {
       await new Promise((resolve)=>{
         if(this.data.contentsArray[this.data.activeIndex][i].imgUrl==''){
@@ -282,16 +309,45 @@ Page({
   // 随机查询今日随机卡牌
   getDayCard(e) {
     let that = this;
-    getDayCard().then(res => {
-      if(this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards.length=0){
-        this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardIndex=0
+    getDayCard(that.data.types).then(res => {
+      if(res.data.ret==200){
+        if(this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards.length=0){
+          this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardIndex=0
+        }
+        this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards=res.data.data;
+        this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].showCards=true;
+        this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].imgUrl= this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards[e.currentTarget.dataset.index].imgUrl
+        that.setData({
+          contentsArray:this.data.contentsArray
+        })
+      }else{
+        wx.showToast({
+          title: res.data.msg,
+          icon:'none'
+        })
       }
-      this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards=res.data.data;
-      this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].showCards=true;
-      this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].imgUrl= this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards[e.currentTarget.dataset.index].imgUrl
-      that.setData({
-        contentsArray:this.data.contentsArray
-      })
+    })
+  },
+  // 随机查询今日随机卡牌
+  getChangeCard(e) {
+    let that = this;
+    getChangeCard(that.data.types).then(res => {
+      if(res.data.ret==200){
+        if(this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards.length=0){
+          this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardIndex=0
+        }
+        this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards=res.data.data;
+        this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].showCards=true;
+        this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].imgUrl= this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards[e.currentTarget.dataset.index].imgUrl
+        that.setData({
+          contentsArray:this.data.contentsArray
+        })
+      }else{
+        wx.showToast({
+          title: res.data.msg,
+          icon:'none'
+        })
+      }
     })
   },
   bindTextVal(e) {
@@ -370,7 +426,7 @@ Page({
                       content: '您未授权录音，功能将无法使用',
                       showCancel: false,
                       success: function (res) {
-
+                        
                       },
                     })
                   } else {
@@ -399,8 +455,6 @@ Page({
         })
       }
     })
-
-
   },
   //暂停录音
   pause: function (e) {

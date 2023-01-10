@@ -6,6 +6,7 @@ import {
 } from "../../utils/fm";
 
 import Wxml2Canvas from 'wxml2canvas'
+import { login } from "../../utils/common";
 Page({
 
   /**
@@ -23,7 +24,8 @@ Page({
     share: {
       title: '',
       query: ''
-    }
+    },
+    headImg:''
   },
   findByFmOne() {
     let that = this;
@@ -34,7 +36,8 @@ Page({
       that.setData({
         content: content[0],
         cardTime: res.data.data.addTime.substring(11, 16),
-        cardImg: content[0].imgUrl
+        cardImg: content[0].imgUrl,
+        headImg:res.data.data.userHeadImg
       })
       that.drawMyCanvas()
     })
@@ -71,7 +74,7 @@ Page({
       })
       setTimeout(() => {
         that.startDraw()
-      }, 1500);
+      }, 10);
     }).exec()
   },
   startDraw() {

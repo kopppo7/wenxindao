@@ -16,10 +16,18 @@ export const findByFmForUser = function (data) {
     return http.post(handleURL('/askfm/findByFmForUser'), data);
 };
 
-
 // 随机查询今日随机卡牌
 export const getDayCard = function (data) {
-    return http.get(handleURL('/askfm/getDayCard'), data);
+    return http.get(handleURL('/askfm/getDayCard?types='+data));
+};
+
+// 换一换卡牌
+export const getChangeCard = function (data) {
+  return http.get(handleURL('/askfm/getChangeCard?types='+data));
+};
+// 获取我每天临时存储的信息
+export const findMyTemp = function (data) {
+  return http.get(handleURL('/askfm/findMyTemp?types='+data));
 };
 
 

@@ -39,10 +39,13 @@ Page({
       }
     },
     goParty(){
-      wx.showModal({
-        title: '主题派对功能正在开发中...',
-        showCancel:false
+      wx.navigateTo({
+        url: '/04zhutipaidui/index/index',
       })
+      // wx.showModal({
+      //   title: '主题派对功能正在开发中...',
+      //   showCancel:false
+      // })
     },
     
     getData(){

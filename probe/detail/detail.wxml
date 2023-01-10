@@ -15,10 +15,10 @@
   </view>
   <view class="share-log" wx:if="{{product.isPower != 1 }}">
     <view>
-      <view class="btitle">邀请好友 免费解锁</view>
+      <view class="btitle">还缺{{4-shareNum}}人解锁 一起努力</view>
       <view class="txt">使用期一年</view>
     </view>
-    <view class="hasNum">
+    <view class="hasNum" wx:if="{{shareNum>0}}">
       <view class="invi-person">
          <!-- 需要循环的 -->
          <view class="invi-box" wx:for="{{shareList}}"  wx:for-item="item" wx:key="*this">
@@ -26,9 +26,21 @@
            <button wx:else open-type="share" data-type="liebian">+</button>
          </view>
       </view>
-
-      
-      <view class="invi-num">已邀请{{areadyShareList.length}}位</view>
+      <!-- <view class="invi-num">已邀请{{areadyShareList.length}}位</view> -->
+    </view>
+    <view class="share-btn" wx:else>
+      <button open-type="share" data-type="liebian">立即邀请</button>
+    </view>
+  </view>
+  <view wx:else class="share-log">
+    <view>
+      <view class="btitle">解锁成功！</view>
+      <view class="txt">到期时间为 {{product.powerExpiratTime}}</view>
+    </view>
+    <view class="share-sucess">
+      <view>
+        <image src="/static/dui.png"></image>
+      </view>
     </view>
   </view>
 
