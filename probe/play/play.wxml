@@ -1,197 +1,290 @@
 <!--03shenmingtansuo/tansuo/tansuo.wxml-->
-<view class="jdt-box"><text style="width: {{(step + 1) * stepBg }}%"></text></view>
+<view class="jdt-box">
+    <text style="width: {{(step + 1) * stepBg }}%"></text>
+</view>
 <scroll-view class="z-tab2" scroll-x="true">
-  <view data-idx="0" bindtap="changeStep" class="item {{step == 0 ? 'active' : ''}}">引言</view>
-  <view bindtap="changeStep" wx:for="{{stepList}}" data-idx="{{index + 1}}" wx:for-item="item" wx:for-index="index" wx:key="*this" class="item {{step == index + 1 ? 'active' : ''}}">第{{index + 1}}轮</view>
-  <view bindtap="changeStep" data-idx="{{ stepList.length + 1}}" class="item {{step == stepList.length + 1 ? 'active' : ''}}">结语</view>
+    <view data-idx="0" bindtap="changeStep" class="item {{step == 0 ? 'active' : ''}}">引言</view>
+    <view bindtap="changeStep" wx:for="{{stepList}}" data-idx="{{index + 1}}" wx:for-item="item" wx:for-index="index"
+          wx:key="index" class="item {{step == index + 1 ? 'active' : ''}}">第{{index + 1}}轮
+    </view>
+    <view bindtap="changeStep" data-idx="{{ stepList.length + 1}}"
+          class="item {{step == stepList.length + 1 ? 'active' : ''}}">结语
+    </view>
 </scroll-view>
 <view class="wp">
-  <view class="yinyan-box" wx:if="{{step == 0}}">
-    <view class="box1">
-      <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
-      <view class="txt">
-        <view>大家好，欢迎开启本次生命探索。</view>
-        <view>今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这种性格给我们带来什么样的影响，</view>
-      </view>
-    </view>
-    <view class="box2">
-      <view class="s1">阅读引言后，点击下一步。在之后的探索中，点击参考1 和 参考2的头像会看到他们的回答。 </view>
-      <view class="s2">
-        <view class="s2-item active">
-          <view class="avatar-box">
-            <text>1</text>
-            <image class="avatar" src="{{userInfo.headImg}}"></image>
-          </view>
-          <view class="name">我</view>
-        </view>
-        <view class="s2-item">
-          <view class="avatar-box">
-            <text>2</text>
-            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
-          </view>
-          <view class="name">参考1</view>
-        </view>
-        <view class="s2-item">
-          <view class="avatar-box">
-            <text>3</text>
-            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
-          </view>
-          <view class="name">参考2</view>
-        </view>
-      </view>
-      <view class="g-submit" catchtap="nextStep">下一步</view>
-    </view>
-  </view>
-  <view class="tansuo-row" wx:if="{{step > 0 && step <= stepList.length}}">
-    <view wx:for="{{list}}" wx:for-item="itemlist" wx:for-index="indexlist">
-      <view wx:if="{{ step - 1 == indexlist }}">
+    <view class="yinyan-box" wx:if="{{step == 0}}">
         <view class="box1">
-          <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
-          <view class="txt">{{itemlist.content}}</view>
+            <image class="avatar"
+                   src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+            <view class="txt">
+                <view>大家好，欢迎开启本次生命探索。</view>
+                <view>今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这种性格给我们带来什么样的影响，</view>
+            </view>
         </view>
         <view class="box2">
-          <view class="box2-r">
-            <view class="tit">链接卡牌，回答问心精灵的问题。</view>
-            <view class="cardContent">
-              <view class="randomCard" wx:if="{{!itemlist.selectCard}}">
-                <view class="cardSelected">
-                  <image src="{{itemlist.randomCard[itemlist.randomCardIndex].imgUrl}}" mode="widthFix"></image>
-                  <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{itemlist.randomCard[itemlist.randomCardIndex].imgUrl}}" catchtap="showImg"> </image>
-                </view>
-                <view class="cardPool">
-                  <image class="{{itemlist.randomCardIndex == index?'selected':''}}" wx:for="{{itemlist.randomCard}}" wx:for-item="item1" wx:for-index="index" wx:key="id" data-idx="{{index}}" data-idxp="{{indexlist}}" catchtap="changeImg" src="{{item1.imgUrl}}" mode="widthFix"></image>
-                </view>
-              </view>
-              <image class="cardImg" wx:if="{{itemlist.selectCard}}" src="{{itemlist.selectCard.imgUrl}}" mode="widthFix">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{itemlist.selectCard.imgUrl}}" catchtap="showImg"> </image>
-              </image>
-              <view class="cardTxt" wx:if="{{itemlist.selectCard}}">{{itemlist.selectCard.answer}}</view>
-              <!-- 文字输入 语音录入 -->
-              <view class="form-z" wx:if="{{!itemlist.selectCard}}">
-                <view class="textarea-box" wx:if="{{itemlist.putType != 5}}">
-                  <textarea wx:if="{{itemlist.putType == 1}}" data-idx="{{indexlist}}" bindinput="inspectText" placeholder="链接卡片回答问题...（最多500字）" maxlength="500" placeholder-style="color: #B6B2CF;" value="{{itemlist.contents.txt}}" />
-                  <view class="btn-yuyin" bindtap="changePutType" data-type="0" data-idx="{{indexlist}}" wx:if="{{itemlist.putType == 1}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>语音输入
-                  </view>
-                  <view class="btn-yuyin" bindtap="changePutType" data-type="1" data-idx="{{indexlist}}" wx:if="{{itemlist.putType == 0}}">
-                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>文字输入
-                  </view>
-                  <view class="m-luyin" wx:if="{{itemlist.putType == 0}}">
-                    <!-- bindtap="start" -->
-                    <button class="btn-luyin" bindtap="start" data-idx="{{indexlist}}" wx:if="{{itemlist.autioStatus == 1 }}">
-                      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-                      <view class="txt">点击录音</view>
-                    </button>
-                    <view class="btn-luyin" data-idx="{{indexlist}}" bindtap="stop" wx:if="{{itemlist.autioStatus == 2}}">
-                      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-                      <view class="txt">点击暂停</view>
+            <view class="s1">阅读引言后，点击下一步。在之后的探索中，点击参考1 和 参考2的头像会看到他们的回答。</view>
+            <view class="s2">
+                <view class="s2-item active">
+                    <view class="avatar-box">
+                        <text>1</text>
+                        <image class="avatar" src="{{userInfo.headImg}}"></image>
                     </view>
-                    <view class="close" data-idx="{{indexlist}}" bindtap="closeAudio" wx:if="{{itemlist.autioStatus == 3}}">
-                      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
-                    </view>
-                    <view class="saveAudio" data-idx="{{indexlist}}" bindtap="saveAudio" wx:if="{{itemlist.autioStatus == 3}}">
-                      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ok.png"></image>
-                    </view>
-                    <view class="btn-luyin" data-idx="{{indexlist}}" bindtap="play" wx:if="{{itemlist.autioStatus == 3}}">
-                      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-                      <view class="txt">点击播放</view>
-                    </view>
-                  </view>
+                    <view class="name">我</view>
                 </view>
-                <view class="btn-audio" data-type="0" data-idx="{{indexlist}}" wx:if="{{itemlist.putType == 5}}">
-                  <image bindtap="playAudio" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image>
-                  <text>{{itemlist.totalTime}}'</text>
-
-                  <image data-idx="{{indexlist}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/audio-del.png" class="close" bindtap="closeAudio"></image>
+                <view class="s2-item">
+                    <view class="avatar-box">
+                        <text>2</text>
+                        <image class="avatar"
+                               src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
+                    </view>
+                    <view class="name">参考1</view>
                 </view>
-              </view>
+                <view class="s2-item">
+                    <view class="avatar-box">
+                        <text>3</text>
+                        <image class="avatar"
+                               src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
+                    </view>
+                    <view class="name">参考2</view>
+                </view>
             </view>
-          </view>
-
-          <view class="box2-l">
-            <view class="box2-l-item {{itemlist.selectCard ? '':'active'}}" data-item="1" data-idx="{{indexlist}}" bindtap="changeCard">
-              <view class="avatar-box">
-                <text></text>
-                <image class="avatar" src="{{userInfo.headImg}}"></image>
-              </view>
-              <view class="name">我</view>
-            </view>
-            <view class="box2-l-item {{itemlist.selectCard.id ==item1.id  ? 'active':''}}" wx:for="{{itemlist.answers}}" wx:for-item="item1" wx:key="id" wx:for-index="index1" data-item="{{item1}}" data-idx="{{indexlist}}" bindtap="changeCard">
-              <view class="avatar-box">
-                <text></text>
-                <image class="avatar" src="{{item1.headImg}}"></image>
-              </view>
-              <view class="name">{{item1.cardMaster}}</view>
-            </view>
-          </view>
+            <view class="g-submit" catchtap="nextStep">下一步</view>
         </view>
-        <view data-idx="{{indexlist}}" class="nextSubmit" catchtap="nextStep">下一步</view>
-      </view>
     </view>
-  </view>
-  <view class="yinyan-box yinyan-box5" wx:if="{{step == stepList.length + 1}}">
-    <view class="box1">
-      <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
-      <view class="txt">
-        <rich-text nodes="{{activity}}"></rich-text>
-      </view>
-      <!-- <view class="txt">
-                本次生命探索正式结束啦。
-                探索完父母的性格对你的影响，是不是对自己有很多新的看见呢？或许，你对父母也有很多新的看见。
-                我们都听过一句话，性格决定命运。我们这些遗传或者被父母影响塑造而成的性格，没有绝对的好坏。看见它，用好它，和它好好相处，也是我们自我接纳的重要课题。
-            </view> -->
+    <view class="tansuo-row" wx:if="{{step > 0 && step <= stepList.length}}">
+        <view wx:for="{{list}}" wx:for-item="itemlist" wx:for-index="indexlist" wx:key="index">
+            <view wx:if="{{ step - 1 == indexlist }}">
+                <view class="box1">
+                    <image class="avatar"
+                           src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+                    <view class="txt">{{itemlist.content}}</view>
+                </view>
+                <view class="box2">
+                    <view class="box2-r">
+                        <view class="tit">链接卡牌，回答问心精灵的问题。</view>
+                        <view class="cardContent">
+                            <view class="card-box {{itemlist.selectCard ? 'hide' : ''}}">
+                                <view class="card-box-l">
+                                    <view
+                                            class="card-img {{itemlist.randomCard[0].isOpen && !itemlist.randomCard[0].isOpened ? 'open' : ''}} {{itemlist.randomCard[0].isOpened ? 'show' : ''}}"
+                                          bindtap="clickCard"
+                                          data-index="0"
+                                          data-listindex="{{indexlist}}">
+                                        <view class="front">
+                                            <image mode="scaleToFill" src="{{itemlist.randomCard[0].imgUrl}}"></image>
+                                        </view>
+                                        <view class="back">
+                                            <image mode="widthFix" src="/static/card-back-big.png"></image>
+                                        </view>
+                                    </view>
+                                </view>
+                                <view class="card-box-r">
+                                    <view
+                                            wx:if="{{itemlist.randomCard[1]}}"
+                                            class="card-img {{itemlist.randomCard[1].isOpen && !itemlist.randomCard[1].isOpened ? 'open' : ''}} {{itemlist.randomCard[1].isOpened ? 'show' : ''}}"
+                                            bindtap="clickCard" data-index="1"
+                                            data-listindex="{{indexlist}}">
+                                        <view class="front">
+                                            <image mode="scaleToFill" src="{{itemlist.randomCard[1].imgUrl}}"></image>
+                                        </view>
+                                        <view class="back">
+                                            <image mode="widthFix" src="/static/card-back.png"></image>
+                                        </view>
+                                    </view>
+                                    <view
+                                            wx:if="{{itemlist.randomCard[2]}}"
+                                            class="card-img {{itemlist.randomCard[2].isOpen && !itemlist.randomCard[2].isOpened ? 'open' : ''}} {{itemlist.randomCard[2].isOpened ? 'show' : ''}}"
+                                            bindtap="clickCard" data-index="2"
+                                            data-listindex="{{indexlist}}">
+                                        <view class="front">
+                                            <image mode="scaleToFill" src="{{itemlist.randomCard[2].imgUrl}}"></image>
+                                        </view>
+                                        <view class="back">
+                                            <image mode="widthFix" src="/static/card-back.png"></image>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+<!--                            <view class="randomCard" wx:if="{{!itemlist.selectCard}}">-->
+<!--                                <view class="cardSelected">-->
+<!--                                    <image src="{{itemlist.randomCard[itemlist.randomCardIndex].imgUrl}}"-->
+<!--                                           mode="widthFix"></image>-->
+<!--                                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"-->
+<!--                                           class="iconImg"-->
+<!--                                           data-img="{{itemlist.randomCard[itemlist.randomCardIndex].imgUrl}}"-->
+<!--                                           catchtap="showImg"></image>-->
+<!--                                </view>-->
+<!--                                <view class="cardPool">-->
+<!--                                    <image class="{{itemlist.randomCardIndex == index?'selected':''}}"-->
+<!--                                           wx:for="{{itemlist.randomCard}}" wx:for-item="item1" wx:for-index="index"-->
+<!--                                           wx:key="id" data-idx="{{index}}" data-idxp="{{indexlist}}"-->
+<!--                                           catchtap="changeImg" src="{{item1.imgUrl}}" mode="widthFix"></image>-->
+<!--                                </view>-->
+<!--                            </view>-->
+                            <image class="cardImg" wx:if="{{itemlist.selectCard}}" src="{{itemlist.selectCard.imgUrl}}"
+                                   mode="widthFix">
+                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                       class="iconImg" data-img="{{itemlist.selectCard.imgUrl}}"
+                                       catchtap="showImg"></image>
+                            </image>
+                            <view class="cardTxt" wx:if="{{itemlist.selectCard}}">{{itemlist.selectCard.answer}}</view>
+                            <!-- 文字输入 语音录入 -->
+                            <view class="form-z" wx:if="{{!itemlist.selectCard}}">
+                                <view class="count-down"
+                                      wx:if="{{recodingTime <= 60000}}"
+                                >
+                                    <view class="num">{{recodingTime/1000}}s</view>
+                                    后结束录音
+                                </view>
+                                <view class="textarea-box" wx:if="{{itemlist.putType != 5}}">
+                                    <textarea wx:if="{{itemlist.putType == 1}}" data-idx="{{indexlist}}"
+                                              bindinput="inspectText" placeholder="链接卡片回答问题...（最多500字）" maxlength="500"
+                                              placeholder-style="color: #B6B2CF;" value="{{itemlist.contents.txt}}"/>
+                                    <view class="btn-yuyin" bindtap="changePutType" data-type="0"
+                                          data-idx="{{indexlist}}" wx:if="{{itemlist.putType == 1}}">
+                                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>
+                                        语音输入
+                                    </view>
+                                    <view class="btn-yuyin" bindtap="changePutType" data-type="1"
+                                          data-idx="{{indexlist}}" wx:if="{{itemlist.putType == 0}}">
+                                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>
+                                        文字输入
+                                    </view>
+                                    <view class="m-luyin" wx:if="{{itemlist.putType == 0}}">
+                                        <!-- bindtap="start" -->
+                                        <button class="btn-luyin" bindtap="start" data-idx="{{indexlist}}"
+                                                wx:if="{{itemlist.autioStatus == 1 }}">
+                                            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
+                                            <view class="txt">点击录音</view>
+                                        </button>
+                                        <view class="btn-luyin" data-idx="{{indexlist}}" bindtap="stop"
+                                              wx:if="{{itemlist.autioStatus == 2}}">
+                                            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
+                                            <view class="txt">点击暂停</view>
+                                        </view>
+                                        <view class="close" data-idx="{{indexlist}}" bindtap="closeAudio"
+                                              wx:if="{{itemlist.autioStatus == 3}}">
+                                            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
+                                        </view>
+                                        <view class="saveAudio" data-idx="{{indexlist}}" bindtap="saveAudio"
+                                              wx:if="{{itemlist.autioStatus == 3}}">
+                                            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ok.png"></image>
+                                        </view>
+                                        <view class="btn-luyin" data-idx="{{indexlist}}" bindtap="play"
+                                              wx:if="{{itemlist.autioStatus == 3}}">
+                                            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
+                                            <view class="txt">点击播放</view>
+                                        </view>
+                                    </view>
+                                </view>
+                                <view class="btn-audio" data-type="0" data-idx="{{indexlist}}"
+                                      wx:if="{{itemlist.putType == 5}}">
+                                    <image bindtap="playAudio"
+                                           src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image>
+                                    <text>{{itemlist.totalTime}}'</text>
+                                    
+                                    <image data-idx="{{indexlist}}"
+                                           src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/audio-del.png"
+                                           class="close" bindtap="closeAudio"></image>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                    
+                    <view class="box2-l">
+                        <view class="box2-l-item {{itemlist.selectCard ? '':'active'}}" data-item="1"
+                              data-idx="{{indexlist}}" bindtap="changeCard">
+                            <view class="avatar-box">
+                                <text></text>
+                                <image class="avatar" src="{{userInfo.headImg}}"></image>
+                            </view>
+                            <view class="name">我</view>
+                        </view>
+                        <view class="box2-l-item {{itemlist.selectCard.id ==item1.id  ? 'active':''}}"
+                              wx:for="{{itemlist.answers}}" wx:for-item="item1" wx:key="id" wx:for-index="index1"
+                              data-item="{{item1}}" data-idx="{{indexlist}}" bindtap="changeCard">
+                            <view class="avatar-box">
+                                <text></text>
+                                <image class="avatar" src="{{item1.headImg}}"></image>
+                            </view>
+                            <view class="name">{{item1.cardMaster}}</view>
+                        </view>
+                    </view>
+                </view>
+                <view data-idx="{{indexlist}}" class="nextSubmit" catchtap="nextStep">下一步</view>
+            </view>
+        </view>
     </view>
-    <view class="box3">
-      <view class="box3-item">
-        <view class="tit">探索解析</view>
-        <view class="con">科学研究发现，我们的性格在小时候有80%的比例受到父母的影响。成年以后，这种影响会降低到40%左右，依然是个非常高的比例，在生命中发挥重要作用。</view>
-      </view>
-      <view class="box3-item">
-        <view class="tit">想要收获更多反馈？ </view>
-        <view class="con">每个人都有自己认知的盲区。敞开自己，去拥抱其它小伙伴的角度和评论吧！</view>
-      </view>
+    <view class="yinyan-box yinyan-box5" wx:if="{{step == stepList.length + 1}}">
+        <view class="box1">
+            <image class="avatar"
+                   src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+            <view class="txt">
+                <rich-text nodes="{{activity}}"></rich-text>
+            </view>
+            <!-- <view class="txt">
+                      本次生命探索正式结束啦。
+                      探索完父母的性格对你的影响，是不是对自己有很多新的看见呢？或许，你对父母也有很多新的看见。
+                      我们都听过一句话，性格决定命运。我们这些遗传或者被父母影响塑造而成的性格，没有绝对的好坏。看见它，用好它，和它好好相处，也是我们自我接纳的重要课题。
+                  </view> -->
+        </view>
+        <view class="box3">
+            <view class="box3-item">
+                <view class="tit">探索解析</view>
+                <view class="con">科学研究发现，我们的性格在小时候有80%的比例受到父母的影响。成年以后，这种影响会降低到40%左右，依然是个非常高的比例，在生命中发挥重要作用。</view>
+            </view>
+            <view class="box3-item">
+                <view class="tit">想要收获更多反馈？</view>
+                <view class="con">每个人都有自己认知的盲区。敞开自己，去拥抱其它小伙伴的角度和评论吧！</view>
+            </view>
+        </view>
+        <view class="box4">
+            <image class="box4-l" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrtxt.png"></image>
+            <image class="box4-r"
+                   src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
+        </view>
+        <view class="box5">
+            <view class="g-submit" bindtap="lookLog">查看本次记录</view>
+            <view class="share" bindtap="openSharePop">分享</view>
+        </view>
     </view>
-    <view class="box4">
-      <image class="box4-l" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrtxt.png"></image>
-      <image class="box4-r" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
-    </view>
-    <view class="box5">
-      <view class="g-submit" bindtap="lookLog">查看本次记录</view>
-      <view class="share" bindtap="openSharePop">分享</view>
-    </view>
-  </view>
 </view>
 <!--分享到-->
 <block wx:if="{{sharePopStatus}}">
-  <view class="pop-mask"></view>
-  <view class="pop-win">
-    <view class="pop-tit">分享到</view>
-    <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
-    <view class="pop-share">
-      <view class="share-item">
-        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>微信好友
-      </view>
-      <view class="share-item">
-        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈
-      </view>
+    <view class="pop-mask"></view>
+    <view class="pop-win">
+        <view class="pop-tit">分享到</view>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
+               bindtap="closePop"></image>
+        <view class="pop-share">
+            <view class="share-item">
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>
+                微信好友
+            </view>
+            <view class="share-item">
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>
+                朋友圈
+            </view>
+        </view>
     </view>
-  </view>
 </block>
 
 <!--放大卡牌-->
 <block wx:if="{{bigPopStatus}}">
-  <view class="pop-mask"></view>
-  <view class="pop-big">
-    <image class="big-pic" src="{{selectImgUrl}}" mode="widthFix"></image>
-    <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closeImgPop"></image>
-  </view>
+    <view class="pop-mask"></view>
+    <view class="pop-big">
+        <image class="big-pic" src="{{selectImgUrl}}" mode="widthFix"></image>
+        <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png"
+               bindtap="closeImgPop"></image>
+    </view>
 </block>
 
 <!--放大卡牌-->
 <block wx:if="{{bigPopStatus}}">
-  <view class="pop-mask"></view>
-  <view class="pop-big">
-    <image class="big-pic" src="{{selectImgUrl}}" mode="widthFix"></image>
-    <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closeImgPop"></image>
-  </view>
+    <view class="pop-mask"></view>
+    <view class="pop-big">
+        <image class="big-pic" src="{{selectImgUrl}}" mode="widthFix"></image>
+        <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png"
+               bindtap="closeImgPop"></image>
+    </view>
 </block>

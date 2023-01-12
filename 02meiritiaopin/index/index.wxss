@@ -75,7 +75,7 @@ page {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 360rpx;
+	width: 240rpx;
 	height: 90rpx;
 	background: linear-gradient(248.27deg, rgba(119, 138, 255, 0.24) 18.05%, rgba(255, 255, 255, 0.32) 83.27%);
 	border: 0.5px solid rgba(255, 255, 255, 0.2);
@@ -156,7 +156,7 @@ page {
 	top: 100rpx;
 	left: 50%;
 	margin-left: 60rpx;
-	
+
 }
 .m-luyin .saveAudio image{
 	width: 64rpx;
@@ -310,3 +310,27 @@ page {
 }
 .addThing image{width: 32rpx;height: 32rpx;margin-right: 16rpx;position: static;}
 .addThing text{}
+
+.z-btn-row{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.z-btn-row .right{
+	display: flex;
+	align-items: center;
+}
+.z-btn-row .right .z-btn{
+	width: 180rpx;
+}
+.z-btn-row .right .z-btn image{
+	width: 32rpx;
+	height: 32rpx;
+}
+.z-btn-row .right .z-btn.next{
+	margin-left: 10rpx;
+}
+.z-btn-row .right .z-btn.next image{
+	margin-right: 0;
+	margin-left: 16rpx;
+}

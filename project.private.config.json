@@ -78,6 +78,27 @@
           "query": "id=82",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "每日调频",
+          "pathName": "02meiritiaopin/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "分享",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "id=95",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "生命探索",
+          "pathName": "probe/play/play",
+          "query": "id=167",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

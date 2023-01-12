@@ -1,4 +1,4 @@
-<!--06wode/index/index.wxml-->
+ <!--06wode/index/index.wxml-->
 <view class="wp">
     <view class="mine-row1">
         <image class="avatar" src="{{userInfo.headImg}}"></image>

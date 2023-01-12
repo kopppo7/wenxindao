@@ -1,139 +1,176 @@
 <!--02meiritiaopin/index/index.wxml-->
-<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg" wx:if="{{activeIndex === 0}}"></image>
-<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg" wx:if="{{activeIndex === 1}}"></image>
-<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg" wx:if="{{activeIndex === 2}}"></image>
+<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg"
+       wx:if="{{activeIndex === 0}}"></image>
+<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg"
+       wx:if="{{activeIndex === 1}}"></image>
+<image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/m-p1.jpg"
+       wx:if="{{activeIndex === 2}}"></image>
 <view class="wp">
-  <view class="z-tab">
-    <view class="{{activeIndex == index?'active tab-item':'tab-item'}}" wx:for="{{tabs}}" wx:for-index="index" wx:for-item="item" bindtap="changeTab" data-ind="{{index}}">{{item}}
-    </view>
-    <view class="detail" bindtap="openPlayPop">帮助</view>
-  </view>
-  <view class="date-count">
-    <view class="date">
-      <view class="s1">
-        <text>{{nowDate.day}}</text>
-        {{nowDate.month}}月
-      </view>
-      <view class="s2">{{nowDate2}}</view>
-    </view>
-    <view class="count">
-      <navigator url="/pages/my/trends/trends?type=1" class="s1">历史记录</navigator>
-      <view class="s2">{{signNum}}人已打卡</view>
-    </view>
-  </view>
-  <view class="m-ask" wx:if="{{activeIndex === 0}}">
-    <view class="item">在早上，问问自己，</view>
-    <view class="item">今天我想用什么样的心情过一天？</view>
-    <view class="item">我在今天想要创造什么样的价值？</view>
-    <view class="item">我有没有关注到、帮助身边的人？</view>
-  </view>
-  <view class="m-ask" wx:if="{{activeIndex === 1}}">
-    <view class="item">让我们有很好的目标感</view>
-    <view class="item">标注今天自己最重要的三件事</view>
-  </view>
-  <view class="m-ask" wx:if="{{activeIndex === 2}}">
-    <view class="item">总结今日的收获或者发现</view>
-    <view class="item dian">感恩今天生命中的遇见</view>
-    <view class="item dian">记录今天很特别的情绪情感体验</view>
-    <view class="item dian">更多的复盘，可以自己设定哦</view>
-  </view>
-  <form catchsubmit="addFm" class="form-z">
-    <view wx:for="{{contentsArray[activeIndex]}}" wx:for-index="idx" wx:for-item="content" wx:key="idx">
-      <view class="z-btn" wx:if="{{!content.showCards}}" bindtap="getDayCard" data-index="{{idx}}">
-        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fanpai.png"></image>
-        抽牌获得启示
-      </view>
-      <view wx:else>
-        <view class="z-btn" bindtap="getChangeCard" data-index="{{idx}}">
-          <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/refresh-cw-01.svg"></image>
-          换一换卡牌
+    <view class="z-tab">
+        <view class="{{activeIndex == index?'active tab-item':'tab-item'}}" wx:for="{{tabs}}" wx:key="index"
+              wx:for-index="index"
+              wx:for-item="item" bindtap="changeTab" data-ind="{{index}}">{{item}}
         </view>
-        <view class="card-list">
-          <view wx:for="{{content.cards}}" wx:for-index="index2"  class="{{content.cardIndex == index2?'active item':'item'}}"
-           wx:for-item="item" bindtap="changeCard" data-pindex="{{idx}}" data-ind="{{index2}}">
-            <view class="pic">
-              <image src="{{item.imgUrl}}"></image>
+        <view class="detail" bindtap="openPlayPop">帮助</view>
+    </view>
+    <view class="date-count">
+        <view class="date">
+            <view class="s1">
+                <text>{{nowDate.day}}</text>
+                {{nowDate.month}}月
             </view>
-            <image bindtap="openBig" data-pindex="{{idx}}" data-index="{{index2}}" class="btn-fan" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
-          </view>
+            <view class="s2">{{nowDate2}}</view>
         </view>
-      </view>
-      <view class="textarea-box">
-        <textarea bindinput="bindTextVal" placeholder="链接卡片回答问题...（最多500字）" maxlength="500" placeholder-style="color: #B6B2CF;" wx:if="{{content.putType == 1 || content.putType == 5}}" value="{{content.txt}}" data-iid="{{idx}}" />
-        <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{content.putType == 1}}" data-iid="{{idx}}">
-          <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>语音输入
+        <view class="count">
+            <navigator url="/pages/my/trends/trends?type=1" class="s1">历史记录</navigator>
+            <view class="s2">{{signNum}}人已打卡</view>
         </view>
-        <view class="btn-audio" bindtap="playAudio" data-type="0" wx:if="{{content.putType == 5}}">
-          <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image>
-          <text>{{content.times}}'</text>
-          <image data-iid="{{idx}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/audio-del.png" class="close" bindtap="closeAudio"></image>
-        </view>
-        <view class="btn-yuyin" bindtap="changePutType" data-type="1" wx:if="{{content.putType == 0}}" data-iid="{{idx}}">
-          <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>文字输入
-        </view>
-        <view class="m-luyin" wx:if="{{content.putType == 0}}">
-          <view class="btn-luyin" bindtap="start" wx:if="{{content.autioStatus == 1}}" data-iid="{{idx}}">
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-            <view class="txt">点击录音</view>
-          </view>
-          <view class="btn-luyin" bindtap="stop" wx:if="{{content.autioStatus == 2}}" data-iid="{{idx}}">
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-            <view class="txt">点击暂停</view>
-          </view>
-          <view class="close" bindtap="closeAudio" wx:if="{{content.autioStatus == 3}}" data-iid="{{idx}}">
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
-          </view>
-          <view class="saveAudio" bindtap="saveAudio" wx:if="{{content.autioStatus == 3}}" data-iid="{{idx}}">
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ok.png"></image>
-          </view>
-          <view class="btn-luyin" bindtap="play" wx:if="{{content.autioStatus == 3}}" data-iid="{{idx}}">
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-            <view class="txt">点击播放</view>
-          </view>
-        </view>
-      </view>
     </view>
-
-    <view class="addThing" bindtap="addThing" wx:if="{{activeIndex == 1&&contentsArray[activeIndex].length<3}}">
-      <image class="m-p1" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/plus.png"></image>
-      <text class="name">添加一件事</text>
+    <view class="m-ask" wx:if="{{activeIndex === 0}}">
+        <view class="item">在早上，问问自己，</view>
+        <view class="item">今天我想用什么样的心情过一天？</view>
+        <view class="item">我在今天想要创造什么样的价值？</view>
+        <view class="item">我有没有关注到、帮助身边的人？</view>
     </view>
-    <radio-group bindchange="radioChange">
-      <label class="label-radio">
-        <radio value="1" checked="true"/>公开
-      </label>
-      <label class="label-radio">
-        <radio value="0"  />仅自己可见
-      </label>
-    </radio-group>
-    <button formType="submit" class="btn-submit">提交</button>
-  </form>
+    <view class="m-ask" wx:if="{{activeIndex === 1}}">
+        <view class="item">让我们有很好的目标感</view>
+        <view class="item">标注今天自己最重要的三件事</view>
+    </view>
+    <view class="m-ask" wx:if="{{activeIndex === 2}}">
+        <view class="item">总结今日的收获或者发现</view>
+        <view class="item dian">感恩今天生命中的遇见</view>
+        <view class="item dian">记录今天很特别的情绪情感体验</view>
+        <view class="item dian">更多的复盘，可以自己设定哦</view>
+    </view>
+    <form catchsubmit="addFm" class="form-z">
+        <view wx:for="{{contentsArray[activeIndex]}}" wx:for-index="idx" wx:for-item="content" wx:key="idx">
+            <view class="z-btn" wx:if="{{!content.showCards}}" bindtap="getDayCard" data-index="{{idx}}">
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fanpai.png"></image>
+                抽牌获得启示
+            </view>
+            <view wx:else>
+                <view class="z-btn-row">
+                    <view class="z-btn" bindtap="getChangeCard" data-index="{{idx}}">
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/refresh-cw-01.svg"></image>
+                        换一换卡牌
+                    </view>
+                    <view class="right">
+                        <view class="z-btn prev" bindtap="prevGroupIndex" data-index="{{idx}}"
+                              wx:if="{{content.cardGroupIndex > 0 && content.cardGroup.length > 0}}">
+                            <image src="/static/arrow-l.png"></image>
+                            上一轮
+                        </view>
+                        <view class="z-btn next" bindtap="nextGroupIndex" data-index="{{idx}}"
+                              wx:if="{{(content.cardGroupIndex < content.cardGroup.length - 1) && content.cardGroup.length > 0}}">
+                            下一轮
+                            <image src="/static/arrow-r.png"></image>
+                        </view>
+                    </view>
+                </view>
+                <view class="card-list">
+                    <!--                    <view wx:for="{{content.cards}}" wx:for-index="index2" wx:key="index2"-->
+                    <!--                          class="{{content.cardIndex == index2?'active item':'item'}}"-->
+                    <!--                          wx:for-item="item" bindtap="changeCard" data-pindex="{{idx}}" data-ind="{{index2}}">-->
+                    <view wx:for="{{content.cardGroup[content.cardGroupIndex]}}" wx:for-index="index2" wx:key="index2"
+                          class="{{content.cardIndex == index2?'active item':'item'}}"
+                          wx:for-item="item" bindtap="changeCard" data-pindex="{{idx}}" data-ind="{{index2}}">
+                        <view class="pic">
+                            <image src="{{item.imgUrl}}"></image>
+                        </view>
+                        <image bindtap="openBig" data-pindex="{{idx}}" data-index="{{index2}}" class="btn-fan"
+                               src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
+                    </view>
+                </view>
+            </view>
+            <view class="textarea-box">
+                <textarea bindinput="bindTextVal" placeholder="链接卡片回答问题...（最多500字）" maxlength="500"
+                          placeholder-style="color: #B6B2CF;" wx:if="{{content.putType == 1 || content.putType == 5}}"
+                          value="{{content.txt}}" data-iid="{{idx}}"/>
+                <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{content.putType == 1}}"
+                      data-iid="{{idx}}">
+                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>
+                    语音输入
+                </view>
+                <view class="btn-audio" bindtap="playAudio" data-type="0" wx:if="{{content.putType == 5}}">
+                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image>
+                    <text>{{content.times}}'</text>
+                    <image data-iid="{{idx}}"
+                           src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/audio-del.png"
+                           class="close" bindtap="closeAudio"></image>
+                </view>
+                <view class="btn-yuyin" bindtap="changePutType" data-type="1" wx:if="{{content.putType == 0}}"
+                      data-iid="{{idx}}">
+                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>
+                    文字输入
+                </view>
+                <view class="m-luyin" wx:if="{{content.putType == 0}}">
+                    <view class="btn-luyin" bindtap="start" wx:if="{{content.autioStatus == 1}}" data-iid="{{idx}}">
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
+                        <view class="txt">点击录音</view>
+                    </view>
+                    <view class="btn-luyin" bindtap="stop" wx:if="{{content.autioStatus == 2}}" data-iid="{{idx}}">
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
+                        <view class="txt">点击暂停</view>
+                    </view>
+                    <view class="close" bindtap="closeAudio" wx:if="{{content.autioStatus == 3}}" data-iid="{{idx}}">
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
+                    </view>
+                    <view class="saveAudio" bindtap="saveAudio" wx:if="{{content.autioStatus == 3}}" data-iid="{{idx}}">
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ok.png"></image>
+                    </view>
+                    <view class="btn-luyin" bindtap="play" wx:if="{{content.autioStatus == 3}}" data-iid="{{idx}}">
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
+                        <view class="txt">点击播放</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        
+        <view class="addThing" bindtap="addThing" wx:if="{{activeIndex == 1&&contentsArray[activeIndex].length<3}}">
+            <image class="m-p1"
+                   src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/plus.png"></image>
+            <text class="name">添加一件事</text>
+        </view>
+        <radio-group bindchange="radioChange">
+            <label class="label-radio">
+                <radio value="1" checked="true"/>
+                公开
+            </label>
+            <label class="label-radio">
+                <radio value="0"/>
+                仅自己可见
+            </label>
+        </radio-group>
+        <button formType="submit" class="btn-submit">提交</button>
+    </form>
 
 </view>
 <!--玩法介绍-->
 <block wx:if="{{playPopStatus}}">
-  <view class="pop-mask"></view>
-  <view class="pop-win">
-    <view class="pop-tit">玩法介绍</view>
-    <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
-    <view class="pop-intro">
-      <div class="pop-intro-item">
-        <view class="tit">为什么要设定意图？</view>
-        <view class="desc">描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字
+    <view class="pop-mask"></view>
+    <view class="pop-win">
+        <view class="pop-tit">玩法介绍</view>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
+               bindtap="closePop"></image>
+        <view class="pop-intro">
+            <div class="pop-intro-item">
+                <view class="tit">为什么要设定意图？</view>
+                <view class="desc">描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字
+                </view>
+                <view class="tit">如何建立积极的自我对话？</view>
+                <view class="desc">
+                    描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字
+                </view>
+            </div>
         </view>
-        <view class="tit">如何建立积极的自我对话？</view>
-        <view class="desc">
-          描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字描述文字
-        </view>
-      </div>
     </view>
-  </view>
 </block>
 <!--放大卡牌-->
 <block wx:if="{{bigPopStatus}}">
-  <view class="pop-mask"></view>
-  <view class="pop-big">
-    <image class="big-pic" src="{{bigCardImgUrl}}" mode="widthFix"></image>
-    <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closePop"></image>
-  </view>
+    <view class="pop-mask"></view>
+    <view class="pop-big">
+        <image class="big-pic" src="{{bigCardImgUrl}}" mode="widthFix"></image>
+        <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png"
+               bindtap="closePop"></image>
+    </view>
 </block>

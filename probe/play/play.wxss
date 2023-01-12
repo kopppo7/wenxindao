@@ -329,7 +329,7 @@
 
 .form-z .textarea-box .btn-luyin {
 	position: absolute;
-	top: 30rpx;
+	top: 60rpx;
 	left: 50%;
 	-webkit-transform: translateX(-50%);
 	-moz-transform: translateX(-50%);
@@ -354,7 +354,7 @@
 	top: 100rpx;
 	left: 50%;
 	margin-left: 60rpx;
-	
+
 }
 .m-luyin .saveAudio image{
 	width: 64rpx;
@@ -480,4 +480,99 @@
 	width: 96rpx;
 	height: 96rpx;
 	z-index: 801;
+}
+
+.form-z{
+	position: relative;
+}
+.count-down{
+	position: absolute;
+	left: 0;
+	top: 10rpx;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	color: #ffffff;
+	z-index: 2;
+}
+.count-down .num{
+	color: #ffb58c;
+}
+
+
+.card-box{
+	margin-bottom: 16rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.card-box.hide{
+	margin-bottom: 0;
+	height: 0;
+	overflow: hidden;
+}
+.card-box-l{
+	flex:2.1;
+	perspective: 900px;
+}
+
+.card-box-l .card-img{
+	position: relative;
+}
+.card-box-l .card-img .front,
+.card-box-l .card-img .back{
+
+	border-radius: 30rpx;
+	overflow: hidden;
+}
+
+.card-box-r{
+	flex:1;
+	margin-left: 20rpx;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.card-box-r .card-img+.card-img{
+	margin-top: 20rpx;
+}
+.card-img{
+	position: relative;
+}
+.card-img .front{
+	padding-top: 148.51%;
+	position: relative;
+	border-radius: 20rpx;
+	overflow: hidden;
+}
+.card-img .back{
+	position: absolute;width: 100%;height: 100%;top: 0;left: 0;
+	border-radius: 20rpx;
+	overflow: hidden;
+}
+
+.card-img image{
+	position: absolute;width: 100%;height: 100%;top: 0;left: 0;
+}
+.card-img.open .front{
+	animation:cardfront 1s linear  forwards;
+}
+.card-img.open .back{
+	animation:cardback 0.5s linear forwards;
+}
+.card-img.show .front{
+	transform:rotateY(0deg)
+}
+.card-img.show .back{
+	transform:rotateY(90deg);
+}
+@keyframes cardback{
+	0%{transform:rotateY(0)}
+	100%{transform:rotateY(90deg);}
+}
+@keyframes cardfront{
+	from{transform:rotateY(-180deg)}
+	to{transform:rotateY(0deg)}
 }
