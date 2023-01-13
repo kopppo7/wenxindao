@@ -404,20 +404,74 @@ Page({
     },
     // 随机查询今日随机卡牌
     getChangeCard(e) {
+        var data = [
+            {
+                addTime: "2022-12-16T14:49:13.000+0000",
+                addUserId: 9,
+                cardName: "问心卡图片sRGB大版本-32",
+                category: 0,
+                deleted: 0,
+                id: 336,
+                imgUrl: "https://file.wxdao.net/2022-12/dbacdbb6-3751-488d-b459-7b2646b9fc71.jpg",
+                status: 2,
+                updateTime: null,
+                updateUserId: null,
+            },
+            {
+                addTime: "2022-12-16T14:49:13.000+0000",
+                addUserId: 9,
+                cardName: "问心卡图片sRGB大版本-32",
+                category: 0,
+                deleted: 0,
+                id: 336,
+                imgUrl: "https://file.wxdao.net/2022-12/dbacdbb6-3751-488d-b459-7b2646b9fc71.jpg",
+                status: 2,
+                updateTime: null,
+                updateUserId: null,
+            },
+            {
+                addTime: "2022-12-16T14:49:13.000+0000",
+                addUserId: 9,
+                cardName: "问心卡图片sRGB大版本-32",
+                category: 0,
+                deleted: 0,
+                id: 336,
+                imgUrl: "https://file.wxdao.net/2022-12/dbacdbb6-3751-488d-b459-7b2646b9fc71.jpg",
+                status: 2,
+                updateTime: null,
+                updateUserId: null,
+            },
+        ]
+
         let that = this;
+
+        // if (this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards.length = 0) {
+        //     this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardIndex = 0
+        // }
+        // this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroup.push(data)
+        // this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroupIndex = this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroup.length - 1
+        // this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards = data;
+        // this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].showCards = true;
+        // this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].imgUrl = this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards[e.currentTarget.dataset.index].imgUrl
+        // that.setData({
+        //     contentsArray: this.data.contentsArray
+        // })
+
         getChangeCard(that.data.types).then(res => {
-            console.log(this.data.contentsArray)
             if (res.data.ret == 200) {
                 if (this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards.length = 0) {
                     this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardIndex = 0
                 }
-                this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroup.push([res.data.data])
+                this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroup.push(res.data.data)
+                this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroupIndex = this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroup.length - 1
                 this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards = res.data.data;
                 this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].showCards = true;
                 this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].imgUrl = this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards[e.currentTarget.dataset.index].imgUrl
                 that.setData({
                     contentsArray: this.data.contentsArray
                 })
+
+                console.log(this.data.contentsArray)
             } else {
                 wx.showToast({
                     title: res.data.msg,
