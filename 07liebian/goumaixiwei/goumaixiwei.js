@@ -3,7 +3,7 @@ import {
     findByAskPartyOne,
     getPayParty
 } from "../../07liebian/api";
-import {getPayProbe} from "../../utils/api";
+import { getPayProbe } from "../../utils/api";
 Page({
 
     /**
@@ -12,7 +12,8 @@ Page({
     data: {
         themeId: '',
         detailObj: {},
-        type:1
+        type: 1,
+        isShowPop: false
     },
     initData () {
         findByAskPartyOne({ id: this.data.themeId }).then(res => {
@@ -32,20 +33,23 @@ Page({
         this.initData()
     },
     //选择类型
-    pickType:function (e) {
+    pickType: function (e) {
         console.log(e.currentTarget.dataset.type)
         this.setData({
-            type:e.currentTarget.dataset.type*1
+            type: e.currentTarget.dataset.type * 1
         })
     },
-    pay:function () {
+    pay: function () {
         let that = this
+        this.setData({
+            isShowPop: false
+        })
         wx.showLoading({
             title: '支付中',
             mask: true,
         })
         getPayParty({
-            id: that.data.themeId*1,
+            id: that.data.themeId * 1,
             types: that.data.type
         }).then((res) => {
             wx.requestPayment({
@@ -61,7 +65,7 @@ Page({
                 // 签名
                 paySign: res.data.data.paySign,
                 // 调用成功回调
-                success() {
+                success () {
                     wx.showLoading()
                     wx.showToast({
                         title: '付款成功',
@@ -71,13 +75,13 @@ Page({
                         wx.redirectTo({
                             url: '/04zhutipaidui/setHouse/setHouse?id=' + that.data.themeId,
                         })
-                    },500)
+                    }, 500)
 
                     // that.getDetail(that.data.product.id)
                     // that.closePop()
                 },
                 // 失败回调
-                fail(err) {
+                fail (err) {
                     console.log(err)
                     // that.getDetail(that.data.product.id)
                     // that.closePop()
@@ -88,12 +92,16 @@ Page({
                     })
                 },
                 // 接口调用结束回调
-                complete() {}
+                complete () { }
             })
 
         })
     },
-
+    handleShowPop () {
+        this.setData({
+            isShowPop: true
+        })
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */

@@ -17,10 +17,10 @@
                     <view class="radio-box">
                         <radio-group bindchange="radioChange" name="radio">
                             <label class="label-radio">
-                                <radio value="0" checked="true"/>隐藏身份
+                                <radio value="1"  checked="true"/>公开身份
                             </label>
                             <label class="label-radio">
-                                <radio value="1" />公开身份
+                                <radio value="0"/>隐藏身份
                             </label>
                         </radio-group>
                     </view>

@@ -11,7 +11,7 @@ Page({
      */
     data: {
         useMes: {},
-        isShow: true,
+        isShow: false,
         themeId:'',
         detailObj:{},
         roomId:'',

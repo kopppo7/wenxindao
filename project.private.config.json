@@ -19,7 +19,7 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "askId=10&roomId=93&isMatch=true&isHaoyou=true",
+          "query": "askId=10&roomId=93",
           "launchMode": "default",
           "scene": null
         },
@@ -68,7 +68,7 @@
         {
           "name": "主题介绍",
           "pathName": "04zhutipaidui/zhutijieshao/zhutijieshao",
-          "query": "id=10",
+          "query": "id=11",
           "launchMode": "default",
           "scene": null
         },
@@ -97,6 +97,13 @@
           "name": "生命探索",
           "pathName": "probe/play/play",
           "query": "id=167",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/setHouse/setHouse",
+          "query": "",
           "launchMode": "default",
           "scene": null
         }

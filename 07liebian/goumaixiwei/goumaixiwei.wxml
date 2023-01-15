@@ -81,6 +81,18 @@
 </view>
 <view class="bottom-box">
     <view class="wp">
-        <view class="btn-praise" bindtap="pay">去组队</view>
+        <view class="btn-praise" bindtap="handleShowPop">去支付</view>
     </view>
 </view>
+<block wx:if="{{isShowPop}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">购买须知</view>
+        <view class="desc">
+            主题派对购买后仅限单次使用
+        </view>
+        <view class="btns">
+            <view class="btn ok" bindtap="pay">知道了</view>
+        </view>
+    </view>
+</block>
