@@ -8,9 +8,9 @@ Page({
      * 页面的初始数据
      */
     data: {
-      page:1,
-      list:[],
-      total:0
+      page2:1,
+      list2:[],
+      total2:0
     },
     /**
      * 生命周期函数--监听页面加载
@@ -20,22 +20,22 @@ Page({
         this.getData();
       })
     },
-    getData(){
+    getData2(){
       wx.showLoading({
         title: '加载中...',
       });
       findByOrderList({
-        page:this.data.page,
+        page:this.data.page2,
         pageSize:20
       }).then(res=>{
-        if(this.data.page==1){
-          this.data.list = res.data.data.list;
+        if(this.data.page2==1){
+          this.data.list2 = res.data.data.list;
         }else{
-          this.data.list.concat(res.data.data.list);
+          this.data.list2.concat(res.data.data.list);
         }
         this.setData({
-          list:this.data.list,
-          total:res.data.data.total
+          list2:this.data.list2,
+          total2:res.data.data.total
         })
         wx.stopPullDownRefresh()
         wx.hideLoading();
@@ -51,7 +51,7 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh() {
-      this.data.page=1;
+      this.data.page2=1;
       this.getData();
     },
 
@@ -59,8 +59,8 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom() {
-      if(this.data.list.length<this.data.total){
-        this.data.page+=1;
+      if(this.data.list2.length<this.data.total2){
+        this.data.page2+=1;
         this.getData();
       }
     }

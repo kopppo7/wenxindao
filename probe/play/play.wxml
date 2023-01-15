@@ -129,7 +129,7 @@
                             </image>
                             <view class="cardTxt" wx:if="{{itemlist.selectCard}}">{{itemlist.selectCard.answer}}</view>
                             <!-- 文字输入 语音录入 -->
-                            <view class="form-z" wx:if="{{!itemlist.selectCard}}">
+                            <view class="form-z">
                                 <view class="count-down"
                                       wx:if="{{recodingTime <= 60000}}"
                                 >

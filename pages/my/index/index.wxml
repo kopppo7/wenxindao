@@ -1,35 +1,44 @@
  <!--06wode/index/index.wxml-->
+ <import src ="/pages/my/order/order.wxml"/>
 <view class="wp">
     <view class="mine-row1">
         <image class="avatar" src="{{userInfo.headImg}}"></image>
         <view class="name">{{ userInfo.wechatName }}</view>
         <image class="set" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-set.png" bindtap="setting"></image>
     </view>
-    <view class="mine-row2">
-        <!-- <view class="item">
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-message.png"></image>
-            我的消息
-            <text>4</text>
-        </view> -->
-        <navigator url="/pages/my/order/order" hover-class="none"  class="item">
-            我的订单
-        </navigator>
-        <navigator url="/pages/my/trends/trends" hover-class="none" class="item">
-            我的动态
-        </navigator>
+<!--    <view class="mine-row2">-->
+<!--        &lt;!&ndash; <view class="item">-->
+<!--            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-message.png"></image>-->
+<!--            我的消息-->
+<!--            <text>4</text>-->
+<!--        </view> &ndash;&gt;-->
+<!--        <navigator url="/pages/my/order/order" hover-class="none"  class="item">-->
+<!--            我的订单-->
+<!--        </navigator>-->
+<!--        <navigator url="/pages/my/trends/trends" hover-class="none" class="item">-->
+<!--            我的动态-->
+<!--        </navigator>-->
+<!--    </view>-->
+    
+    <view class="page-tab">
+        <view class="tab-s {{pageTabIndex === 0 ? 'on' : ''}}" bindtap="changePageTab" data-index="0">我的动态</view>
+        <view class="tab-s {{pageTabIndex === 1 ? 'on' : ''}}"  bindtap="changePageTab" data-index="1">我的订单</view>
     </view>
-    <!-- 切换 -->
-    <view class="h-dt-tab">
-        <view class="h-dt-tab-item {{cur_tab === index ? 'on' : ''}}"
-              bindtap="changeCurTab"
-              data-index="{{index}}"
-              data-type="{{item.type}}"
-              wx:for="{{tab}}" wx:key="index">
-            <view class="title">{{item.title}}</view>
-            <view class="num">{{index == 0 ?totalSum :item.num}}</view>
+    
+<!--    我的动态-->
+    <block wx:if="{{pageTabIndex === 0}}">
+        <!-- 切换 -->
+        <view class="h-dt-tab">
+            <view class="h-dt-tab-item {{cur_tab === index ? 'on' : ''}}"
+                  bindtap="changeCurTab"
+                  data-index="{{index}}"
+                  data-type="{{item.type}}"
+                  wx:for="{{tab}}" wx:key="index">
+                <view class="title">{{item.title}}</view>
+                <view class="num">{{index == 0 ?totalSum :item.num}}</view>
+            </view>
         </view>
-    </view>
-    <view class="mine-row3">
+        <view class="mine-row3">
         <view class="title-box">
             <view class="title">我的动态</view>
             <!-- <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-filter.svg"></image> -->
@@ -52,7 +61,7 @@
                           {{item.contents.data[0].txt}}
                         </view>
                         <view class="picBox">
-                          <image class="pic"  src="{{item.contents.imgUrl}}">
+                          <image class="pic"  mode="widthFix" src="{{item.contents.imgUrl}}">
                           </image>
                           <image catchtap="openBig" data-pinurl="{{item.contents.imgUrl}}" class="btn-fan" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
                         </view>
@@ -122,6 +131,33 @@
             </view>
         </view>
     </view>
+    </block>
+    <!--    我的订单-->
+    <block wx:if="{{pageTabIndex === 1}}">
+        <view class="wp">
+            <view class="order-list" >
+                <view class="item mb12" wx:for="{{list2}}" wx:for-item="item" wx:key="id">
+                    <view class="s1">
+                        <view class="s1-l">订单号：{{item.payId}}</view>
+                        <view class="s1-r">¥
+                            <text>{{item.paymentAmount+'/'+(item.types==2?'席位':'场')}}</text>
+                        </view>
+                    </view>
+                    <view class="s2">
+                        <view class="only" wx:if="{{item.types==2}}">单独购买</view>
+                        <view class="friend" wx:else>好友结伴</view>
+                        <view>{{item.title||''}}</view>
+                    </view>
+                    <view class="s3">
+                        <view class="s3-l">下单时间：{{item.addTime}}</view>
+                        <view class="s3-r" wx:if="{{item.status==1}}">
+                            <view class="btn">去使用</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </block>
 </view>
 
 <view class="nav">

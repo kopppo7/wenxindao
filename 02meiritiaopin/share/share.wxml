@@ -2,35 +2,49 @@
 <view class="canvas-box my_canvas" id="my-canvas">
     
     <image class="canvas-bg my_draw_canvas"
-           data-url="/static/canvas-bg.png"
+           data-url="https://file.wxdao.net/2023-01/31a9cf23-bfd1-4be1-b1e3-e9e9b13a967b.png"
            data-type="image"
-           src="/static/canvas-bg.png"></image>
+           src="https://file.wxdao.net/2023-01/31a9cf23-bfd1-4be1-b1e3-e9e9b13a967b.png"></image>
     <view class="my_draw_canvas canvas-content">
-        <view class="s1 my_draw_canvas">
-            <image class="s1-l my_draw_canvas" src="{{headImg}}" data-type="image" data-url="{{headImg}}"></image>
-            <view class="s1-r my_draw_canvas">
-                <view class="days my_draw_canvas" data-type="text" data-text="{{nowDate.gregorianDay}}">
-                    {{nowDate.gregorianDay}}
+        
+        <view class="date-mod my_draw_canvas">
+            <view class="days my_draw_canvas" data-type="text" data-text="{{nowDate.gregorianDay}}">
+                {{nowDate.gregorianDay}}
+            </view>
+            <view class="date-box my_draw_canvas" data-type="text">
+                <view class="lc my_draw_canvas" data-type="text"
+                      data-text="{{nowDate.chineseMonth}}{{nowDate.chineseDay}}">
+                    {{nowDate.chineseMonth}}{{nowDate.chineseDay}}
                 </view>
-                <view class="date-box my_draw_canvas" data-type="text">
-                    <view class="lc my_draw_canvas" data-type="text" data-text="{{nowDate.chineseMonth}}{{nowDate.chineseDay}}">
-                        {{nowDate.chineseMonth}}{{nowDate.chineseDay}}
-                    </view>
-                    <view class="date my_draw_canvas" data-type="text"
-                          data-text="{{nowDate.gregorianYear}}.{{nowDate.gregorianMonthBase1}}">
-                        {{nowDate.gregorianYear}}.{{nowDate.gregorianMonthBase1}}
-                    </view>
+                <view class="gang my_draw_canvas" data-type="text"
+                      data-text="/"> / </view>
+                <view class="date my_draw_canvas" data-type="text"
+                      data-text="{{nowDate.gregorianYear}}.{{nowDate.gregorianMonthBase1}}">
+                    {{nowDate.gregorianYear}}.{{nowDate.gregorianMonthBase1}}
                 </view>
             </view>
         </view>
-        <image class="s2 my_draw_canvas" src="{{cardImg}}" data-type="image" data-url="{{cardImg}}"></image>
-        <view class="s3">
-            <!-- <view class="s3-item">感恩</view> -->
-            <!-- <view class="s3-item">敏锐</view> -->
-            <!-- <view class="s3-item">觉察</view> -->
+        <view class="head-img my_draw_canvas">
+            <image class="s1-l my_draw_canvas" mode="aspectFill" src="{{headImg}}" data-type="image"
+                   data-url="{{headImg}}"></image>
+            <view class="name my_draw_canvas" data-type="text" data-text="{{userName}}">{{userName}}</view>
         </view>
-        <view class="s4 my_draw_canvas">
-            <view data-type="text" class="my_draw_canvas" data-text="{{content.txt}}">{{content.txt}}</view>
+        <view class="content my_draw_canvas">
+            <view class="card my_draw_canvas">
+                <image class="my_draw_canvas" src="{{cardImg}}" data-type="image" data-url="{{cardImg}}"></image>
+            </view>
+            <view data-type="text" class="title my_draw_canvas" data-text="{{typeTit}}">
+                {{typeTit}}
+            </view>
+            <view data-type="text" class="yin my_draw_canvas" data-text=' “ '>
+                “
+            </view>
+            <view data-type="text" class="text my_draw_canvas" data-text="{{content.txt}}">
+                {{content.txt}}
+            </view>
+            <view data-type="text" class="yin end my_draw_canvas" data-text=' ” '>
+                ”
+            </view>
         </view>
         <view class="s5 my_draw_canvas">
             <view class="s5-l">
@@ -38,6 +52,8 @@
                     <view class="s5-l-tit my_draw_canvas" data-type="text" data-text="打卡时间">打卡时间</view>
                     <view class="s5-l-time my_draw_canvas" data-type="text" data-text="{{cardTime}}">{{cardTime}}</view>
                 </view>
+                <view class="gang my_draw_canvas" data-type="text"
+                      data-text="/"> / </view>
                 <view class="s5-l-item">
                     <view class="s5-l-tit my_draw_canvas" data-type="text" data-text="连续打卡">连续打卡</view>
                     <view class="s5-l-time my_draw_canvas" data-type="text" data-text="{{cardCount}}天">{{cardCount}}天

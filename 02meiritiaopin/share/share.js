@@ -26,7 +26,9 @@ Page({
             title: '',
             query: ''
         },
-        headImg: ''
+        headImg: '',
+        userName:'',
+        typeTit:''
     },
     findByFmOne() {
         let that = this;
@@ -38,7 +40,9 @@ Page({
                 content: content[0],
                 cardTime: res.data.data.addTime.substring(11, 16),
                 cardImg: content[0].imgUrl,
-                headImg: res.data.data.userHeadImg
+                headImg: res.data.data.userHeadImg,
+                userName: res.data.data.userName,
+                typeTit:res.data.data.target
             })
             that.drawMyCanvas()
         })

@@ -61,7 +61,7 @@ Page({
                 startTime: '',
                 endTime: '',
                 cardGroup: [],
-                cardGroupIndex:0
+                cardGroupIndex: 0
             }], [{
                 txt: "",
                 voice: "",
@@ -77,7 +77,7 @@ Page({
                 startTime: '',
                 endTime: '',
                 cardGroup: [],
-                cardGroupIndex:0
+                cardGroupIndex: 0
             }], [{
                 txt: "",
                 voice: "",
@@ -93,7 +93,7 @@ Page({
                 startTime: '',
                 endTime: '',
                 cardGroup: [],
-                cardGroupIndex:0
+                cardGroupIndex: 0
             }]
         ],
         initContentsArray: [
@@ -112,7 +112,7 @@ Page({
                 startTime: '',
                 endTime: '',
                 cardGroup: [],
-                cardGroupIndex:0
+                cardGroupIndex: 0
             }], [{
                 txt: "",
                 voice: "",
@@ -128,7 +128,7 @@ Page({
                 startTime: '',
                 endTime: '',
                 cardGroup: [],
-                cardGroupIndex:0
+                cardGroupIndex: 0
             }], [{
                 txt: "",
                 voice: "",
@@ -144,7 +144,7 @@ Page({
                 startTime: '',
                 endTime: '',
                 cardGroup: [],
-                cardGroupIndex:0
+                cardGroupIndex: 0
             }]
         ],
 
@@ -237,7 +237,7 @@ Page({
     findMyTemp() {
         findMyTemp(this.data.types).then(res => {
             if (res.data.ret == 200) {
-                if (res.data.data){
+                if (res.data.data) {
                     if (this.data.contentsArray[this.data.activeIndex][0].cards.length = 0) {
                         this.data.contentsArray[this.data.activeIndex][0].cardIndex = 0
                     }
@@ -250,10 +250,10 @@ Page({
 
                         //创建牌组
                         cardGroup.push([])
-                        if (orgCards.length >= 6){
+                        if (orgCards.length >= 6) {
                             cardGroup.push([])
                         }
-                        if (orgCards.length === 9){
+                        if (orgCards.length === 9) {
                             cardGroup.push([])
                         }
                         orgCards.map((item, index) => {
@@ -292,22 +292,22 @@ Page({
         });
     },
     //切换牌组
-    nextGroupIndex:function (e) {
+    nextGroupIndex: function (e) {
         var contentsArray = this.data.contentsArray
         var content = contentsArray[this.data.activeIndex]
         content[0].cardGroupIndex++
         content[0].cards = content[0].cardGroup[content[0].cardGroupIndex]
         this.setData({
-            contentsArray:contentsArray
+            contentsArray: contentsArray
         })
     },
-    prevGroupIndex:function () {
+    prevGroupIndex: function () {
         var contentsArray = this.data.contentsArray
         var content = contentsArray[this.data.activeIndex]
         content[0].cardGroupIndex--
         content[0].cards = content[0].cardGroup[content[0].cardGroupIndex]
         this.setData({
-            contentsArray:contentsArray
+            contentsArray: contentsArray
         })
     },
     // 新增每日调频
@@ -444,31 +444,37 @@ Page({
         ]
 
         let that = this;
+        var contentsArray = this.data.contentsArray
+        var activeIndex = this.data.activeIndex
+        var index = e.currentTarget.dataset.index
 
-        // if (this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards.length = 0) {
-        //     this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardIndex = 0
+        // if (contentsArray[activeIndex][index].cards.length === 0) {
+        //     contentsArray[activeIndex][index].cardIndex = 0
         // }
-        // this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroup.push(data)
-        // this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroupIndex = this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroup.length - 1
-        // this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards = data;
-        // this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].showCards = true;
-        // this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].imgUrl = this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards[e.currentTarget.dataset.index].imgUrl
+        // contentsArray[activeIndex][index].cardGroup.push(data)
+        // contentsArray[activeIndex][index].cardGroupIndex = contentsArray[activeIndex][index].cardGroup.length - 1
+        // contentsArray[activeIndex][index].cards = data;
+        // contentsArray[activeIndex][index].showCards = true;
+        // contentsArray[activeIndex][index].imgUrl = contentsArray[activeIndex][index].cards[index].imgUrl;
+        //
         // that.setData({
-        //     contentsArray: this.data.contentsArray
+        //     contentsArray: contentsArray
         // })
+
 
         getChangeCard(that.data.types).then(res => {
             if (res.data.ret == 200) {
-                if (this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards.length = 0) {
-                    this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardIndex = 0
+                if (contentsArray[activeIndex][index].cards.length === 0) {
+                    contentsArray[activeIndex][index].cardIndex = 0
                 }
-                this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroup.push(res.data.data)
-                this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroupIndex = this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cardGroup.length - 1
-                this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards = res.data.data;
-                this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].showCards = true;
-                this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].imgUrl = this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.index].cards[e.currentTarget.dataset.index].imgUrl
+                contentsArray[activeIndex][index].cardGroup.push(data)
+                contentsArray[activeIndex][index].cardGroupIndex = contentsArray[activeIndex][index].cardGroup.length - 1
+                contentsArray[activeIndex][index].cards = data;
+                contentsArray[activeIndex][index].showCards = true;
+                contentsArray[activeIndex][index].imgUrl = contentsArray[activeIndex][index].cards[index].imgUrl;
+
                 that.setData({
-                    contentsArray: this.data.contentsArray
+                    contentsArray: contentsArray
                 })
 
                 console.log(this.data.contentsArray)

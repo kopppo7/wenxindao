@@ -99,6 +99,27 @@
           "query": "id=167",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "分享2",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "id=96",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的",
+          "pathName": "pages/my/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "生命探索详情",
+          "pathName": "pages/my/probedetail/probedetail",
+          "query": "id=167",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

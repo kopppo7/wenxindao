@@ -210,3 +210,142 @@ page{
 	height: 96rpx;
 	z-index: 801;
 }
+
+
+.page-tab{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	margin-bottom: 30rpx;
+}
+.tab-s{
+	flex:0 0 50%;
+	text-align: center;
+	color: #ffffff;
+	opacity: .6;
+	font-size: 30rpx;
+	padding-bottom: 32rpx;
+}
+.tab-s.on{
+	position: relative;
+	opacity: 1;
+}
+.tab-s.on:after{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	height: 2px;
+	background-color: #7461e7;
+	width: 120rpx;
+	margin-left: -60rpx;
+}
+
+
+
+/* 06wode/wodedigndan/wodedigndan.wxss */
+.order-list{
+
+}
+.order-list .item{
+	background: rgba(182, 178, 207, 0.12);
+	backdrop-filter: blur(12px);
+	border-radius: 16rpx;
+	padding: 24rpx;
+	box-sizing: border-box;
+}
+.order-list .s1{
+	display: flex;
+	justify-content: space-between;
+}
+.order-list .s1-l{
+	font-size: 24rpx;
+	color: #B6B2CF;
+}
+.order-list .s1-r{
+	color: #ffb58c;
+}
+.order-list .s1-r text{
+	font-size: 36rpx;
+}
+.order-list .s2{
+	display: flex;
+	font-size: 32rpx;
+	margin-bottom: 16rpx;
+	align-items: center;
+}
+.order-list .s2 .only{
+	color: #ffffff;
+	background: linear-gradient(to right, #82EAEA,#5C76FE);
+	padding: 2rpx 4rpx;
+	box-sizing: border-box;
+	font-size: 24rpx;
+	border-radius: 6rpx;
+	margin-right: 10rpx;
+}
+.order-list .s2 .friend{
+	color: #ffffff;
+	background: linear-gradient(to right, #FDB988,#FE5C5C);
+	padding: 2rpx 4rpx;
+	box-sizing: border-box;
+	font-size: 24rpx;
+	border-radius: 6rpx;
+	margin-right: 10rpx;
+}
+.order-list .s2 view:last-child{
+	flex:1;
+}
+.order-list .s3{
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+.order-list .s3-l{
+	font-size: 24rpx;
+	color: #B6B2CF;
+}
+.order-list .s3-r{
+	display: flex;
+	align-items: center;
+}
+.order-list .s3-r .btn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 136rpx;
+	height: 60rpx;
+	background: #7461E7;
+	border: 0.5px solid rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(12px);
+	border-radius: 46rpx;
+}
+.order-list .s3-r .avatar{
+	width: 48rpx;
+	height: 48rpx;
+	margin-left: -16rpx;
+	border-radius: 50%;
+}
+.order-list .s3-r .name{
+	font-size: 24rpx;
+	color: #B6B2CF;
+	margin-left: 12rpx;
+}
+.order-list .s3-r .status{
+	font-size: 24rpx;
+	color: #ffb58c;
+	margin-left: 24rpx;
+}
+.order-list .s4{
+	padding: 24rpx 0;
+	box-sizing: border-box;
+	border-top: 1px dashed rgba(255, 255, 255, 0.2);
+	margin-top: 24rpx;
+}
+.order-list .s4 .tip{
+	width: 28rpx;
+	height: 28rpx;
+}
+.order-list .s4 text{
+	color: #ffb58c;
+}

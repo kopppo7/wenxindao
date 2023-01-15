@@ -36,11 +36,11 @@
 .face .txt .date{
   color: #B6B2CF;
   font-size: 24rpx;
-} 
-.list .item{ 
+}
+.list .item{
   margin-top: 32rpx;
   background: rgba(182, 178, 207, 0.12);
-  backdrop-filter: blur(12px); 
+  backdrop-filter: blur(12px);
   border-radius: 8px;
   padding: 24rpx;
   box-sizing: border-box;
@@ -62,12 +62,26 @@
   display: flex;
   align-items: center;
 }
-.list .item .pic image{
+.list .item .pic .img{
+	width: 33%;
+	height: 308rpx;
+	margin: 10rpx;
+	border-radius: 10rpx;
+	overflow: hidden;
+	position: relative;
+}
+.list .item .pic .card{
   display: block;
-  width: 33%;
+	width: 100%;
   height: 100%;
-  margin: 10rpx;
-  border-radius: 10rpx;
+}
+.btn-fan{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 48rpx;
+	height: 48rpx;
+	z-index: 2;
 }
 .list .item .audio{
   /* height: 72rpx; */
@@ -116,7 +130,32 @@
 
 
 
+.pop-big {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	z-index: 801;
+}
 
+.pop-big .big-pic {
+	width: 670rpx;
+	/* height: 998rpx; */
+}
+
+.pop-close-bot {
+	position: absolute;
+	bottom: -116rpx;
+	left: 50%;
+	margin-left: -48rpx;
+	width: 96rpx;
+	height: 96rpx;
+	z-index: 801;
+}
 
 
 

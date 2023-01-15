@@ -14,6 +14,9 @@ Page({
     time: '', // 添加时间
     list:[],
     showShare:false,
+      bigPopStatus:false,
+      bigCardImgUrl:''
+
   },
 
   openShare:function(){
@@ -41,7 +44,7 @@ Page({
     audioCtx.pause()
     audioCtx.src = this.data.list[e.currentTarget.dataset.idx].answerVoice
     let list = this.data.list
-    list[e.currentTarget.dataset.idx].playVoice = !list[e.currentTarget.dataset.idx].playVoice 
+    list[e.currentTarget.dataset.idx].playVoice = !list[e.currentTarget.dataset.idx].playVoice
     if(list[e.currentTarget.dataset.idx].playVoice) {
         audioCtx.play()
     } else {
@@ -94,5 +97,18 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+
+    openBig(e) {
+        this.setData({
+            bigPopStatus: true,
+            bigCardImgUrl: e.currentTarget.dataset.pinurl
+        })
+    },
+    closePopBig() {
+        this.setData({
+            bigPopStatus: false,
+            bigCardImgUrl: ''
+        })
+    },
 })

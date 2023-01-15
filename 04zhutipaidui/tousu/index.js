@@ -1,4 +1,5 @@
 // 04zhutipaidui/tousu/index.js
+import config from "../../utils/config";
 Page({
 
   /**
@@ -6,14 +7,7 @@ Page({
    */
   data: {
     textarea:'',
-    textarea:'',
-    textarea:'',
-    textarea:'',
-    textarea:'',
   },
-  textareaChange(){},
-  textareaChange(){},
-  textareaChange(){},
   textareaChange(){},
   // 上传相关图片
   callGetPic: function () {
