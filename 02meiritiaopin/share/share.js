@@ -28,7 +28,9 @@ Page({
         },
         headImg: '',
         userName:'',
-        typeTit:''
+        typeTit:'',
+        txt1:'',
+        txt2:'',
     },
     findByFmOne() {
         let that = this;
@@ -36,13 +38,24 @@ Page({
             id: this.data.pageId
         }).then(res => {
             var content = JSON.parse(res.data.data.contents);
+            var txt = content[0].txt
+
+
+            var num = 70
+            var txt1 = txt.substring(0,70)
+            var txt2 = txt.substring(70,txt.length)
+            console.log(txt1)
+            console.log(txt2)
+
             that.setData({
                 content: content[0],
                 cardTime: res.data.data.addTime.substring(11, 16),
                 cardImg: content[0].imgUrl,
                 headImg: res.data.data.userHeadImg,
                 userName: res.data.data.userName,
-                typeTit:res.data.data.target
+                typeTit:res.data.data.target,
+                txt1:txt1,
+                txt2:txt2,
             })
             that.drawMyCanvas()
         })
@@ -91,7 +104,8 @@ Page({
             width: that.data.width,
             height: that.data.height,
             element: 'myCanvas', // canvas的id,
-            background: 'rgba(0,0,0,0)',
+            background: 'rgba(255,255,255,1)',
+            borderRadius:'50rpx',
             obj: that, // 传入当前组件的this
 
             progress(percent) { // 进度

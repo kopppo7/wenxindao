@@ -63,7 +63,8 @@ Page({
         activity: '', // 结束语
         selectImgUrl: '', // 选中的图片地址
         recodingTime: 300000,
-        canClickCard:true
+        canClickCard:true,
+        curStep:0
     },
     // 放大看卡片
     showImg(e) {
@@ -78,10 +79,15 @@ Page({
         })
     },
     openSharePop() {
-        let that = this;
-        that.setData({
-            sharePopStatus: true
+        // let that = this;
+        // that.setData({
+        //     sharePopStatus: true
+        // })
+        console.log(123)
+        wx.redirectTo({
+            url: '/probe/share/share?id=' + this.data.id,
         })
+
     },
     closePop() {
         let that = this;
@@ -481,7 +487,8 @@ Page({
                 }
                 this.setData({
                     list: arr,
-                    step: Number(this.data.step) + 1
+                    step: Number(this.data.step) + 1,
+                    curStep: Number(this.data.step) + 1,
                     // randomCard:res.data.data,
                     // randomCardIndex:0
                 })
@@ -497,11 +504,13 @@ Page({
     },
     // 切换第几部
     changeStep(e) {
-        if (e.target.dataset.idx <= this.data.step + 1) {
+        if (e.target.dataset.idx <= this.data.curStep) {
             this.setData({
                 step: e.target.dataset.idx,
             })
         }
+        console.log(this.data.step)
+        console.log(this.data.curStep)
 
     },
     // 获取详情
@@ -564,7 +573,8 @@ Page({
                 }
             })
             this.setData({
-                step: step
+                step: step,
+                curStep:step
             })
             console.log(step)
 
