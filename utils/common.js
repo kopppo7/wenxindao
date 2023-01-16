@@ -50,15 +50,15 @@ export const checkLogInfo = (token,callback) => {
       yunId : userInfo.data.data.yunId,
     };
     setLoginInfo(userInfo.data.data);
-    if(user.wechatName==''||user.wechatName==null||user.wechatName==undefined){
+    if(user.phone==''||user.phone==null||user.phone==undefined){
       wx.redirectTo({
-        url: '/pages/auth/auth',
+        url: '/pages/login/login',
       })
       return;
     }
-    else if(user.phone==''||user.phone==null||user.phone==undefined){
+    else if(user.wechatName==''||user.wechatName==null||user.wechatName==undefined){
       wx.redirectTo({
-        url: '/pages/login/login',
+        url: '/pages/auth/auth',
       })
       return;
     }

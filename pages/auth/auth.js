@@ -94,15 +94,12 @@ Page({
           title: res.data.msg,
         })
       } else {
-        var user = {
-          phone: res.data.data.phone,
-          wechatName: res.data.data.wechatName,
-          headImg: res.data.data.headImg,
-          yunToken: res.data.data.yunToken,
-          yunId: res.data.data.yunId,
-        };
-        setLoginInfo(user);
-        if (res.data.data.phone == '' || res.data.data.phone == null) {
+        var userInfo = getLoginInfo();
+        userInfo.rname = this.data.nickName;
+        userInfo.headImg = this.data.headImg;
+        userInfo.wechatName = this.data.nickName;
+        setLoginInfo(userInfo);
+        if (userInfo.phone == '' || userInfo.phone == null) {
           wx.redirectTo({
             url: '/pages/login/login',
           })
