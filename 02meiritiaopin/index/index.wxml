@@ -75,7 +75,7 @@
                           class="{{content.cardIndex == index2?'active item':'item'}}"
                           wx:for-item="item" bindtap="changeCard" data-pindex="{{idx}}" data-ind="{{index2}}">
                         <view class="pic">
-                            <image src="{{item.imgUrl}}"></image>
+                            <image mode="aspectFill" src="{{item.imgUrl}}"></image>
                         </view>
                         <image bindtap="openBig" data-pindex="{{idx}}" data-index="{{index2}}" class="btn-fan"
                                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>

@@ -71,7 +71,11 @@
                                           data-index="0"
                                           data-listindex="{{indexlist}}">
                                         <view class="front">
-                                            <image mode="scaleToFill" src="{{itemlist.randomCard[0].imgUrl}}"></image>
+                                            <image mode="aspectFill" src="{{itemlist.randomCard[0].imgUrl}}"></image>
+                                            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                                   class="iconImg"
+                                                   data-img="{{itemlist.randomCard[0].imgUrl}}"
+                                                   catchtap="showImg"></image>
                                         </view>
                                         <view class="back">
                                             <image mode="widthFix" src="/static/card-back-big.png"></image>
@@ -85,7 +89,11 @@
                                             bindtap="clickCard" data-index="1"
                                             data-listindex="{{indexlist}}">
                                         <view class="front">
-                                            <image mode="scaleToFill" src="{{itemlist.randomCard[1].imgUrl}}"></image>
+                                            <image mode="aspectFill" src="{{itemlist.randomCard[1].imgUrl}}"></image>
+                                            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                                   class="iconImg"
+                                                   data-img="{{itemlist.randomCard[1].imgUrl}}"
+                                                   catchtap="showImg"></image>
                                         </view>
                                         <view class="back">
                                             <image mode="widthFix" src="/static/card-back.png"></image>
@@ -97,7 +105,11 @@
                                             bindtap="clickCard" data-index="2"
                                             data-listindex="{{indexlist}}">
                                         <view class="front">
-                                            <image mode="scaleToFill" src="{{itemlist.randomCard[2].imgUrl}}"></image>
+                                            <image mode="aspectFill" src="{{itemlist.randomCard[2].imgUrl}}"></image>
+                                            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                                   class="iconImg"
+                                                   data-img="{{itemlist.randomCard[2].imgUrl}}"
+                                                   catchtap="showImg"></image>
                                         </view>
                                         <view class="back">
                                             <image mode="widthFix" src="/static/card-back.png"></image>
@@ -211,7 +223,9 @@
                         </view>
                     </view>
                 </view>
-                <view data-idx="{{indexlist}}" class="nextSubmit" catchtap="nextStep">下一步</view>
+                <view data-idx="{{indexlist}}" class="nextSubmit" catchtap="nextStep">
+                    {{ curStep === step ? '下一步' : '修改答案'}}
+                </view>
             </view>
         </view>
     </view>
@@ -279,12 +293,4 @@
     </view>
 </block>
 
-<!--放大卡牌-->
-<block wx:if="{{bigPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-big">
-        <image class="big-pic" src="{{selectImgUrl}}" mode="widthFix"></image>
-        <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png"
-               bindtap="closeImgPop"></image>
-    </view>
-</block>
+

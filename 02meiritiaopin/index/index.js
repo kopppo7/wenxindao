@@ -173,7 +173,9 @@ Page({
             cardIndex: 0,
             times: '',
             startTime: '',
-            endTime: ''
+            endTime: '',
+            cardGroupIndex:0,
+            cardGroup:[]
         })
         this.setData({
             contentsArray: arr
@@ -253,9 +255,13 @@ Page({
                         if (orgCards.length >= 6) {
                             cardGroup.push([])
                         }
-                        if (orgCards.length === 9) {
+                        if (orgCards.length >= 9) {
                             cardGroup.push([])
                         }
+                        if (orgCards.length >= 12) {
+                            cardGroup.push([])
+                        }
+                        console.log(orgCards.length)
                         orgCards.map((item, index) => {
                             if (index <= 2) {
                                 cardGroup[0].push(item)
@@ -265,6 +271,9 @@ Page({
                             }
                             if (index > 5 && index <= 8) {
                                 cardGroup[2].push(item)
+                            }
+                            if (index > 8 && index <= 12) {
+                                cardGroup[3].push(item)
                             }
                         })
                     }
@@ -404,7 +413,7 @@ Page({
     },
     // 随机查询今日随机卡牌
     getChangeCard(e) {
-        var data = [
+        var data2 = [
             {
                 addTime: "2022-12-16T14:49:13.000+0000",
                 addUserId: 9,
@@ -464,6 +473,7 @@ Page({
 
         getChangeCard(that.data.types).then(res => {
             if (res.data.ret == 200) {
+                var data = res.data.data
                 if (contentsArray[activeIndex][index].cards.length === 0) {
                     contentsArray[activeIndex][index].cardIndex = 0
                 }

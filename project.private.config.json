@@ -120,6 +120,20 @@
           "query": "id=167",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "123",
+          "pathName": "probe/play/play",
+          "query": "id=184",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "生命探索分享",
+          "pathName": "probe/share/share",
+          "query": "id=184",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

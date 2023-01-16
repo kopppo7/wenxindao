@@ -13,7 +13,7 @@ function wxPromisify(fn) {
             };
             obj.fail = function (res) {
                 // 失败
-               
+
                 reject(res)
             };
             fn(obj)

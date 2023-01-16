@@ -21,7 +21,8 @@
         "index/index",
         "detail/detail",
         "play/play",
-        "invitation/index"
+        "invitation/index",
+        "share/share"
       ]
     },
     {
