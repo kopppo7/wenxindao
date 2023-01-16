@@ -133,12 +133,15 @@
 <!--                                           catchtap="changeImg" src="{{item1.imgUrl}}" mode="widthFix"></image>-->
 <!--                                </view>-->
 <!--                            </view>-->
-                            <image class="cardImg" wx:if="{{itemlist.selectCard}}" src="{{itemlist.selectCard.imgUrl}}"
+                            <view class="cardImg">
+                                <image class="cardImg-img" wx:if="{{itemlist.selectCard}}"
+                                       src="{{itemlist.selectCard.imgUrl}}"
                                    mode="widthFix">
                                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
                                        class="iconImg" data-img="{{itemlist.selectCard.imgUrl}}"
                                        catchtap="showImg"></image>
                             </image>
+                            </view>
                             <view class="cardTxt" wx:if="{{itemlist.selectCard}}">{{itemlist.selectCard.answer}}</view>
                             <!-- 文字输入 语音录入 -->
                             <view class="form-z">
