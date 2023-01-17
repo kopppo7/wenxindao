@@ -203,6 +203,7 @@ Page({
             onRemoveTeamMembers: that.onRemoveTeamMembers,
             onmsg: that.onMsg
         });
+        console.log(nim)
     },
     // 群组更新
     onTeams(e) {
@@ -390,10 +391,22 @@ Page({
     // onDismissTeam () { },
     // 解散群
     dismissTeam() {
-        dissolveGroup({
-            id: 98,
-            token: '9f011c22-e886-4344-b450-ec546d52c0ba'
+        // nim.dismissTeam({
+        //     teamId:"8046708445",
+        //     done: dismissTeamDone
+        // })
+        // function dismissTeamDone(error, obj) {
+        //     console.log('解散群' + (!error?'成功':'失败'), error, obj);
+        // }
+        quitRoom({
+            roomId: 121
+        }).then(res => {
+
         })
+        // dissolveGroup({
+        //     id: 121,
+        //     token: '9f011c22-e886-4344-b450-ec546d52c0ba'
+        // })
     },
     dismissTeamDone(error, obj) {
         console.log(error);

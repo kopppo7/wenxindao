@@ -134,6 +134,20 @@
           "query": "id=184",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "pp",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=124&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "po",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=124&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
