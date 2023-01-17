@@ -462,10 +462,11 @@
 	-o-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	z-index: 801;
+	margin-top: -70rpx;
 }
 
 .pop-big .big-pic {
-	width: 670rpx;
+	width: 560rpx;
 	/* height: 998rpx; */
 }
 
