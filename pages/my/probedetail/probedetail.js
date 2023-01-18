@@ -111,4 +111,9 @@ Page({
             bigCardImgUrl: ''
         })
     },
+    toShare:function () {
+      wx.navigateTo({
+          url: '/probe/share/share?id=' + this.data.id,
+      })
+    }
 })

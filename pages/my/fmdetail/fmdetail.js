@@ -50,7 +50,7 @@ Page({
     audioCtx.pause()
     audioCtx.src = this.data.info.contents[e.currentTarget.dataset.idx].voice;
     let list = this.data.info.contents;
-    list[e.currentTarget.dataset.idx].playVoice = !list[e.currentTarget.dataset.idx].playVoice 
+    list[e.currentTarget.dataset.idx].playVoice = !list[e.currentTarget.dataset.idx].playVoice
     if(list[e.currentTarget.dataset.idx].playVoice) {
         audioCtx.play()
     } else {
@@ -94,5 +94,11 @@ Page({
       title: '问心岛'
     };
     return shareObj;
-  }
+  },
+    //分享朋友圈
+    toShare:function () {
+        wx.navigateTo({
+            url: '/02meiritiaopin/share/share?id=' + this.data.info.id,
+        })
+    }
 })
