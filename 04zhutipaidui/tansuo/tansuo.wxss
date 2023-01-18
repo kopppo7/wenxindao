@@ -686,3 +686,71 @@ image{object-fit: cover;}
 .bot-fix{}
 .bot-fix{}
 .bot-fix{}
+.kick-tit{
+	font-size: 32rpx;
+	color: #ffffff;
+	opacity: .8;
+	margin-bottom: 20rpx;
+}
+.kick-list{
+	margin-bottom: 48rpx;
+}
+.kick-list .kick-item{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.kick-list .kick-item+.kick-item{
+	margin-top: 48rpx;
+}
+.kick-list .face{
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	width: 80rpx;
+	height: 80rpx;
+	border-radius: 50%;
+	overflow: hidden;
+	margin-right: 24rpx;
+}
+.kick-list .face image{
+	display: block;width: 100%;height: 100%;
+}
+.kick-list .name{
+	font-size: 28rpx;
+	color: #ffffff;
+}
+.kick-list .l{
+	display: flex;
+	align-items: center;
+}
+.kick-list .r{
+	background: rgba(182, 178, 207, 0.18);
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	border-radius: 48px;
+	width: 120rpx;
+	height: 64rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 28rpx;
+	color: #ffffff;
+}
+
+.quit-btn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 32rpx;
+	color: #ee354c;
+	margin-top: 40rpx;
+}
+.quit-btn image{
+	width: 32rpx;
+	height: 32rpx;
+	margin-left: 20rpx;
+}
+
+
+
+
+
+

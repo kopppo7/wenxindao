@@ -134,6 +134,41 @@
           "query": "id=184",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "pp",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=124&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "po",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=124&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "qqq",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=127&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "www",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=133&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "1",
+          "pathName": "04zhutipaidui/zhutijieshao/zhutijieshao",
+          "query": "id=14",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

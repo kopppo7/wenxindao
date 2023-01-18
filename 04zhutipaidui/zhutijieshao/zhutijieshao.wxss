@@ -224,3 +224,6 @@ page{
 	background-color: #FFB58C;
 	color: #010206;
 }
+.bottom-box .btn-box .bottom-r.full{
+	width: 100%;
+}
