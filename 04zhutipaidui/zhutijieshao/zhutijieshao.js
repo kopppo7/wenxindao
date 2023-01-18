@@ -23,6 +23,8 @@ Page({
         evalList: [],
         rating: 4,
         area: '',
+        roomData:{},
+        roomPath:{}
     },
     // 打开购买本探索弹窗
     openBuyPop (e) {
@@ -132,8 +134,27 @@ Page({
         this.setData({
             themeId: options.id,
             'evalParams.id': options.id,
+            roomData:wx.getStorageSync('roomData'),
+            roomPath:wx.getStorageSync('roomPath'),
         })
         this.initData()
+    },
+    //返回游戏房间
+    toRoom:function () {
+        console.log(this.data.roomPath)
+        var url = '/04zhutipaidui/tansuo/tansuo'
+        var roomPath = this.data.roomPath
+        for (const roomPathKey in roomPath) {
+            url=url+'&'+roomPathKey+'='+roomPath[roomPathKey]
+        }
+        url.replace('&','?')
+        console.log(url.replace('&','?'))
+        console.log(url)
+        wx.redirectTo({
+            url: url.replace('&','?') ,
+        })
+
+
     },
 
     /**
