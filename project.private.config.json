@@ -12,7 +12,7 @@
         {
           "name": "裂变分享",
           "pathName": "probe/detail/detail",
-          "query": "id=15&shareId=12",
+          "query": "id=15&shareId=18",
           "launchMode": "default",
           "scene": null
         },
