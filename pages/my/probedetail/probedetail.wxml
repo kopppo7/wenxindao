@@ -51,7 +51,7 @@
                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>
                 微信好友
             </button>
-            <view class="share-item">
+            <view class="share-item" bindtap="toShare">
                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>
                 朋友圈
             </view>

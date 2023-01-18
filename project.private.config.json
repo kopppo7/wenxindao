@@ -3,7 +3,7 @@
   "setting": {
     "compileHotReLoad": true,
     "bigPackageSizeSupport": true,
-    "urlCheck": false
+    "urlCheck": true
   },
   "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
   "condition": {
@@ -167,6 +167,20 @@
           "name": "1",
           "pathName": "04zhutipaidui/zhutijieshao/zhutijieshao",
           "query": "id=14",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "share",
+          "pathName": "probe/share/share",
+          "query": "id=197",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "分享详情",
+          "pathName": "pages/my/fmdetail/fmdetail",
+          "query": "id=132",
           "launchMode": "default",
           "scene": null
         }
