@@ -204,7 +204,8 @@ Page({
       res.data.data.introduce = res.data.data.introduce.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
         .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
       if (res.data.data.powerExpiratTime) {
-        let dateTime = formatTime(new Date(res.data.data.powerExpiratTime));
+        console.log(res.data.data.powerExpiratTime.replace(/-/g,'/'))
+        let dateTime = formatTime(new Date(res.data.data.powerExpiratTime.replace(/-/g,'/')));
         res.data.data.powerExpiratTime = dateTime.year + '年' + dateTime.month + '月' + dateTime.day + '日';
       }
       this.setData({

@@ -1,4 +1,4 @@
-// pages/login/login.js
+const _charStr = 'abacdefghjklmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789';
 import {
   updateUserMsg,
   getUserMsg,
@@ -67,6 +67,31 @@ Page({
       nickName: e.detail.value
     })
   },
+  randomUserInfo() {
+    let min = 0,
+      max = _charStr.length - 1,
+      _str = '';
+    let len = 10;
+    //循环生成字符串
+    for (var i = 0, index; i < len; i++) {
+      index = this.RandomIndex(min, max, i);
+      _str += _charStr[index];
+    }
+    this.setData({
+      nickName: "wenxin" + _str,
+      headImg: "https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"
+    })
+  },
+  RandomIndex(min, max, i) {
+    let index = Math.floor(Math.random() * (max - min + 1) + min),
+      numStart = _charStr.length - 10;
+    //如果字符串第一位是数字，则递归重新获取
+    if (i == 0 && index >= numStart) {
+      index = RandomIndex(min, max, i);
+    }
+    //返回最终索引值
+    return index;
+  },
   getUserInfo(e) {
     if (!this.data.headImg) {
       wx.showToast({
@@ -86,8 +111,7 @@ Page({
     }
     updateUserMsg({
       nickname: this.data.nickName,
-      headimgurl: this.data.headImg,
-      citys: ''
+      headimgurl: this.data.headImg
     }).then(res => {
       if (res.data.ret != 200) {
         wx.showToast({

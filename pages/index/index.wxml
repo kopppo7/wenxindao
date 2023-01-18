@@ -1,18 +1,15 @@
 <!--index.wxml-->
 <view class="wp" >
     <view class="index-row1">
-        <navigator url="/02meiritiaopin/index/index" hover-class="none" class="item">
+        <view bindtap="jump" data-type="mrtp" url="" hover-class="none" class="item">
             <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title1.png"></image>
-        </navigator>
-        <navigator url="/probe/index/index" hover-class="none" class="item">
+        </view>
+        <view bindtap="jump" data-type="smts" class="item">
             <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title2.png"></image>
-        </navigator>
-        <navigator url="/04zhutipaidui/index/index" hover-class="none" class="item">
+        </view>
+        <view bindtap="jump" data-type="ztpd" class="item">
             <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title3.png"></image>
-        </navigator>
-<!--        <view bindtap="goParty" hover-class="none" class="item">-->
-<!--            <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-title3.png"></image>-->
-<!--        </view>-->
+        </view>
     </view>
     <view class="index-row2">
       <block wx:for="{{list}}" wx:for-item="item" wx:key="id">
@@ -44,10 +41,10 @@
         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-nav1.png"></image>
         <view class="txt">问心岛</view>
     </navigator>
-    <navigator url="/pages/my/index/index" hover-class="none" class="item">
+    <view bindtap="jump" data-type="my" class="item">
         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-nav2.png"></image>
         <view class="txt">我的</view>
-    </navigator>
+    </view>
 </view>
 <!-- 封禁 -->
 <block wx:if="{{stopUse}}">

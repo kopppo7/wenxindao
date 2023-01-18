@@ -1,31 +1,34 @@
-// pages/telLogin/index.js
 import {
   sendCode,
-  phoneLogin
+  phoneLogin,
+  updateUserMsg
 } from "../../utils/api";
+import {
+  getLoginInfo,
+  setLoginInfo
+} from "../../utils/stoage"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    numArr:['+86','+87'],
-    telphone:"",
-    msg:"",
-    activeNum:'+86',
-    downTime:60,
-    disabled:false,
-    codebtn:"获取验证码",
-    code:"",
-    key:"",
+    numArr: ['+86', '+87'],
+    telphone: "",
+    msg: "",
+    activeNum: '+86',
+    downTime: 60,
+    disabled: false,
+    codebtn: "获取验证码",
+    code: "",
+    key: "",
   },
-  bindPickerChange(e){
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+  bindPickerChange(e) {
     this.setData({
       activeNum: this.data.numArr[e.detail.value]
     })
   },
-  getMsg(e){
+  getMsg(e) {
     this.setData({
       msg: e.detail.value
     })
@@ -37,8 +40,8 @@ Page({
     if (!reg.test(phone)) {
       wx.showToast({
         title: '手机号码格式不正确',
-        icon:"none",
-        duration:2000
+        icon: "none",
+        duration: 2000
       })
       return false;
     }
@@ -47,121 +50,92 @@ Page({
     })
   },
   //发送验证码
-  sendcode(res){
-    var phone=this.data.telphone;
+  sendcode(res) {
+    var phone = this.data.telphone;
     var time = 60;
-    var that=this;
-    sendCode({phone:phone}).then(res=>{
-      if(res.data.ret==200){
+    var that = this;
+    sendCode({
+      phone: phone
+    }).then(res => {
+      if (res.data.ret == 200) {
         wx.showToast({
           title: '验证码已发送.请注意接收',
-          icon:"success"
-        })  
-      
-        var timers=setInterval(function () {
+          icon: "success"
+        })
+
+        var timers = setInterval(function () {
           time--;
-          if (time>0){
+          if (time > 0) {
             that.setData({
-              codebtn:time+'s后重新获取',
-              disabled:true
+              codebtn: time + 's后重新获取',
+              disabled: true
             });
-          }else{
+          } else {
             that.setData({
-              codebtn:'获取验证码',
-              disabled:false
+              codebtn: '获取验证码',
+              disabled: false
             });
             clearInterval(timers)
           }
-        },1000)
-      }else{
+        }, 1000)
+      } else {
         wx.showToast({
           title: res.data.msg,
-          icon:"none",
-          duration:2000
+          icon: "none",
+          duration: 2000
         })
       }
       this.setData({
-        key:res.data.data,
+        key: res.data.data,
       })
     })
-    
+
   },
   // 登录处理
-  login(e){
-    var phone=this.data.telphone
-    var code=this.data.msg
-    var key=this.data.key
+  login(e) {
+    var phone = this.data.telphone
+    var code = this.data.msg
+    var key = this.data.key
     phoneLogin({
       phone,
       code,
       key
-    }).then(res=>{
-      if(res.data.ret==200){
-        wx.redirectTo({
-          url: '/pages/index/index',
+    }).then(res => {
+      if (res.data.ret == 200) {
+        var userInfo = getLoginInfo();
+        if (userInfo != null && userInfo != '') {
+          userInfo.phone = phone;
+        } else {
+          userInfo = {
+            phone: phone,
+            wechatName: '',
+            headImg: ''
+          };
+        }
+        setLoginInfo(userInfo);
+        if (userInfo.wechatName == '' || userInfo.wechatName == null) {
+          wx.redirectTo({
+            url: '/pages/auth/auth',
+          })
+        } else {
+          updateUserMsg({
+            phone: phone,
+            nickname: userInfo.wechatName,
+            headimgurl: userInfo.headImg
+          }).then(up => {
+            wx.hideLoading();
+            wx.redirectTo({
+              url: '/pages/index/index',
+            })
+          })
+        }
+      } else {
+        wx.showToast({
+          title: res.data.msg,
+          icon: "none",
+          duration: 2000
         })
-     }else{
-      wx.showToast({
-        title: res.data.msg,
-        icon:"none",
-        duration:2000
-      })
-     }
+      }
     })
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
   }
 })

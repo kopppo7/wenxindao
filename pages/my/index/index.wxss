@@ -258,13 +258,17 @@ page{
 .order-list .s1{
 	display: flex;
 	justify-content: space-between;
+  padding-bottom: 20rpx;
 }
 .order-list .s1-l{
 	font-size: 24rpx;
-	color: #B6B2CF;
+  color: #B6B2CF;
+  flex:1;
 }
 .order-list .s1-r{
-	color: #ffb58c;
+  color: #ffb58c;
+  width: 250rpx;
+  text-align: right;
 }
 .order-list .s1-r text{
 	font-size: 36rpx;

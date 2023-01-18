@@ -12,13 +12,16 @@
       <image class="avatar" wx:else src="{{headImg}}" ></image>
     </button>
     <view class="inp">
-        <input class="weui-input" placeholder="请输入昵称" type="nickname" value="{{nickName}}" bindinput="getNick" bindchange="getNickChange"  maxlength="10"/>
+        <input class="weui-input" placeholder="请输入昵称" type="nickname" value="{{nickName}}" bindinput="getNick" bindchange="getNickChange"  maxlength="50"/>
     </view>
   </view>
 </view>
 
 <view class="login-bottom">
+  <button class="btn-login"  bindtap="randomUserInfo">
+  随机生成头像昵称
+  </button>
   <button class="btn-login"  bindtap="getUserInfo">
-    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-weixin.png"></image>授权用户信息
+  授权用户信息
   </button>
 </view>
