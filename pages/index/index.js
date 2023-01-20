@@ -17,7 +17,8 @@ Page({
     relieveTime: "",
     page: 1,
     list: [],
-    total: 0
+    total: 0,
+    pagePara:''
   },
   callNum() {
     wx.makePhoneCall({
@@ -29,15 +30,13 @@ Page({
       stopUse: false
     })
   },
+  onShow(){
+    that.getData();
+  },
   onLoad: async function (para) {
-    var that = this;
-    if (para.look != 'casual') {
-      await login(function () {
-        that.getData();
-      });
-    }else{
-      that.getData();
-    }
+    this.setData({
+      pagePara:para.look
+    })
     if (wx.getStorageSync('loginInfo').relieveTime) {
       this.setData({
         relieveTime: wx.getStorageSync('loginInfo').relieveTime,
