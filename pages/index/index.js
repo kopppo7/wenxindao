@@ -2,6 +2,7 @@ import {
   login
 } from '../../utils/common'
 import {
+  getUserMsg,
   indexFlow
 } from "../../utils/api";
 import { getLoginInfo, setLoginInfo } from "../../utils/stoage"
@@ -31,7 +32,7 @@ Page({
     })
   },
   onShow(){
-    that.getData();
+    this.getData();
   },
   onLoad: async function (para) {
     this.setData({
