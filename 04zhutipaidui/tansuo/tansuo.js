@@ -11,7 +11,7 @@ import {
     findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate, addRoomLog
 } from "../api";
 import yunApi from "../../utils/yun";
-import {findByOrderList} from "../../utils/api";
+import {findByOrderList, getUserMsg} from "../../utils/api";
 
 var nim = null;
 var downTime = Math.random() * 10 + 5;
@@ -406,7 +406,6 @@ Page({
     },
     //渲染消息
     pushMsg(error, msg) {
-
         var yunMsgList = this.data.yunMsgList
         yunMsgList.push(msg)
         // yunMsgList = []
@@ -742,10 +741,10 @@ Page({
 
             } else {
                 clearTimeout(startTimeout)
+
                 that.setData({
                     timePopStatus:false
                 })
-
             }
             that.saveData()
         },1000)
@@ -758,7 +757,7 @@ Page({
             this.setData({
                 readyPopStatus: true
             })
-            this.readyTimeDown()
+            // this.readyTimeDown()
         }
     },
     //准备弹窗倒计时
@@ -1045,11 +1044,22 @@ Page({
         })
     },
 
+    //获取用户信息 云信等
+    getUserInfo:function () {
+        getUserMsg().then(res => {
+            if (res.data.ret === 200){
+                wx.setStorageSync('loginInfo', res.data.data);
+            }
+        })
+    },
 
     /**
      * 生命周期函数--监听页面加载
      */
     async onLoad(options) {
+
+        // this.getUserInfo()
+
         this.contentScroll()
 
         var partyData = wx.getStorageSync('partyData')
@@ -1715,8 +1725,8 @@ Page({
 
         this.setData({
             kickPopStatus: true,
-            kickPlayer: e.currentTarget.dataset.item,
-            kickPopType: 2
+            // kickPlayer: e.currentTarget.dataset.item,
+            // kickPopType: 2
         })
     },
     //结尾畅聊投诉
