@@ -2,6 +2,7 @@
 import {
   decodePhone,
   updateUserMsg,
+  getUserMsg,
   appletsLogin 
 } from "../../utils/api";
 import {
@@ -26,7 +27,6 @@ Page({
 
     clickAgree() {
         var that = this;
-        console.log(that.data.agreeStatus);
         that.setData({
             agreeStatus: !that.data.agreeStatus
         })
@@ -52,33 +52,28 @@ Page({
               }).then(res=>{
                 if(res.data.ret==200){
                   var json =JSON.parse(res.data.data);
-                  var userInfo = getLoginInfo();
-                  if (userInfo != null&&userInfo!='') {
+                  var token = wx.getStorageSync('tokenKey');
+                  getUserMsg(token).then(customer=>{
+                    var userInfo = customer.data.data;
                     userInfo.phone = json.phoneNumber;
-                  } else {
-                    userInfo = {
-                      phone: json.phoneNumber,
-                      wechatName: '',
-                      headImg: ''
-                    };
-                  }
-                  setLoginInfo(userInfo);
-                  if(userInfo.wechatName==''||userInfo.wechatName==null){
-                    wx.redirectTo({
-                      url: '/pages/auth/auth',
-                    })
-                  }else{
-                    updateUserMsg({
-                      phone:json.phoneNumber,
-                      nickname:userInfo.wechatName,
-                      headimgurl:userInfo.headImg
-                    }).then(up=>{
-                      wx.hideLoading();
+                    setLoginInfo(userInfo);
+                    if(userInfo.wechatName==''||userInfo.wechatName==null){
                       wx.redirectTo({
-                        url: '/pages/index/index',
+                        url: '/pages/auth/auth',
                       })
-                    })
-                  }
+                    }else{
+                      updateUserMsg({
+                        phone:json.phoneNumber,
+                        nickname:userInfo.wechatName,
+                        headimgurl:userInfo.headImg
+                      }).then(up=>{
+                        wx.hideLoading();
+                        wx.redirectTo({
+                          url: '/pages/index/index',
+                        })
+                      })
+                    }
+                  })
                 } else{
                   wx.hideLoading();
                   wx.showToast({
