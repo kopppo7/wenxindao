@@ -111,6 +111,9 @@ Page({
     var token = wx.getStorageSync('tokenKey');
     getUserMsg(token).then(customer=>{
       var userInfo = customer.data.data;
+      userInfo.wechatName = this.data.nickName;
+      userInfo.rname = this.data.nickName;
+      userInfo.headImg = this.data.headImg;
       updateUserMsg({
         nickname: this.data.nickName,
         headimgurl: this.data.headImg
