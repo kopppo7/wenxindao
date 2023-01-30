@@ -1058,7 +1058,7 @@ Page({
      */
     async onLoad(options) {
 
-        this.getUserInfo()
+        // this.getUserInfo()
 
         this.contentScroll()
 
