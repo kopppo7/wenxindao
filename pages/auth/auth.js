@@ -9,7 +9,6 @@ import {
   setLoginInfo
 } from "../../utils/stoage"
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -109,30 +108,30 @@ Page({
       })
       return
     }
-    updateUserMsg({
-      nickname: this.data.nickName,
-      headimgurl: this.data.headImg
-    }).then(res => {
-      if (res.data.ret != 200) {
-        wx.showToast({
-          title: res.data.msg,
-        })
-      } else {
-        var userInfo = getLoginInfo();
-        userInfo.rname = this.data.nickName;
-        userInfo.headImg = this.data.headImg;
-        userInfo.wechatName = this.data.nickName;
-        setLoginInfo(userInfo);
-        if (userInfo.phone == '' || userInfo.phone == null) {
-          wx.redirectTo({
-            url: '/pages/login/login',
+    var token = wx.getStorageSync('tokenKey');
+    getUserMsg(token).then(customer=>{
+      var userInfo = customer.data.data;
+      updateUserMsg({
+        nickname: this.data.nickName,
+        headimgurl: this.data.headImg
+      }).then(res => {
+        if (res.data.ret != 200) {
+          wx.showToast({
+            title: res.data.msg,
           })
         } else {
-          wx.redirectTo({
-            url: '/pages/index/index',
-          })
+          setLoginInfo(userInfo);
+          if (userInfo.phone == '' || userInfo.phone == null) {
+            wx.redirectTo({
+              url: '/pages/login/login',
+            })
+          } else {
+            wx.redirectTo({
+              url: '/pages/index/index',
+            })
+          }
         }
-      }
+      })
     })
   }
 })

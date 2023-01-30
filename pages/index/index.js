@@ -2,9 +2,14 @@ import {
   login
 } from '../../utils/common'
 import {
-  indexFlow
+  indexFlow,
+  getUserMsg,
+  appletsLogin
 } from "../../utils/api";
-import { getLoginInfo, setLoginInfo } from "../../utils/stoage"
+import {
+  getLoginInfo,
+  setLoginInfo
+} from "../../utils/stoage"
 
 //获取应用实例
 const app = getApp();
@@ -18,7 +23,7 @@ Page({
     page: 1,
     list: [],
     total: 0,
-    pagePara:''
+    pagePara: ''
   },
   callNum() {
     wx.makePhoneCall({
@@ -30,12 +35,29 @@ Page({
       stopUse: false
     })
   },
-  onShow(){
-    that.getData();
+  onShow() {
+    this.getData();
+    var user = getLoginInfo();
+    if (user == '') {
+      wx.login({
+        success: function (res) {
+          var obj = {
+            code: res.code,
+            role: 1
+          };
+          appletsLogin(obj).then(tk => {
+            wx.setStorageSync('tokenKey', tk.data.data.token);
+            getUserMsg(tk.data.data.token).then(userInfo => {
+              setLoginInfo(userInfo.data.data);
+            });
+          })
+        }
+      });
+    }
   },
   onLoad: async function (para) {
     this.setData({
-      pagePara:para.look
+      pagePara: para.look
     })
     if (wx.getStorageSync('loginInfo').relieveTime) {
       this.setData({
@@ -46,11 +68,11 @@ Page({
   },
   jump(e) {
     var loginInfo = getLoginInfo();
-    if(loginInfo.phone==''||loginInfo.phone==null||loginInfo.phone==undefined){
+    if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
       wx.showModal({
-        title:'当前未授权手机号，请授权后进行体验',
-        success:function(auth){
-          if(auth.confirm){
+        title: '当前未授权手机号，请授权后进行体验',
+        success: function (auth) {
+          if (auth.confirm) {
             wx.redirectTo({
               url: '/pages/login/login',
             })
@@ -58,12 +80,11 @@ Page({
         }
       })
       return;
-    }
-    else if(loginInfo.wechatName==''||loginInfo.wechatName==null||loginInfo.wechatName==undefined){
+    } else if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
       wx.showModal({
-        title:'当前未完善您的头像和昵称，请完善后进行体验',
-        success:function(auth){
-          if(auth.confirm){
+        title: '当前未完善您的头像和昵称，请完善后进行体验',
+        success: function (auth) {
+          if (auth.confirm) {
             wx.redirectTo({
               url: '/pages/auth/auth',
             })
