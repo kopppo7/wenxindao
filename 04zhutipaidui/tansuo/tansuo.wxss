@@ -301,7 +301,7 @@
 .room-theme .peoples .item:nth-child(2n){
 	text-align: right;
 }
-.room-theme .peoples .item .people{margin-bottom: 24rpx;display: inline-block;position: relative;}
+.room-theme .peoples .item .people{margin-bottom: 24rpx;display: inline-block;position: relative;width: 100rpx;}
 .room-theme .peoples .item .people .ico{ width: 100%;height: 100%;border-radius: 50%;display: block;}
 .room-theme .peoples .item .people .ready{position: absolute;left: 50%;top: 86rpx;width: 20rpx;height: 20rpx;margin-left: -10rpx;}
 .room-theme .peoples .item .people .ico2{
@@ -311,7 +311,7 @@
 .room-theme .peoples .item .people .ico2 image{
 	width: 48rpx;height: 48rpx;
 }
-.room-theme .peoples .item .people .name{text-align: center;font-size: 24rpx;line-height: 32rpx;color: #fff;display: block;}
+.room-theme .peoples .item .people .name{text-align: center;font-size: 24rpx;line-height: 32rpx;color: #fff;display: block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
 .room-theme .peoples.active{}
 .room-theme .peoples.active{}
 .room-theme .peoples.active{}

@@ -385,14 +385,14 @@ Page({
     sendCustomMsg(type, val) {
         var that = this;
         var content = {
-            type: type,
+            type: type, //发言类型 1 玩家准备 2 玩家是否轮到发言 3玩家是否在线  4 系统文字消息 5 系统发牌消息 6 跳过发言 7 点赞
             data: {
-                status: val.status,
-                value: val.text,
-                cardList: val.list,
-                audio: val.audio,
-                video: val.video,
-                img: val.imgUrl
+                status: val.status,  //玩家是否在线 
+                value: val.text,     //发的内容
+                cardList: val.list,  //发的卡牌
+                audio: val.audio,    //发的音频
+                video: val.video,    //发的视频
+                img: val.imgUrl      //发的图片
             }
         };
         var msg = nim.sendCustomMsg({
@@ -741,7 +741,7 @@ Page({
 
             } else {
                 clearTimeout(startTimeout)
-
+                that.handleBegin()
                 that.setData({
                     timePopStatus:false
                 })
@@ -1279,6 +1279,7 @@ Page({
                 show_speak_count_down: false
             })
         }
+        // QAQ 这里应该不用判断是否是房主
         if (that.data.isOwner) {
             that.sendCustomMsg(4, {text: '轮到' + playerList[personInd].nick + '发言'})
         }
