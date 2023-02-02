@@ -16,7 +16,7 @@ Page({
         detailObj:{},
         roomId:'',
         isMatch:'',
-        isHaoyou:''
+        isfriend:''
     },
     //上传本地图片
     radioChange(e) {
@@ -79,13 +79,13 @@ Page({
               }
               updateImMsg(param).then(res => {
                   wx.redirectTo({
-                      url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isHaoyou='+this.data.isHaoyou,
+                      url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
                   })
               })
             }
           } else {
               wx.redirectTo({
-                  url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isHaoyou='+this.data.isHaoyou,
+                  url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
               })
           }
         } else {
@@ -132,7 +132,7 @@ Page({
             themeId: options.id,
             roomId:options.roomId,
             isMatch:options.isMatch,
-            isHaoyou:options.isHaoyou,
+            isfriend:options.isfriend,
         })
         this.getRoomDet()
     },

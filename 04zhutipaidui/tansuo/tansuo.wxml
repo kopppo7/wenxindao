@@ -105,9 +105,6 @@
                                     />
                                 </view>
                             </view>
-                            <view class="z-btn" wx:if="{{!item.selectImage.url}}" bindtap="selectCard"
-                                  data-step="{{item.step}}">选择
-                            </view>
                         </view>
                         <view class="card" wx:if="{{item.card}}">
                             <text class="name">（自己）</text>
