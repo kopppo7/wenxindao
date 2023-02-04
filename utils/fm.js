@@ -55,3 +55,8 @@ export const uploadFile = function (data) {
 export const findByFmOne = function (data) {
     return http.get(handleURL('/askfm/findByFmOne'), data);
 };
+
+// 根据id查询每日调频详情
+export const findMyFmForDay = function (data) {
+    return http.get(handleURL('/askfm/findMyFmForDay'), data);
+};

@@ -42,7 +42,7 @@
         <view class="item dian">记录今天很特别的情绪情感体验</view>
         <view class="item dian">更多的复盘，可以自己设定哦</view>
     </view>
-    <form catchsubmit="addFm" class="form-z">
+    <form catchsubmit="addFm" class="form-z" wx:if="{{isEditFm}}">
         <view wx:for="{{contentsArray[activeIndex]}}" wx:for-index="idx" wx:for-item="content" wx:key="idx">
             <view class="z-btn" wx:if="{{!content.showCards}}" bindtap="getDayCard" data-index="{{idx}}">
                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fanpai.png"></image>
@@ -129,19 +129,63 @@
                    src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/plus.png"></image>
             <text class="name">添加一件事</text>
         </view>
-        <radio-group bindchange="radioChange">
+        <radio-group bindchange="radioChange" wx:if="{{isOpen}}">
             <label class="label-radio">
                 <radio value="1" checked="true"/>
                 公开
             </label>
             <label class="label-radio">
-                <radio value="0"/>
+                <radio value="0" />
                 仅自己可见
             </label>
         </radio-group>
-        <button formType="submit" class="btn-submit">提交</button>
+        <radio-group bindchange="radioChange" wx:else>
+            <label class="label-radio">
+                <radio value="1" />
+                公开
+            </label>
+            <label class="label-radio">
+                <radio value="0" checked="true" />
+                仅自己可见
+            </label>
+        </radio-group>
+        
+        <view class="btn-box" wx:if="{{isEditFmChange}}">
+            <button class="btn-submit"  formType="submit">完成</button>
+            <button class="btn-share" bindtap="shareFm">分享</button>
+        </view>
+        <button formType="submit" class="btn-submit" wx:else>提交</button>
     </form>
-
+    <view class="form-z" wx:else>
+        <view wx:for="{{contentsArray[activeIndex]}}" wx:for-index="idx" wx:for-item="content" wx:key="idx">
+            <view class="card-list">
+                <view class="item">
+                    <view class="pic">
+                        <image mode="aspectFill" src="{{content.imgUrl}}"></image>
+                    </view>
+                    <image bindtap="openBig" class="btn-fan"
+                            src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
+                </view>
+            </view>
+            <view class="textarea-box">
+                <textarea bindinput="bindTextVal" placeholder="链接卡片回答问题...（最多500字）" maxlength="500" placeholder-style="color: #B6B2CF;" value="{{content.txt}}" disabled />
+            </view>
+        </view>
+        <radio-group>
+            <label class="label-radio" wx:if="{{isOpen}}">
+                <radio value="1" checked="true"/>
+                公开
+            </label>
+            <label class="label-radio" wx:else>
+                <radio value="0" checked="true"/>
+                仅自己可见
+            </label>
+        </radio-group>
+        <view class="btn-box">
+            <button class="btn-submit" bindtap="changeFm">修改</button>
+            <button class="btn-share" bindtap="shareFm">分享</button>
+        </view>
+    </view>
 </view>
 <!--玩法介绍-->
 <block wx:if="{{playPopStatus}}">

@@ -334,3 +334,8 @@ page {
 	margin-right: 0;
 	margin-left: 16rpx;
 }
+.btn-box{display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;/* 垂直居中 */align-content:center;/* 多行一起垂直居中 */}
+.btn-box .btn-share{flex-shrink: 0;background: #FFB58C;
+	border-radius: 36px;width: 182rpx;line-height: 96rpx;text-align: center;margin-left: 48rpx;}
+.btn-box{}
+.btn-box{}

@@ -239,6 +239,13 @@
           "query": "id=212",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "02meiritiaopin/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
