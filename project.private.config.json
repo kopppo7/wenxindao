@@ -225,6 +225,20 @@
           "query": "askId=14&roomId=158&isMatch=true&isfriend=undefined",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "probe/play/play",
+          "query": "id=212",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "probe/play/play",
+          "query": "id=212",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

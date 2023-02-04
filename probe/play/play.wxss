@@ -194,10 +194,14 @@
 	flex: 1;
 	background: rgba(182, 178, 207, 0.12);
 	backdrop-filter: blur(12px);
-	border: 0.5px solid rgba(255, 255, 255, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.2);
 	border-radius: 12px;
   padding: 24rpx;
   box-sizing: border-box;
+}
+.tansuo-row .box2 .box2-r.notMine{
+	background: rgba(113, 215, 160,.2);
+
 }
 .tansuo-row .box2 .box2-r .tit{
 	font-size: 26rpx;
@@ -240,11 +244,11 @@
 }
 .yinyan-box5 .box4{
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-between;align-items:center;
 }
 .yinyan-box5 .box4-l{
-	width: 402rpx;
-	height: 224rpx;
+	width: 244rpx;
+	height: 182rpx;
 }
 .yinyan-box5 .box4-r{
 	width: 268rpx;
@@ -415,7 +419,9 @@
 	background: #7461E7;
   border-radius: 68rpx;
   margin: 40rpx auto;
+	display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;/* 垂直居中 */align-content:center;/* 多行一起垂直居中 */
 }
+.nextSubmit image{width: 48rpx;margin-right: 10rpx;}
 .randomCard{
   display: flex;
   justify-content: space-between;
@@ -602,3 +608,5 @@
 	height: 48rpx;
 	z-index: 1;
 }
+
+.cardTxt{color: #71D7A0;margin-top: 30rpx;}

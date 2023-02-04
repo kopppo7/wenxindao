@@ -48,9 +48,10 @@
                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fanpai.png"></image>
                 抽牌获得启示
             </view>
+            <!-- 二期再加换一换 -->
             <view wx:else>
                 <view class="z-btn-row">
-                    <view class="z-btn" bindtap="getChangeCard" data-index="{{idx}}">
+                    <!-- <view class="z-btn" bindtap="getChangeCard" data-index="{{idx}}">
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/refresh-cw-01.svg"></image>
                         换一换卡牌
                     </view>
@@ -65,12 +66,9 @@
                             下一轮
                             <image src="/static/arrow-r.png"></image>
                         </view>
-                    </view>
+                    </view> -->
                 </view>
                 <view class="card-list">
-                    <!--                    <view wx:for="{{content.cards}}" wx:for-index="index2" wx:key="index2"-->
-                    <!--                          class="{{content.cardIndex == index2?'active item':'item'}}"-->
-                    <!--                          wx:for-item="item" bindtap="changeCard" data-pindex="{{idx}}" data-ind="{{index2}}">-->
                     <view wx:for="{{content.cardGroup[content.cardGroupIndex]}}" wx:for-index="index2" wx:key="index2"
                           class="{{content.cardIndex == index2?'active item':'item'}}"
                           wx:for-item="item" bindtap="changeCard" data-pindex="{{idx}}" data-ind="{{index2}}">

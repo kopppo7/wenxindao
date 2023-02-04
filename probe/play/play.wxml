@@ -60,7 +60,7 @@
                     <view class="txt">{{itemlist.content}}</view>
                 </view>
                 <view class="box2">
-                    <view class="box2-r">
+                    <view class="{{isMine? 'box2-r':'box2-r notMine'}}">
                         <view class="tit">链接卡牌，回答问心精灵的问题。</view>
                         <view class="cardContent">
                             <view class="card-box {{itemlist.selectCard ? 'hide' : ''}}">
@@ -144,7 +144,7 @@
                             </view>
                             <view class="cardTxt" wx:if="{{itemlist.selectCard}}">{{itemlist.selectCard.answer}}</view>
                             <!-- 文字输入 语音录入 -->
-                            <view class="form-z">
+                            <view class="form-z" wx:if="{{isMine}}">
                                 <view class="count-down"
                                       wx:if="{{recodingTime <= 60000}}"
                                 >
@@ -226,8 +226,15 @@
                         </view>
                     </view>
                 </view>
-                <view data-idx="{{indexlist}}" class="nextSubmit" catchtap="nextStep">
+                <view data-idx="{{indexlist}}" class="nextSubmit" catchtap="nextStep" wx:if="{{isMine}}">
                     {{ curStep === step ? '下一步' : '修改答案'}}
+                </view>
+                <view class="nextSubmit" catchtap="backMine" wx:else data-idx="{{indexlist}}">
+                    <image
+                        src="https://file.wxdao.net/2023-02/3574d34e-4e03-4fd3-a2ff-d38624ab454d.png"
+                        mode="widthFix"
+                    />
+                    <text>返回我的探索</text>
                 </view>
             </view>
         </view>
@@ -247,16 +254,16 @@
         </view>
         <view class="box3">
             <view class="box3-item">
-                <view class="tit">探索解析</view>
+                <view class="tit">生命探索解析</view>
                 <view class="con">科学研究发现，我们的性格在小时候有80%的比例受到父母的影响。成年以后，这种影响会降低到40%左右，依然是个非常高的比例，在生命中发挥重要作用。</view>
             </view>
             <view class="box3-item">
-                <view class="tit">想要收获更多反馈？</view>
-                <view class="con">每个人都有自己认知的盲区。敞开自己，去拥抱其它小伙伴的角度和评论吧！</view>
+                <view class="tit">想要更深入的了解自己？</view>
+                <view class="con">每个人都有自我认知的盲区。如果您想要更全面的探索本话题，获得问心认证卡牌师的专业反馈，或者体验问心岛线下活动，欢迎联系我们。</view>
             </view>
         </view>
         <view class="box4">
-            <image class="box4-l" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrtxt.png"></image>
+            <image class="box4-l" src="https://file.wxdao.net/2023-02/655ac759-acc1-4fc8-af91-14543152a35c.png"></image>
             <image class="box4-r"
                    src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
         </view>

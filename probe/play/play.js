@@ -63,22 +63,23 @@ Page({
         activity: '', // 结束语
         selectImgUrl: '', // 选中的图片地址
         recodingTime: 300000,
-        canClickCard:true,
-        curStep:0
+        canClickCard: true,
+        curStep: 0,
+        isMine: true
     },
     // 放大看卡片
-    showImg(e) {
+    showImg (e) {
         this.setData({
             bigPopStatus: true,
             selectImgUrl: e.currentTarget.dataset.img
         })
     },
-    closeImgPop(e) {
+    closeImgPop (e) {
         this.setData({
             bigPopStatus: false
         })
     },
-    openSharePop() {
+    openSharePop () {
         // let that = this;
         // that.setData({
         //     sharePopStatus: true
@@ -89,7 +90,7 @@ Page({
         })
 
     },
-    closePop() {
+    closePop () {
         let that = this;
         that.setData({
             sharePopStatus: false
@@ -97,7 +98,7 @@ Page({
     },
     // 语音输入相关
     // 检查文档是否合规
-    inspectText(e) {
+    inspectText (e) {
         let list = this.data.list
         let idx = e.target.dataset.idx
         list[idx].contents.txt = e.detail.value
@@ -128,7 +129,7 @@ Page({
         })
     },
     // 切换语音 文字输入
-    changePutType(e) {
+    changePutType (e) {
         let list = this.data.list
         let idx = e.target.dataset.idx
         list[idx].putType = e.currentTarget.dataset.type
@@ -137,7 +138,7 @@ Page({
         })
     },
     // 录音
-    start(e) {
+    start (e) {
         console.log('开始录音开始录音开始录音', e)
         let that = this
         // this.setData({
@@ -162,7 +163,7 @@ Page({
         //开始录音
         wx.authorize({
             scope: 'scope.record',
-            success() {
+            success () {
                 console.log("录音授权成功");
                 that.recodingCountDown()
                 //第一次成功授权后 状态切换为2
@@ -180,7 +181,7 @@ Page({
                     console.log(res);
                 })
             },
-            fail() {
+            fail () {
                 console.log("第一次录音授权失败");
                 wx.showModal({
                     title: '提示',
@@ -249,7 +250,7 @@ Page({
         if (recodingTime > 0) {
             recodingTimeout = setTimeout(function () {
                 that.setData({
-                    recodingTime:recodingTime-1000
+                    recodingTime: recodingTime - 1000
                 })
                 that.recodingCountDown()
             }, 1000)
@@ -281,7 +282,7 @@ Page({
     //   })
     // },
     //停止录音
-    stop(e) {
+    stop (e) {
         let list = this.data.list
         let idx = e.currentTarget.dataset.idx
         list[idx].endTime = e.timeStamp
@@ -293,7 +294,7 @@ Page({
         //   endTime: e.timeStamp, // 结束录音时间
         // })
         this.setData({
-            recodingTime:300000
+            recodingTime: 300000
         })
         clearTimeout(recodingTimeout)
         let that = this;
@@ -313,7 +314,7 @@ Page({
             // })
             console.log('停止录音', res.tempFilePath)
             that.setData({
-                recodingTime:300000
+                recodingTime: 300000
             })
             clearTimeout(recodingTimeout)
             const {
@@ -322,7 +323,7 @@ Page({
         })
     },
     //播放声音
-    play() {
+    play () {
         innerAudioContext.autoplay = true
         innerAudioContext.src = this.data.tempFilePath
         console.log('this.data.tempFilePath', this.data.tempFilePath)
@@ -335,7 +336,7 @@ Page({
         })
     },
     // 关闭
-    closeAudio(e) {
+    closeAudio (e) {
         let list = this.data.list
         let idx = e.currentTarget.dataset.idx
         list[idx].autioStatus = 1
@@ -347,7 +348,7 @@ Page({
         })
     },
     // 保存语音
-    saveAudio(e) {
+    saveAudio (e) {
         let that = this
         // recorderManager.stop();
         wx.uploadFile({
@@ -358,7 +359,7 @@ Page({
                 'content-type': 'multipart/form-data',
                 'token': wx.getStorageSync('tokenKey') || ''
             },
-            success(res) {
+            success (res) {
                 let list = that.data.list
                 let idx = e.currentTarget.dataset.idx
                 list[idx].autioStatus = 0
@@ -376,7 +377,7 @@ Page({
         })
     },
     // 播放语音
-    playAudio() {
+    playAudio () {
         if (this.data.isPlay) {
             audioCtx.pause()
             this.setData({
@@ -390,7 +391,7 @@ Page({
         }
     },
     // 切换图片
-    changeImg(e) {
+    changeImg (e) {
         let idxp = e.currentTarget.dataset.idxp
         let idx = e.currentTarget.dataset.idx
         let list = this.data.list
@@ -401,23 +402,33 @@ Page({
         })
     },
     // 切换卡片
-    changeCard(e) {
+    changeCard (e) {
         let list = this.data.list
-
         if (e.currentTarget.dataset.item == 1) {
             list[e.currentTarget.dataset.idx].selectCard = ''
             this.setData({
-                list: list
+                list: list,
+                isMine: true
             })
         } else {
             list[e.currentTarget.dataset.idx].selectCard = e.currentTarget.dataset.item
             this.setData({
-                list: list
+                list: list,
+                isMine: false
             })
         }
     },
+    // 返回我的探索
+    backMine (e) {
+        let list = this.data.list
+        list[e.currentTarget.dataset.idx].selectCard = ''
+        this.setData({
+            list,
+            isMine: true
+        })
+    },
     // 下一步
-    nextStep(e) {
+    nextStep (e) {
         if (this.data.step > 0 && this.data.step < this.data.stepList.length + 2) {
             //step>0<最后一个为循环
             //需要判断是否填写内容
@@ -503,7 +514,7 @@ Page({
 
     },
     // 切换第几部
-    changeStep(e) {
+    changeStep (e) {
         if (e.target.dataset.idx <= this.data.curStep) {
             this.setData({
                 step: e.target.dataset.idx,
@@ -514,7 +525,7 @@ Page({
 
     },
     // 获取详情
-    getDetail(id) {
+    getDetail (id) {
         getProExpDetail({
             id: id
         }).then((res) => {
@@ -574,7 +585,7 @@ Page({
             })
             this.setData({
                 step: step,
-                curStep:step
+                curStep: step
             })
             console.log(step)
 
@@ -605,7 +616,7 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad(options) {
+    onLoad (options) {
         let info = getLoginInfo();
         this.setData({
             userInfo: info
@@ -618,7 +629,7 @@ Page({
         }
 
     },
-    lookLog() {
+    lookLog () {
         wx.redirectTo({
             url: '/pages/my/probedetail/probedetail?id=' + this.data.id,
         })
@@ -626,60 +637,60 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady() {
+    onReady () {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow() {
+    onShow () {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide() {
+    onHide () {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload() {
+    onUnload () {
 
     },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh() {
+    onPullDownRefresh () {
 
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom() {
+    onReachBottom () {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage() {
+    onShareAppMessage () {
 
     },
 
     //翻牌
-    clickCard:function (e) {
-        if (this.data.canClickCard){
+    clickCard: function (e) {
+        if (this.data.canClickCard) {
             this.setData({
-                canClickCard:false
+                canClickCard: false
             })
             var listIndex = e.currentTarget.dataset.listindex
-            var cardIndex = e.currentTarget.dataset.index*1
+            var cardIndex = e.currentTarget.dataset.index * 1
             var list = this.data.list
             var randomCard = JSON.parse(JSON.stringify(list[listIndex].randomCard))
             //调换位置
@@ -687,16 +698,16 @@ Page({
             list[listIndex].randomCard[0].isOpen = true
             list[listIndex].randomCard[cardIndex] = randomCard[0]
             this.setData({
-                list:list
+                list: list
             })
             var that = this;
             setTimeout(function () {
                 list[listIndex].randomCard[0].isOpened = true
                 that.setData({
-                    list:list,
-                    canClickCard:true
+                    list: list,
+                    canClickCard: true
                 })
-            },1000)
+            }, 1000)
         }
 
     }
