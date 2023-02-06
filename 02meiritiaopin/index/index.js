@@ -728,7 +728,7 @@ Page({
             }else{
                 this.setData({
                     isEditFm:true,
-                    isOpen:res.data.data.isOpen,
+                    isOpen:1,
                     isEditFmChange:false
                 })
             }
