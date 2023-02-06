@@ -246,6 +246,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=179&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

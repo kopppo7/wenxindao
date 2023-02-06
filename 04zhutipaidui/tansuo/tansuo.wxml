@@ -399,7 +399,7 @@
             <image src="{{themeDetail.imgUrl}}"/>
         </view>
         <view class="wait">00:{{waitTime}}</view>
-        <view class="btns" bindtap="closePop">
+        <view class="btns" bindtap="cancleMatch">
             <view class="close btn">取消匹配</view>
         </view>
     </view>

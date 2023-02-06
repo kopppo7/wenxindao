@@ -99,7 +99,7 @@ Page({
         //消息列表
         msgList: [],
         //云信原始消息列表
-        yunMsgList: []
+        yunMsgList: [],
     },
     // 活动提示
     activityChange () {
@@ -115,7 +115,7 @@ Page({
         if (this.data.activeStatus == true) {
             wx.setStorageSync('activeStatus', this.data.activeStatus)
         }
-        this.creatRoom()
+        // this.creatRoom()
     },
     cancelActivityPop () {
         wx.navigateBack({
@@ -152,6 +152,23 @@ Page({
         if (timeInt) {
             clearInterval(timeInt)
         }
+    },
+    // 取消匹配
+    cancleMatch () {
+        this.setData({
+            matePopStatus: false
+        })
+        if (timeInt) {
+            clearInterval(timeInt)
+        }
+        quitRoom({
+            roomId: this.data.roomData.id
+        }).then(res => {
+            wx.removeStorageSync('roomData')
+        })
+        wx.navigateBack({
+            delta: 1,
+        })
     },
     //------------------------------------分享end-----------------------------------------------------------
 
@@ -440,6 +457,7 @@ Page({
                     sysType: 'sys',
                     text: '玩家已准备',
                     msgStep: that.data.step,
+                    isBotMes: 1,    // isBotMes 1 是下面展示的消息列表 0 是上面的系统内容
                     fromAccount: msg.from
                 }
                 msgList.push(msgObj)
@@ -455,10 +473,22 @@ Page({
             } else if (content.type == 2) {
                 // 自定义消息type为2的时候 玩家是否轮到发言
                 var play = that.data.playerList;
+                var msgObj = {}
                 play.forEach(item => {
                     if (item && item.account && item.account == msg.from) {
                         item.isActive = content.data.status
+                        msgObj = {
+                            sysType: 'sys',
+                            text: '轮到' + item.nick + '发言',
+                            msgStep: that.data.step,
+                            isBotMes: 1,    // isBotMes 是否是下面展示的消息列表 isTopMes 是否是上面展示的系统消息
+                            fromAccount: msg.from
+                        }
                     }
+                })
+                msgList.push(msgObj)
+                that.setData({
+                    msgList: msgList
                 })
                 that.setData({
                     playerList: play
@@ -480,6 +510,7 @@ Page({
                     sysType: 'sys',
                     text: content.data.value,
                     msgStep: that.data.step,
+                    isBotMes: 1,
                     fromAccount: msg.from
                 }
                 if (content.data.value === '开始') {
@@ -505,6 +536,7 @@ Page({
                     sysType: 'sys',
                     cardList: content.data.cardList,
                     step: that.data.step,
+                    isBotMes: 0,
                     bigImage: {
                         url: '',
                         id: ''
@@ -519,6 +551,18 @@ Page({
 
             } else if (content.type === 6) {
                 //跳过发言
+                // 自定义消息type为4的时候 为系统文字消息
+                var msgObj = {
+                    sysType: 'sys',
+                    text: item.nick + '跳过本轮发言',
+                    msgStep: that.data.step,
+                    isBotMes: 1,
+                    fromAccount: msg.from
+                }
+                msgList.push(msgObj)
+                that.setData({
+                    msgList: msgList
+                })
                 that.handleJumpSpeak()
 
             } else if (content.type === 7) {
@@ -545,6 +589,7 @@ Page({
                 fromNick: msg.fromNick,
                 text: msg.text,
                 msgStep: that.data.step,
+                isBotMes: 1,
                 fromAccount: msg.from
             }
             msgList.push(msgObj)
@@ -583,6 +628,7 @@ Page({
                 var msgObj = {
                     sysType: 'sys',
                     text: '玩家已准备',
+                    isBotMes: 1,
                     msgStep: that.data.step,
                     fromAccount: msg.from
                 }
@@ -593,10 +639,22 @@ Page({
             } else if (content.type == 2) {
                 // 自定义消息type为2的时候 玩家是否轮到发言
                 var play = that.data.playerList;
+                var msgObj = {}
                 play.forEach(item => {
                     if (item && item.account && item.account == msg.from) {
                         item.isActive = content.data.status
+                        msgObj = {
+                            sysType: 'sys',
+                            text: '轮到' + item.nick + '发言',
+                            msgStep: that.data.step,
+                            isBotMes: 1,    // isBotMes 是否是下面展示的消息列表 isTopMes 是否是上面展示的系统消息
+                            fromAccount: msg.from
+                        }
                     }
+                })
+                msgList.push(msgObj)
+                that.setData({
+                    msgList: msgList
                 })
                 that.setData({
                     playerList: play
@@ -618,6 +676,7 @@ Page({
                     sysType: 'sys',
                     text: content.data.value,
                     msgStep: that.data.step,
+                    isBotMes: 1,
                     fromAccount: msg.from
                 }
                 if (content.data.value === '开始') {
@@ -643,6 +702,7 @@ Page({
                     sysType: 'sys',
                     cardList: content.data.cardList,
                     step: that.data.step,
+                    isBotMes: 0,
                     bigImage: {
                         url: '',
                         id: ''
@@ -657,6 +717,17 @@ Page({
 
             } else if (content.type === 6) {
                 //跳过发言
+                var msgObj = {
+                    sysType: 'sys',
+                    text: item.nick + '跳过本轮发言',
+                    msgStep: that.data.step,
+                    isBotMes: 1,
+                    fromAccount: msg.from
+                }
+                msgList.push(msgObj)
+                that.setData({
+                    msgList: msgList
+                })
                 that.handleJumpSpeak()
 
             } else if (content.type === 7) {
@@ -683,6 +754,7 @@ Page({
                 fromNick: msg.fromNick,
                 text: msg.text,
                 msgStep: that.data.step,
+                isBotMes: 1,
                 fromAccount: msg.from
             }
             msgList.push(msgObj)
@@ -949,6 +1021,7 @@ Page({
             askId: this.data.askId,
             payId: this.data.themeDetail.baoPayId
         }
+
         createBaoRoom(params).then(res => {
             wx.setStorageSync('roomData', res.data.data)
             that.setData({
@@ -966,8 +1039,6 @@ Page({
                 that.getDownTime()
             }
         })
-
-
     },
     // 获取房间详情
     getRoomDetails (roomId) {
@@ -979,7 +1050,15 @@ Page({
                 roomData: res.data.data
             })
             wx.setStorageSync('roomData', res.data.data)
-            that.initRoom()
+            // 是匹配还是包房
+            if (wx.getStorageSync('roomData').matchType == 1) {
+                that.initRoom()
+            } else {
+                that.setData({
+                    matePopStatus: true,
+                })
+                that.getDownTime()
+            }
         })
     },
 
@@ -995,6 +1074,8 @@ Page({
         var that = this;
         var userIm = []
         var readyNum = 0
+        console.log(this.data.playerList,'this.data.playerList');
+        console.log(this.data.truePlayerList,'this.data.truePlayerList');
         this.data.playerList.forEach(item => {
             if (item && item.account) {
                 userIm.push(item.account)
@@ -1004,8 +1085,9 @@ Page({
                 readyNum++
             }
         })
+        console.log(readyNum,this.data.truePlayerList.length);
         if (num > 1) {
-            if (readyNum !== APP.globalData.truePlayerList.length - 1) {
+            if (readyNum !== this.data.truePlayerList.length) {
                 wx.showToast({
                     title: '还有成员未准备',
                     icon: 'none'
@@ -1147,13 +1229,13 @@ Page({
                 that.initRoom()
                 // this.getRoomDetails(wx.getStorageSync('roomData').id)
             } else {
-                //没有房间数据
+                // 没有房间数据
                 // 如果是邀请好友的话带isfriend参数直接初始化房间 或者 是匹配的
                 if (options.isfriend || options.isMatch) {
                     this.getRoomDetails(options.roomId)
                 } else {
                     // 倒计时等待
-                    this.creatRoom()
+                    this.getRoomDetails(options.roomId)
                     this.getDownTime()
                 }
             }

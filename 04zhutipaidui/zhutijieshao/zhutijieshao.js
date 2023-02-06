@@ -3,6 +3,7 @@ import {
     findByAskPartyOne,
     evaluateList,
     insertEvaluate,
+    createBaoRoom,
     roomMatchingPlay
 } from "../api";
 Page({
@@ -23,34 +24,39 @@ Page({
         evalList: [],
         rating: 4,
         area: '',
-        roomData:{},
-        roomPath:{}
+        roomData: {},
+        roomPath: {}
     },
     // 打开购买本探索弹窗
     openBuyPop (e) {
         var type = e.currentTarget.dataset.type
         var that = this;
-        console.log(roomMatchingPlay);
         roomMatchingPlay(that.data.themeId).then(res => {
             console.log(res.data)
             if (res.data.ret === 201) {
                 wx.navigateTo({
-                  url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
+                    url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
                 })
-            }else if (res.data.ret === 200){
-                if (type === 'haoyou'){
-                    wx.navigateTo({
-                        url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId+'&roomId='+res.data.data+'&isfriend=true',
-                    })
-                } else {
-                    wx.navigateTo({
-                        url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId+'&roomId='+res.data.data+'&isMatch=true',
-                    })
-                }
-
+            } else if (res.data.ret === 200) {
+                wx.navigateTo({
+                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.data + '&isMatch=true',
+                })
             }
         })
-
+    },
+    // 好友结伴
+    friendTogether () {
+        createBaoRoom(this.data.themeId).then(res => {
+            if (res.data.ret === 201) {
+                wx.navigateTo({
+                    url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
+                })
+            } else if (res.data.ret === 200) {
+                wx.navigateTo({
+                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.data + '&isfriend=true',
+                })
+            }
+        })
     },
     // 关闭弹窗
     closePop () {
@@ -134,24 +140,24 @@ Page({
         this.setData({
             themeId: options.id,
             'evalParams.id': options.id,
-            roomData:wx.getStorageSync('roomData'),
-            roomPath:wx.getStorageSync('roomPath'),
+            roomData: wx.getStorageSync('roomData'),
+            roomPath: wx.getStorageSync('roomPath'),
         })
         this.initData()
     },
     //返回游戏房间
-    toRoom:function () {
+    toRoom: function () {
         console.log(this.data.roomPath)
         var url = '/04zhutipaidui/tansuo/tansuo'
         var roomPath = this.data.roomPath
         for (const roomPathKey in roomPath) {
-            url=url+'&'+roomPathKey+'='+roomPath[roomPathKey]
+            url = url + '&' + roomPathKey + '=' + roomPath[roomPathKey]
         }
-        url.replace('&','?')
-        console.log(url.replace('&','?'))
+        url.replace('&', '?')
+        console.log(url.replace('&', '?'))
         console.log(url)
         wx.redirectTo({
-            url: url.replace('&','?') ,
+            url: url.replace('&', '?'),
         })
 
 
