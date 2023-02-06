@@ -75,13 +75,13 @@ page {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 240rpx;
+	width: 340rpx;
 	height: 90rpx;
 	background: linear-gradient(248.27deg, rgba(119, 138, 255, 0.24) 18.05%, rgba(255, 255, 255, 0.32) 83.27%);
 	border: 0.5px solid rgba(255, 255, 255, 0.2);
 	backdrop-filter: blur(12.2323px);
 	border-radius: 60rpx;
-	margin-bottom: 64rpx;
+	margin: 48rpx 0;
 }
 
 .z-btn image {

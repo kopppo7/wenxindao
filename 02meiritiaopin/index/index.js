@@ -150,17 +150,20 @@ Page({
         ],
         isEditFm: false,
         isEditFmChange: false,
-        submitFmData:null,
-        shareId:''
+        submitFmData: null,
+        shareId: ''
 
 
     },
     initAudio () {
+        audioCtx.pause()
+        audioCtx.src = null
         this.setData({
             putType: 1,
             autioStatus: 1,
             cardShow: false,
-            isOpen: 0
+            isOpen: 0,
+            isPlay: false
         })
     },
     addThing () {
@@ -207,7 +210,7 @@ Page({
     openBig (e) {
         this.setData({
             bigPopStatus: true,
-            bigCardImgUrl:this.data.isEditFm?  this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.pindex].cards[e.currentTarget.dataset.index].imgUrl: this.data.submitFmData.imgUrl
+            bigCardImgUrl: this.data.isEditFm ? this.data.contentsArray[this.data.activeIndex][e.currentTarget.dataset.pindex].cards[e.currentTarget.dataset.index].imgUrl : this.data.submitFmData.imgUrl
         })
     },
     closePop () {
@@ -375,9 +378,10 @@ Page({
                 that.setData({
                     contentsArray: that.data.initContentsArray,
                     isEditFm: true,
-                    shareId:res.data.data,
-                    isEditFmChange:true
+                    shareId: res.data.data,
+                    isEditFmChange: true
                 })
+                that.guanBiVoice()
                 that.findMyFmForDay()
             }
         })
@@ -666,8 +670,13 @@ Page({
         arr[this.data.activeIndex][e.currentTarget.dataset.iid]['putType'] = 1
         arr[this.data.activeIndex][e.currentTarget.dataset.iid]['tempFilePath'] = ''
         arr[this.data.activeIndex][e.currentTarget.dataset.iid]['autioStatus'] = 1
+        arr[this.data.activeIndex][e.currentTarget.dataset.iid]['voice'] = ''
         this.setData({
             contentsArray: arr
+        })
+        this.guanBiVoice()
+        this.setData({
+            isPlay: true
         })
     },
     saveAudio (e) {
@@ -695,7 +704,11 @@ Page({
             }
         })
     },
-    playAudio () {
+    playAudio (e) {
+        console.log(e.currentTarget.dataset.type);
+        let ind = e.currentTarget.dataset.type;
+        let vioces = this.data.contentsArray[this.data.activeIndex][ind]?.voice || '';
+        audioCtx.src = vioces
         if (this.data.isPlay) {
             audioCtx.pause()
             this.setData({
@@ -709,48 +722,62 @@ Page({
         }
     },
     findMyFmForDay () {
-        console.log(this.data.contentsArray,'this.data.contentsArray');
+        console.log(this.data.contentsArray, 'this.data.contentsArray');
         findMyFmForDay({ types: this.data.types }).then(res => {
-            console.log(res.data.data,'res.data.data');
+            console.log(res.data.data, 'res.data.data');
             if (!!res.data.data) {
                 let arr = this.data.contentsArray
                 res.data.data.contents = JSON.parse(res.data.data.contents);
                 arr[this.data.activeIndex] = res.data.data.contents
                 // submitFmData.contents = cards
-                console.log(res.data.data,'res.data');
+                console.log(res.data.data, 'res.data');
                 this.setData({
-                    isEditFm:false,
-                    submitFmData:res.data.data.contents,
-                    contentsArray:arr,
-                    isOpen:res.data.data.isOpen,
-                    shareId:res.data.data.id
+                    isEditFm: false,
+                    submitFmData: res.data.data.contents,
+                    contentsArray: arr,
+                    isOpen: res.data.data.isOpen,
+                    shareId: res.data.data.id
                 })
-            }else{
+            } else {
                 this.setData({
-                    isEditFm:true,
-                    isOpen:1,
-                    isEditFmChange:false
+                    isEditFm: true,
+                    isOpen: 1,
+                    isEditFmChange: false
                 })
             }
         })
     },
-    changeFm(){
+    changeFm () {
         this.setData({
-            isEditFm:true,
-            isEditFmChange:true
+            isEditFm: true,
+            isEditFmChange: true
         })
     },
-    shareFm(){
+    shareFm () {
         wx.navigateTo({
             url: '/02meiritiaopin/share/share?id=' + this.data.shareId,
         })
+    },
+    guanBiVoice () {
+        audioCtx.pause();
+        audioCtx.src = null;
     },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad (options) {
+        let that = this
         this.initData()
         this.findMyFmForDay()
+        audioCtx.onPlay(() => {
+            console.log('kaishi ');
+            that.setData({ isPlay: true })
+        })
+        audioCtx.onEnded(() => {
+            console.log('jieshu ');
+            that.setData({ isPlay: false })
+            console.log();
+        })
     },
     /**
      * 生命周期函数--监听页面显示
