@@ -10,7 +10,7 @@ import {
     getRoomDetails,
     findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate, addRoomLog
 } from "../api";
-import yunApi from "../../utils/yun";
+import { formatMsgList } from "../../utils/yun";
 import { findByOrderList, getUserMsg } from "../../utils/api";
 
 var nim = null;
@@ -67,7 +67,7 @@ Page({
         show_think_count_down: false,//显示思考倒计时
         endId: '',
         scrollTo: 0,
-        bottomHeight: 50,
+        bottomHeight: 10,
         helpText: '',
         stepCardList: [],
         bigPopStatus: false,
@@ -100,6 +100,10 @@ Page({
         msgList: [],
         //云信原始消息列表
         yunMsgList: [],
+        // 上面的数据
+        topArr: [],
+        // 下面的数据
+        botArr: [],
     },
     // 活动提示
     activityChange () {
@@ -405,7 +409,7 @@ Page({
         var content = {
             type: type, //发言类型 1 玩家准备 2 玩家是否轮到发言 3玩家是否在线  4 系统文字消息 5 系统发牌消息 6 跳过发言 7 点赞
             data: {
-                status: val.status,  //玩家是否在线 
+                status: val.status,  //玩家是否准备 
                 value: val.text,     //发的内容
                 cardList: val.list,  //发的卡牌
                 audio: val.audio,    //发的音频
@@ -444,6 +448,7 @@ Page({
         console.log('渲染消息', msg)
         if (msg.content) {
             var content = JSON.parse(msg.content)
+            let nick = ''
             if (content.type == 1) {
                 // 自定义消息type为1的时候 玩家准备
                 // playerList 所有用户信息
@@ -451,14 +456,16 @@ Page({
                 play.forEach(item => {
                     if (item && item.account && item.account == msg.from) {
                         item.isReady = content.data.status
+                        nick = item.nick
                     }
                 })
                 var msgObj = {
                     sysType: 'sys',
-                    text: '玩家已准备',
+                    text: content.data.status?'玩家已准备':'玩家取消准备',
                     msgStep: that.data.step,
                     isBotMes: 1,    // isBotMes 1 是下面展示的消息列表 0 是上面的系统内容
-                    fromAccount: msg.from
+                    fromAccount: msg.from,
+                    nick
                 }
                 msgList.push(msgObj)
                 that.setData({
@@ -482,7 +489,8 @@ Page({
                             text: '轮到' + item.nick + '发言',
                             msgStep: that.data.step,
                             isBotMes: 1,    // isBotMes 是否是下面展示的消息列表 isTopMes 是否是上面展示的系统消息
-                            fromAccount: msg.from
+                            fromAccount: msg.from,
+                            nick
                         }
                     }
                 })
@@ -511,7 +519,8 @@ Page({
                     text: content.data.value,
                     msgStep: that.data.step,
                     isBotMes: 1,
-                    fromAccount: msg.from
+                    fromAccount: msg.from,
+                    nick
                 }
                 if (content.data.value === '开始') {
                     that.setData({
@@ -557,7 +566,8 @@ Page({
                     text: item.nick + '跳过本轮发言',
                     msgStep: that.data.step,
                     isBotMes: 1,
-                    fromAccount: msg.from
+                    fromAccount: msg.from,
+                    nick
                 }
                 msgList.push(msgObj)
                 that.setData({
@@ -614,12 +624,14 @@ Page({
         var that = this;
         if (msg.content) {
             var content = JSON.parse(msg.content)
+            let nick = ''
             if (content.type == 1) {
                 // 自定义消息type为1的时候 玩家准备
                 var play = that.data.playerList;
                 play.forEach(item => {
                     if (item && item.account && item.account == msg.from) {
                         item.isReady = content.data.status
+                        nick = item.nick
                     }
                 })
                 that.setData({
@@ -627,10 +639,11 @@ Page({
                 })
                 var msgObj = {
                     sysType: 'sys',
-                    text: '玩家已准备',
+                    text: content.data.status?'玩家已准备':'玩家取消准备',
                     isBotMes: 1,
                     msgStep: that.data.step,
-                    fromAccount: msg.from
+                    fromAccount: msg.from,
+                    nick
                 }
                 msgList.push(msgObj)
                 that.setData({
@@ -648,7 +661,8 @@ Page({
                             text: '轮到' + item.nick + '发言',
                             msgStep: that.data.step,
                             isBotMes: 1,    // isBotMes 是否是下面展示的消息列表 isTopMes 是否是上面展示的系统消息
-                            fromAccount: msg.from
+                            fromAccount: msg.from,
+                            nick
                         }
                     }
                 })
@@ -677,7 +691,8 @@ Page({
                     text: content.data.value,
                     msgStep: that.data.step,
                     isBotMes: 1,
-                    fromAccount: msg.from
+                    fromAccount: msg.from,
+                    nick
                 }
                 if (content.data.value === '开始') {
                     that.setData({
@@ -708,7 +723,8 @@ Page({
                         id: ''
                     },
                     msgStep: that.data.step,
-                    fromAccount: msg.from
+                    fromAccount: msg.from,
+                    nick
                 }
                 msgList.push(msgObj)
                 that.setData({
@@ -722,7 +738,8 @@ Page({
                     text: item.nick + '跳过本轮发言',
                     msgStep: that.data.step,
                     isBotMes: 1,
-                    fromAccount: msg.from
+                    fromAccount: msg.from,
+                    nick
                 }
                 msgList.push(msgObj)
                 that.setData({
@@ -755,14 +772,14 @@ Page({
                 text: msg.text,
                 msgStep: that.data.step,
                 isBotMes: 1,
-                fromAccount: msg.from
+                fromAccount: msg.from,
+                nick
             }
             msgList.push(msgObj)
             that.setData({
                 msgList: msgList
             })
         }
-        console.log(that.data.msgList, 'that.data.msgList');
         that.saveData()
     },
 
@@ -989,8 +1006,12 @@ Page({
 
     // 解散群
     dismissTeam () {
+        let that = this
+        dissolveGroup(that.data.teamId).then(res=>{
+            console.log(res,'解散房间的信息');
+        })
         nim.dismissTeam({
-            teamId: "8500709078",
+            teamId: '213',
             done: dismissTeamDone
         })
 
@@ -1074,8 +1095,8 @@ Page({
         var that = this;
         var userIm = []
         var readyNum = 0
-        console.log(this.data.playerList,'this.data.playerList');
-        console.log(this.data.truePlayerList,'this.data.truePlayerList');
+        console.log(this.data.playerList, 'this.data.playerList');
+        console.log(this.data.truePlayerList, 'this.data.truePlayerList');
         this.data.playerList.forEach(item => {
             if (item && item.account) {
                 userIm.push(item.account)
@@ -1085,7 +1106,7 @@ Page({
                 readyNum++
             }
         })
-        console.log(readyNum,this.data.truePlayerList.length);
+        console.log(readyNum, this.data.truePlayerList.length);
         if (num > 1) {
             if (readyNum !== this.data.truePlayerList.length) {
                 wx.showToast({
@@ -1195,6 +1216,7 @@ Page({
             // })
             //真实环境，考虑删除initRoom？
             this.initRoom()
+            console.log(this.data.yunMsgList,'this.data.yunMsgList');
             //处理存储的消息
             this.data.yunMsgList.map(item => {
                 this.renderHistoryMsh(item)
@@ -1691,7 +1713,7 @@ Page({
 
         console.log(this.data.isReady)
 
-
+        
         if (this.data.isOwner) {
             //房主
             this.saveData()
@@ -1721,6 +1743,15 @@ Page({
 
     //存储数据
     saveData: function () {
+        let topArr = formatMsgList(this.data.msgList).topArr
+        let botArr = formatMsgList(this.data.msgList).botArr
+        this.setData({
+            topArr: formatMsgList(this.data.msgList).topArr,
+            botArr: formatMsgList(this.data.msgList).botArr,
+        })
+        console.log(this.data.topArr, 'this.data.topArr');
+        console.log(this.data.botArr, 'this.data.botArr');
+        console.log(this.data.msgList, 'this.data.botArr222');
         wx.setStorageSync('roomPath', this.data.pageOptions)
         wx.setStorageSync('partyData', this.data)
     },

@@ -125,7 +125,7 @@
                     </view>
                 </block>
                 <!-- 最后加一个垫底的节点 -->
-                <view class="last-view" id="{{endId}}" style="height:{{bottomHeight}}px;"></view>
+                <view class="last-view" id="{{endId}}" style="height:20px;"></view>
             </scroll-view>
             <scroll-view
                     wx:else
@@ -191,7 +191,74 @@
                     </view>
                 </block>
                 <!-- 最后加一个垫底的节点 -->
-                <view class="last-view" id="{{endId}}" style="height:{{bottomHeight}}px;"></view>
+                <view class="last-view" id="{{endId}}" style="height:20px;"></view>
+            </scroll-view>
+            <scroll-view
+                class="bot-content"
+                scroll-into-view="{{scrollTo}}"
+                scroll-y="true"
+            >
+                <view class="box">
+                    <block wx:for="{{botArr}}" wx:key="index">
+                        <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
+                            wx:for-item="item"
+                            class="{{item.sysType != 'sys'?'item':'item sys'}}"
+                            wx:key="index">
+                            <view class="text" wx:if="item.text">
+                                <text class="name">{{item.nick}}：</text>
+                                <text class="con">{{item.text}}</text>
+                            </view>
+                            <view class="cardList" wx:if="{{item.cardList}}">
+                                <view class="con">
+                                    <view class="left">
+                                        <image
+                                                src="{{item.bigImage.url}}"
+                                                mode="widthFix"
+                                        />
+                                        <image
+                                                wx:if="{{item.bigImage.url}}"
+                                                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                                class="iconImg" data-img="{{item.bigImage.url}}" catchtap="showImg"></image>
+                                    </view>
+                                    <view class="right">
+                                        <image
+                                                wx:for="{{item.cardList}}"
+                                                wx:key="cardIndex"
+                                                wx:for-item="card"
+                                                wx:for-index="cardIndex"
+                                                data-step="{{item.step}}"
+                                                data-index="{{cardIndex}}"
+                                                bindtap="clickSmallImage"
+                                                src="{{card.imgUrl}}"
+                                                mode="widthFix"
+                                        />
+                                    </view>
+                                </view>
+                                <view class="z-btn" wx:if="{{!item.selectImage.url}}" bindtap="selectCard"
+                                    data-step="{{item.step}}">选择
+                                </view>
+                            </view>
+                            <view class="card" wx:if="{{item.card}}">
+                                <text class="name">（自己）</text>
+                                <text class="con">拿到的牌</text>
+                                <view class="img">
+                                    <image
+                                            src="{{item.card}}"
+                                            mode="widthFix"
+                                    />
+                                    <view class="icon" data-img="{{item.card}}" catchtap="showImg">
+                                        <image
+                                                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                                mode="scaleToFill"
+                                        />
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </block>
+                    <!-- 最后加一个垫底的节点 -->
+                    <view class="last-view" id="{{endId}}" style="height:20px;"></view>
+                </view>
             </scroll-view>
         </view>
     </view>

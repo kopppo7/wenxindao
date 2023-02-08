@@ -748,7 +748,18 @@ image{object-fit: cover;}
 	height: 32rpx;
 	margin-left: 20rpx;
 }
-
+.bot-content{
+	position: absolute;bottom: -170rpx;left: 0;width: 100%;
+	background: rgba(182, 178, 207, 0.18);
+	border-radius: 24rpx;
+	max-height: 130rpx;
+	-wekit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;
+}
+.bot-content .box{
+	padding: 24rpx 24rpx 0;
+}
+.bot-content .item .name{color: rgba(255, 255, 255, 0.6);}
+.bot-content .item.sys .name{}
 
 
 

@@ -157,6 +157,10 @@ export const receiveInvite = function (id) {
 export const receiveDetail = function (id,askId) {
   return http.get(handleURL('/askInvite/getAskInviteUsers?id='+id+'&askId='+askId));
 }
+// 解散房间
+export const dissolveGroup = function (id) {
+  return http.get(handleURL('/room/dissolveGroup?id=213'));
+}
 
 
 
