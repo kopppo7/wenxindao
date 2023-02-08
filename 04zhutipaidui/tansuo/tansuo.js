@@ -87,7 +87,7 @@ Page({
 
         //准备弹窗
         readyPopStatus: false,
-        readyTime: 15,
+        readyTime: 5,
 
         //页面参数
         pageOptions: {},
@@ -155,6 +155,7 @@ Page({
         })
         if (timeInt) {
             clearInterval(timeInt)
+            timeInt = null
         }
     },
     // 取消匹配
@@ -164,6 +165,7 @@ Page({
         })
         if (timeInt) {
             clearInterval(timeInt)
+            timeInt = null
         }
         quitRoom({
             roomId: this.data.roomData.id
@@ -282,20 +284,21 @@ Page({
                     }
                 }
             }
-        }
-        console.log(this.data.playerList, 'this.data.playerList');
-        if (members[0].account != this.data.roomData.ownerUserIm) {
-            members.forEach((item, index) => {
-                if (item?.account == this.data.roomData.ownerUserIm) {
-                    let obj = members[0];
-                    members[0] = item;
-                    members[index] = obj;
-                }
+
+            console.log(this.data.playerList, 'this.data.playerList');
+            if (members[0] && members[0].account != this.data.roomData.ownerUserIm) {
+                members.forEach((item, index) => {
+                    if (item?.account == this.data.roomData.ownerUserIm) {
+                        let obj = members[0];
+                        members[0] = item;
+                        members[index] = obj;
+                    }
+                })
+            }
+            this.setData({
+                playerList: members
             })
         }
-        this.setData({
-            playerList: members
-        })
         //结尾畅聊成员列表
         var list = JSON.parse(JSON.stringify(playerList))
         var showPlayerList = []
@@ -460,8 +463,8 @@ Page({
                     }
                 })
                 var msgObj = {
-                    sysType: 'sys',
-                    text: content.data.status?'玩家已准备':'玩家取消准备',
+                    sysType: 'people',
+                    text: content.data.status ? '玩家已准备' : '玩家取消准备',
                     msgStep: that.data.step,
                     isBotMes: 1,    // isBotMes 1 是下面展示的消息列表 0 是上面的系统内容
                     fromAccount: msg.from,
@@ -490,7 +493,6 @@ Page({
                             msgStep: that.data.step,
                             isBotMes: 1,    // isBotMes 是否是下面展示的消息列表 isTopMes 是否是上面展示的系统消息
                             fromAccount: msg.from,
-                            nick
                         }
                     }
                 })
@@ -513,6 +515,12 @@ Page({
                     playerList: play
                 })
             } else if (content.type == 4) {
+                var play = that.data.playerList;
+                play.forEach(item => {
+                    if (item && item.account && item.account == msg.from) {
+                        nick = item.nick
+                    }
+                })
                 // 自定义消息type为4的时候 为系统文字消息
                 var msgObj = {
                     sysType: 'sys',
@@ -638,8 +646,8 @@ Page({
                     playerList: play
                 })
                 var msgObj = {
-                    sysType: 'sys',
-                    text: content.data.status?'玩家已准备':'玩家取消准备',
+                    sysType: 'people',
+                    text: content.data.status ? '玩家已准备' : '玩家取消准备',
                     isBotMes: 1,
                     msgStep: that.data.step,
                     fromAccount: msg.from,
@@ -662,7 +670,6 @@ Page({
                             msgStep: that.data.step,
                             isBotMes: 1,    // isBotMes 是否是下面展示的消息列表 isTopMes 是否是上面展示的系统消息
                             fromAccount: msg.from,
-                            nick
                         }
                     }
                 })
@@ -732,9 +739,16 @@ Page({
                 })
 
             } else if (content.type === 6) {
+                var play = that.data.playerList;
+                play.forEach(item => {
+                    if (item && item.account && item.account == msg.from) {
+                        item.isReady = content.data.status
+                        nick = item.nick
+                    }
+                })
                 //跳过发言
                 var msgObj = {
-                    sysType: 'sys',
+                    sysType: 'people',
                     text: item.nick + '跳过本轮发言',
                     msgStep: that.data.step,
                     isBotMes: 1,
@@ -804,7 +818,7 @@ Page({
             if (num === readyNum && num >= 2) {
                 this.setData({
                     timePopStatus: true,
-                    waitTime: 15
+                    waitTime: 5
                 })
                 this.startCountDown()
                 console.log('开始倒计时')
@@ -900,7 +914,7 @@ Page({
         clearTimeout(readyTimeout)
         this.setData({
             isReady: true,
-            readyTime: 15,
+            readyTime: 5,
             readyPopStatus: false
         })
         this.sendCustomMsg(1, { status: this.data.isReady })
@@ -1007,8 +1021,9 @@ Page({
     // 解散群
     dismissTeam () {
         let that = this
-        dissolveGroup(that.data.teamId).then(res=>{
-            console.log(res,'解散房间的信息');
+        console.log(that.data.teamId);
+        dissolveGroup(that.data.roomId).then(res => {
+            console.log(res, '解散房间的信息');
         })
         nim.dismissTeam({
             teamId: '213',
@@ -1108,7 +1123,7 @@ Page({
         })
         console.log(readyNum, this.data.truePlayerList.length);
         if (num > 1) {
-            if (readyNum !== this.data.truePlayerList.length) {
+            if (readyNum < this.data.truePlayerList.length - 1) {
                 wx.showToast({
                     title: '还有成员未准备',
                     icon: 'none'
@@ -1192,14 +1207,19 @@ Page({
     async onLoad (options) {
 
         // this.getUserInfo()
-
+        wx.removeStorageSync('partyData')
         this.contentScroll()
-
         var partyData = wx.getStorageSync('partyData')
 
         if (partyData) {
             //进入过页面，从别处返回
-            this.setData(partyData)
+            this.setData({
+                partyData,
+                roomId: partyData.roomId,
+                teamId: partyData.teamId,
+                roomData: wx.getStorageSync('roomData'),
+                audioId: wx.getStorageSync('roomData').audioGroup,
+            })
 
             //重新进来，准备后的倒计时没有结束，继续显示
             if (this.data.timePopStatus) {
@@ -1216,7 +1236,7 @@ Page({
             // })
             //真实环境，考虑删除initRoom？
             this.initRoom()
-            console.log(this.data.yunMsgList,'this.data.yunMsgList');
+            console.log(this.data.yunMsgList, 'this.data.yunMsgList');
             //处理存储的消息
             this.data.yunMsgList.map(item => {
                 this.renderHistoryMsh(item)
@@ -1255,6 +1275,7 @@ Page({
                 // 如果是邀请好友的话带isfriend参数直接初始化房间 或者 是匹配的
                 if (options.isfriend || options.isMatch) {
                     this.getRoomDetails(options.roomId)
+                    that.initRoom()
                 } else {
                     // 倒计时等待
                     this.getRoomDetails(options.roomId)
@@ -1303,6 +1324,7 @@ Page({
             timeInt = setInterval(() => {
                 if (downtimes <= 1) {
                     clearInterval(timeInt)
+                    timeInt = null
                     that.setData({
                         timePopStatus: false,
                     })
@@ -1349,7 +1371,7 @@ Page({
         //话术
         var guideWords = stepData.guideWords
         //思考时间
-        var thinkTime = stepData.thinkTime
+        var thinkTime = stepData.thinkTime || 3
         // var thinkTime = 3
 
         //显示引导语言
@@ -1377,9 +1399,13 @@ Page({
         var step = this.data.step
         var stepData = this.data.themeDetail.list[step - 1]
         //说话时间
-        var speakTime = stepData.speakTime
+        var speakTime = stepData.speakTime || 10
         // var speakTime = 30
-
+        console.log('思考结束开始答题');
+        if (timeInt) {
+            clearInterval(timeInt)
+            timeInt = null
+        }
         //隐藏思考倒计时
         that.setData({
             show_think_count_down: false
@@ -1417,7 +1443,7 @@ Page({
         if (that.data.isOwner) {
             that.sendCustomMsg(4, { text: '轮到' + playerList[personInd].nick + '发言' })
         }
-        console.log('当前发言人：' + personInd)
+        console.log('当前发言人：' + personInd + speakTime)
         //发言倒计时，倒计时完后下个人发言
         that.getDownTime(speakTime, nextPerson)
 
@@ -1494,6 +1520,7 @@ Page({
     //处理跳过发言
     handleJumpSpeak: function () {
         clearInterval(timeInt)
+        timeInt = null
         //成员列表，去掉空的
         var playerList = []
         this.data.playerList.map(item => {
@@ -1713,7 +1740,7 @@ Page({
 
         console.log(this.data.isReady)
 
-        
+
         if (this.data.isOwner) {
             //房主
             this.saveData()
@@ -1743,15 +1770,10 @@ Page({
 
     //存储数据
     saveData: function () {
-        let topArr = formatMsgList(this.data.msgList).topArr
-        let botArr = formatMsgList(this.data.msgList).botArr
         this.setData({
             topArr: formatMsgList(this.data.msgList).topArr,
             botArr: formatMsgList(this.data.msgList).botArr,
         })
-        console.log(this.data.topArr, 'this.data.topArr');
-        console.log(this.data.botArr, 'this.data.botArr');
-        console.log(this.data.msgList, 'this.data.botArr222');
         wx.setStorageSync('roomPath', this.data.pageOptions)
         wx.setStorageSync('partyData', this.data)
     },
