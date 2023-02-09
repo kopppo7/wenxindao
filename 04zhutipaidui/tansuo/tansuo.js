@@ -516,11 +516,6 @@ Page({
                 })
             } else if (content.type == 4) {
                 var play = that.data.playerList;
-                play.forEach(item => {
-                    if (item && item.account && item.account == msg.from) {
-                        nick = item.nick
-                    }
-                })
                 // 自定义消息type为4的时候 为系统文字消息
                 var msgObj = {
                     sysType: 'sys',
@@ -528,7 +523,6 @@ Page({
                     msgStep: that.data.step,
                     isBotMes: 1,
                     fromAccount: msg.from,
-                    nick
                 }
                 if (content.data.value === '开始') {
                     that.setData({
@@ -604,7 +598,8 @@ Page({
             }
         } else {
             var msgObj = {
-                fromNick: msg.fromNick,
+                sysType: 'people',
+                nick: msg.fromNick,
                 text: msg.text,
                 msgStep: that.data.step,
                 isBotMes: 1,
@@ -921,6 +916,8 @@ Page({
     },
     //取消准备
     cancelReady: function () {
+        clearInterval(timeInt)
+        timeInt = null
         this.setData({
             isReady: false,
             readyPopStatus: true
@@ -1402,10 +1399,7 @@ Page({
         var speakTime = stepData.speakTime || 10
         // var speakTime = 30
         console.log('思考结束开始答题');
-        if (timeInt) {
-            clearInterval(timeInt)
-            timeInt = null
-        }
+
         //隐藏思考倒计时
         that.setData({
             show_think_count_down: false
@@ -1422,11 +1416,16 @@ Page({
             }
         })
         //是否轮到本人发言
+
+        // QAQ 这里判断是否是房主 房主发轮到谁的消息
+        if (that.data.isOwner) {
+            that.sendCustomMsg(4, { text: '轮到' + playerList[personInd].nick + '发言' })
+        }
         //当前发言人账号
         let curAcc = playerList[personInd].account
         //我的账号
         let myAcc = wx.getStorageSync('loginInfo').yunId
-        if (curAcc === myAcc) {
+        if (curAcc == myAcc) {
             that.setData({
                 inputStatus: 1,
                 show_speak_count_down: true,
@@ -1436,16 +1435,14 @@ Page({
         } else {
             that.setData({
                 inputStatus: 0,
+                waitTime: speakTime,
                 show_speak_count_down: false
             })
         }
-        // QAQ 这里判断是否是房主 房主发轮到谁的消息
-        if (that.data.isOwner) {
-            that.sendCustomMsg(4, { text: '轮到' + playerList[personInd].nick + '发言' })
-        }
         console.log('当前发言人：' + personInd + speakTime)
+     
         //发言倒计时，倒计时完后下个人发言
-        that.getDownTime(speakTime, nextPerson)
+        this.getDownTime(speakTime, nextPerson)
 
         function nextPerson () {
             that.setData({

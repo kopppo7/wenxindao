@@ -33,10 +33,14 @@ button::after{
 .mb24{
 	margin-bottom: 48rpx;
 }
-.z-tab{
+.z-tab-box{
 	position: relative;
+	padding-right: 140rpx;
+}
+.z-tab{
 	display: flex;
 	margin-bottom: 32rpx;
+	overflow-x: auto;
 }
 .z-tab .tab-item{
 	font-size: 32rpx;
@@ -44,6 +48,7 @@ button::after{
 	color: #ffffff;
 	opacity: .6;
 	margin-right: 32rpx;
+	flex-shrink: 0;
 }
 .z-tab .tab-item.active{
 	position: relative;
