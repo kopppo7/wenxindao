@@ -137,7 +137,7 @@ Page({
         })
     },
     //关闭弹窗
-    closePop () {
+    closePop (clear) {
         var that = this;
         that.setData({
             sharePopStatus: false,
@@ -153,7 +153,7 @@ Page({
             contPasserPopStatus: false,
             roomSetPopStatus: false
         })
-        if (timeInt) {
+        if (clear==1 && timeInt) {
             clearInterval(timeInt)
             timeInt = null
         }
@@ -448,7 +448,7 @@ Page({
         // msgList 页面显示的滚动聊天内容
         var msgList = this.data.msgList
         var that = this;
-        console.log('渲染消息', msg)
+        console.log('渲染消息111', msg)
         if (msg.content) {
             var content = JSON.parse(msg.content)
             let nick = ''
@@ -540,7 +540,7 @@ Page({
                 that.setData({
                     msgList: msgList
                 })
-                // console.log(APP.globalData.mesList);
+                console.log(that.data.msgList);
             } else if (content.type == 5) {
                 // 自定义消息type为5的时候 为系统发牌消息
                 var msgObj = {
@@ -563,19 +563,23 @@ Page({
             } else if (content.type === 6) {
                 //跳过发言
                 // 自定义消息type为4的时候 为系统文字消息
-                var msgObj = {
-                    sysType: 'sys',
-                    text: item.nick + '跳过本轮发言',
-                    msgStep: that.data.step,
-                    isBotMes: 1,
-                    fromAccount: msg.from,
-                    nick
-                }
-                msgList.push(msgObj)
-                that.setData({
-                    msgList: msgList
+                var player = that.data.playerList;
+                player.forEach(item => {
+                    if (item && item.account && item.account == msg.from) {
+                        var msgObj = {
+                            sysType: 'sys',
+                            text: item.nick + '跳过本轮发言',
+                            msgStep: that.data.step,
+                            isBotMes: 1,
+                            fromAccount: msg.from,
+                        }
+                        msgList.push(msgObj)
+                        that.setData({
+                            msgList: msgList
+                        })
+                        that.handleJumpSpeak()
+                    }
                 })
-                that.handleJumpSpeak()
 
             } else if (content.type === 7) {
                 //点赞
@@ -734,21 +738,13 @@ Page({
                 })
 
             } else if (content.type === 6) {
-                var play = that.data.playerList;
-                play.forEach(item => {
-                    if (item && item.account && item.account == msg.from) {
-                        item.isReady = content.data.status
-                        nick = item.nick
-                    }
-                })
                 //跳过发言
                 var msgObj = {
-                    sysType: 'people',
+                    sysType: 'sys',
                     text: item.nick + '跳过本轮发言',
                     msgStep: that.data.step,
                     isBotMes: 1,
                     fromAccount: msg.from,
-                    nick
                 }
                 msgList.push(msgObj)
                 that.setData({
@@ -1130,17 +1126,25 @@ Page({
                 this.setData({
                     timePopStatus: true
                 })
-                this.getDownTime(2, startPlay)
-
-                function startPlay () {
-                    startPlayRoom({
-                        roomId: that.data.roomData.id,
-                        userIm
-                    }).then(res => {
-
+                // this.getDownTime(2, startPlay)
+                startPlayRoom({
+                    roomId: that.data.roomData.id,
+                    userIm
+                }).then(res => {
+                    if (that.data.isOwner) {
                         that.sendCustomMsg(4, { text: '开始' })
-                    })
-                }
+                    }
+                })
+                // function startPlay () {
+                //     startPlayRoom({
+                //         roomId: that.data.roomData.id,
+                //         userIm
+                //     }).then(res => {
+                //         if (that.data.isOwner) {
+                //             that.sendCustomMsg(4, { text: '开始' })
+                //         }
+                //     })
+                // }
             }
 
         } else {
@@ -1210,8 +1214,8 @@ Page({
 
         if (partyData) {
             //进入过页面，从别处返回
+            this.setData(partyData)
             this.setData({
-                partyData,
                 roomId: partyData.roomId,
                 teamId: partyData.teamId,
                 roomData: wx.getStorageSync('roomData'),
@@ -1440,7 +1444,7 @@ Page({
             })
         }
         console.log('当前发言人：' + personInd + speakTime)
-     
+
         //发言倒计时，倒计时完后下个人发言
         this.getDownTime(speakTime, nextPerson)
 
@@ -1455,7 +1459,7 @@ Page({
                 })
                 that.speak()
             } else {
-                //记录本轮内容
+                //记录本轮内容ƒ
                 that.addRecode()
                 console.log('全部人发言结束,进入下一轮')
                 if (that.data.step < that.data.themeDetail.list.length) {
@@ -1517,7 +1521,6 @@ Page({
     //处理跳过发言
     handleJumpSpeak: function () {
         clearInterval(timeInt)
-        timeInt = null
         //成员列表，去掉空的
         var playerList = []
         this.data.playerList.map(item => {
@@ -1734,10 +1737,9 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload () {
-
-        console.log(this.data.isReady)
-
-
+        if (timeInt) {
+            clearInterval(timeInt)
+        }
         if (this.data.isOwner) {
             //房主
             this.saveData()

@@ -140,8 +140,8 @@
                           class="{{item.sysType != 'sys'?'item':'item sys'}}"
                           wx:key="index">
                         <view class="text" wx:if="item.text">
-                            <text class="name" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
-                            <text class="name" wx:else>系统：</text>
+                            <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
+                            <text class="name a2" wx:if="{{item.sysType == 'sys'}}">系统：</text>
                             <text class="con">{{item.text}}</text>
                         </view>
                         <view class="cardList" wx:if="{{item.cardList}}">
@@ -207,7 +207,8 @@
                             class="{{item.sysType != 'sys'?'item':'item sys'}}"
                             wx:key="index">
                             <view class="text" wx:if="item.text">
-                                <text class="name">{{item.nick}}：</text>
+                                <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
+                            <text class="name a2" wx:else>系统：</text>
                                 <text class="con">{{item.text}}</text>
                             </view>
                             <view class="cardList" wx:if="{{item.cardList}}">
