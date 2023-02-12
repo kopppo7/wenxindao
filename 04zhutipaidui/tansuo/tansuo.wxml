@@ -61,140 +61,79 @@
                         <text class="name">{{item.nick}}</text>
                     </view>
                 </view>
+                <scroll-view
+                    class="top-content"
+                    scroll-into-view="{{scrollTo}}"
+                    scroll-y="true"
+                >
+                    <view class="box">
+                        <block wx:for="{{stepCardList}}" wx:key="index" wx:for-index="indexlist">
+                            <view 
+                                wx:for-item="item"
+                                class="itemList sys"
+                                wx:key="index">
+                                <view class="card-box">
+                                    <view class="card-box-l">
+                                        <view class="card-img {{item.cardList[0].isOpen && !item.cardList[0].isOpened ? 'open' : ''}} {{item.cardList[0].isOpened ? 'show' : ''}}"
+                                              bindtap="clickCard"
+                                              data-index="0"
+                                              data-listindex="{{indexlist}}">
+                                            <view class="front">
+                                                <image mode="aspectFill" src="{{item.cardList[0].imgUrl}}"></image>
+                                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                                       class="iconImg"
+                                                       data-img="{{item.cardList[0].imgUrl}}"
+                                                       catchtap="showImg"></image>
+                                            </view>
+                                            <view class="back">
+                                                <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                                            </view>
+                                        </view>
+                                    </view>
+                                    <view class="card-box-r">
+                                        <view
+                                                wx:if="{{item.cardList[1]}}"
+                                                class="card-img {{item.cardList[1].isOpen && !item.cardList[1].isOpened ? 'open' : ''}} {{item.cardList[1].isOpened ? 'show' : ''}}"
+                                                bindtap="clickCard" data-index="1"
+                                                data-listindex="{{indexlist}}">
+                                            <view class="front">
+                                                <image mode="aspectFill" src="{{item.cardList[1].imgUrl}}"></image>
+                                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                                       class="iconImg"
+                                                       data-img="{{item.cardList[1].imgUrl}}"
+                                                       catchtap="showImg"></image>
+                                            </view>
+                                            <view class="back">
+                                                <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                                            </view>
+                                        </view>
+                                        <view
+                                                wx:if="{{item.cardList[2]}}"
+                                                class="card-img {{item.cardList[2].isOpen && !item.cardList[2].isOpened ? 'open' : ''}} {{item.cardList[2].isOpened ? 'show' : ''}}"
+                                                bindtap="clickCard" data-index="2"
+                                                data-listindex="{{indexlist}}">
+                                            <view class="front">
+                                                <image mode="aspectFill" src="{{item.cardList[2].imgUrl}}"></image>
+                                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
+                                                       class="iconImg"
+                                                       data-img="{{item.cardList[2].imgUrl}}"
+                                                       catchtap="showImg"></image>
+                                            </view>
+                                            <view class="back">
+                                                <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                                            </view>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                        </block>
+                        <!-- 最后加一个垫底的节点 -->
+                        <view class="last-view" id="{{endId}}" style="height:20px;"></view>
+                    </view>
+                </scroll-view>
             </view>
             
             
-            <scroll-view
-                    wx:if="{{showOtherStep}}"
-                    class="content"
-                    scroll-into-view="{{scrollTo}}"
-                    scroll-y="true"
-            >
-                <block wx:for="{{stepMsgList}}" wx:key="index">
-                    <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
-                          wx:for-item="item"
-                          class="{{item.sysType != 'sys'?'item':'item sys'}}"
-                          wx:key="index">
-                        <view class="text" wx:if="item.text">
-                            <text class="name" wx:if="{{item.sysType === 'sys'}}">系统：</text>
-                            <text class="name" wx:else>{{item.fromNick || item.nick}}：</text>
-                            <text class="con">{{item.text}}</text>
-                        </view>
-                        <view class="cardList" wx:if="{{item.cardList}}">
-                            <view class="con">
-                                <view class="left">
-                                    <image
-                                            src="{{item.bigImage.url}}"
-                                            mode="widthFix"
-                                    />
-                                    <image
-                                            wx:if="{{item.bigImage.url}}"
-                                            src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
-                                            class="iconImg" data-img="{{item.bigImage.url}}" catchtap="showImg"></image>
-                                </view>
-                                <view class="right">
-                                    <image
-                                            wx:for="{{item.cardList}}"
-                                            wx:key="cardIndex"
-                                            wx:for-item="card"
-                                            wx:for-index="cardIndex"
-                                            data-step="{{item.step}}"
-                                            data-index="{{cardIndex}}"
-                                            bindtap="clickSmallImage"
-                                            src="{{card.imgUrl}}"
-                                            mode="widthFix"
-                                    />
-                                </view>
-                            </view>
-                        </view>
-                        <view class="card" wx:if="{{item.card}}">
-                            <text class="name">（自己）</text>
-                            <text class="con">拿到的牌</text>
-                            <view class="img">
-                                <image
-                                        src="{{item.card}}"
-                                        mode="widthFix"
-                                />
-                                <view class="icon" data-img="{{item.card}}" catchtap="showImg">
-                                    <image
-                                            src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
-                                            mode="scaleToFill"
-                                    />
-                                </view>
-                            </view>
-                        </view>
-                    </view>
-                </block>
-                <!-- 最后加一个垫底的节点 -->
-                <view class="last-view" id="{{endId}}" style="height:20px;"></view>
-            </scroll-view>
-            <scroll-view
-                    wx:else
-                    class="content"
-                    scroll-into-view="{{scrollTo}}"
-                    scroll-y="true"
-            >
-                <block wx:for="{{mesList}}" wx:key="index">
-                    <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
-                          wx:for-item="item"
-                          class="{{item.sysType != 'sys'?'item':'item sys'}}"
-                          wx:key="index">
-                        <view class="text" wx:if="item.text">
-                            <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
-                            <text class="name a2" wx:if="{{item.sysType == 'sys'}}">系统：</text>
-                            <text class="con">{{item.text}}</text>
-                        </view>
-                        <view class="cardList" wx:if="{{item.cardList}}">
-                            <view class="con">
-                                <view class="left">
-                                    <image
-                                            src="{{item.bigImage.url}}"
-                                            mode="widthFix"
-                                    />
-                                    <image
-                                            wx:if="{{item.bigImage.url}}"
-                                            src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
-                                            class="iconImg" data-img="{{item.bigImage.url}}" catchtap="showImg"></image>
-                                </view>
-                                <view class="right">
-                                    <image
-                                            wx:for="{{item.cardList}}"
-                                            wx:key="cardIndex"
-                                            wx:for-item="card"
-                                            wx:for-index="cardIndex"
-                                            data-step="{{item.step}}"
-                                            data-index="{{cardIndex}}"
-                                            bindtap="clickSmallImage"
-                                            src="{{card.imgUrl}}"
-                                            mode="widthFix"
-                                    />
-                                </view>
-                            </view>
-                            <view class="z-btn" wx:if="{{!item.selectImage.url}}" bindtap="selectCard"
-                                  data-step="{{item.step}}">选择
-                            </view>
-                        </view>
-                        <view class="card" wx:if="{{item.card}}">
-                            <text class="name">（自己）</text>
-                            <text class="con">拿到的牌</text>
-                            <view class="img">
-                                <image
-                                        src="{{item.card}}"
-                                        mode="widthFix"
-                                />
-                                <view class="icon" data-img="{{item.card}}" catchtap="showImg">
-                                    <image
-                                            src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
-                                            mode="scaleToFill"
-                                    />
-                                </view>
-                            </view>
-                        </view>
-                    </view>
-                </block>
-                <!-- 最后加一个垫底的节点 -->
-                <view class="last-view" id="{{endId}}" style="height:20px;"></view>
-            </scroll-view>
             <scroll-view
                 class="bot-content"
                 scroll-into-view="{{scrollTo}}"
@@ -208,54 +147,8 @@
                             wx:key="index">
                             <view class="text" wx:if="item.text">
                                 <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
-                            <text class="name a2" wx:else>系统：</text>
+                            <text class="name a2" wx:else>系统1：</text>
                                 <text class="con">{{item.text}}</text>
-                            </view>
-                            <view class="cardList" wx:if="{{item.cardList}}">
-                                <view class="con">
-                                    <view class="left">
-                                        <image
-                                                src="{{item.bigImage.url}}"
-                                                mode="widthFix"
-                                        />
-                                        <image
-                                                wx:if="{{item.bigImage.url}}"
-                                                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
-                                                class="iconImg" data-img="{{item.bigImage.url}}" catchtap="showImg"></image>
-                                    </view>
-                                    <view class="right">
-                                        <image
-                                                wx:for="{{item.cardList}}"
-                                                wx:key="cardIndex"
-                                                wx:for-item="card"
-                                                wx:for-index="cardIndex"
-                                                data-step="{{item.step}}"
-                                                data-index="{{cardIndex}}"
-                                                bindtap="clickSmallImage"
-                                                src="{{card.imgUrl}}"
-                                                mode="widthFix"
-                                        />
-                                    </view>
-                                </view>
-                                <view class="z-btn" wx:if="{{!item.selectImage.url}}" bindtap="selectCard"
-                                    data-step="{{item.step}}">选择
-                                </view>
-                            </view>
-                            <view class="card" wx:if="{{item.card}}">
-                                <text class="name">（自己）</text>
-                                <text class="con">拿到的牌</text>
-                                <view class="img">
-                                    <image
-                                            src="{{item.card}}"
-                                            mode="widthFix"
-                                    />
-                                    <view class="icon" data-img="{{item.card}}" catchtap="showImg">
-                                        <image
-                                                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
-                                                mode="scaleToFill"
-                                        />
-                                    </view>
-                                </view>
                             </view>
                         </view>
                     </block>

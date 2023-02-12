@@ -70,6 +70,7 @@ Page({
         bottomHeight: 10,
         helpText: '',
         stepCardList: [],
+        canClickCard: true,
         bigPopStatus: false,
         selectImgUrl: '',
         isJump: false,//是否跳过
@@ -153,7 +154,7 @@ Page({
             contPasserPopStatus: false,
             roomSetPopStatus: false
         })
-        if (clear==1 && timeInt) {
+        if (clear == 1 && timeInt) {
             clearInterval(timeInt)
             timeInt = null
         }
@@ -1585,52 +1586,82 @@ Page({
 
     //发牌
     sendCard: function () {
-        findByCard({
-            id: this.data.roomData.id
-        }).then(res => {
-            if (res.data.ret === 200) {
-                var list = res.data.data
-                // 发牌接口房主调一次 分给其他人 每张牌添加一个yunid 发给每个人
-                //将卡牌显示到消息内容，但不能使用发送消息，不然每个人的牌都能看到
-                // 牌直接发三张 三张都记录
-                var msgList = APP.globalData.mesList
-                var msgObj = {
-                    sysType: 'sys',
-                    cardList: list,
-                    step: this.data.step,
-                    bigImage: {
-                        url: '',
-                        id: ''
-                    },
-                    selectImage: {
-                        url: '',
-                        id: ''
+        let that = this
+        if (this.data.isOwner) {
+            findByCard({
+                id: this.data.roomData.id
+            }).then(res => {
+                if (res.data.ret === 200) {
+                    var list = that.fenPai(res.data.data)
+                    // 发牌接口房主调一次 分给其他人 每张牌添加一个yunid 发给每个人
+                    //将卡牌显示到消息内容，但不能使用发送消息，不然每个人的牌都能看到
+                    // 牌直接发三张 三张都记录
+                    debugger
+                    var msgList = that.data.stepCardList
+                    var msgObj = {
+                        sysType: 'sys',
+                        cardList: list,
+                        step: this.data.step,
                     }
+                    msgList.push(msgObj)
+                    that.setData({
+                        stepCardList: msgList
+                    })
+                    this.contentScroll()
                 }
-                msgList.push(msgObj)
-                APP.globalData.mesList = msgList
-
-                //本地记录每轮卡牌 
-                var stepCardList = this.data.stepCardList
-                var stepImage = {
-                    step: this.data.step,
-                    cardList: list,
-                    bigImage: {
-                        url: '',
-                        id: ''
-                    },
-                    selectImage: {
-                        url: '',
-                        id: ''
-                    }
-                }
-                stepCardList.push(stepImage)
-                this.setData({
-                    stepCardList: stepCardList
+            })
+        }
+    },
+    // 数组分成三份每份加一种yunid
+    fenPai (cardArr) {
+        debugger
+        let arr1 = []
+        let arr2 = []
+        for (let i = 0; i < cardArr.length; i += 3) {
+            arr1.push(cardArr.slice(i, i + 3));
+        }
+        console.log(arr1);
+        console.log(this.data.playerList);
+        this.data.playerList.forEach((item, index) => {
+            if (item.account && item.account == this.data.account) {
+                arr1[index].forEach(part => {
+                    part['account'] = item.account
+                    part['isOpened'] = false
+                    part['isOpen'] = false
+                    arr2.push(part)
                 })
-                this.contentScroll()
             }
         })
+        console.log(arr2,'arr2');
+        return arr2
+    },
+    //翻牌
+    clickCard: function (e) {
+        if (this.data.canClickCard) {
+            this.setData({
+                canClickCard: false
+            })
+            var listIndex = e.currentTarget.dataset.listindex
+            var cardIndex = e.currentTarget.dataset.index * 1
+            var list = this.data.stepCardList
+            var cardList = JSON.parse(JSON.stringify(list[listIndex].cardList))
+            //调换位置
+            list[listIndex].cardList[0] = cardList[cardIndex]
+            list[listIndex].cardList[0].isOpen = true
+            list[listIndex].cardList[cardIndex] = cardList[0]
+            this.setData({
+                stepCardList: list
+            })
+            var that = this;
+            setTimeout(function () {
+                list[listIndex].cardList[0].isOpened = true
+                that.setData({
+                    stepCardList: list,
+                    canClickCard: true
+                })
+            }, 1000)
+        }
+
     },
     //点击小图
     clickSmallImage: function (e) {
