@@ -448,6 +448,7 @@ Page({
         // console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error ? '成功' : '失败') + ', id=' + msg.idClient);
         // msgList 页面显示的滚动聊天内容
         var msgList = this.data.msgList
+        var stepList = this.data.stepCardList
         var that = this;
         console.log('渲染消息111', msg)
         if (msg.content) {
@@ -543,23 +544,27 @@ Page({
                 })
                 console.log(that.data.msgList);
             } else if (content.type == 5) {
+                var list = []
+                // 筛选出当前人分的牌
+                if (content.data.cardList && content.data.cardList.length > 0) {
+                    list = content.data.cardList.filter(item => {
+                        return item.account == that.data.account
+                    })
+                }
                 // 自定义消息type为5的时候 为系统发牌消息
                 var msgObj = {
                     sysType: 'sys',
-                    cardList: content.data.cardList,
+                    cardList: list,
                     step: that.data.step,
                     isBotMes: 0,
-                    bigImage: {
-                        url: '',
-                        id: ''
-                    },
-                    msgStep: that.data.step,
-                    fromAccount: msg.from
+                    nick: list[0].nick
                 }
-                msgList.push(msgObj)
+                stepList.push(msgObj)
                 that.setData({
-                    msgList: msgList
+                    stepCardList: stepList
                 })
+                this.contentScroll()
+
 
             } else if (content.type === 6) {
                 //跳过发言
@@ -1596,25 +1601,24 @@ Page({
                     // 发牌接口房主调一次 分给其他人 每张牌添加一个yunid 发给每个人
                     //将卡牌显示到消息内容，但不能使用发送消息，不然每个人的牌都能看到
                     // 牌直接发三张 三张都记录
-                    debugger
-                    var msgList = that.data.stepCardList
-                    var msgObj = {
-                        sysType: 'sys',
-                        cardList: list,
-                        step: this.data.step,
-                    }
-                    msgList.push(msgObj)
-                    that.setData({
-                        stepCardList: msgList
-                    })
-                    this.contentScroll()
+                    // var msgList = that.data.stepCardList
+                    // var msgObj = {
+                    //     sysType: 'sys',
+                    //     cardList: list,
+                    //     step: this.data.step,
+                    // }
+                    // msgList.push(msgObj)
+                    // that.setData({
+                    //     stepCardList: msgList
+                    // })
+                    console.log(list, 'list');
+                    this.sendCustomMsg(5, { list: list })
                 }
             })
         }
     },
     // 数组分成三份每份加一种yunid
     fenPai (cardArr) {
-        debugger
         let arr1 = []
         let arr2 = []
         for (let i = 0; i < cardArr.length; i += 3) {
@@ -1623,16 +1627,17 @@ Page({
         console.log(arr1);
         console.log(this.data.playerList);
         this.data.playerList.forEach((item, index) => {
-            if (item.account && item.account == this.data.account) {
+            if (item.account) {
                 arr1[index].forEach(part => {
                     part['account'] = item.account
+                    part['nick'] = item.nick
                     part['isOpened'] = false
                     part['isOpen'] = false
                     arr2.push(part)
                 })
             }
         })
-        console.log(arr2,'arr2');
+        console.log(arr2, 'arr2');
         return arr2
     },
     //翻牌
