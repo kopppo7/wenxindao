@@ -39,14 +39,17 @@ Page({
                 })
             } else if (res.data.ret === 200) {
                 wx.navigateTo({
-                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.data + '&isMatch=true',
+                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.id + '&isMatch=true',
                 })
             }
         })
     },
     // 好友结伴
     friendTogether () {
-        createBaoRoom(this.data.themeId).then(res => {
+        let params = {
+            askId: this.data.themeId,
+        }
+        createBaoRoom(params).then(res => {
             if (res.data.ret === 201) {
                 wx.navigateTo({
                     url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,

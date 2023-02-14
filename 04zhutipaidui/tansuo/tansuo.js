@@ -877,7 +877,12 @@ Page({
     //准备弹窗是否显示
     showReadyPop: function () {
         //不是房主，没有准备，显示准备弹窗
-        if ((!this.data.isOwner || (this.data.isOwner && this.data.isMatch)) && !this.data.isReady) {
+        console.log(!this.data.isOwner);
+        console.log(!this.data.isMatch);
+        console.log(this.data.isOwner && this.data.isMatch);
+        console.log(!this.data.isReady);
+        if ((!this.data.isOwner || (this.data.isOwner && !!this.data.isMatch)) && !this.data.isReady) {
+            debugger
             this.setData({
                 readyPopStatus: true
             })

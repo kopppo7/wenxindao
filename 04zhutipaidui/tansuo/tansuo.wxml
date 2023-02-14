@@ -168,10 +168,6 @@
             <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
         </view>
         <view class="inp">
-            
-            <!--        wx:if="{{inputStatus}}"-->
-            
-            <!--        disabled="{{!inputStatus}}"-->
             <input type="text"
                    value="{{inputText}}"
                    wx:if="{{inputStatus}}"
