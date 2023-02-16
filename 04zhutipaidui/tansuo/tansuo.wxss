@@ -240,11 +240,11 @@
 }
 .yinyan-box5 .box4{
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-between;align-items:center;
 }
 .yinyan-box5 .box4-l{
-	width: 402rpx;
-	height: 224rpx;
+	width: 244rpx;
+	height: 182rpx;
 }
 .yinyan-box5 .box4-r{
 	width: 268rpx;

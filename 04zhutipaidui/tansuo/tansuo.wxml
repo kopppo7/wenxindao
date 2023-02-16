@@ -141,6 +141,7 @@
                 class="bot-content"
                 scroll-into-view="{{scrollTo}}"
                 scroll-y="true"
+                wx:if="{{botArr.length > 0}}"
             >
                 <view class="box">
                     <block wx:for="{{botArr}}" wx:key="index">
@@ -150,7 +151,7 @@
                             wx:key="index">
                             <view class="text" wx:if="item.text">
                                 <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
-                            <text class="name a2" wx:else>系统1：</text>
+                            <text class="name a2" wx:else>系统：</text>
                                 <text class="con">{{item.text}}</text>
                             </view>
                         </view>
@@ -177,7 +178,7 @@
                    bindconfirm="sendMsg"/>
         </view>
         <view class="btn" bindtap="handleReady"
-              wx:if="{{!isReady && (!isOwner || (isOwner && isMatch)) && !isBeginPlay}}">
+              wx:if="{{(!isReady&&!isOwner) && (!isOwner || (isOwner && isMatch)) && !isBeginPlay}}">
             准备
             <text>点击准备</text>
         </view>
@@ -191,7 +192,7 @@
         <view class="own-btns" wx:if="{{isOwner && !isMatch && !isBeginPlay}}">
             <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
             <view class="btn" bindtap="handleInviRoad">匹配路人</view>
-            <view class="btn" bindtap="handleBegin">快速开始</view>
+            <view class="btn" bindtap="handleFastStart">快速开始</view>
         </view>
     </view>
     
@@ -208,17 +209,16 @@
             </view>
             <view class="box3">
                 <view class="box3-item">
-                    <view class="tit">心理学小课堂</view>
+                    <view class="tit">派对解析</view>
                     <view class="con">{{themeDetail.tips}}</view>
                 </view>
                 <view class="box3-item">
-                    <view class="tit">想要收获更多反馈？</view>
-                    <view class="con">每个人都有自己认知的盲区。敞开自己，去拥抱其它小伙伴的角度和评论吧！</view>
+                    <view class="tit">想要更深入的了解自己？</view>
+                    <view class="con"> 每个人都有自己认知的盲区。敞开自己，每个人都有自我认知的盲区。如果您想要更全面的探索本话题，获得问心认证卡牌师的专业反馈，或者体验问心岛线下活动，欢迎联系我们。！</view>
                 </view>
             </view>
             <view class="box4">
-                <image class="box4-l"
-                       src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrtxt.png"></image>
+                <image class="box4-l" src="https://file.wxdao.net/2023-02/655ac759-acc1-4fc8-af91-14543152a35c.png"></image>
                 <image class="box4-r"
                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
             </view>
@@ -370,13 +370,8 @@
 <block wx:if="{{mixPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
-        <view class="pop-tit">至少2人开始派对</view>
-        <view class="desc">
-            至少
-            <text
-                    class="num">2
-            </text>
-            人才可以开始派对，请邀请好友或匹配路人玩家！
+        <view class="pop-tit">至少{{roomData.minNumber}}人开始派对</view>
+        <view class="desc">至少<text class="num">{{roomData.minNumber}}</text>人才可以开始派对，请邀请好友或匹配路人玩家！
         </view>
         <view class="btns">
             <view class="btn ok" bindtap="closePop">知道了</view>

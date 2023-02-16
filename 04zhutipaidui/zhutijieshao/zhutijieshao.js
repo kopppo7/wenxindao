@@ -27,7 +27,7 @@ Page({
         roomData: {},
         roomPath: {}
     },
-    // 打开购买本探索弹窗
+    // 快速匹配
     openBuyPop (e) {
         var type = e.currentTarget.dataset.type
         var that = this;
@@ -39,7 +39,7 @@ Page({
                 })
             } else if (res.data.ret === 200) {
                 wx.navigateTo({
-                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.id + '&isMatch=true',
+                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + (res.data.id || res.data.data) + '&isMatch=0',
                 })
             }
         })
@@ -56,7 +56,7 @@ Page({
                 })
             } else if (res.data.ret === 200) {
                 wx.navigateTo({
-                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.data + '&isfriend=true',
+                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.data.id
                 })
             }
         })
