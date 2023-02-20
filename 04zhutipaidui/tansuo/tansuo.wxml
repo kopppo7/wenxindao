@@ -136,30 +136,56 @@
                 </scroll-view>
             </view>
             
-            
-            <scroll-view
-                class="bot-content"
-                scroll-into-view="{{scrollTo}}"
-                scroll-y="true"
-                wx:if="{{botArr.length > 0}}"
-            >
-                <view class="box">
-                    <block wx:for="{{botArr}}" wx:key="index">
-                        <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
-                            wx:for-item="item"
-                            class="{{item.sysType != 'sys'?'item':'item sys'}}"
-                            wx:key="index">
-                            <view class="text" wx:if="item.text">
-                                <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
-                            <text class="name a2" wx:else>系统：</text>
-                                <text class="con">{{item.text}}</text>
+            <view wx:if="{{showOtherStep}}">
+                <scroll-view
+                    class="bot-content"
+                    scroll-into-view="{{scrollTo}}"
+                    scroll-y="true"
+                    wx:if="{{stepBotArr.length > 0}}"
+                >
+                    <view class="box">
+                        <block wx:for="{{stepBotArr}}" wx:key="index">
+                            <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
+                                wx:for-item="item"
+                                class="{{item.sysType != 'sys'?'item':'item sys'}}"
+                                wx:key="index">
+                                <view class="text" wx:if="item.text">
+                                    <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
+                                <text class="name a2" wx:else>系统：</text>
+                                    <text class="con">{{item.text}}</text>
+                                </view>
                             </view>
-                        </view>
-                    </block>
-                    <!-- 最后加一个垫底的节点 -->
-                    <view class="last-view" id="{{endId}}" style="height:20px;"></view>
-                </view>
-            </scroll-view>
+                        </block>
+                        <!-- 最后加一个垫底的节点 -->
+                        <view class="last-view" id="{{endId}}" style="height:20px;"></view>
+                    </view>
+                </scroll-view>
+            </view>
+            <view wx:else>
+                <scroll-view
+                    class="bot-content"
+                    scroll-into-view="{{scrollTo}}"
+                    scroll-y="true"
+                    wx:if="{{botArr.length > 0}}"
+                >
+                    <view class="box">
+                        <block wx:for="{{botArr}}" wx:key="index">
+                            <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
+                                wx:for-item="item"
+                                class="{{item.sysType != 'sys'?'item':'item sys'}}"
+                                wx:key="index">
+                                <view class="text" wx:if="item.text">
+                                    <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
+                                <text class="name a2" wx:else>系统：</text>
+                                    <text class="con">{{item.text}}</text>
+                                </view>
+                            </view>
+                        </block>
+                        <!-- 最后加一个垫底的节点 -->
+                        <view class="last-view" id="{{endId}}" style="height:20px;"></view>
+                    </view>
+                </scroll-view>
+            </view>
         </view>
     </view>
     <view class="theme-bot" wx:if="{{step !== (themeDetail.list.length+1)}}">
@@ -341,7 +367,7 @@
 </block>
 
 <!-- 准备提示 -->
-<block wx:if="{{readyPopStatus}}">
+<block wx:if="{{readyPopStatus && !isBeginPlay}}">
     <view class="pop-mask"></view>
     <view class="pop-win2" style="z-index: 799;">
         <view class="pop-tit">提示</view>

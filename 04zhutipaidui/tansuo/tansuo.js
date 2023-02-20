@@ -565,7 +565,6 @@ Page({
                     cardList: list,
                     step: that.data.step,
                     isBotMes: 0,
-                    nick: list[0].nick
                 }
                 stepList.push(msgObj)
                 that.setData({
@@ -792,18 +791,23 @@ Page({
 
             } else if (content.type === 6) {
                 //跳过发言
-                var msgObj = {
-                    sysType: 'sys',
-                    text: item.nick + '跳过本轮发言',
-                    msgStep: that.data.step,
-                    isBotMes: 1,
-                    fromAccount: msg.from,
-                }
-                msgList.push(msgObj)
-                that.setData({
-                    msgList: msgList
+                var player = that.data.playerList;
+                player.forEach(item => {
+                    if (item && item.account && item.account == msg.from) {
+                        var msgObj = {
+                            sysType: 'sys',
+                            text: item.nick + '跳过本轮发言',
+                            msgStep: that.data.step,
+                            isBotMes: 1,
+                            fromAccount: msg.from,
+                        }
+                        msgList.push(msgObj)
+                        that.setData({
+                            msgList: msgList
+                        })
+                        that.handleJumpSpeak()
+                    }
                 })
-                that.handleJumpSpeak()
 
             } else if (content.type === 7) {
                 //点赞
@@ -823,15 +827,41 @@ Page({
                     msgList: msgList
                 })
 
+            } else if (content.type == 8) {
+                //玩家离开房间
+                var player = that.data.playerList;
+                var player2 = that.data.playerList;
+                var userName = that.getUserName(content.data.account)
+                var userAccount = content.data.account
+                var msgObj = {
+                    sysType: 'sys',
+                    text: userName + '离开房间',
+                    msgStep: that.data.step,
+                    isBotMes: 1,
+                    fromAccount: userAccount,
+                }
+                msgList.push(msgObj)
+                that.setData({
+                    msgList: msgList
+                })
+                // 别人离开的话，更新人员信息
+                player.forEach((item, index) => {
+                    if (item?.account && item?.account == userAccount) {
+                        player2.splice(index, 1)
+                    }
+                })
+                that.setData({
+                    playerList: player2
+                })
             }
         } else {
             var msgObj = {
-                fromNick: msg.fromNick,
+                sysType: 'people',
+                nick: msg.fromNick,
                 text: msg.text,
                 msgStep: that.data.step,
                 isBotMes: 1,
                 fromAccount: msg.from,
-                nick
             }
             msgList.push(msgObj)
             that.setData({
@@ -919,7 +949,7 @@ Page({
             console.log(that.data.waitTime)
             if (that.data.waitTime > 0) {
                 that.startCountDown()
-                if (that.data.waitTime === 10) {
+                if (that.data.waitTime === 3) {
                     var routeList = getCurrentPages()
                     if (routeList[routeList.length - 1].route !== '04zhutipaidui/tansuo/tansuo') {
                         console.log('该回来了')
@@ -1661,6 +1691,7 @@ Page({
 
     //查看往轮
     viewStep: function (e) {
+        debugger
         var step = e.currentTarget.dataset.step
         var stepList = this.data.stepList
         if (step < this.data.step) {
@@ -1674,14 +1705,16 @@ Page({
             })
 
             //找msgList中对应轮的数据
-            var msgList = APP.globalData.mesList
+            var msgList = this.data.msgList
             var stepMsgList = []
             msgList.map(item => {
                 if (item.msgStep === step) {
                     stepMsgList.push(item)
                 }
             })
+            
             this.setData({
+                stepBotArr: formatMsgList(stepMsgList).botArr,
                 stepMsgList: stepMsgList,
                 showOtherStep: true
             })
