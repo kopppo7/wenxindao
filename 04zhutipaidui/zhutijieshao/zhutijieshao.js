@@ -39,7 +39,7 @@ Page({
                 })
             } else if (res.data.ret === 200) {
                 wx.navigateTo({
-                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + (res.data.id || res.data.data) + '&isMatch=0',
+                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + (res.data.id || res.data.data) + '&isMatch=1',
                 })
             }
         })
@@ -56,7 +56,7 @@ Page({
                 })
             } else if (res.data.ret === 200) {
                 wx.navigateTo({
-                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.data.id
+                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.data.id + '&isfriend=1'
                 })
             }
         })
