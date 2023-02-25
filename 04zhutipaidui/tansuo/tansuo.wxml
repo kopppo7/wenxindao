@@ -7,7 +7,7 @@
         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet"/>
     </view>
     <!--<view class="end-test" bindtap="toEnd">结束</view>-->
-    <view class="end-test" bindtap="dismissTeam">解散</view>
+    <!-- <view class="end-test" bindtap="dismissTeam">解散</view> -->
     <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
         <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
         <block wx:for="{{stepList}}" wx:key="index">
@@ -16,10 +16,7 @@
                 }}轮
             </view>
         </block>
-        <!--    <view class="item {{step == 2 ? 'active' : ''}}">第2轮</view>-->
-        <!--    <view class="item {{step == 3 ? 'active' : ''}}">第3轮</view>-->
-        <!--    <view class="item {{step == 4 ? 'active' : ''}}">第4轮</view>-->
-        <view class="item {{step == (themeDetail.list.length+1) ? 'active' : ''}}">结语</view>
+        <view class="item {{step == (themeDetail.list.length+1) ? 'active' : ''}}" data-step="{{themeDetail.list.length+1}}" bindtap="viewStep">结语</view>
     </scroll-view>
     <view class="wp" wx:if="{{step !== (themeDetail.list.length+1)}}">
         <view class="room-theme">
@@ -249,8 +246,10 @@
                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
             </view>
             <view class="box5">
-                <view class="g-submit" bindtap="lookLog">查看本次记录</view>
-                <view class="share" bindtap="openSharePop">分享</view>
+                
+                <button class="share"  open-type="share">分享</button>
+                <view class="g-submit" bindtap="handleXieganwu">写感悟</view>
+                <view class="g-submit" bindtap="bindTuichufangjian">退出</view>
             </view>
         </view>
     </view>
@@ -301,7 +300,7 @@
             <text>后关闭复盘环节</text>
         </view>
         <view class="btns">
-            <view class="lx">联系客服<button open-type="contact"></button></view>
+            <view class="lx" bindtap="openKefu">添加客服</view>
             <view class="speak">
                 <image
                         src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png"
@@ -309,7 +308,7 @@
                 />
                 <text>点击说话</text>
             </view>
-            <view class="leave" bindtap="quit">离开</view>
+            <view class="leave" bindtap="handleTiaoguo">跳过</view>
         </view>
     </view>
 </view>
@@ -330,14 +329,14 @@
 <!-- 倒计时 -->
 <view class="timeDown" wx:if="{{ timePopStatus}}">{{waitTime}}</view>
 <!--分享到-->
-<block wx:if="{{sharePopStatus}}">
+<!-- <block wx:if="{{sharePopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win">
         <view class="pop-tit">分享到</view>
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
                bindtap="closePop"></image>
         <view class="pop-share">
-            <view class="share-item">
+            <view class="share-item" bindtap="onShareAppMessage">
                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>
                 微信好友
             </view>
@@ -347,7 +346,8 @@
             </view>
         </view>
     </view>
-</block>
+</block> -->
+
 <!-- 活动提示 -->
 <block wx:if="{{activityPopStatus}}">
     <view class="pop-mask"></view>
@@ -597,5 +597,33 @@
         <image class="pop-close-bot"
                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png"
                bindtap="closeImgPop"></image>
+    </view>
+</block>
+<!-- 添加客服 -->
+<block wx:if="{{kefuPop}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win">
+        <view class="pop-tit">添加客服</view>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
+               bindtap="closePop"></image>
+        <view class="qr">
+            想获得更多解读，添加企业二维码 寻求卡牌获得帮助！
+            <image 
+                       src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
+        </view>
+    </view>
+</block>
+<!-- 匹配路人 -->
+<block wx:if="{{isTuichufangjian}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">退出房间</view>
+        <view class="desc">
+            确定要退出房间吗？
+        </view>
+        <view class="btns">
+            <view class="btn  close" bindtap="closePop">取消</view>
+            <view class="btn ok" bindtap="quit">确定</view>
+        </view>
     </view>
 </block>

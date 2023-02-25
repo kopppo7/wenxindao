@@ -140,6 +140,11 @@ Page({
      */
     onLoad (options) {
         console.log(options);
+        if (options.open) {
+            this.setData({
+                gwPopStatus:true
+            })
+        }
         this.setData({
             themeId: options.id,
             'evalParams.id': options.id,

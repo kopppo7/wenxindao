@@ -258,17 +258,18 @@
 }
 .yinyan-box5 .box5 .g-submit{
 	position: static;
-	width: 440rpx;
+	width: 202rpx;
 }
 .yinyan-box5 .box5 .share{
 	font-size: 32rpx;
 	color: #010206;
-	width: 182rpx;
+	width: 202rpx;
 	height: 96rpx;
 	line-height: 96rpx;
 	text-align: center;
 	background: #FFB58C;
 	border-radius: 72rpx;
+	margin: 0;
 }
 
 .hourse-set{
@@ -520,7 +521,7 @@ image{object-fit: cover;}
 }
 .count-down{
 	position: fixed;
-	bottom: 220rpx;
+	bottom: 260rpx;
 	left: 50%;
 	-webkit-transform: translateX(-50%);-moz-transform: translateX(-50%);-ms-transform: translateX(-50%);-o-transform: translateX(-50%);transform: translateX(-50%);
 	width: 218rpx;

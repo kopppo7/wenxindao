@@ -413,6 +413,27 @@
           "query": "askId=14&roomId=264&isMatch=undefined&isfriend=1",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=267&isMatch=1&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=283&isfriend=1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=278&isMatch=1&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

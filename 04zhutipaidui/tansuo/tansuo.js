@@ -40,7 +40,7 @@ Page({
         roomSetPopStatus: false, //房间设置
         payMatching: false, //付费or匹配
         step: 0,
-        waitTime: '10',
+        waitTime: '00',
         chatroom: null,
         account: "",
         nickName: "",
@@ -106,7 +106,9 @@ Page({
         topArr: [],
         // 下面的数据
         botArr: [],
-        haveRoom: true
+        haveRoom: true,
+        kefuPop: false,
+        isTuichufangjian: false
     },
     // 活动提示
     activityChange () {
@@ -152,7 +154,9 @@ Page({
             showTousuPop: false,
             jumpPopStatus: false,
             contPasserPopStatus: false,
-            roomSetPopStatus: false
+            roomSetPopStatus: false,
+            kefuPop: false,
+            isTuichufangjian: false
         })
         if (clear == 1 && timeInt) {
             clearInterval(timeInt)
@@ -194,9 +198,9 @@ Page({
                 account: wx.getStorageSync('loginInfo').yunId
             })
         }
-        // 准备弹窗是否显示
-        this.showReadyPop()
-
+        if (this.data.isMatch || this.data.roomData.ownerUserIm != account) {
+            this.showReadyPop()
+        }
         nim = SDK.getInstance({
             debug: false, // 是否开启日志，将其打印到console。集成开发阶段建议打开。
             appKey: '820499c93e45806d2420d75aa9ce9846',
@@ -512,7 +516,6 @@ Page({
                             text: '轮到' + item.nick + '发言',
                             msgStep: that.data.step,
                             isBotMes: 1,    // isBotMes 是否是下面展示的消息列表 isTopMes 是否是上面展示的系统消息
-                            fromAccount: msg.from,
                         }
                     }
                 })
@@ -542,7 +545,6 @@ Page({
                     text: content.data.value,
                     msgStep: that.data.step,
                     isBotMes: 1,
-                    fromAccount: msg.from,
                 }
                 if (content.data.value === '开始') {
                     that.setData({
@@ -594,7 +596,6 @@ Page({
                             text: item.nick + '跳过本轮发言',
                             msgStep: that.data.step,
                             isBotMes: 1,
-                            fromAccount: msg.from,
                         }
                         msgList.push(msgObj)
                         that.setData({
@@ -632,7 +633,6 @@ Page({
                     text: userName + '离开房间',
                     msgStep: that.data.step,
                     isBotMes: 1,
-                    fromAccount: userAccount,
                 }
                 msgList.push(msgObj)
                 that.setData({
@@ -738,7 +738,6 @@ Page({
                             text: '轮到' + item.nick + '发言',
                             msgStep: that.data.step,
                             isBotMes: 1,    // isBotMes 是否是下面展示的消息列表 isTopMes 是否是上面展示的系统消息
-                            fromAccount: msg.from,
                         }
                     }
                 })
@@ -817,7 +816,6 @@ Page({
                             text: item.nick + '跳过本轮发言',
                             msgStep: that.data.step,
                             isBotMes: 1,
-                            fromAccount: msg.from,
                         }
                         msgList.push(msgObj)
                         that.setData({
@@ -856,7 +854,6 @@ Page({
                     text: userName + '离开房间',
                     msgStep: that.data.step,
                     isBotMes: 1,
-                    fromAccount: userAccount,
                 }
                 msgList.push(msgObj)
                 that.setData({
@@ -908,14 +905,8 @@ Page({
                 }
             })
             if (num === readyNum && num >= 2) {
-                this.setData({
-                    timePopStatus: true,
-                    waitTime: 10
-                })
-                this.startCountDown()
-                console.log('开始倒计时')
+                this.sendCustomMsg(9, {})
             } else {
-
                 console.log('还没准备好')
             }
 
@@ -1019,6 +1010,9 @@ Page({
                 this.setData({
                     readyPopStatus: true
                 })
+                if (!this.data.matePopStatus) {
+                    this.readyTimeDown(this.data.account)
+                }
             }
         }
     },
@@ -1224,8 +1218,18 @@ Page({
     onShareAppMessage () {
         console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1');
         return {
-            title: '弹出分享时显示的分享标题',
-            path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
+            title: this.data.themeDetail.title,
+            query: 'askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
+            imageUrl: '',
+        }
+    },
+    //邀请好友
+    onShareTimeline () {
+        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1');
+        return {
+            title: this.data.themeDetail.title,
+            query: 'askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
+            imageUrl: '',
         }
     },
     handleInviFriend () {
@@ -1724,38 +1728,48 @@ Page({
 
     //查看往轮
     viewStep: function (e) {
-        debugger
         var step = e.currentTarget.dataset.step
         var stepList = this.data.stepList
-        if (step < this.data.step) {
-            //加类名
-            stepList.map(item => {
-                item.view = false
-            })
-            stepList[step - 1].view = true
-            this.setData({
-                stepList: stepList,
-            })
+        if (this.data.step === this.data.themeDetail.list.length + 1) {
 
-            //找msgList中对应轮的数据
-            var msgList = this.data.msgList
-            var stepMsgList = []
-            msgList.map(item => {
-                if (item.msgStep === step) {
-                    stepMsgList.push(item)
-                }
-            })
+        } else {
+            if (step < this.data.step) {
+                //加类名
+                stepList.map(item => {
+                    item.view = false
+                })
+                stepList[step - 1].view = true
+                this.setData({
+                    stepList: stepList,
+                })
 
-            this.setData({
-                stepBotArr: formatMsgList(stepMsgList).botArr,
-                stepMsgList: stepMsgList,
-                showOtherStep: true
-            })
-        }
-        if (step === this.data.step) {
-            this.setData({
-                showOtherStep: false
-            })
+                //找msgList中对应轮的数据
+                var msgList = this.data.msgList
+                var stepMsgList = []
+                msgList.map(item => {
+                    if (item.msgStep === step) {
+                        stepMsgList.push(item)
+                    }
+                })
+
+                this.setData({
+                    stepBotArr: formatMsgList(stepMsgList).botArr,
+                    stepMsgList: stepMsgList,
+                    showOtherStep: true
+                })
+            }
+            if (step === this.data.step) {
+                stepList.map(item => {
+                    item.view = false
+                })
+                this.setData({
+                    stepList: stepList,
+                })
+                this.setData({
+                    showOtherStep: false
+                })
+            }
+
         }
     },
     //查看用户发言
@@ -1977,16 +1991,26 @@ Page({
             if (that.data.sec > 0) {
                 that.countDown()
             } else {
-                that.quit()
+                that.handleTiaoguo()
             }
         }, 1000)
+    },
+    // 跳过复盘
+    handleTiaoguo () {
+        var that = this
+        console.log(this.data.isOwner)
+        this.setData({
+            haveRoom: false,
+            showFupan: false,
+            step: this.data.stepList.length + 1
+        })
+        if (timeout) clearTimeout(timeout)
     },
     //离开
     quit: function () {
         var that = this
-        console.log(this.data.isOwner)
         this.setData({
-            haveRoom: false
+            isTuichufangjian: false
         })
         if (this.data.isOwner) {
             //解散房间
@@ -1994,20 +2018,21 @@ Page({
                 id: this.data.roomData.id,
                 token: wx.getStorageSync('tokenKey')
             })
-            that.leaveRoomClear(1)
+            that.leaveRoomClear()
         } else {
             //退出房间
             quitRoom({
                 id: this.data.roomData.id
             }).then(res => {
-                that.leaveRoomClear(1)
+                that.leaveRoomClear()
             })
         }
-        this.setData({
-            showFupan: false,
-            step: this.data.stepList.length + 1
+    },
+    handleXieganwu () {
+        this.leaveRoomClear(1)
+        wx.navigateTo({
+            url: '/04zhutipaidui/zhutijieshao/zhutijieshao?id=' + this.data.themeDetail.id + '&open=1',
         })
-        clearTimeout(timeout)
     },
     //退出房间
     clickQuitRoom: function () {
@@ -2053,8 +2078,8 @@ Page({
         wx.removeStorageSync('roomData')
         this.onDisconnect()
         if (jump) {
-            return 
-        }else{
+            console.log('清除缓存');
+        } else {
             wx.redirectTo({
                 url: '/pages/index/index',
             })
@@ -2072,13 +2097,6 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom () {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage () {
 
     },
 
@@ -2155,7 +2173,16 @@ Page({
             scrollTo: view_id
         })
     },
-
+    openKefu () {
+        this.setData({
+            kefuPop: true
+        })
+    },
+    bindTuichufangjian () {
+        this.setData({
+            isTuichufangjian: true
+        })
+    },
 
     /**
      * 生命周期函数--监听页面加载
@@ -2230,12 +2257,12 @@ Page({
                     // 如果是邀请好友的话带isfriend参数直接初始化房间 或者 是匹配的
                     if (Number(options.isMatch)) {
                         that.getRoomDetails(options.roomId)
-                        that.initRoom()
+                        // that.initRoom()
                     } else if (Number(options.isfriend)) {
                         inviteFriendsRoom({ roomId: options.roomId }).then(res => {
                             console.log('好友进入房间了', res);
                             that.getRoomDetails(options.roomId)
-                            that.initRoom()
+                            // that.initRoom()
                         })
                     } else {
                         // 倒计时等待
@@ -2252,6 +2279,5 @@ Page({
                 url: '/pages/index/index',
             })
         }
-    },
-
+    }
 })

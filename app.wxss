@@ -90,6 +90,12 @@ button::after{
   box-sizing: border-box;
 	z-index: 801;
 }
+.pop-win .qr{
+	width: 420rpx;
+	text-align: center;margin: 0 auto;
+}
+.pop-win .qr image{width: 320rpx;height: 320rpx;display: block;margin: 48rpx auto 0;}
+.pop-win{}
 .pop-tit{
 	font-size: 36rpx;
 	line-height: 114rpx;
