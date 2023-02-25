@@ -613,7 +613,7 @@
         </view>
     </view>
 </block>
-<!-- 匹配路人 -->
+<!-- 退出房间 -->
 <block wx:if="{{isTuichufangjian}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">

@@ -106,10 +106,10 @@ Page({
         topArr: [],
         // 下面的数据
         botArr: [],
-        haveRoom: true,
-        kefuPop: false,
-        isTuichufangjian: false,
-        isPaiduiKaishi:false,
+        haveRoom: true,  //刚进来的时候房间是否存在
+        kefuPop: false,  //客服弹窗
+        isTuichufangjian: false, //结语处退出房间弹窗
+        isPaiduiKaishi:false,  //进来的时候派对是否开始
     },
     // 活动提示
     activityChange () {
@@ -442,6 +442,7 @@ Page({
                 video: val?.video,    //发的视频
                 img: val?.imgUrl,      //发的图片
                 account: val?.account,      //房间人员变动
+                times: val?.times,      // 倒计时时间
             }
         };
         var msg = nim.sendCustomMsg({
@@ -663,13 +664,15 @@ Page({
                 }
 
             } else if (content.type == 9) {
-
                 this.setData({
                     timePopStatus: true,
                     waitTime: 10
                 })
                 this.startCountDown()
                 console.log('开始倒计时')
+            }else if(content.type == 10){
+                // 发言和思考倒计时
+                this.getDownTime(content.data.times, that.speak)
             }
         } else {
             var msgObj = {
@@ -2145,6 +2148,7 @@ Page({
                 this.saveData()
             } else {
                 if (!this.data.isReady) {
+                    this.leaveRoomClear()
                     //未准备，退出页面，代表退出房间。
                     // quitRoom({
                     //     roomId: this.data.roomData.id
