@@ -108,7 +108,8 @@ Page({
         botArr: [],
         haveRoom: true,
         kefuPop: false,
-        isTuichufangjian: false
+        isTuichufangjian: false,
+        isPaiduiKaishi:false,
     },
     // 活动提示
     activityChange () {
@@ -2183,7 +2184,14 @@ Page({
             isTuichufangjian: true
         })
     },
-
+    handlePaiduikaishi(){
+        this.setData({
+            isPaiduiKaishi:false
+        })
+        wx.redirectTo({
+            url: '/pages/index/index',
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -2260,8 +2268,14 @@ Page({
                         // that.initRoom()
                     } else if (Number(options.isfriend)) {
                         inviteFriendsRoom({ roomId: options.roomId }).then(res => {
-                            console.log('好友进入房间了', res);
-                            that.getRoomDetails(options.roomId)
+                            console.log('好友进入房间了', res.data.ret);
+                            if (res.data.ret == 201) {
+                                that.setData({
+                                    isPaiduiKaishi:true
+                                })
+                            } else {
+                                that.getRoomDetails(options.roomId)
+                            }
                             // that.initRoom()
                         })
                     } else {

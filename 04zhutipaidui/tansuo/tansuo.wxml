@@ -627,3 +627,16 @@
         </view>
     </view>
 </block>
+<!-- 派对已经开始 -->
+<block wx:if="{{isPaiduiKaishi}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">提示</view>
+        <view class="desc">
+            <text>活动已开始，非常抱歉！\n您可以匹配新派对</text>
+        </view>
+        <view class="btns">
+            <view class="btn ok" bindtap="handlePaiduikaishi">确定</view>
+        </view>
+    </view>
+</block>
