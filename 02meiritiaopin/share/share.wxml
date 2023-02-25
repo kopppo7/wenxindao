@@ -1,97 +1,173 @@
 <!--02meiritiaopin/share/share.wxml-->
 <view class="canvas-box my_canvas my_draw_canvas" id="my-canvas">
-    
-    <image  mode="widthFix"
-            class="canvas-bg my_draw_canvas"
-           data-url="https://file.wxdao.net/2023-01/818c2e50-2642-48b5-97bd-f76d0c3cc931.png"
-           data-type="image"
-           src="https://file.wxdao.net/2023-02/41474f41-30e5-44b5-a9a2-474438017f41.png"></image>
-    <view class="my_draw_canvas canvas-content">
-        
-        <view class="date-mod my_draw_canvas">
-            <view class="days my_draw_canvas" data-type="text" data-text="{{nowDate.gregorianDay}}">
-                {{nowDate.gregorianDay}}
-            </view>
-            <view class="date-box my_draw_canvas" data-type="text">
-                <view class="lc my_draw_canvas" data-type="text"
-                      data-text="{{nowDate.chineseMonth}}{{nowDate.chineseDay}}">
-                    {{nowDate.chineseMonth}}{{nowDate.chineseDay}}
-                </view>
-                <view class="gang my_draw_canvas" data-type="text"
-                      data-text="/"> / </view>
-                <view class="date my_draw_canvas" data-type="text"
+	<image
+		mode="widthFix"
+		class="canvas-bg my_draw_canvas"
+		data-url="https://file.duomixiong.com/2023-01/818c2e50-2642-48b5-97bd-f76d0c3cc931.png"
+		data-type="image"
+		src="https://file.duomixiong.com/2023-02/41474f41-30e5-44b5-a9a2-474438017f41.png"
+	></image>
+	<view class="my_draw_canvas canvas-content">
+		<view class="date-mod my_draw_canvas">
+			<view
+				class="days my_draw_canvas"
+				data-type="text"
+				data-text="{{ nowDate.gregorianDay }}"
+			>
+				{{ nowDate.gregorianDay }}
+			</view>
+			<view class="date-box my_draw_canvas" data-type="text">
+				<view
+					class="lc my_draw_canvas"
+					data-type="text"
+					data-text="{{ nowDate.chineseMonth }}{{ nowDate.chineseDay }}"
+				>
+					{{ nowDate.chineseMonth }}{{ nowDate.chineseDay }}
+				</view>
+				<view class="gang my_draw_canvas" data-type="text" data-text="/">
+					/
+				</view>
+				<view class="date my_draw_canvas" data-type="text"
                       data-text="{{nowDate.gregorianYear}}.{{nowDate.gregorianMonthBase1}}">
                     {{nowDate.gregorianYear}}.{{nowDate.gregorianMonthBase1}}
                 </view>
-            </view>
-        </view>
-        <view class="head-img my_draw_canvas">
-            <image class="s1-l my_draw_canvas" mode="aspectFill" src="{{headImg}}" data-type="image"
-                   data-url="{{headImg}}"></image>
-            <view class="name my_draw_canvas" data-type="text" data-text="{{userName}}">{{userName}}</view>
-        </view>
-        <view class="content my_draw_canvas">
-            <div class="text-mod-top ">
-                <div class="l">
-                    <view data-type="text" class="title my_draw_canvas" data-text="{{typeTit}}">
-                        {{typeTit}}
-                    </view>
-                    <image class="my_draw_canvas yin"
-                           src="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png" data-type="image" data-url="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"></image>
-                    <view data-type="text" class="text my_draw_canvas" data-text="{{txt1}}">
-                        {{txt1}}
-                        <image wx:if="{{!txt2}}"
-                                class="my_draw_canvas yin end"
-                               src="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png" data-type="image" data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"></image>
-                    </view>
-                </div>
-                <div class="r">
-                    <view class="card my_draw_canvas">
-                        <image class="my_draw_canvas" src="{{cardImg}}" data-type="image" data-url="{{cardImg}}"></image>
-                    </view>
-                </div>
-            </div>
-            <view data-type="text" wx:if="{{txt2}}" class="text text2 my_draw_canvas" data-text="{{txt2}}">
-                {{txt2}}
-                <image class="my_draw_canvas yin end"
-                       src="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png" data-type="image" data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"></image>
-            </view>
-           
-        </view>
-        <view class="s5 my_draw_canvas">
-            <view class="s5-l">
-                <view class="s5-l-item">
-                    <view class="s5-l-tit my_draw_canvas" data-type="text" data-text="打卡时间">打卡时间</view>
-                    <view class="s5-l-time my_draw_canvas" data-type="text" data-text="{{cardTime}}">{{cardTime}}</view>
-                </view>
-                <view class="gang my_draw_canvas" data-type="text"
-                      data-text="/"> / </view>
-                <view class="s5-l-item">
-                    <view class="s5-l-tit my_draw_canvas" data-type="text" data-text="连续打卡">连续打卡</view>
-                    <view class="s5-l-time my_draw_canvas" data-type="text" data-text="{{cardCount}}天">{{cardCount}}天
-                    </view>
-                </view>
-            </view>
-            <view class="s5-r">
-                <image data-type="image" data-url="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"
-                       class="qr my_draw_canvas"
-                       src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"></image>
-            </view>
-        </view>
-    </view>
+			</view>
+		</view>
+		<view class="head-img my_draw_canvas">
+			<image
+				class="s1-l my_draw_canvas"
+				mode="aspectFill"
+				src="{{ headImg }}"
+				data-type="image"
+				data-url="{{ headImg }}"
+			></image>
+			<view
+				class="name my_draw_canvas"
+				data-type="text"
+				data-text="{{ userName }}"
+				>{{ userName }}</view
+			>
+		</view>
+		<view class="content my_draw_canvas">
+			<div class="text-mod-top">
+				<div class="l">
+					<view
+						data-type="text"
+						class="title my_draw_canvas"
+						data-text="{{ typeTit }}"
+					>
+						{{ typeTit }}
+					</view>
+					<image
+						class="my_draw_canvas yin"
+						src="https://file.duomixiong.com/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
+						data-type="image"
+						data-url="https://file.duomixiong.com/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
+					></image>
+					<view
+						data-type="text"
+						class="text my_draw_canvas"
+						data-text="{{ txt1 }}"
+					>
+						{{ txt1 }}
+						<image
+							wx:if="{{ !txt2 }}"
+							class="my_draw_canvas yin end"
+							src="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+							data-type="image"
+							data-url="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+						></image>
+					</view>
+				</div>
+				<div class="r">
+					<view class="card my_draw_canvas">
+						<image
+							class="my_draw_canvas"
+							src="{{ cardImg }}"
+							data-type="image"
+							data-url="{{ cardImg }}"
+						></image>
+					</view>
+				</div>
+			</div>
+			<view
+				data-type="text"
+				wx:if="{{ txt2 }}"
+				class="text text2 my_draw_canvas"
+				data-text="{{ txt2 }}"
+			>
+				{{ txt2 }}
+				<image
+					class="my_draw_canvas yin end"
+					src="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+					data-type="image"
+					data-url="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+				></image>
+			</view>
+		</view>
+		<view class="s5 my_draw_canvas">
+			<view class="s5-l">
+				<view class="s5-l-item">
+					<view
+						class="s5-l-tit my_draw_canvas"
+						data-type="text"
+						data-text="打卡时间"
+						>打卡时间</view
+					>
+					<view
+						class="s5-l-time my_draw_canvas"
+						data-type="text"
+						data-text="{{ cardTime }}"
+						>{{ cardTime }}</view
+					>
+				</view>
+				<view class="gang my_draw_canvas" data-type="text" data-text="/">
+					/
+				</view>
+				<view class="s5-l-item">
+					<view
+						class="s5-l-tit my_draw_canvas"
+						data-type="text"
+						data-text="连续打卡"
+						>连续打卡</view
+					>
+					<view
+						class="s5-l-time my_draw_canvas"
+						data-type="text"
+						data-text="{{ cardCount }}天"
+						>{{ cardCount }}天
+					</view>
+				</view>
+			</view>
+			<view class="s5-r">
+				<image
+					data-type="image"
+					data-url="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"
+					class="qr my_draw_canvas"
+					src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"
+				></image>
+			</view>
+		</view>
+	</view>
 </view>
-<canvas canvas-id="myCanvas" height="{{height}}" style="{{'height:'+height+'px'}}" class="myCanvas"></canvas>
+<canvas
+	canvas-id="myCanvas"
+	height="{{ height }}"
+	style="{{ 'height:' + height + 'px' }}"
+	class="myCanvas"
+></canvas>
 <view class="tools-box">
-    <view class="tools-item" bindtap="share1">
-        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>
-        微信好友
-    </view>
-    <!-- <button class="tools-item" open-type="share"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</button> -->
-    <view class="tools-item" bindtap="savePoster">
-        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-download.png"></image>
-        保存本地
-    </view>
+	<view class="tools-item" bindtap="share1">
+		<image
+			src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"
+		></image>
+		微信好友
+	</view>
+	<!-- <button class="tools-item" open-type="share"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</button> -->
+	<view class="tools-item" bindtap="savePoster">
+		<image
+			src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-download.png"
+		></image>
+		保存本地
+	</view>
 </view>
-
-
-

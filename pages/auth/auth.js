@@ -20,7 +20,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
+  onLoad (options) {
     wx.login({
       success: function (res) {
         var obj = {
@@ -33,10 +33,10 @@ Page({
       }
     });
   },
-  chooseAvatar(e) {
+  chooseAvatar (e) {
     var that = this;
     wx.uploadFile({
-      url: 'https://www.wxdao.net/user/oss/upload/uploadFile',
+      url: 'https://wenxin.duomixiong.com/user/oss/upload/uploadFile',
       filePath: e.detail.avatarUrl,
       name: 'file',
       header: {
@@ -56,17 +56,17 @@ Page({
       }
     })
   },
-  getNick(e) {
+  getNick (e) {
     this.setData({
       nickName: e.detail.value
     })
   },
-  getNickChange(e) {
+  getNickChange (e) {
     this.setData({
       nickName: e.detail.value
     })
   },
-  randomUserInfo() {
+  randomUserInfo () {
     let min = 0,
       max = _charStr.length - 1,
       _str = '';
@@ -81,7 +81,7 @@ Page({
       headImg: "https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"
     })
   },
-  RandomIndex(min, max, i) {
+  RandomIndex (min, max, i) {
     let index = Math.floor(Math.random() * (max - min + 1) + min),
       numStart = _charStr.length - 10;
     //如果字符串第一位是数字，则递归重新获取
@@ -91,7 +91,7 @@ Page({
     //返回最终索引值
     return index;
   },
-  getUserInfo(e) {
+  getUserInfo (e) {
     if (!this.data.headImg) {
       wx.showToast({
         title: '请先上传头像',
@@ -109,7 +109,7 @@ Page({
       return
     }
     var token = wx.getStorageSync('tokenKey');
-    getUserMsg(token).then(customer=>{
+    getUserMsg(token).then(customer => {
       var userInfo = customer.data.data;
       userInfo.wechatName = this.data.nickName;
       userInfo.rname = this.data.nickName;

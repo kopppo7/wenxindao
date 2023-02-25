@@ -1,101 +1,163 @@
 <!--02meiritiaopin/share/share.wxml-->
 <view class="canvas-box my_canvas my_draw_canvas" id="my-canvas">
-    
-    <image  mode="widthFix"
-            class="canvas-bg my_draw_canvas"
-           data-url="https://file.wxdao.net/2023-01/4b8c69c4-f7bf-4000-8a77-6f205ad0f647.png"
-           data-type="image"
-           src="https://file.wxdao.net/2023-01/4b8c69c4-f7bf-4000-8a77-6f205ad0f647.png"></image>
-    <view class="my_draw_canvas canvas-content">
-        
-        <view class="date-mod my_draw_canvas">
-            <view class="days my_draw_canvas" data-type="text" data-text="{{nowDate.gregorianDay}}">
-                {{nowDate.gregorianDay}}
-            </view>
-            <view class="date-box my_draw_canvas" data-type="text">
-                <view class="lc my_draw_canvas" data-type="text"
-                      data-text="{{nowDate.chineseMonth}}{{nowDate.chineseDay}}">
-                    {{nowDate.chineseMonth}}{{nowDate.chineseDay}}
-                </view>
-                <view class="gang my_draw_canvas" data-type="text"
-                      data-text="/"> / </view>
-                <view class="date my_draw_canvas" data-type="text"
+	<image
+		mode="widthFix"
+		class="canvas-bg my_draw_canvas"
+		data-url="https://file.duomixiong.com/2023-01/4b8c69c4-f7bf-4000-8a77-6f205ad0f647.png"
+		data-type="image"
+		src="https://file.duomixiong.com/2023-01/4b8c69c4-f7bf-4000-8a77-6f205ad0f647.png"
+	></image>
+	<view class="my_draw_canvas canvas-content">
+		<view class="date-mod my_draw_canvas">
+			<view
+				class="days my_draw_canvas"
+				data-type="text"
+				data-text="{{ nowDate.gregorianDay }}"
+			>
+				{{ nowDate.gregorianDay }}
+			</view>
+			<view class="date-box my_draw_canvas" data-type="text">
+				<view
+					class="lc my_draw_canvas"
+					data-type="text"
+					data-text="{{ nowDate.chineseMonth }}{{ nowDate.chineseDay }}"
+				>
+					{{ nowDate.chineseMonth }}{{ nowDate.chineseDay }}
+				</view>
+				<view class="gang my_draw_canvas" data-type="text" data-text="/">
+					/
+				</view>
+				<view class="date my_draw_canvas" data-type="text"
                       data-text="{{nowDate.gregorianYear}}.{{nowDate.gregorianMonthBase1}}">
                     {{nowDate.gregorianYear}}.{{nowDate.gregorianMonthBase1}}
                 </view>
-            </view>
-        </view>
-        <view class="head-img my_draw_canvas">
-            <image class="s1-l my_draw_canvas" mode="aspectFill" src="{{headImg}}" data-type="image"
-                   data-url="{{headImg}}"></image>
-            <view class="name my_draw_canvas" data-type="text" data-text="{{userName}}">{{userName}}</view>
-            <image class="tuijian my_draw_canvas" mode="aspectFill"
-                   src="https://file.wxdao.net/2023-01/80273208-1940-4ca6-94c4-4f5bae1c92ac.png" data-type="image"
-                   data-url="https://file.wxdao.net/2023-01/80273208-1940-4ca6-94c4-4f5bae1c92ac.png"></image>
-            
-        </view>
-        <view class="ts-det">
-            <view class="pic">
-                <image class="my_draw_canvas" mode="aspectFill" src="{{det.imgUrl}}" data-type="image"
-                       data-url="{{det.imgUrl}}"></image>
-            </view>
-            <view class="txt">
-                <view data-type="text" data-text="{{det.title}}" class="title my_draw_canvas">{{det.title}}</view>
-                <view data-type="text" data-text="{{det.introduce}}" class="desc my_draw_canvas">{{det.introduce}}</view>
-            </view>
-        </view>
-        <view class="eval-list">
-            <view data-type="text" class="title my_draw_canvas" data-text="精彩点评">精彩点评</view>
-            <block  wx:for="{{evalList}}" wx:key="index">
-                <view class="eval-item" wx:if="{{index < 2}}">
-    
-                    <image class="my_draw_canvas start"
-                           src="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
-                           data-type="image" data-url="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"></image>
-                    <view data-type="text" class="text my_draw_canvas" data-text="{{item.evaluate}}">
-                        
-                        {{item.evaluate}}
-                        
-                    </view>
-                    <image
-                            class="my_draw_canvas end"
-                            src="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png" data-type="image" data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"></image>
-                   
-                </view>
-            </block>
-            <view class="bot-info">
-                <view class="left">
-                    <view data-type="text" data-text="想要参加【生命探索】？" class="text my_draw_canvas">想要参加【生命探索】？</view>
-                    <view  data-type="text" data-text="请长按二维码立即体验！"  class="text my_draw_canvas">请长按二维码立即体验！</view>
-                    <image
-                            class="my_draw_canvas"
-                            src="https://file.wxdao.net/2023-01/bb36eff6-7532-48a0-ab6b-bd8f40444a1a.png" data-type="image" data-url="https://file.wxdao.net/2023-01/bb36eff6-7532-48a0-ab6b-bd8f40444a1a.png"></image>
-                    
-                </view>
-                <view class="right">
-                    <image data-type="image" data-url="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"
-                           class="my_draw_canvas"
-                           src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"></image>
-                </view>
-            </view>
-           
-        </view>
-        
-
-    </view>
+			</view>
+		</view>
+		<view class="head-img my_draw_canvas">
+			<image
+				class="s1-l my_draw_canvas"
+				mode="aspectFill"
+				src="{{ headImg }}"
+				data-type="image"
+				data-url="{{ headImg }}"
+			></image>
+			<view
+				class="name my_draw_canvas"
+				data-type="text"
+				data-text="{{ userName }}"
+				>{{ userName }}</view
+			>
+			<image
+				class="tuijian my_draw_canvas"
+				mode="aspectFill"
+				src="https://file.duomixiong.com/2023-01/80273208-1940-4ca6-94c4-4f5bae1c92ac.png"
+				data-type="image"
+				data-url="https://file.duomixiong.com/2023-01/80273208-1940-4ca6-94c4-4f5bae1c92ac.png"
+			></image>
+		</view>
+		<view class="ts-det">
+			<view class="pic">
+				<image
+					class="my_draw_canvas"
+					mode="aspectFill"
+					src="{{ det.imgUrl }}"
+					data-type="image"
+					data-url="{{ det.imgUrl }}"
+				></image>
+			</view>
+			<view class="txt">
+				<view
+					data-type="text"
+					data-text="{{ det.title }}"
+					class="title my_draw_canvas"
+					>{{ det.title }}</view
+				>
+				<view
+					data-type="text"
+					data-text="{{ det.introduce }}"
+					class="desc my_draw_canvas"
+					>{{ det.introduce }}</view
+				>
+			</view>
+		</view>
+		<view class="eval-list">
+			<view data-type="text" class="title my_draw_canvas" data-text="精彩点评"
+				>精彩点评</view
+			>
+			<block wx:for="{{ evalList }}" wx:key="index">
+				<view class="eval-item" wx:if="{{ index < 2 }}">
+					<image
+						class="my_draw_canvas start"
+						src="https://file.duomixiong.com/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
+						data-type="image"
+						data-url="https://file.duomixiong.com/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
+					></image>
+					<view
+						data-type="text"
+						class="text my_draw_canvas"
+						data-text="{{ item.evaluate }}"
+					>
+						{{ item.evaluate }}
+					</view>
+					<image
+						class="my_draw_canvas end"
+						src="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+						data-type="image"
+						data-url="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+					></image>
+				</view>
+			</block>
+			<view class="bot-info">
+				<view class="left">
+					<view
+						data-type="text"
+						data-text="想要参加【生命探索】？"
+						class="text my_draw_canvas"
+						>想要参加【生命探索】？</view
+					>
+					<view
+						data-type="text"
+						data-text="请长按二维码立即体验！"
+						class="text my_draw_canvas"
+						>请长按二维码立即体验！</view
+					>
+					<image
+						class="my_draw_canvas"
+						src="https://file.duomixiong.com/2023-01/bb36eff6-7532-48a0-ab6b-bd8f40444a1a.png"
+						data-type="image"
+						data-url="https://file.duomixiong.com/2023-01/bb36eff6-7532-48a0-ab6b-bd8f40444a1a.png"
+					></image>
+				</view>
+				<view class="right">
+					<image
+						data-type="image"
+						data-url="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"
+						class="my_draw_canvas"
+						src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"
+					></image>
+				</view>
+			</view>
+		</view>
+	</view>
 </view>
-<canvas canvas-id="myCanvas" height="{{height}}" style="{{'height:'+height+'px'}}" class="myCanvas"></canvas>
+<canvas
+	canvas-id="myCanvas"
+	height="{{ height }}"
+	style="{{ 'height:' + height + 'px' }}"
+	class="myCanvas"
+></canvas>
 <view class="tools-box">
-    <view class="tools-item" bindtap="share1">
-        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>
-        微信好友
-    </view>
-    <!-- <button class="tools-item" open-type="share"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</button> -->
-    <view class="tools-item" bindtap="savePoster">
-        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-download.png"></image>
-        保存本地
-    </view>
+	<view class="tools-item" bindtap="share1">
+		<image
+			src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"
+		></image>
+		微信好友
+	</view>
+	<!-- <button class="tools-item" open-type="share"><image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>朋友圈</button> -->
+	<view class="tools-item" bindtap="savePoster">
+		<image
+			src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-download.png"
+		></image>
+		保存本地
+	</view>
 </view>
-
-
-

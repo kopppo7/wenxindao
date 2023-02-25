@@ -3,8 +3,8 @@ import {
   appletsLogin,
   getUserMsg,
   receiveInvite,
-   decodePhone,
-   updateUserMsg
+  decodePhone,
+  updateUserMsg
 } from '../../utils/api'
 import {
   getLoginInfo,
@@ -17,50 +17,50 @@ Page({
    */
   data: {
     bigPopStatus: false,
-    isAuth:false,
+    isAuth: false,
     bigCardImgUrl: '',
-    id:'',
-    shareId:'',
-    fissionInfo:{},
-    headImg:'',
-    nickName:''
+    id: '',
+    shareId: '',
+    fissionInfo: {},
+    headImg: '',
+    nickName: ''
   },
-  openBig(e) {
+  openBig (e) {
     this.setData({
       bigPopStatus: true
     })
   },
-  showAuth(){
+  showAuth () {
     this.setData({
-      isAuth:true
+      isAuth: true
     })
   },
-  closeAuth(){
+  closeAuth () {
     this.setData({
-      isAuth:false
+      isAuth: false
     })
   },
-  closePopBig(){
+  closePopBig () {
     this.setData({
       bigPopStatus: false
     })
   },
-  chooseAvatar(e){
+  chooseAvatar (e) {
     var that = this;
     wx.uploadFile({
-      url:'https://www.wxdao.net/user/oss/upload/uploadFile',
-      filePath:e.detail.avatarUrl,
-      name:'file',
-      header:{
-        "token":wx.getStorageSync('tokenKey')
+      url: 'https://wenxin.duomixiong.com/user/oss/upload/uploadFile',
+      filePath: e.detail.avatarUrl,
+      name: 'file',
+      header: {
+        "token": wx.getStorageSync('tokenKey')
       },
-      success:function(res){
+      success: function (res) {
         var uploadRet = JSON.parse(res.data);
-        if(uploadRet.ret==200){
+        if (uploadRet.ret == 200) {
           that.setData({
-            headImg:uploadRet.data
+            headImg: uploadRet.data
           })
-        }else{
+        } else {
           wx.showToast({
             title: '头像上传失败',
           })
@@ -68,18 +68,18 @@ Page({
       }
     })
   },
-  getNick(e){
+  getNick (e) {
     this.setData({
       nickName: e.detail.value
     })
   },
-  getNickChange(e){
+  getNickChange (e) {
     this.setData({
       nickName: e.detail.value
     })
   },
-  login() {
-    if(!this.data.headImg) {
+  login () {
+    if (!this.data.headImg) {
       wx.showToast({
         title: '请先上传头像',
         icon: 'none',
@@ -87,7 +87,7 @@ Page({
       })
       return
     }
-    if(!this.data.nickName) {
+    if (!this.data.nickName) {
       wx.showToast({
         title: '请输入昵称',
         icon: 'none',
@@ -96,10 +96,10 @@ Page({
       return
     }
   },
-  getPhone(e) {
+  getPhone (e) {
     wx.showLoading({
       title: '授权中...',
-      mask:true
+      mask: true
     })
     let that = this
     if (e.detail.errMsg == "getPhoneNumber:ok") {
@@ -107,10 +107,10 @@ Page({
         success: function (res) {
           decodePhone({
             iv: e.detail.iv,
-            encryptedData:e.detail.encryptedData,
-            code:res.code
-          }).then(res=>{
-            if(res.data.ret==200){
+            encryptedData: e.detail.encryptedData,
+            code: res.code
+          }).then(res => {
+            if (res.data.ret == 200) {
               let json = JSON.parse(res.data.data);
               let userInfo = getLoginInfo();
               userInfo = {
@@ -120,49 +120,49 @@ Page({
               };
               setLoginInfo(userInfo);
               updateUserMsg({
-                phone:json.phoneNumber,
+                phone: json.phoneNumber,
                 nickname: userInfo.wechatName,
                 headimgurl: userInfo.headImg
-              }).then(up=>{
+              }).then(up => {
                 wx.hideLoading();
                 that.confirmLogin()
               })
-            } else{
+            } else {
               wx.hideLoading();
               wx.showToast({
                 title: '授权失败，请稍后再试',
-                icon:'error'
+                icon: 'error'
               });
             }
           })
         }
       })
-    }else{
+    } else {
       wx.hideLoading();
     }
-   },
+  },
 
-   confirmLogin(){
+  confirmLogin () {
     wx.showLoading({
       title: '接受邀请中...',
-      mask:true
+      mask: true
     })
     receiveInvite(this.data.shareId).then((res) => {
       wx.navigateBack()
     })
-   },
-   
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
+  onLoad (options) {
     this.setData({
-      id:options.id,
-      shareId:options.shareId
+      id: options.id,
+      shareId: options.shareId
     })
-    findInviteById(options.shareId).then(res=>{
+    findInviteById(options.shareId).then(res => {
       this.setData({
-        fissionInfo:res.data.data
+        fissionInfo: res.data.data
       })
     })
     wx.login({
@@ -173,8 +173,8 @@ Page({
         };
         appletsLogin(obj).then(res => {
           wx.setStorageSync('tokenKey', res.data.data.token);
-          getUserMsg(res.data.data.token).then(userInfo=>{
-            if(userInfo.data.data.phone!=null&&userInfo.data.data.wechatName!=null){
+          getUserMsg(res.data.data.token).then(userInfo => {
+            if (userInfo.data.data.phone != null && userInfo.data.data.wechatName != null) {
               wx.navigateBack();
             }
           })
