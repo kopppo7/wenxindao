@@ -648,8 +648,9 @@ Page({
                     quitRoom({
                         roomId: that.data.roomData.id
                     }).then(res => {
-                        that.leaveRoomClear()
+                        
                     })
+                    that.leaveRoomClear()
                 }
                 else {
                     // 别人离开的话，更新人员信息
@@ -1036,6 +1037,7 @@ Page({
                 console.log(account)
             } else {
                 that.sendCustomMsg(8, { account: account })
+                if(readyTimeout) clearTimeout(readyTimeout)
             }
         }, 1000)
     },
@@ -2047,11 +2049,9 @@ Page({
             success (res) {
                 if (res.confirm) {
                     quitRoom({
-                        id: this.data.roomData.id
+                        id: that.data.roomData.id
                     }).then(res => {
-                        if (res.data.ret === 200) {
-                            that.leaveRoomClear()
-                        }
+                        that.sendCustomMsg(8, { account: that.data.account })
                     })
                 } else if (res.cancel) {
                     console.log('用户点击取消')
@@ -2078,15 +2078,17 @@ Page({
             partyData: null,
             roomData: null,
         })
-        wx.removeStorageSync('partyData')
         wx.removeStorageSync('roomData')
+        wx.removeStorageSync('partyData')
         this.onDisconnect()
         if (jump) {
             console.log('清除缓存');
         } else {
-            wx.redirectTo({
-                url: '/pages/index/index',
-            })
+            setTimeout(() => {
+                wx.redirectTo({
+                    url: '/pages/index/index',
+                })
+            }, 300);
         }
     },
 
@@ -2163,6 +2165,9 @@ Page({
             }
         } else {
             console.log('房间不存在');
+            wx.removeStorageSync('roomData')
+            wx.removeStorageSync('partyData')
+            wx.removeStorageSync('roomPath')
         }
     },
     //content滚动

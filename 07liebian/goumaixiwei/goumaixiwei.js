@@ -12,7 +12,7 @@ Page({
     data: {
         themeId: '',
         detailObj: {},
-        type: 1,
+        type: 2,
         isShowPop: false
     },
     initData () {
@@ -52,48 +52,55 @@ Page({
             id: that.data.themeId * 1,
             types: that.data.type
         }).then((res) => {
-            wx.requestPayment({
-                // 时间戳
-                appId: res.data.data.appId,
-                timeStamp: res.data.data.timeStamp,
-                // 随机字符串
-                nonceStr: res.data.data.nonceStr,
-                // 统一下单接口返回的 prepay_id 参数值
-                package: res.data.data.package,
-                // 签名类型
-                signType: res.data.data.signType,
-                // 签名
-                paySign: res.data.data.paySign,
-                // 调用成功回调
-                success () {
-                    wx.showLoading()
-                    wx.showToast({
-                        title: '付款成功',
-                        icon: 'success'
-                    })
-                    setTimeout(function () {
-                        wx.redirectTo({
-                            url: '/04zhutipaidui/setHouse/setHouse?id=' + that.data.themeId,
+            if (res.data.ret == 201) {
+                wx.showToast({
+                  title: res.data.msg,
+                  icon:"none"
+                })
+            } else {
+                wx.requestPayment({
+                    // 时间戳
+                    appId: res.data.data.appId,
+                    timeStamp: res.data.data.timeStamp,
+                    // 随机字符串
+                    nonceStr: res.data.data.nonceStr,
+                    // 统一下单接口返回的 prepay_id 参数值
+                    package: res.data.data.package,
+                    // 签名类型
+                    signType: res.data.data.signType,
+                    // 签名
+                    paySign: res.data.data.paySign,
+                    // 调用成功回调
+                    success () {
+                        wx.showLoading()
+                        wx.showToast({
+                            title: '付款成功',
+                            icon: 'success'
                         })
-                    }, 500)
+                        setTimeout(function () {
+                            wx.redirectTo({
+                                url: '/04zhutipaidui/zhutijieshao/zhutijieshao?id=' + that.data.themeId,
+                            })
+                        }, 500)
 
-                    // that.getDetail(that.data.product.id)
-                    // that.closePop()
-                },
-                // 失败回调
-                fail (err) {
-                    console.log(err)
-                    // that.getDetail(that.data.product.id)
-                    // that.closePop()
-                    wx.showLoading()
-                    wx.showToast({
-                        title: '付款失败',
-                        icon: 'error'
-                    })
-                },
-                // 接口调用结束回调
-                complete () { }
-            })
+                        // that.getDetail(that.data.product.id)
+                        // that.closePop()
+                    },
+                    // 失败回调
+                    fail (err) {
+                        console.log(err)
+                        // that.getDetail(that.data.product.id)
+                        // that.closePop()
+                        wx.showLoading()
+                        wx.showToast({
+                            title: '付款失败',
+                            icon: 'error'
+                        })
+                    },
+                    // 接口调用结束回调
+                    complete () { }
+                })
+            }
 
         })
     },
