@@ -367,7 +367,7 @@
 </block>
 
 <!-- 准备提示 -->
-<block wx:if="{{readyPopStatus && !isBeginPlay}}">
+<block wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2" style="z-index: 799;">
         <view class="pop-tit">提示</view>

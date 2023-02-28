@@ -109,7 +109,8 @@ Page({
         haveRoom: true,  //刚进来的时候房间是否存在
         kefuPop: false,  //客服弹窗
         isTuichufangjian: false, //结语处退出房间弹窗
-        isPaiduiKaishi:false,  //进来的时候派对是否开始
+        isPaiduiKaishi: false,  //进来的时候派对是否开始
+        isTuiChuRoom: false
     },
     // 活动提示
     activityChange () {
@@ -648,7 +649,6 @@ Page({
                     quitRoom({
                         roomId: that.data.roomData.id
                     }).then(res => {
-                        
                     })
                     that.leaveRoomClear()
                 }
@@ -671,7 +671,7 @@ Page({
                 })
                 this.startCountDown()
                 console.log('开始倒计时')
-            }else if(content.type == 10){
+            } else if (content.type == 10) {
                 // 发言和思考倒计时
                 this.getDownTime(content.data.times, that.speak)
             }
@@ -1037,7 +1037,7 @@ Page({
                 console.log(account)
             } else {
                 that.sendCustomMsg(8, { account: account })
-                if(readyTimeout) clearTimeout(readyTimeout)
+                if (readyTimeout) clearTimeout(readyTimeout)
             }
         }, 1000)
     },
@@ -1798,12 +1798,14 @@ Page({
 
     //存储数据
     saveData: function () {
-        this.setData({
-            topArr: formatMsgList(this.data.msgList).topArr,
-            botArr: formatMsgList(this.data.msgList).botArr,
-        })
-        wx.setStorageSync('roomPath', this.data.pageOptions)
-        wx.setStorageSync('partyData', this.data)
+        if (!this.data.isTuiChuRoom) {
+            this.setData({
+                topArr: formatMsgList(this.data.msgList).topArr,
+                botArr: formatMsgList(this.data.msgList).botArr,
+            })
+            wx.setStorageSync('roomPath', this.data.pageOptions)
+            wx.setStorageSync('partyData', this.data)
+        }
     },
 
     //投诉
@@ -2048,11 +2050,7 @@ Page({
             content: '确定退出房间吗？',
             success (res) {
                 if (res.confirm) {
-                    quitRoom({
-                        id: that.data.roomData.id
-                    }).then(res => {
-                        that.sendCustomMsg(8, { account: that.data.account })
-                    })
+                    that.sendCustomMsg(8, { account: that.data.account })
                 } else if (res.cancel) {
                     console.log('用户点击取消')
                 }
@@ -2077,18 +2075,18 @@ Page({
         this.setData({
             partyData: null,
             roomData: null,
+            isTuiChuRoom: true
         })
         wx.removeStorageSync('roomData')
         wx.removeStorageSync('partyData')
+        wx.removeStorageSync('roomPath')
         this.onDisconnect()
         if (jump) {
             console.log('清除缓存');
         } else {
-            setTimeout(() => {
-                wx.redirectTo({
-                    url: '/pages/index/index',
-                })
-            }, 300);
+            wx.redirectTo({
+                url: '/pages/index/index',
+            })
         }
     },
 
@@ -2193,9 +2191,9 @@ Page({
             isTuichufangjian: true
         })
     },
-    handlePaiduikaishi(){
+    handlePaiduikaishi () {
         this.setData({
-            isPaiduiKaishi:false
+            isPaiduiKaishi: false
         })
         wx.redirectTo({
             url: '/pages/index/index',
@@ -2280,7 +2278,7 @@ Page({
                             console.log('好友进入房间了', res.data.ret);
                             if (res.data.ret == 201) {
                                 that.setData({
-                                    isPaiduiKaishi:true
+                                    isPaiduiKaishi: true
                                 })
                             } else {
                                 that.getRoomDetails(options.roomId)
