@@ -1401,7 +1401,7 @@ Page({
                     that.setData({
                         matePopStatus: false,
                     })
-                    this.initRoom()
+                    that.initRoom()
                 } else {
                     time1++
                     if (time1 < 10) {
