@@ -275,7 +275,7 @@
 	border-radius: 72rpx;
 }
 .cardContent .cardImg{
-  width: 400rpx;
+  /* width: 400rpx; */
   border-radius: 16rpx;
 	overflow: hidden;
   position: relative;

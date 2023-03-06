@@ -199,10 +199,14 @@ Page({
     })
     getProDetail(id).then((res) => {
       wx.hideLoading()
-      res.data.data.activity = res.data.data.activity.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
-        .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
-      res.data.data.introduce = res.data.data.introduce.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
-        .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
+      if(res.data.data.activity){
+        res.data.data.activity = res.data.data.activity.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
+          .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
+      }
+      if(res.data.data.introduce){
+        res.data.data.introduce = res.data.data.introduce.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
+          .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
+      }
       if (res.data.data.powerExpiratTime == '长期') {
         res.data.data.powerExpiratTime = '长期'
       } else {

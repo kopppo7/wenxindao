@@ -3,7 +3,8 @@
   "projectname": "wenxin-wx",
   "setting": {
     "compileHotReLoad": true,
-    "bigPackageSizeSupport": true
+    "bigPackageSizeSupport": true,
+    "urlCheck": false
   },
   "condition": {
     "miniprogram": {
