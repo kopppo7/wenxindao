@@ -103,7 +103,7 @@
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <rating showRating  rating="{{rating}}" bind:click="change"></rating>
         <form bindsubmit="bindFormSubmit">
-            <textarea class="content" placeholder="您认为本次的派对设计如何？您收获了什么？您的感受如何？可以记录下来..." name="textarea"/>
+            <textarea class="content" placeholder="您认为本次的派对设计如何？您收获了什么？您的感受如何？可以记录下来..." name="textarea" maxlength="500" bindinput="inputArea" />
             <button form-type="submit" class="btn-buy"> 提交 </button>
         </form>
         

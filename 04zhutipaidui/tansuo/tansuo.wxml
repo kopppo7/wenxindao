@@ -69,7 +69,8 @@
                             <view 
                                 wx:for-item="item"
                                 class="itemList sys"
-                                wx:key="index">
+                                wx:key="index"
+                                >
                                 <view class="name">{{item.nick}}(自己)
                                     <text class="huang">拿到的牌：</text></view>
                                 <view class="card-box">
@@ -167,7 +168,7 @@
                 >
                     <view class="box">
                         <block wx:for="{{botArr}}" wx:key="index">
-                            <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
+                            <view
                                 wx:for-item="item"
                                 class="{{item.sysType != 'sys'?'item':'item sys'}}"
                                 wx:key="index">
@@ -382,7 +383,7 @@
 <block wx:if="{{matePopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
-        <view class="pop-tit">{{themeDetail.title}}</view>
+        <view class="pop-tit">匹配中，请耐心等待...</view>
         <view class="img">
             <image src="{{themeDetail.imgUrl}}"/>
         </view>

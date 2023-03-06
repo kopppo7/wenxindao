@@ -170,7 +170,15 @@ Page({
 
 
     },
-
+    inputArea(e){
+        console.log(e.detail.value.length);
+        if (e.detail.value.length >= 500) {
+            wx.showToast({
+                title: '最多输入500个字',
+                icon: 'none'
+            })
+        }
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */

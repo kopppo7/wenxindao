@@ -71,6 +71,8 @@ Page({
         bottomHeight: 10,
         helpText: '',
         stepCardList: [],
+        stepCardListCopy: [],
+        stepCardListAll: [],
         canClickCard: true,
         bigPopStatus: false,
         selectImgUrl: '',
@@ -193,11 +195,11 @@ Page({
             that.setData({
                 // 是否是房主
                 isOwner: true,
-                account: wx.getStorageSync('loginInfo').yunId,
+                account: account,
             })
         } else {
             that.setData({
-                account: wx.getStorageSync('loginInfo').yunId
+                account: account,
             })
         }
         if (this.data.isMatch || this.data.roomData.ownerUserIm != account) {
@@ -474,6 +476,7 @@ Page({
         // msgList 页面显示的滚动聊天内容
         var msgList = this.data.msgList
         var stepList = this.data.stepCardList
+        var stepListAll = this.data.stepCardListAll 
         var that = this;
         console.log('渲染消息111', msg)
         if (msg.content) {
@@ -568,8 +571,13 @@ Page({
                 console.log(that.data.msgList);
             } else if (content.type == 5) {
                 var list = []
+                var allCard = []
                 // 筛选出当前人分的牌
+                debugger
                 if (content.data.cardList && content.data.cardList.length > 0) {
+                    allCard = content.data.cardList.filter(item => {
+                        return item.account
+                    })
                     list = content.data.cardList.filter(item => {
                         return item.account == that.data.account
                     })
@@ -581,10 +589,21 @@ Page({
                     step: that.data.step,
                     isBotMes: 0,
                 }
+                var msgObj2 = {
+                    sysType: 'sys',
+                    cardList: allCard,
+                    step: that.data.step,
+                    isBotMes: 0,
+                }
                 stepList.push(msgObj)
+                stepListAll.push(msgObj2)
                 that.setData({
-                    stepCardList: stepList
+                    stepCardList: stepList,
+                    stepCardListCopy: stepList,
+                    stepCardListAll: stepListAll,
                 })
+                console.log(stepListAll,'stepListAll1');
+                console.log(this.data.stepCardListAll,'this.data.stepCardListAll1');
                 this.contentScroll()
 
 
@@ -1784,13 +1803,24 @@ Page({
         console.log(item.account)
         if (this.data.viewAccount === item.account) {
             this.setData({
-                viewAccount: ''
+                viewAccount: '',
+                stepCardList:this.data.stepCardListCopy
             })
+
         } else {
+            let arr = this.data.stepCardListAll
+            console.log(this.data.stepCardListAll,'this.data.stepCardListAll2');
+            arr.forEach(item=>{
+                item.cardList = item.cardList.filter(part=>{
+                    return part.account == this.data.viewAccount
+                })
+            })
             this.setData({
-                viewAccount: item.account
+                viewAccount: item.account,
+                stepCardList:arr
             })
         }
+
         console.log(this.data.viewAccount)
 
 
