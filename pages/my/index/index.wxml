@@ -107,16 +107,21 @@
                     <view class="dot" data-index="{{index}}" catchtap="openPop">
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
-                    <view class="title title2">{{item.categoryText}}主题派对</view>
+                    <view class="title title2">{{item.categoryText}}</view>
                     <view class="type-list" wx:if="{{item.target.length > 0}}">
                         <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
-                    <view class="pic-list">
+                    <view style="display: flex;flex-wrap: wrap;">
+                      <view class="picBox" style="text-align: {{index%3==0?'left':(index%3==1?'center':'right')}};" wx:for="{{item.contents.imgUrl}}" wx:for-item="itemImg">
+                          <image class="pic" mode="widthFix"  src="{{itemImg.imgUrl}}">
+                          </image>
+                          <image catchtap="openBig"  style="right: {{index%3==0?'30rpx':(index%3==1?'20rpx':'5rpx')}};" data-pinurl="{{itemImg.imgUrl}}" class="btn-fan" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
+                        </view>
+                        <!-- <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
                         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
                         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
                         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
-                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
-                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
+                        <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image> -->
                     </view>
                     <view class="count-box">
                         <view class="avatar-box">
@@ -144,14 +149,14 @@
                         </view>
                     </view>
                     <view class="s2">
-                        <view class="only" wx:if="{{item.types==2}}">单独购买</view>
+                        <view class="only" wx:if="{{item.types==2||item.types==0}}">单独购买</view>
                         <view class="friend" wx:else>好友结伴</view>
                         <view>{{item.title||''}}</view>
                     </view>
                     <view class="s3">
                         <view class="s3-l">下单时间：{{item.addTime}}</view>
                         <view class="s3-r" wx:if="{{item.status==1}}">
-                            <view class="btn">去使用</view>
+                            <view class="btn" bindtap="jump" data-type="{{item.types}}" data-id="{{item.id}}">去使用</view>
                         </view>
                     </view>
                 </view>

@@ -93,7 +93,7 @@
               <view class="cardImg">
                 <view class="card-box {{itemlist.selectCard ? '' : 'hide'}}" wx:if="{{itemlist.selectCard}}">
                   <view class="card-box-l">
-                    <view class="card-img {{itemlist.answers[selectMasterIndex].cards[0].isOpen && !itemlist.answers[selectMasterIndex].cards[0].isOpened ? 'open' : ''}} {{itemlist.answers[selectMasterIndex].cards[0].isOpened ? 'show' : ''}}" bindtap="masterCilckCard" data-index="0" data-listindex="{{indexlist}}">
+                    <view class="card-img show" data-index="0" data-listindex="{{indexlist}}">
                       <view class="front">
                         <image mode="aspectFill" src="{{itemlist.answers[selectMasterIndex].cards[0].imgUrl}}"></image>
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{itemlist.answers[selectMasterIndex].cards[0].imgUrl}}" catchtap="showImg"></image>
@@ -167,7 +167,6 @@
                 <view class="btn-audio" data-type="0" data-idx="{{indexlist}}" wx:if="{{itemlist.putType == 5}}">
                   <image bindtap="playAudio" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image>
                   <text>{{itemlist.totalTime}}'</text>
-
                   <image data-idx="{{indexlist}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/audio-del.png" class="close" bindtap="closeAudio"></image>
                 </view>
               </view>

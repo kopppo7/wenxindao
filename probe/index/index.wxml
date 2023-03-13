@@ -1,11 +1,11 @@
 <!--03shenmingtansuo/index/index.wxml-->
 <view class="wp">
-    <view class="z-tab-box">
+    <view >
         <view class="z-tab">
             <view bindtap='change' wx:for="{{category}}" data-id="{{item.id}}" wx:for-item="item" class="tab-item {{item.id == categoryId ? 'active' : ''}}" wx:key="id">
               {{item.typeName}}
             </view>
-            <navigator url="" hover-class="none" class="detail">玩法详情</navigator>
+            <!-- <navigator url="" hover-class="none" class="detail">玩法详情</navigator> -->
         </view>
 
     </view>

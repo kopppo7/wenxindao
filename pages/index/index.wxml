@@ -16,10 +16,11 @@
          <view class="item item1" >
              <image class="avatar" src="{{item.userHeadImg}}"></image>
              <view class="txt">
-                 <view class="title title2" wx:if="{{item.category==0}}">#每日调频#</view>
-                 <view class="title title2" wx:if="{{item.category==1}}">#生命探索#</view>
-                 <view class="title title1" wx:if="{{item.category==2}}">#主题派对#</view>
+                 <view class="title" wx:if="{{item.category==0}}">#每日调频#</view>
+                 <view class="title title1" wx:if="{{item.category==1}}">#生命探索#</view>
+                 <view class="title title2" wx:if="{{item.category==2}}">#主题派对#</view>
                  <view class="desc">{{item.content}}</view>
+                 <view class="jump_href" data-category="{{item.category}}" data-id="{{item.objectId}}" bindtap="details">查看更多</view>
              </view>
          </view>
         <!-- <view class="item item2"  wx:if="{{item.category==1}}">

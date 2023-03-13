@@ -12,7 +12,8 @@ Page({
     info: {},
     showShare: false,
     bigPopStatus: false,
-    bigCardImgUrl: ''
+    bigCardImgUrl: '',
+    pageFrom:''
   },
   showShare() {
      this.setData({
@@ -29,6 +30,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    this.setData({
+      pageFrom:options.from
+    });
     findByFmOne(options.id).then(res => {
       let info = res.data.data;
       info.contents = JSON.parse(info.contents);
@@ -76,6 +80,11 @@ Page({
     })
     this.setData({
         list: list
+    })
+  },
+  goFm(){
+    wx.navigateTo({
+      url: '/02meiritiaopin/index/index',
     })
   },
   closePopBig(){

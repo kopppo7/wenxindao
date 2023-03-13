@@ -578,7 +578,6 @@ Page({
       //答到第几轮了
       var step = 0
       arr.map((item, index) => {
-        debugger
         if (item.imgUrl) {
           step = index + 1
           let answers = []

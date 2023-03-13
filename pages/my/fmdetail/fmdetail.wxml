@@ -34,7 +34,10 @@
 </view>
 
 <view class="foot">
-  <button class="btn-share-g" bindtap="showShare">
+  <button wx:if="{{pageFrom=='index'}}" class="btn-share-g" bindtap="goFm">
+    <text>开始调频</text>
+  </button>
+  <button wx:else class="btn-share-g" bindtap="showShare">
     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share.svg"></image>
     <text>分享</text>
   </button>

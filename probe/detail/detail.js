@@ -102,6 +102,9 @@ Page({
       objectId: this.data.id,
       category: 0, // 类型(0:生命探索,1:主题派对)
     }).then((res) => {
+      wx.showToast({
+        title: '提交成功',
+      })
       wx.hideLoading()
       this.getEvaList()
       this.closePop()
@@ -210,7 +213,6 @@ Page({
       if (res.data.data.powerExpiratTime == '长期') {
         res.data.data.powerExpiratTime = '长期'
       } else {
-        console.log(res.data.data.powerExpiratTime.replace(/-/g, '/'))
         let dateTime = formatTime(new Date(res.data.data.powerExpiratTime.replace(/-/g, '/')));
         res.data.data.powerExpiratTime = dateTime.year + '年' + dateTime.month + '月' + dateTime.day + '日';
       }
@@ -243,10 +245,6 @@ Page({
       wx.stopPullDownRefresh()
       wx.hideLoading();
     })
-  },
-  // 提交评价
-  submitPercep() {
-
   },
   // 获取邀请详情
   getReceiveDetail(shareId, id) {
