@@ -149,9 +149,9 @@ Page({
         that.setData({
             sharePopStatus: false,
             activityPopStatus: false,
-            matePopStatus: false,
             waitStatus: false,
             mixPopStatus: false,
+            matePopStatus:false,
             timePopStatus: false,
             kickPopStatus: false,
             passerPopStatus: false,
@@ -166,22 +166,6 @@ Page({
             clearInterval(timeInt)
             timeInt = null
         }
-    },
-    // 取消匹配
-    cancleMatch () {
-        var that = this
-        this.setData({
-            matePopStatus: false
-        })
-        if (timeInt) {
-            clearInterval(timeInt)
-            timeInt = null
-        }
-        quitRoom({
-            roomId: this.data.roomData.id
-        }).then(res => {
-            that.leaveRoomClear()
-        })
     },
     //------------------------------------分享end-----------------------------------------------------------
 
@@ -202,7 +186,7 @@ Page({
                 account: account,
             })
         }
-        if (this.data.isMatch || this.data.roomData.ownerUserIm != account) {
+        if (this.data.roomData.ownerUserIm != account) {
             this.showReadyPop()
         }
         nim = SDK.getInstance({
@@ -476,7 +460,7 @@ Page({
         // msgList 页面显示的滚动聊天内容
         var msgList = this.data.msgList
         var stepList = this.data.stepCardList
-        var stepListAll = this.data.stepCardListAll 
+        var stepListAll = this.data.stepCardListAll
         var that = this;
         console.log('渲染消息111', msg)
         if (msg.content) {
@@ -602,8 +586,8 @@ Page({
                     stepCardListCopy: stepList,
                     stepCardListAll: stepListAll,
                 })
-                console.log(stepListAll,'stepListAll1');
-                console.log(this.data.stepCardListAll,'this.data.stepCardListAll1');
+                console.log(stepListAll, 'stepListAll1');
+                console.log(this.data.stepCardListAll, 'this.data.stepCardListAll1');
                 this.contentScroll()
 
 
@@ -1034,9 +1018,7 @@ Page({
                 this.setData({
                     readyPopStatus: true
                 })
-                if (!this.data.matePopStatus) {
-                    this.readyTimeDown(this.data.account)
-                }
+                this.readyTimeDown(this.data.account)
             }
         }
     },
@@ -1209,10 +1191,10 @@ Page({
             if (wx.getStorageSync('roomData').matchType == 1) {
                 that.initRoom()
             } else {
-                that.setData({
-                    matePopStatus: true,
-                })
-                that.getDownTime()
+                // that.setData({
+                //     matePopStatus: true,
+                // })
+                // that.getDownTime()
             }
         })
     },
@@ -1226,15 +1208,16 @@ Page({
                 roomData: res.data.data
             })
             wx.setStorageSync('roomData', res.data.data)
+            that.initRoom()
             // 是匹配还是包房
-            if (wx.getStorageSync('roomData').matchType == 1) {
-                that.initRoom()
-            } else {
-                that.setData({
-                    matePopStatus: true,
-                })
-                that.getDownTime()
-            }
+            // if (wx.getStorageSync('roomData').matchType == 1) {
+            //     that.initRoom()
+            // } else {
+            //     // that.setData({
+            //     //     matePopStatus: true,
+            //     // })
+            //     // that.getDownTime()
+            // }
         })
     },
 
@@ -1417,10 +1400,7 @@ Page({
             var time = setInterval(() => {
                 if (time1 > 9) {
                     clearInterval(time)
-                    that.setData({
-                        matePopStatus: false,
-                    })
-                    that.initRoom()
+                    that.initRoom() 
                 } else {
                     time1++
                     if (time1 < 10) {
@@ -1756,9 +1736,9 @@ Page({
         var step = e.currentTarget.dataset.step
         var stepList = this.data.stepList
         if (this.data.step === this.data.themeDetail.list.length + 1) {
-
+            console.log('这里是结语？？？');
         } else {
-            if (step < this.data.step) {
+            if (step <= this.data.step) {
                 //加类名
                 stepList.map(item => {
                     item.view = false
@@ -1769,17 +1749,32 @@ Page({
                 })
 
                 //找msgList中对应轮的数据
-                var msgList = this.data.msgList
-                var stepMsgList = []
-                msgList.map(item => {
-                    if (item.msgStep === step) {
-                        stepMsgList.push(item)
+                let arr = []
+                let obj = {
+                    isBotMes: 0,
+                    step: 1,
+                    sysType: "sys",
+                    cardList: []
+                }
+                this.data.stepCardListAll.forEach(item => {
+                    item.cardList.forEach(part => {
+                        if (this.data.viewAccount) {
+                            if (part.account == this.data.viewAccount) {
+                                obj.cardList.push(part)
+                            }
+                        }else {
+                            if (part.account == this.data.account) {
+                                obj.cardList.push(part)
+                            }
+                        }
+                    })
+                    if (obj.cardList.length > 0) {
+                        arr.push(obj)
                     }
                 })
 
                 this.setData({
-                    stepBotArr: formatMsgList(stepMsgList).botArr,
-                    stepMsgList: stepMsgList,
+                    stepCardList: arr,
                     showOtherStep: true
                 })
             }
@@ -1789,9 +1784,8 @@ Page({
                 })
                 this.setData({
                     stepList: stepList,
-                })
-                this.setData({
                     showOtherStep: false
+
                 })
             }
 
@@ -1799,26 +1793,37 @@ Page({
     },
     //查看用户发言
     viewPeopleMsg: function (e) {
-        var item = e.currentTarget.dataset.item
-        console.log(item.account)
-        if (this.data.viewAccount === item.account) {
+        var datasetItem = e.currentTarget.dataset.item
+        console.log(datasetItem.account)
+        if (this.data.viewAccount === datasetItem.account) {
             this.setData({
                 viewAccount: '',
-                stepCardList:this.data.stepCardListCopy
+                stepCardList: this.data.stepCardListCopy
             })
 
         } else {
-            let arr = this.data.stepCardListAll
-            console.log(this.data.stepCardListAll,'this.data.stepCardListAll2');
-            arr.forEach(item=>{
-                item.cardList = item.cardList.filter(part=>{
-                    return part.account == this.data.viewAccount
+            let arr = []
+            let obj = {
+                isBotMes: 0,
+                step: 1,
+                sysType: "sys",
+                cardList: []
+            }
+            this.data.stepCardListAll.forEach(item => {
+                item.cardList.forEach(part => {
+                    if (part.account == datasetItem.account) {
+                        obj.cardList.push(part)
+                    }
                 })
+                if (obj.cardList.length > 0) {
+                    arr.push(obj)
+                }
             })
             this.setData({
-                viewAccount: item.account,
-                stepCardList:arr
+                viewAccount: datasetItem.account,
+                stepCardList: arr
             })
+            console.log(arr, 'arrarrarrarr')
         }
 
         console.log(this.data.viewAccount)
@@ -2120,19 +2125,6 @@ Page({
         }
     },
 
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh () {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom () {
-
-    },
 
     //页面执行 end ************************************************
     watchBack: function (name, value) {
@@ -2142,26 +2134,6 @@ Page({
         let data = {};
         data[name] = value;
         this.setData(data);
-    },
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide () {
-
     },
 
     /**
@@ -2234,7 +2206,6 @@ Page({
      */
     async onLoad (options) {
         if (options.roomId) {
-
             // this.getUserInfo()
             this.contentScroll()
             var partyData = wx.getStorageSync('partyData')
@@ -2302,7 +2273,6 @@ Page({
                     // 如果是邀请好友的话带isfriend参数直接初始化房间 或者 是匹配的
                     if (Number(options.isMatch)) {
                         that.getRoomDetails(options.roomId)
-                        // that.initRoom()
                     } else if (Number(options.isfriend)) {
                         inviteFriendsRoom({ roomId: options.roomId }).then(res => {
                             console.log('好友进入房间了', res.data.ret);
@@ -2313,12 +2283,10 @@ Page({
                             } else {
                                 that.getRoomDetails(options.roomId)
                             }
-                            // that.initRoom()
                         })
                     } else {
-                        // 倒计时等待
+                        //  初始化房间
                         that.getRoomDetails(options.roomId)
-                        that.getDownTime()
                     }
                 }
             }
