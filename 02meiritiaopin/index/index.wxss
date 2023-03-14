@@ -89,6 +89,14 @@ page {
 	height: 40rpx;
 	margin-right: 16rpx;
 }
+.z-tab .detail {
+  position: absolute;
+  top: 10rp;
+  right: 20rpx;
+  font-size: 30rpx;
+  line-height: 88rpx;
+  color: #ffb58c;
+}
 
 .form-z .textarea-box {
 	position: relative;
@@ -259,6 +267,7 @@ page {
   border: none;
   height: 348rpx;
 }
+
 
 .pop-intro {}
 
