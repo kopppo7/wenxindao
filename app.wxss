@@ -285,7 +285,7 @@ button::after{
 }
 .trend-list .box .type-list{
 	display: flex;
-	margin-bottom: 32rpx;
+	/* margin-bottom: 32rpx; */
 }
 .trend-list .box .type-list .type-item{
 	display: inline-flex;

@@ -56,7 +56,7 @@
                     <view class="type-list" wx:if="{{item.target.length > 0}}">
                         <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
-                    <view class="pictxt">
+                    <view>
                         <view class="txt">
                           {{item.contents.data[0].txt}}
                         </view>
@@ -79,7 +79,7 @@
                     <view class="type-list" wx:if="{{item.target.length > 0}}">
                         <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
-                    <view class="">
+                    <view style="padding-top:16rpx">
                         <!-- <image mode="widthFix" class="" src="{{item.contents.imgUrl}}"></image> -->
                         <view class="picBox">
                           <image class="pic" mode="widthFix"  src="{{item.contents.imgUrl}}">
@@ -111,7 +111,7 @@
                     <view class="type-list" wx:if="{{item.target.length > 0}}">
                         <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
-                    <view style="display: flex;flex-wrap: wrap;">
+                    <view style="display: flex;flex-wrap: wrap;padding-top:16rpx">
                       <view class="picBox" style="text-align: {{index%3==0?'left':(index%3==1?'center':'right')}};" wx:for="{{item.contents.imgUrl}}" wx:for-item="itemImg">
                           <image class="pic" mode="widthFix"  src="{{itemImg.imgUrl}}">
                           </image>
@@ -123,14 +123,14 @@
                         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image>
                         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/1.png"></image> -->
                     </view>
-                    <view class="count-box">
+                    <!-- <view class="count-box">
                         <view class="avatar-box">
                             <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar1.jpg"></image>
                             <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
                             <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
                         </view>
-                        <!-- <view class="txt"><text>3</text>人已参与</view> -->
-                    </view>
+                        <view class="txt"><text>3</text>人已参与</view>
+                    </view> -->
                 </view>
               </view>
             </view>

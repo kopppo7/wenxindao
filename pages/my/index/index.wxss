@@ -122,6 +122,9 @@ page{
 	width: 56rpx;
 	height: 56rpx;
 }
+.trend-item .txt{
+  padding: 20rpx 0rpx;
+}
 .nav .item .txt{
 	font-size: 24rpx;
 }

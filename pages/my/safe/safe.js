@@ -80,10 +80,6 @@ Page({
         errorStatus: false
        })
     },
-
-
-
-
     //倒计时
     count:function(){
         this.setData({

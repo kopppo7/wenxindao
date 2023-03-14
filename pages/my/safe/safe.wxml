@@ -3,7 +3,7 @@
     <view class="z-list2">
         <view class="item">
             <view class="l">我的UID</view>
-            <view class="r">25151518855</view>
+            <view class="r">{{userInfo.id}}</view>
         </view>
         <view class="item">
             <view class="l">手机号绑定</view>
@@ -12,10 +12,10 @@
                 <view class="btn" catchtap="changeTel">更换</view>
             </view>
         </view>
-        <view class="item">
+        <!-- <view class="item">
             <view class="l">微信</view>
             <view class="r">扬帆</view>
-        </view>
+        </view> -->
     </view>
 </view>
 <view class="bot-btns">
