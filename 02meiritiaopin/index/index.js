@@ -516,7 +516,7 @@ Page({
         dayForSignNumber().then(res => {
             this.setData({
                 signNum: res.data.data.number || 0,
-                nowDate2: res.data.data.chinese.chineseMonth + res.data.data.chinese.chineseDay
+                nowDate2: res.data.data.chinese
             })
         })
     },
