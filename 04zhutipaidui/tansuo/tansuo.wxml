@@ -71,7 +71,7 @@
                                 class="itemList sys"
                                 wx:key="index"
                                 >
-                                <view class="name">{{item.nick}}(自己)
+                                <view class="name">{{item.cardList[0].nick}}
                                     <text class="huang">拿到的牌：</text></view>
                                 <view class="card-box">
                                     <view class="card-box-l">
@@ -133,33 +133,7 @@
                     </view>
                 </scroll-view>
             </view>
-            
-            <view wx:if="{{showOtherStep}}">
-                <scroll-view
-                    class="bot-content"
-                    scroll-into-view="{{scrollTo}}"
-                    scroll-y="true"
-                    wx:if="{{stepBotArr.length > 0}}"
-                >
-                    <view class="box">
-                        <block wx:for="{{stepBotArr}}" wx:key="index">
-                            <view wx:if="{{viewAccount ? item.fromAccount === viewAccount : true}}"
-                                wx:for-item="item"
-                                class="{{item.sysType != 'sys'?'item':'item sys'}}"
-                                wx:key="index">
-                                <view class="text" wx:if="item.text">
-                                    <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
-                                <text class="name a2" wx:else>系统：</text>
-                                    <text class="con">{{item.text}}</text>
-                                </view>
-                            </view>
-                        </block>
-                        <!-- 最后加一个垫底的节点 -->
-                        <view class="last-view" id="{{endId}}" style="height:20px;"></view>
-                    </view>
-                </scroll-view>
-            </view>
-            <view wx:else>
+            <view>
                 <scroll-view
                     class="bot-content"
                     scroll-into-view="{{scrollTo}}"
@@ -202,20 +176,20 @@
                    bindconfirm="sendMsg"/>
         </view>
         <view class="btn" bindtap="handleReady"
-              wx:if="{{(!isReady&&!isOwner) && (!isOwner || (isOwner && isMatch)) && !isBeginPlay}}">
+              wx:if="{{(!isReady&&!isOwner) && !isOwner && !isBeginPlay}}">
             准备
             <text>点击准备</text>
         </view>
         <view  bindtap="cancelReady" class="btn disabled"
-               wx:if="{{isReady && (!isOwner || (isOwner && isMatch))   && !isBeginPlay}}">
+               wx:if="{{isReady && !isOwner  && !isBeginPlay}}">
             取消准备
         </view>
         <view class="btn disabled" bindtap="jumpSpeak" wx:if="{{isBeginPlay && inputStatus && !isJump}}">
             跳过
         </view>
-        <view class="own-btns" wx:if="{{isOwner && !isMatch && !isBeginPlay}}">
+        <view class="own-btns" wx:if="{{isOwner && !isBeginPlay}}">
             <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
-            <view class="btn" bindtap="handleInviRoad">匹配路人</view>
+            <view class="btn" bindtap="handleInviRoad"  wx:if="{{!isMatch}}">匹配路人</view>
             <view class="btn" bindtap="handleFastStart">快速开始</view>
         </view>
     </view>
@@ -380,7 +354,7 @@
 </block>
 
 <!-- 匹配中 -->
-<block wx:if="{{matePopStatus}}">
+<!-- <block wx:if="{{matePopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <view class="pop-tit">匹配中，请耐心等待...</view>
@@ -392,7 +366,7 @@
             <view class="close btn">取消匹配</view>
         </view>
     </view>
-</block>
+</block> -->
 <!-- 至少两人开始派对 -->
 <block wx:if="{{mixPopStatus}}">
     <view class="pop-mask"></view>
