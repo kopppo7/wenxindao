@@ -116,7 +116,17 @@ Page({
         break;
     }
   },
-
+  details(e){
+    if(e.currentTarget.dataset.category==0){
+      wx.navigateTo({
+        url: '/pages/my/fmdetail/fmdetail?id='+e.currentTarget.dataset.id+'&from=index',
+      })
+    }else if(e.currentTarget.dataset.category==1){
+      wx.navigateTo({
+        url: '/probe/detail/detail?id='+e.currentTarget.dataset.id+'',
+      })
+    }
+  },
   getData() {
     indexFlow({
       page: this.data.page,

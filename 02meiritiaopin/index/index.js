@@ -351,7 +351,7 @@ Page({
                         resolve({ ret: true });
                     }
                 } else {
-                    resolve({ ret: false, msg: '请输入一段语音或文字' });
+                    resolve({ ret: false, msg: '请输入一段文字' });
                 }
             }).then(res => {
                 if (!res.ret) {

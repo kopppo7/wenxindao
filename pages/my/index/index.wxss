@@ -171,18 +171,19 @@ page{
 .picBox{
   position: relative;
   display: inline-block;
+  width:33.3%;
+  padding-bottom: 20rpx;
 }
 .pic {
-  width: 168rpx;
+  width:90%;
   border-radius: 24rpx;
-  margin-bottom: 16rpx;
 }
 .picBox .btn-fan{
   position: absolute;
-	bottom: 8rpx;
-	right: 8rpx;
-	width: 48rpx;
-	height: 48rpx;
+  bottom: 25rpx;
+  right: 30rpx;
+  width: 48rpx;
+  height: 48rpx;
 }
 .pop-big {
 	position: fixed;

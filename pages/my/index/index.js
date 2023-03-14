@@ -126,6 +126,18 @@ Page({
         })
         this.getData();
     },
+    jump(e){
+      if(e.currentTarget.dataset.type==0){
+        //生命探索
+        wx.navigateTo({
+          url: '/probe/detail/detail?id='+e.currentTarget.dataset.id,
+        })
+      }else{
+        wx.navigateTo({
+          url: '/04zhutipaidui/zhutijieshao/zhutijieshao?id='+id,
+        })
+      }
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -153,10 +165,15 @@ Page({
             type: this.data.seType
         }).then(res => {
             for (var i = 0; i < res.data.data.list.length; i++) {
+              try{
                 res.data.data.list[i].contents = JSON.parse(res.data.data.list[i].contents);
                 if (res.data.data.list[i].category == 0) {
                     res.data.data.list[i].contents.imgUrl = res.data.data.list[i].contents.data[0].imgUrl;
                 }
+              }
+              catch(e){
+                
+              }
             }
             if (this.data.page == 1) {
                 this.data.list = res.data.data.list;
@@ -170,6 +187,7 @@ Page({
                 list: this.data.list,
                 total: res.data.data.total
             })
+            console.log(this.data.list)
             wx.stopPullDownRefresh()
             // wx.hideLoading();
         }).catch(err => {
@@ -281,6 +299,9 @@ Page({
                 })
                 break;
             case '1':
+              wx.navigateTo({
+                  url: '/pages/my/partydetail/partydetail?id=' + e.currentTarget.dataset.id,
+              })
                 break;
             case '2':
                 wx.navigateTo({

@@ -1,0 +1,68 @@
+<view class="wp">
+    <view class="face">
+        <view class="name">探索号：{{id}}</view>
+        <view class="date">记录于：{{time}}</view>
+    </view>
+    <view class="list">
+        <view class="item" wx:for="{{list}}" wx:for-item="item" wx:for-index="index" wx:key="id">
+            <view class="desc">
+                <text>【第{{index + 1}}轮】</text>
+                {{item.content}}
+            </view>
+            <view class="pic">
+                <view class="img" wx:for="{{item.cards}}" wx:for-item="card" wx:for-index="index2" wx:key="id">
+                    <image class="card" src="{{card.imgUrl}}" mode="aspectFill"></image>
+                    <image catchtap="openBig" data-pinurl="{{card.imgUrl}}" class="btn-fan" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
+                </view>
+            </view>
+            <view class="audio" wx:if="{{item.answerVoice}}">
+                <image catchtap="play" data-idx="{{index}}" class="audioImg" mode="widthFix"
+                       src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png">
+                    <!-- 静止状态 -->
+                    <image wx:if="{{!item.playVoice}}" mode="widthFix" class="voiceImg"
+                           src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/voice.png"></image>
+                    <!-- 播放状态 -->
+                    <image wx:if="{{item.playVoice}}" mode="widthFix" class="voiceImg voiceImg2"
+                           src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/voice.png"></image>
+                    <image wx:if="{{item.playVoice}}" mode="widthFix" class="voiceImg1"
+                           src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/voice.png"></image>
+                </image>
+                <text class="times" wx:if="{{item.answerVoiceTime}}">{{item.answerVoiceTime}}'</text>
+            </view>
+            <view wx:else class='texts'>{{item.answerText}}</view>
+        </view>
+    </view>
+</view>
+
+<view class="btn-share-g" bindtap="openShare">
+    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share.svg"></image>
+    <text>分享</text>
+</view>
+
+<!--分享到-->
+<block wx:if="{{showShare}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win">
+        <view class="pop-tit">分享到</view>
+        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
+               bindtap="closePop"></image>
+        <view class="pop-share">
+            <button open-type="share" class="share-item">
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-weixin.png"></image>
+                微信好友
+            </button>
+            <view class="share-item" bindtap="toShare">
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/share-friends.png"></image>
+                朋友圈
+            </view>
+        </view>
+    </view>
+</block>
+<!--放大卡牌-->
+<block wx:if="{{bigPopStatus}}">
+    <view class="pop-mask"></view>
+    <view class="pop-big">
+        <image class="big-pic" src="{{bigCardImgUrl}}" mode="widthFix"></image>
+        <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closePopBig"></image>
+    </view>
+</block>

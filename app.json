@@ -59,7 +59,8 @@
         "probedetail/probedetail",
         "safe/safe",
         "feedback/detail/detail",
-        "feedback/submit/submit"
+        "feedback/submit/submit",
+        "partydetail/partydetail"
       ]
     },
     {
