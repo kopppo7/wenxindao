@@ -161,7 +161,10 @@ export const receiveDetail = function (id,askId) {
 export const dissolveGroup = function (id) {
   return http.get(handleURL('/room/dissolveGroup?id=213'));
 }
-
+// 查询主题派对游玩详情
+export const getMyRoomUserInfo = function (roomUserId) {
+  return http.get(handleURL('/my/getMyRoomUserInfo?roomUserId='+roomUserId));
+}
 
 
 

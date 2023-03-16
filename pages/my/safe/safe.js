@@ -3,7 +3,7 @@ import {
   getLoginInfo
 } from "../../../utils/stoage"
 import {
-  sendCodeForUpdate,userLoginOut,updatePhone
+  sendCodeForUpdate,userLoginOut,updatePhone,updateUserMsg,getUserMsg
 } from "../../../utils/api";
 import { login } from '../../../utils/common'
 Page({
@@ -19,8 +19,8 @@ Page({
         },
         telPopStatus: false,
         codePopStatus: false,
-
-
+        namePopStatus:false,
+        nickName:'',
         countdown: 10,
         interval:'', // 定时器
         sending:false, // 发送中
@@ -43,12 +43,28 @@ Page({
         code: e.detail.value
       })
       if(e.detail.value.length == 6){
+        wx.showLoading({
+          title: '校验中...',
+        })
         updatePhone({
           phone: this.data.phone,
           key: this.data.key,
           code: e.detail.value
         }).then((res) => {
-          updateInfo()
+          wx.hideLoading()
+          if(res.data.ret==200){
+            this.updateInfo()
+            wx.showToast({
+              title: '手机号更换成功',
+            })
+            this.setData({
+              telPopStatus:false,
+            })
+          }else{
+            wx.showToast({
+              title: res.data.msg
+            })
+          }
         })
       }
     },
@@ -67,11 +83,48 @@ Page({
             telPopStatus: true
         })
     },
+    changeName:function(){
+      let that = this;
+      that.setData({
+        namePopStatus: true,
+        nickName:that.data.userInfo.rname
+      })
+    },
+    updateName(){
+      console.log(this.data.nickName)
+      if(this.data.nickName==''||this.data.nickName==null){
+        wx.showToast({
+          title: '昵称不能为空',
+        });
+        return;
+      }
+      let obj = this.data.userInfo;
+      obj.nickname=this.data.nickName;
+      updateUserMsg(obj).then(res=>{
+        if(res.data.ret==200){
+          let user = this.data.userInfo;
+          user.rname=this.data.nickName;
+          user.wechatName=this.data.nickName;
+          this.setData({
+            userInfo:user,
+            namePopStatus:false
+          });
+          wx.showToast({
+            title: '昵称修改成功',
+          })
+        }else{
+          wx.showToast({
+            title: res.data.msg,
+          })
+        }
+      })
+    },
     // 关闭弹框狂
     closePop: function(){
         let that = this;
         that.setData({
-            telPopStatus: false
+            telPopStatus: false,
+            namePopStatus:false
         })
     },
     // 关闭错误提示
@@ -126,11 +179,16 @@ Page({
         sendCodeForUpdate({
           phone: this.data.phone
         }).then((res) => {
-          debugger
-          that.setData({
-            key: res.data.data
-          })
-          that.count()
+          if(res.data.ret==200){
+            that.setData({
+              key: res.data.data
+            })
+            that.count()
+          }else{
+            wx.showToast({
+              title: res.msg,
+            })
+          }
         })
     },
     // 退出登录
@@ -156,12 +214,11 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        // this.count(this)
-        clearInterval(this.interval)
-        let info = getLoginInfo();
+      getUserMsg().then(res=>{
         this.setData({
-          userInfo:info
+          userInfo:res.data.data
         });
+      })
     },
 
     /**

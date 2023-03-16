@@ -1,5 +1,5 @@
 import {
-  getProExpDetail
+  getMyRoomUserInfo
 } from '../../../utils/api'
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext()
@@ -31,16 +31,6 @@ Page({
   },
   //播放声音
   play(e) {
-    // innerAudioContext.autoplay = true
-    // innerAudioContext.src = this.data.list[e.currentTarget.dataset.idx].answerVoice
-    // console.log('this.data.list[e.currentTarget.dataset.idx].answerVoice', this.data.list[e.currentTarget.dataset.idx].answerVoice)
-    // innerAudioContext.onPlay(() => {
-    //   console.log('开始播放')
-    // })
-    // innerAudioContext.onError((res) => {
-    //   console.log(res.errMsg)
-    //   console.log(res.errCode)
-    // })
     audioCtx.pause()
     audioCtx.src = this.data.list[e.currentTarget.dataset.idx].answerVoice
     let list = this.data.list
@@ -79,9 +69,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    getProExpDetail({
-      id:options.id
-    }).then(res=>{
+    getMyRoomUserInfo(options.id).then(res=>{
         res.data.data.details.map((item) => {
             item.playVoice = false
         })

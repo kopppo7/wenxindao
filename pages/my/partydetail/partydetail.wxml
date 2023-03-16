@@ -7,12 +7,12 @@
         <view class="item" wx:for="{{list}}" wx:for-item="item" wx:for-index="index" wx:key="id">
             <view class="desc">
                 <text>【第{{index + 1}}轮】</text>
-                {{item.content}}
+                {{item.guideWords}}
             </view>
             <view class="pic">
-                <view class="img" wx:for="{{item.cards}}" wx:for-item="card" wx:for-index="index2" wx:key="id">
-                    <image class="card" src="{{card.imgUrl}}" mode="aspectFill"></image>
-                    <image catchtap="openBig" data-pinurl="{{card.imgUrl}}" class="btn-fan" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
+                <view class="img" >
+                    <image class="card" src="{{item.cardImgUrl}}" mode="aspectFill"></image>
+                    <image catchtap="openBig" data-pinurl="{{item.cardImgUrl}}" class="btn-fan" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>
                 </view>
             </view>
             <view class="audio" wx:if="{{item.answerVoice}}">
