@@ -36,7 +36,7 @@ Page({
   chooseAvatar (e) {
     var that = this;
     wx.uploadFile({
-      url: 'https://wenxin.duomixiong.com/user/oss/upload/uploadFile',
+      url: 'https://wenxin.wxdao.net/user/oss/upload/uploadFile',
       filePath: e.detail.avatarUrl,
       name: 'file',
       header: {
