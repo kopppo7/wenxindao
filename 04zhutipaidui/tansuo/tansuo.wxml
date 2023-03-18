@@ -471,6 +471,21 @@
         </view>
     </view>
 </block>
+<!-- 成为临时房主提醒 -->
+<block wx:if="{{isLinShiFangZhu}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">是否成为临时房主？</view>
+        <view class="desc">
+            邀请更多人来参与派对
+            <view>（AA制）</view>
+        </view>
+        <view class="btns">
+            <view class="btn  close" bindtap="backPrev">返回</view>
+            <view class="btn ok" bindtap="handleIsLinShiFz">确定</view>
+        </view>
+    </view>
+</block>
 <!-- 踢人 -->
 <block wx:if="{{kickPopStatus}}">
     <view class="pop-mask"></view>
