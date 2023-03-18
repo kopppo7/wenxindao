@@ -676,12 +676,16 @@ image{object-fit: cover;}
 .bot-fix .countdown text{color: #fff;}
 .bot-fix .btns{text-align: center;background: #222537;display: -webkit-flex;display: flex;justify-content: center;align-items:center;padding: 20rpx 40rpx;}
 .bot-fix .btns .lx{width: 160rpx;line-height: 80rpx;text-align: center;border-radius: 40rpx;background-color: rgba(182,178,207,0.18);font-size: 28rpx;font-weight: 500;color: #fff;position: relative;}
+
+.fp-btns .say{display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;/* 垂直居中 */align-content:center;width: 142rpx;}
+.fp-btns .say image{width: 48rpx;height: 48rpx;}
 .lx button{
 	position: absolute;width: 100%;height: 100%;top: 0;left: 0;
 	background: transparent;
 }
-.bot-fix .btns .speak{display: -webkit-flex;display: flex;justify-content: center;align-items:center;width: 286rpx;background: #7461E7;
-	border-radius: 74rpx;line-height: 80rpx;margin: 0 32rpx;}
+.fp-btns .say:first-child{border-right: 1px solid rgba(255, 255, 255, 0.11);height: 80rpx;}
+.bot-fix .btns .fp-btns{display: -webkit-flex;display: flex;justify-content: center;align-items:center;width: 288rpx;background: rgba(255, 255, 255, 0.1);
+	border-radius: 40rpx;line-height: 80rpx;margin: 0 32rpx;height: 80rpx;}
 .bot-fix .btns .speak image{width: 40rpx;height: 40rpx;margin-right: 8rpx;}
 .bot-fix .btns .speak text{color: #fff;font-size: 32rpx;line-height: 80rpx;}
 .bot-fix .btns .leave{width: 160rpx;line-height: 80rpx;text-align: center;border-radius: 40rpx;background-color: rgba(182,178,207,0.18);font-size: 28rpx;font-weight: 500;color: #ffb58c;}

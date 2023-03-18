@@ -79,6 +79,8 @@ Page({
         isJump: false,//是否跳过
         jumpNum: 0,//跳过次数
         jumpPopStatus: false,
+        jumpPopStatus2: false,
+        jumpPopStatus3: false,
         stepList: [],//轮导航列表
         showOtherStep: false,//显示其他轮
         stepMsgList: [],//其他轮信息内容
@@ -112,7 +114,9 @@ Page({
         kefuPop: false,  //客服弹窗
         isTuichufangjian: false, //结语处退出房间弹窗
         isPaiduiKaishi: false,  //进来的时候派对是否开始
-        isTuiChuRoom: false
+        isTuiChuRoom: false,
+        fupanIsSay:true,
+        fupanIsVoice:true
     },
     // 活动提示
     activityChange () {
@@ -157,6 +161,9 @@ Page({
             passerPopStatus: false,
             showTousuPop: false,
             jumpPopStatus: false,
+            jumpPopStatus2: false,
+            jumpPopStatus3: false,
+            jumpPopStatus4: false,
             contPasserPopStatus: false,
             roomSetPopStatus: false,
             kefuPop: false,
@@ -557,7 +564,6 @@ Page({
                 var list = []
                 var allCard = []
                 // 筛选出当前人分的牌
-                debugger
                 if (content.data.cardList && content.data.cardList.length > 0) {
                     allCard = content.data.cardList.filter(item => {
                         return item.account
@@ -1391,6 +1397,11 @@ Page({
                     if (downtimes < 10) {
                         downtimes = '0' + downtimes
                     }
+                    if (this.data.themeDetail.list[step - 1].speakTime-downtimes == 3) {
+                        this.setData({
+                            jumpPopStatus3: true
+                        })
+                    }
                     that.setData({
                         waitTime: downtimes
                     })
@@ -1418,7 +1429,13 @@ Page({
         var that = this;
         var step = this.data.step
         var stepData = this.data.themeDetail.list[step - 1]
-
+        // 隐藏跳过发言相关弹窗
+        this.setData({
+            jumpPopStatus:false,
+            jumpPopStatus2:false,
+            jumpPopStatus3:false,
+            jumpPopStatus4:false,
+        })
 
         //话术
         var guideWords = stepData.guideWords
@@ -1538,35 +1555,44 @@ Page({
     },
     //点击跳过发言
     jumpSpeak: function () {
-        // 第二次跳过的时候出现弹窗
-        if (this.data.jumpNum === 1) {
+        if (this.data.jumpNum === 0) {
+            // 第1次跳过的时候出现弹窗
             this.setData({
                 jumpPopStatus: true
             })
-        } else {
-            this.sendCustomMsg(6, { text: '跳过发言' })
+        } else if(this.data.jumpNum === 1) {
+            // 第2次跳过的时候出现弹窗
             this.setData({
-                isJump: true,
-                inputStatus: false,
-                jumpNum: this.data.jumpNum + 1
+                jumpPopStatus2: true
+            })
+        }else if(this.data.jumpNum === 2){
+            // 第3次跳过的时候出现弹窗
+            this.setData({
+                jumpPopStatus3: true
             })
         }
     },
     //确认跳过
     jumpConfirm: function () {
         var that = this
-        this.sendCustomMsg(6, { text: '跳过发言' })
+        if (this.data.jumpNum == 2) {
+            quitRoom({
+                roomId: this.data.roomData.id
+            }).then(res => {
+                if (res.data.ret === 200) {
+                    that.leaveRoomClear()
+                }
+            })
+        }else{
+            this.sendCustomMsg(6, { text: '跳过发言' })
+        }
         this.setData({
             isJump: true,
             inputStatus: false,
+            jumpPopStatus:false,
+            jumpPopStatus2:false,
+            jumpPopStatus3:false,
             jumpNum: this.data.jumpNum + 1
-        })
-        quitRoom({
-            roomId: this.data.roomData.id
-        }).then(res => {
-            if (res.data.ret === 200) {
-                that.leaveRoomClear()
-            }
         })
     },
     // 有人离开之后处理显示的人员和判断还有几个人在房间
@@ -2199,6 +2225,16 @@ Page({
         })
         wx.redirectTo({
             url: '/pages/index/index',
+        })
+    },
+    handleToggleFupanIsSay(){
+        this.setData({
+            fupanIsSay:!this.data.fupanIsSay
+        })
+    },
+    handleToggleFupanIsVoice(){
+        this.setData({
+            fupanIsVoice:!this.data.fupanIsVoice
         })
     },
     /**

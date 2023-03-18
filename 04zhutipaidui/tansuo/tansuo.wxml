@@ -276,12 +276,35 @@
         </view>
         <view class="btns">
             <view class="lx" bindtap="openKefu">添加客服</view>
-            <view class="speak">
-                <image
-                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png"
+            <view class="fp-btns">
+                <view class="say">
+                    <image
+                        src="../../static/microphone-open.png"
                         mode="scaleToFill"
-                />
-                <text>点击说话</text>
+                        wx:if="{{fupanIsSay}}"
+                        bindtap="handleToggleFupanIsSay"
+                    />
+                    <image
+                        src="../../static/microphone-x.png"
+                        mode="scaleToFill"
+                        wx:else
+                        bindtap="handleToggleFupanIsSay"
+                    />
+                </view>
+                <view class="say">
+                    <image
+                        src="../../static/volume-open.png"
+                        mode="scaleToFill"
+                        wx:if="{{fupanIsVoice}}"
+                        bindtap="handleToggleFupanIsVoice"
+                    />
+                    <image
+                        src="../../static/volume-x.png"
+                        mode="scaleToFill"
+                        wx:else
+                        bindtap="handleToggleFupanIsVoice"
+                    />
+                </view>
             </view>
             <view class="leave" bindtap="handleTiaoguo">跳过</view>
         </view>
@@ -380,14 +403,47 @@
     </view>
 </block>
 <!-- 跳过提示 -->
+
 <block wx:if="{{jumpPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
-        <view class="pop-tit">跳过本轮</view>
+        <view class="pop-tit">提示</view>
+        <view class="desc">
+            <view>
+                每场只有  
+                <text class="num">2</text>
+                次提跳过机会，请珍惜~
+            </view>
+        </view>
+        <view class="btns">
+            <view class="btn close" bindtap="closePop">取消</view>
+            <view class="btn close" bindtap="jumpConfirm">确定跳过</view>
+        </view>
+    </view>
+</block>
+<block wx:if="{{jumpPopStatus2}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">提示</view>
+        <view class="desc">
+            <view>
+                这是您最后 <text class="num">1</text>次跳过机会，请珍惜~
+            </view>
+        </view>
+        <view class="btns">
+            <view class="btn close" bindtap="closePop">取消</view>
+            <view class="btn close" bindtap="jumpConfirm">确定跳过</view>
+        </view>
+    </view>
+</block>
+<block wx:if="{{jumpPopStatus3}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">提示</view>
         <view class="desc">
             <view>
                 您已跳过
-                <text class="num">1</text>
+                <text class="num">2</text>
                 轮
             </view>
             再次跳过将视为
@@ -395,6 +451,22 @@
         </view>
         <view class="btns">
             <view class="btn close" bindtap="closePop">取消</view>
+            <view class="btn ok" bindtap="jumpConfirm">确定</view>
+        </view>
+    </view>
+</block>
+<block wx:if="{{jumpPopStatus4}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">提示</view>
+        <view class="desc">
+            <view>
+                由于您 
+                <text class="num">30</text>
+                s 内没有发言，系统已自动跳过本轮
+            </view>
+        </view>
+        <view class="btns">
             <view class="btn ok" bindtap="jumpConfirm">确定</view>
         </view>
     </view>
