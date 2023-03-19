@@ -335,7 +335,7 @@ Page({
     // 连接成功
     onConnect () {
         // 是匹配并且是房主那此时用户就是临时房主
-        if (this.data.isMatch && this.data.isOwner) {
+        if (this.data.isMatch && this.data.isOwner && !wx.getStorageSync('isLinShiFangZhu')) {
             this.setData({
                 isLinShiFangZhu: true
             })
@@ -2153,6 +2153,7 @@ Page({
         wx.removeStorageSync('roomData')
         wx.removeStorageSync('partyData')
         wx.removeStorageSync('roomPath')
+        wx.removeStorageSync('isLinShiFangZhu')
          // 清除nim实例
         nim.destroy({
             done: function (err) {
@@ -2261,6 +2262,7 @@ Page({
         this.setData({
             isLinShiFangZhu: false
         })
+        wx.setStorageSync('isLinShiFangZhu',1)
         this.sendCustomMsg(4, { text: '您已成为临时房主（无踢人权限）,快去邀请更多的人参与派对吧~' })
     },
     /**
