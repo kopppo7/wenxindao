@@ -178,7 +178,6 @@
         <view class="btn" bindtap="handleReady"
               wx:if="{{(!isReady&&!isOwner) && !isOwner && !isBeginPlay}}">
             准备
-            <text>点击准备</text>
         </view>
         <view  bindtap="cancelReady" class="btn disabled"
                wx:if="{{isReady && !isOwner  && !isBeginPlay}}">
@@ -364,8 +363,14 @@
     </view>
 </block>
 
-<!-- 准备提示 -->
+<!-- 准备提示   " -->
 <block wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}">
+    <view class="ready-fix">
+        请 {{readyTime}}S 内点击准备
+    </view>
+</block>
+  
+<!-- <block wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2" style="z-index: 799;">
         <view class="pop-tit">提示</view>
@@ -374,7 +379,7 @@
             <view class="ok btn" bindtap="clickReady">立即准备</view>
         </view>
     </view>
-</block>
+</block> -->
 
 <!-- 匹配中 -->
 <!-- <block wx:if="{{matePopStatus}}">
@@ -455,7 +460,7 @@
         </view>
     </view>
 </block>
-<block wx:if="{{jumpPopStatus4}}">
+<block wx:if="{{jumpPopStatus4 && inputStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <view class="pop-tit">提示</view>

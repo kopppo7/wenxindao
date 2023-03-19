@@ -1091,9 +1091,12 @@ Page({
     //点击准备
     handleReady () {
         this.setData({
-            isReady: !this.data.isReady
+            isReady: true,
+            readyPopStatus: false,
+            readyTime: 5,
         })
         this.sendCustomMsg(1, { status: this.data.isReady })
+        clearInterval(readyTimeout)
     },
     //-------------------------------------准备end-----------------------------------------------------------
 
@@ -1404,14 +1407,21 @@ Page({
                     }
                 } else {
                     downtimes--
+                    var step = that.data.step
+                    var speakTime = that.data.themeDetail.list[step - 1].speakTime || 10
+                    console.log(step, '==============');
+                    console.log(speakTime);
+                    console.log(downtimes);
+                    // 判断几秒内没发言自动跳过
+                    if (speakTime && speakTime - downtimes == 3) {
+                        clearInterval(timeInt)
+                        that.setData({
+                            jumpPopStatus4: true,
+                        })
+                        downtimes = speakTime
+                    }
                     if (downtimes < 10) {
                         downtimes = '0' + downtimes
-                    }
-                    // 判断几秒内没发言自动跳过
-                    if (this.data.themeDetail.list[step - 1].speakTime - downtimes == 3) {
-                        this.setData({
-                            jumpPopStatus4: true
-                        })
                     }
                     that.setData({
                         waitTime: downtimes
@@ -2154,10 +2164,10 @@ Page({
         wx.removeStorageSync('partyData')
         wx.removeStorageSync('roomPath')
         wx.removeStorageSync('isLinShiFangZhu')
-         // 清除nim实例
+        // 清除nim实例
         nim.destroy({
             done: function (err) {
-            console.log('实例已被完全清除')
+                console.log('实例已被完全清除')
             }
         })
         if (jump) {
@@ -2262,14 +2272,14 @@ Page({
         this.setData({
             isLinShiFangZhu: false
         })
-        wx.setStorageSync('isLinShiFangZhu',1)
+        wx.setStorageSync('isLinShiFangZhu', 1)
         this.sendCustomMsg(4, { text: '您已成为临时房主（无踢人权限）,快去邀请更多的人参与派对吧~' })
     },
     /**
      * 生命周期函数--监听页面加载
      */
     async onLoad (options) {
-        console.log(options,'options');
+        console.log(options, 'options');
         if (options.roomId) {
             // this.getUserInfo()
             this.contentScroll()
