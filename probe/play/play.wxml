@@ -65,7 +65,7 @@
                       <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{itemlist.randomCard[0].imgUrl}}" catchtap="showImg"></image>
                     </view>
                     <view class="back">
-                      <image mode="widthFix" src="https://file.duomixiong.com/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                      <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
                     </view>
                   </view>
                 </view>
@@ -76,7 +76,7 @@
                       <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{itemlist.randomCard[1].imgUrl}}" catchtap="showImg"></image>
                     </view>
                     <view class="back">
-                      <image mode="widthFix" src="https://file.duomixiong.com/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                      <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
                     </view>
                   </view>
                   <view wx:if="{{itemlist.randomCard[2]}}" class="card-img {{itemlist.randomCard[2].isOpen && !itemlist.randomCard[2].isOpened ? 'open' : ''}} {{itemlist.randomCard[2].isOpened ? 'show' : ''}}" bindtap="clickCard" data-index="2" data-listindex="{{indexlist}}">
@@ -85,7 +85,7 @@
                       <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{itemlist.randomCard[2].imgUrl}}" catchtap="showImg"></image>
                     </view>
                     <view class="back">
-                      <image mode="widthFix" src="https://file.duomixiong.com/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                      <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
                     </view>
                   </view>
                 </view>
@@ -99,7 +99,7 @@
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{itemlist.answers[selectMasterIndex].cards[0].imgUrl}}" catchtap="showImg"></image>
                       </view>
                       <view class="back">
-                        <image mode="widthFix" src="https://file.duomixiong.com/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                        <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
                       </view>
                     </view>
                   </view>
@@ -110,7 +110,7 @@
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{itemlist.answers[selectMasterIndex].cards[1].imgUrl}}" catchtap="showImg"></image>
                       </view>
                       <view class="back">
-                        <image mode="widthFix" src="https://file.duomixiong.com/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                        <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
                       </view>
                     </view>
                     <view wx:if="{{itemlist.answers.cards[2]}}" class="card-img {{itemlist.answers[selectMasterIndex].cards[2].isOpen && !itemlist.answers[selectMasterIndex].cards[2].isOpened ? 'open' : ''}} {{itemlist.answers[selectMasterIndex].cards[2].isOpened ? 'show' : ''}}" bindtap="masterCilckCard" data-index="2" data-listindex="{{indexlist}}">
@@ -119,7 +119,7 @@
                         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{itemlist.answers[selectMasterIndex].cards[2].imgUrl}}" catchtap="showImg"></image>
                       </view>
                       <view class="back">
-                        <image mode="widthFix" src="https://file.duomixiong.com/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                        <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
                       </view>
                     </view>
                   </view>
@@ -195,7 +195,7 @@
           {{ curStep === step ? '下一步' : '修改答案'}}
         </view>
         <view class="nextSubmit" catchtap="backMine" wx:else data-idx="{{indexlist}}">
-          <image src="https://file.duomixiong.com/2023-02/3574d34e-4e03-4fd3-a2ff-d38624ab454d.png" mode="widthFix" />
+          <image src="https://file.wxdao.net/2023-02/3574d34e-4e03-4fd3-a2ff-d38624ab454d.png" mode="widthFix" />
           <text>返回我的探索</text>
         </view>
       </view>
@@ -224,7 +224,7 @@
       </view>
     </view>
     <view class="box4">
-      <image class="box4-l" src="https://file.duomixiong.com/2023-02/655ac759-acc1-4fc8-af91-14543152a35c.png"></image>
+      <image class="box4-l" src="https://file.wxdao.net/2023-02/655ac759-acc1-4fc8-af91-14543152a35c.png"></image>
       <image class="box4-r" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
     </view>
     <view class="box5">

@@ -76,9 +76,42 @@ Page({
       index = this.RandomIndex(min, max, i);
       _str += _charStr[index];
     }
-    this.setData({
-      nickName: "wenxin" + _str,
-      headImg: "https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"
+    // this.setData({
+    //   nickName: "wenxin" + _str,
+    //   headImg: "https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"
+    // })
+    let nickName = "wenxin" + _str;
+    let headImg = "https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg";
+    var token = wx.getStorageSync('tokenKey');
+    wx.showLoading({
+      title: '随机生成头像昵称..',
+    })
+    getUserMsg(token).then(customer => {
+      var userInfo = customer.data.data;
+      userInfo.wechatName = nickName;
+      userInfo.rname = nickName;
+      userInfo.headImg = headImg;
+      updateUserMsg({
+        nickname: nickName,
+        headimgurl: headImg
+      }).then(res => {
+        if (res.data.ret != 200) {
+          wx.showToast({
+            title: res.data.msg,
+          })
+        } else {
+          setLoginInfo(userInfo);
+          if (userInfo.phone == '' || userInfo.phone == null) {
+            wx.redirectTo({
+              url: '/pages/login/login',
+            })
+          } else {
+            wx.redirectTo({
+              url: '/pages/index/index',
+            })
+          }
+        }
+      })
     })
   },
   RandomIndex (min, max, i) {

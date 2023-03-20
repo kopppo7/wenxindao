@@ -3,9 +3,9 @@
 	<image
 		mode="widthFix"
 		class="canvas-bg my_draw_canvas"
-		data-url="https://file.duomixiong.com/2023-01/4b8c69c4-f7bf-4000-8a77-6f205ad0f647.png"
+		data-url="https://file.wxdao.net/2023-01/4b8c69c4-f7bf-4000-8a77-6f205ad0f647.png"
 		data-type="image"
-		src="https://file.duomixiong.com/2023-01/4b8c69c4-f7bf-4000-8a77-6f205ad0f647.png"
+		src="https://file.wxdao.net/2023-01/4b8c69c4-f7bf-4000-8a77-6f205ad0f647.png"
 	></image>
 	<view class="my_draw_canvas canvas-content">
 		<view class="date-mod my_draw_canvas">
@@ -50,9 +50,9 @@
 			<image
 				class="tuijian my_draw_canvas"
 				mode="aspectFill"
-				src="https://file.duomixiong.com/2023-01/80273208-1940-4ca6-94c4-4f5bae1c92ac.png"
+				src="https://file.wxdao.net/2023-01/80273208-1940-4ca6-94c4-4f5bae1c92ac.png"
 				data-type="image"
-				data-url="https://file.duomixiong.com/2023-01/80273208-1940-4ca6-94c4-4f5bae1c92ac.png"
+				data-url="https://file.wxdao.net/2023-01/80273208-1940-4ca6-94c4-4f5bae1c92ac.png"
 			></image>
 		</view>
 		<view class="ts-det">
@@ -88,9 +88,9 @@
 				<view class="eval-item" wx:if="{{ index < 2 }}">
 					<image
 						class="my_draw_canvas start"
-						src="https://file.duomixiong.com/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
+						src="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
 						data-type="image"
-						data-url="https://file.duomixiong.com/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
+						data-url="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
 					></image>
 					<view
 						data-type="text"
@@ -101,9 +101,9 @@
 					</view>
 					<image
 						class="my_draw_canvas end"
-						src="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+						src="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
 						data-type="image"
-						data-url="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+						data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
 					></image>
 				</view>
 			</block>
@@ -123,9 +123,9 @@
 					>
 					<image
 						class="my_draw_canvas"
-						src="https://file.duomixiong.com/2023-01/bb36eff6-7532-48a0-ab6b-bd8f40444a1a.png"
+						src="https://file.wxdao.net/2023-01/bb36eff6-7532-48a0-ab6b-bd8f40444a1a.png"
 						data-type="image"
-						data-url="https://file.duomixiong.com/2023-01/bb36eff6-7532-48a0-ab6b-bd8f40444a1a.png"
+						data-url="https://file.wxdao.net/2023-01/bb36eff6-7532-48a0-ab6b-bd8f40444a1a.png"
 					></image>
 				</view>
 				<view class="right">

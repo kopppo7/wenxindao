@@ -16,7 +16,7 @@ page {
 .date-count {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 120rpx;
+	margin-bottom: 50rpx;
 }
 
 .date-count .date {}

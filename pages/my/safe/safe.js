@@ -1,6 +1,7 @@
 // 06wode/zhanghuyuanquan/zhanghuyuanquan.js
 import {
-  getLoginInfo
+  getLoginInfo,
+  setLoginInfo
 } from "../../../utils/stoage"
 import {
   sendCodeForUpdate,userLoginOut,updatePhone,updateUserMsg,getUserMsg
@@ -72,6 +73,7 @@ Page({
     async updateInfo() {
       await login();
       let info = getLoginInfo();
+      debugger
       this.setData({
         userInfo:info
       });
@@ -91,7 +93,6 @@ Page({
       })
     },
     updateName(){
-      console.log(this.data.nickName)
       if(this.data.nickName==''||this.data.nickName==null){
         wx.showToast({
           title: '昵称不能为空',
@@ -102,6 +103,10 @@ Page({
       obj.nickname=this.data.nickName;
       updateUserMsg(obj).then(res=>{
         if(res.data.ret==200){
+          let info = getLoginInfo();
+          info.rname = obj.nickname;
+          info.wechatName = obj.nickname
+          setLoginInfo(info);
           let user = this.data.userInfo;
           user.rname=this.data.nickName;
           user.wechatName=this.data.nickName;
@@ -220,53 +225,41 @@ Page({
         });
       })
     },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady() {
-
+    chooseAvatar (e) {
+      var that = this;
+      wx.uploadFile({
+        url: 'https://wenxin.wxdao.net/user/oss/upload/uploadFile',
+        filePath: e.detail.avatarUrl,
+        name: 'file',
+        header: {
+          "token": wx.getStorageSync('tokenKey')
+        },
+        success: function (res) {
+          var uploadRet = JSON.parse(res.data);
+          if (uploadRet.ret == 200) {
+            let obj = that.data.userInfo;
+            updateUserMsg({
+              nickname: obj.rname,
+              headimgurl: uploadRet.data
+            })
+            let info = getLoginInfo();
+            info.headImg = uploadRet.data;
+            setLoginInfo(info);
+            let user = that.data.userInfo;
+            user.headImg=uploadRet.data;
+            that.setData({
+              userInfo:user,
+              namePopStatus:false
+            });
+            wx.showToast({
+              title: '头像修改成功',
+            })
+          } else {
+            wx.showToast({
+              title: '头像修改失败',
+            })
+          }
+        }
+      })
     },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
-    }
 })
