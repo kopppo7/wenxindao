@@ -2,6 +2,8 @@
 import {
     findByAskPartyOne,
     updateImMsg,
+    roomMatchingPlay,
+    createBaoRoom
 } from "../api";
 import config from "../../utils/config";
 Page({
@@ -78,6 +80,7 @@ Page({
                   nickname: val.input
               }
               updateImMsg(param).then(res => {
+
                   wx.redirectTo({
                       url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
                   })

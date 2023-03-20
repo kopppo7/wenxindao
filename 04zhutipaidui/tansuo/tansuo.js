@@ -79,6 +79,9 @@ Page({
         isJump: false,//是否跳过
         jumpNum: 0,//跳过次数
         jumpPopStatus: false,
+        jumpPopStatus2: false,
+        jumpPopStatus3: false,
+        jumpPopStatus4: false,
         stepList: [],//轮导航列表
         showOtherStep: false,//显示其他轮
         stepMsgList: [],//其他轮信息内容
@@ -112,7 +115,10 @@ Page({
         kefuPop: false,  //客服弹窗
         isTuichufangjian: false, //结语处退出房间弹窗
         isPaiduiKaishi: false,  //进来的时候派对是否开始
-        isTuiChuRoom: false
+        isTuiChuRoom: false,
+        fupanIsSay: true,
+        fupanIsVoice: true,
+        isLinShiFangZhu: false
     },
     // 活动提示
     activityChange () {
@@ -151,16 +157,20 @@ Page({
             activityPopStatus: false,
             waitStatus: false,
             mixPopStatus: false,
-            matePopStatus:false,
+            matePopStatus: false,
             timePopStatus: false,
             kickPopStatus: false,
             passerPopStatus: false,
             showTousuPop: false,
             jumpPopStatus: false,
+            jumpPopStatus2: false,
+            jumpPopStatus3: false,
+            jumpPopStatus4: false,
             contPasserPopStatus: false,
             roomSetPopStatus: false,
             kefuPop: false,
-            isTuichufangjian: false
+            isTuichufangjian: false,
+            isLinShiFangZhu: false
         })
         if (clear == 1 && timeInt) {
             clearInterval(timeInt)
@@ -175,20 +185,6 @@ Page({
         var token = wx.getStorageSync('loginInfo').yunToken;
         var account = wx.getStorageSync('loginInfo').yunId;
         var that = this;
-        if (that.data.roomData.ownerUserIm == account) {
-            that.setData({
-                // 是否是房主
-                isOwner: true,
-                account: account,
-            })
-        } else {
-            that.setData({
-                account: account,
-            })
-        }
-        if (this.data.roomData.ownerUserIm != account) {
-            this.showReadyPop()
-        }
         nim = SDK.getInstance({
             debug: false, // 是否开启日志，将其打印到console。集成开发阶段建议打开。
             appKey: '820499c93e45806d2420d75aa9ce9846',
@@ -216,6 +212,21 @@ Page({
             // 收到消息
             onmsg: that.onMsg
         });
+        if (that.data.roomData.ownerUserIm == account) {
+            that.setData({
+                // 是否是房主
+                isOwner: true,
+                account: account,
+            })
+        } else {
+            that.setData({
+                account: account,
+            })
+        }
+        if (this.data.roomData.ownerUserIm != account) {
+            this.showReadyPop()
+        }
+        console.log(nim);
     },
     // 群组信息
     onTeams (e) {
@@ -323,6 +334,12 @@ Page({
     },
     // 连接成功
     onConnect () {
+        // 是匹配并且是房主那此时用户就是临时房主
+        if (this.data.isMatch && this.data.isOwner && !wx.getStorageSync('isLinShiFangZhu')) {
+            this.setData({
+                isLinShiFangZhu: true
+            })
+        }
         console.log('连接成功');
     },
     //重新连接
@@ -557,7 +574,6 @@ Page({
                 var list = []
                 var allCard = []
                 // 筛选出当前人分的牌
-                debugger
                 if (content.data.cardList && content.data.cardList.length > 0) {
                     allCard = content.data.cardList.filter(item => {
                         return item.account
@@ -1075,9 +1091,12 @@ Page({
     //点击准备
     handleReady () {
         this.setData({
-            isReady: !this.data.isReady
+            isReady: true,
+            readyPopStatus: false,
+            readyTime: 5,
         })
         this.sendCustomMsg(1, { status: this.data.isReady })
+        clearInterval(readyTimeout)
     },
     //-------------------------------------准备end-----------------------------------------------------------
 
@@ -1388,6 +1407,19 @@ Page({
                     }
                 } else {
                     downtimes--
+                    var step = that.data.step
+                    var speakTime = that.data.themeDetail.list[step - 1].speakTime || 10
+                    console.log(step, '==============');
+                    console.log(speakTime);
+                    console.log(downtimes);
+                    // 判断几秒内没发言自动跳过
+                    if (speakTime && speakTime - downtimes == 3) {
+                        clearInterval(timeInt)
+                        that.setData({
+                            jumpPopStatus4: true,
+                        })
+                        downtimes = speakTime
+                    }
                     if (downtimes < 10) {
                         downtimes = '0' + downtimes
                     }
@@ -1400,7 +1432,7 @@ Page({
             var time = setInterval(() => {
                 if (time1 > 9) {
                     clearInterval(time)
-                    that.initRoom() 
+                    that.initRoom()
                 } else {
                     time1++
                     if (time1 < 10) {
@@ -1418,7 +1450,13 @@ Page({
         var that = this;
         var step = this.data.step
         var stepData = this.data.themeDetail.list[step - 1]
-
+        // 隐藏跳过发言相关弹窗
+        this.setData({
+            jumpPopStatus: false,
+            jumpPopStatus2: false,
+            jumpPopStatus3: false,
+            jumpPopStatus4: false,
+        })
 
         //话术
         var guideWords = stepData.guideWords
@@ -1538,35 +1576,45 @@ Page({
     },
     //点击跳过发言
     jumpSpeak: function () {
-        // 第二次跳过的时候出现弹窗
-        if (this.data.jumpNum === 1) {
+        if (this.data.jumpNum === 0) {
+            // 第1次跳过的时候出现弹窗
             this.setData({
                 jumpPopStatus: true
             })
-        } else {
-            this.sendCustomMsg(6, { text: '跳过发言' })
+        } else if (this.data.jumpNum === 1) {
+            // 第2次跳过的时候出现弹窗
             this.setData({
-                isJump: true,
-                inputStatus: false,
-                jumpNum: this.data.jumpNum + 1
+                jumpPopStatus2: true
+            })
+        } else if (this.data.jumpNum === 2) {
+            // 第3次跳过的时候出现弹窗
+            this.setData({
+                jumpPopStatus3: true
             })
         }
     },
     //确认跳过
     jumpConfirm: function () {
         var that = this
-        this.sendCustomMsg(6, { text: '跳过发言' })
+        if (this.data.jumpNum == 2) {
+            quitRoom({
+                roomId: this.data.roomData.id
+            }).then(res => {
+                if (res.data.ret === 200) {
+                    that.leaveRoomClear()
+                }
+            })
+        } else {
+            this.sendCustomMsg(6, { text: '跳过发言' })
+        }
         this.setData({
             isJump: true,
             inputStatus: false,
+            jumpPopStatus: false,
+            jumpPopStatus2: false,
+            jumpPopStatus3: false,
+            jumpPopStatus4: false,
             jumpNum: this.data.jumpNum + 1
-        })
-        quitRoom({
-            roomId: this.data.roomData.id
-        }).then(res => {
-            if (res.data.ret === 200) {
-                that.leaveRoomClear()
-            }
         })
     },
     // 有人离开之后处理显示的人员和判断还有几个人在房间
@@ -1762,7 +1810,7 @@ Page({
                             if (part.account == this.data.viewAccount) {
                                 obj.cardList.push(part)
                             }
-                        }else {
+                        } else {
                             if (part.account == this.data.account) {
                                 obj.cardList.push(part)
                             }
@@ -2115,7 +2163,13 @@ Page({
         wx.removeStorageSync('roomData')
         wx.removeStorageSync('partyData')
         wx.removeStorageSync('roomPath')
-        this.onDisconnect()
+        wx.removeStorageSync('isLinShiFangZhu')
+        // 清除nim实例
+        nim.destroy({
+            done: function (err) {
+                console.log('实例已被完全清除')
+            }
+        })
         if (jump) {
             console.log('清除缓存');
         } else {
@@ -2201,10 +2255,31 @@ Page({
             url: '/pages/index/index',
         })
     },
+    handleToggleFupanIsSay () {
+        this.setData({
+            fupanIsSay: !this.data.fupanIsSay
+        })
+    },
+    handleToggleFupanIsVoice () {
+        this.setData({
+            fupanIsVoice: !this.data.fupanIsVoice
+        })
+    },
+    backPrev () {
+        wx.navigateBack();
+    },
+    handleIsLinShiFz () {
+        this.setData({
+            isLinShiFangZhu: false
+        })
+        wx.setStorageSync('isLinShiFangZhu', 1)
+        this.sendCustomMsg(4, { text: '您已成为临时房主（无踢人权限）,快去邀请更多的人参与派对吧~' })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     async onLoad (options) {
+        console.log(options, 'options');
         if (options.roomId) {
             // this.getUserInfo()
             this.contentScroll()
@@ -2298,5 +2373,7 @@ Page({
                 url: '/pages/index/index',
             })
         }
+
+
     }
 })
