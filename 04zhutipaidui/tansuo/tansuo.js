@@ -1410,10 +1410,11 @@ Page({
                     var step = that.data.step
                     var speakTime = that.data.themeDetail.list[step - 1].speakTime || 10
                     console.log(step, '==============');
-                    console.log(speakTime);
-                    console.log(downtimes);
+                    console.log(speakTime, 'speakTime');
+                    console.log(downtimes, 'downtimes');
+                    console.log(speakTime - downtimes, 'speakTime - downtimes');
                     // 判断几秒内没发言自动跳过
-                    if (speakTime && speakTime - downtimes == 3) {
+                    if (speakTime && speakTime - downtimes == 3 && that.data.show_speak_count_down) {
                         clearInterval(timeInt)
                         that.setData({
                             jumpPopStatus4: true,
@@ -1632,7 +1633,8 @@ Page({
             }
         })
         this.setData({
-            show_speak_count_down: false
+            show_speak_count_down: false,
+            jumpPopStatus4:false
         })
         if (this.data.personInd < (playerList.length - 1)) {
             //发言人index 小于 成员数量，切换下个人发言
