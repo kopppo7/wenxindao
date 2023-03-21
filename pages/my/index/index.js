@@ -138,12 +138,16 @@ Page({
         })
       }
     },
+    onShow(){
+      login(res => {
+          this.Init()
+      })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
         login(res => {
-            this.Init()
             this.getData();
             this.getData2();
             this.getTopData()
@@ -251,6 +255,7 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh() {
+        this.Init();
         if (this.data.pageTabIndex === 0){
             this.setData({
                 page: 1,
@@ -270,8 +275,6 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom() {
-
-
         if (this.data.pageTabIndex === 0){
             if (this.data.list.length < this.data.total) {
                 this.data.page += 1;

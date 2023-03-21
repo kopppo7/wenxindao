@@ -3,9 +3,9 @@
 	<image
 		mode="widthFix"
 		class="canvas-bg my_draw_canvas"
-		data-url="https://file.duomixiong.com/2023-01/818c2e50-2642-48b5-97bd-f76d0c3cc931.png"
+		data-url="https://file.wxdao.net/2023-01/818c2e50-2642-48b5-97bd-f76d0c3cc931.png"
 		data-type="image"
-		src="https://file.duomixiong.com/2023-02/41474f41-30e5-44b5-a9a2-474438017f41.png"
+		src="https://file.wxdao.net/2023-02/41474f41-30e5-44b5-a9a2-474438017f41.png"
 	></image>
 	<view class="my_draw_canvas canvas-content">
 		<view class="date-mod my_draw_canvas">
@@ -60,9 +60,9 @@
 					</view>
 					<image
 						class="my_draw_canvas yin"
-						src="https://file.duomixiong.com/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
+						src="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
 						data-type="image"
-						data-url="https://file.duomixiong.com/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
+						data-url="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
 					></image>
 					<view
 						data-type="text"
@@ -73,9 +73,9 @@
 						<image
 							wx:if="{{ !txt2 }}"
 							class="my_draw_canvas yin end"
-							src="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+							src="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
 							data-type="image"
-							data-url="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+							data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
 						></image>
 					</view>
 				</div>
@@ -99,9 +99,9 @@
 				{{ txt2 }}
 				<image
 					class="my_draw_canvas yin end"
-					src="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+					src="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
 					data-type="image"
-					data-url="https://file.duomixiong.com/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+					data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
 				></image>
 			</view>
 		</view>
