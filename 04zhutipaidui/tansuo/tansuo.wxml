@@ -24,7 +24,7 @@
                 <view class="left">
                     <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg">
                     </image>
-                    <view class="ico">
+                    <view class="ico" bindtap="handleOpenGuiZe">
                         <image
                                 src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-wh.png"></image>
                         <text class="name">帮助</text>
@@ -40,7 +40,6 @@
                     <view
                             class="{{ (isBeginPlay && !show_think_count_down && personInd == index)?'people active':'people' }} {{viewAccount === item.account ? 'view' : ''}}"
                             bindtap="viewPeopleMsg"
-                            bindlongpress="handleKick"
                             data-item="{{item}}">
                         <view class="face">
                             <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
@@ -189,7 +188,7 @@
         <view class="own-btns" wx:if="{{isOwner && !isBeginPlay}}">
             <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
             <view class="btn" bindtap="handleInviRoad"  wx:if="{{!isMatch}}">匹配路人</view>
-            <view class="btn" bindtap="handleFastStart">快速开始</view>
+            <view class="btn" bindtap="handleFastStart">开启派对</view>
         </view>
     </view>
     
@@ -278,13 +277,13 @@
             <view class="fp-btns">
                 <view class="say">
                     <image
-                        src="../../static/microphone-open.png"
+                        src="https://file.wxdao.net/2023-03/ba07ede1-7354-4856-8661-2945462ea4c9.png"
                         mode="scaleToFill"
                         wx:if="{{fupanIsSay}}"
                         bindtap="handleToggleFupanIsSay"
                     />
                     <image
-                        src="../../static/microphone-x.png"
+                        src="https://file.wxdao.net/2023-03/23ccfdd6-b0d2-405d-aa97-a0ae28705cf3.png"
                         mode="scaleToFill"
                         wx:else
                         bindtap="handleToggleFupanIsSay"
@@ -292,13 +291,13 @@
                 </view>
                 <view class="say">
                     <image
-                        src="../../static/volume-open.png"
+                        src="https://file.wxdao.net/2023-03/7714487f-3fad-4e19-975b-f81603fada72.png"
                         mode="scaleToFill"
                         wx:if="{{fupanIsVoice}}"
                         bindtap="handleToggleFupanIsVoice"
                     />
                     <image
-                        src="../../static/volume-x.png"
+                        src="https://file.wxdao.net/2023-03/d6a1af8b-fa67-4032-bd66-274f439d5ed5.png"
                         mode="scaleToFill"
                         wx:else
                         bindtap="handleToggleFupanIsVoice"
@@ -476,6 +475,20 @@
         </view>
     </view>
 </block>
+<!-- 中途退出提醒 -->
+<block wx:if="{{isZhongTuTuiChu}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">提示</view>
+        <view class="desc">
+            中途退出派对将降低匹配成功率
+        </view>
+        <view class="btns">
+            <view class="btn  close" bindtap="clickZhongTuQuitRoom">确认退出</view>
+            <view class="btn ok" bindtap="closePop">继续派对</view>
+        </view>
+    </view>
+</block>
 <!-- 成为临时房主提醒 -->
 <block wx:if="{{isLinShiFangZhu}}">
     <view class="pop-mask"></view>
@@ -556,7 +569,7 @@
                 <view class="kick-tit">踢出玩家</view>
                 <view class="kick-list">
                     <block wx:for="{{playerList}}" wx:key="index">
-                    <view class="kick-item" wx:if="{{item && item.account}}">
+                    <view class="kick-item" wx:if="{{item && item.account && !isOwner}}">
                         <view class="l">
                             <view class="face">
                                 <image src="{{item.avatar}}"></image>
@@ -572,7 +585,7 @@
         <view class="btns" bindtap="closePop">
             <view class="btn ok">确定</view>
         </view>
-        <view class="quit-btn" bindtap="clickQuitRoom">
+        <view class="quit-btn" bindtap="handleZhongTuTuiChu">
             <text>退出房间</text>
             <image src="/static/SignOut.png"></image>
         </view>
@@ -690,7 +703,7 @@
         </view>
         <view class="btns">
             <view class="btn  close" bindtap="closePop">取消</view>
-            <view class="btn ok" bindtap="quit">确定</view>
+            <view class="btn ok" bindtap="clickQuitRoom">确定</view>
         </view>
     </view>
 </block>
@@ -704,6 +717,21 @@
         </view>
         <view class="btns">
             <view class="btn ok" bindtap="handlePaiduikaishi">确定</view>
+        </view>
+    </view>
+</block>
+<!-- 【房间匹配规则】 -->
+<block wx:if="{{isRoomGuiZe}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">【房间匹配规则】</view>
+        <view class="desc tal">
+            <view>1、您需要找到安静的环境，探索过程中会有声音外放，同时您需要使用语音功能与其他岛民交流。</view>
+            <view>2、房间内超过<text class="num">【4】</text>位岛民准备，就会开始倒计时10秒启动问心探索。未准备的岛民会被踢出房间。</view>
+            <view>3、若没有其他参与者准备，1分钟后，会为您开启与问心精灵的互动探索。</view>
+        </view>
+        <view class="btns">
+            <view class="btn ok" bindtap="closePop">确定</view>
         </view>
     </view>
 </block>

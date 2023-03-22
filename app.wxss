@@ -167,6 +167,9 @@ button::after{
   box-sizing: border-box;
 	margin-bottom: 40rpx;
 }
+.pop-win2 .desc.tal{
+	text-align: left;
+}
 .pop-win2 .desc .num{color: #ffb58c;}
 .pop-win2 .person{padding: 40rpx 0;box-sizing: border-box;}
 .pop-win2 .person image{width: 128rpx;height: 128rpx;border-radius: 128rpx;display: block;margin: 0 auto 20rpx;}

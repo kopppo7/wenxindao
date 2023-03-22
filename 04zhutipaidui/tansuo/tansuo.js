@@ -28,7 +28,7 @@ Page({
      */
     data: {
         sharePopStatus: false,
-        activityPopStatus: true, //活动提示
+        activityPopStatus: false, //活动提示
         matePopStatus: false, //匹配中
         waitStatus: false, //等待状态
         mixPopStatus: false, //至少两人开始派对
@@ -118,7 +118,39 @@ Page({
         isTuiChuRoom: false,
         fupanIsSay: true,
         fupanIsVoice: true,
-        isLinShiFangZhu: false
+        isLinShiFangZhu: false,
+        isZhongTuTuiChu: false,
+        isRoomGuiZe: false
+    },
+    //关闭弹窗
+    closePop (clear) {
+        var that = this;
+        that.setData({
+            sharePopStatus: false,
+            activityPopStatus: false,
+            waitStatus: false,
+            mixPopStatus: false,
+            matePopStatus: false,
+            timePopStatus: false,
+            kickPopStatus: false,
+            passerPopStatus: false,
+            showTousuPop: false,
+            jumpPopStatus: false,
+            jumpPopStatus2: false,
+            jumpPopStatus3: false,
+            jumpPopStatus4: false,
+            contPasserPopStatus: false,
+            roomSetPopStatus: false,
+            kefuPop: false,
+            isTuichufangjian: false,
+            isZhongTuTuiChu: false,
+            isRoomGuiZe: false,
+            isLinShiFangZhu: false
+        })
+        if (clear == 1 && timeInt) {
+            clearInterval(timeInt)
+            timeInt = null
+        }
     },
     // 活动提示
     activityChange () {
@@ -148,34 +180,6 @@ Page({
         that.setData({
             sharePopStatus: true
         })
-    },
-    //关闭弹窗
-    closePop (clear) {
-        var that = this;
-        that.setData({
-            sharePopStatus: false,
-            activityPopStatus: false,
-            waitStatus: false,
-            mixPopStatus: false,
-            matePopStatus: false,
-            timePopStatus: false,
-            kickPopStatus: false,
-            passerPopStatus: false,
-            showTousuPop: false,
-            jumpPopStatus: false,
-            jumpPopStatus2: false,
-            jumpPopStatus3: false,
-            jumpPopStatus4: false,
-            contPasserPopStatus: false,
-            roomSetPopStatus: false,
-            kefuPop: false,
-            isTuichufangjian: false,
-            isLinShiFangZhu: false
-        })
-        if (clear == 1 && timeInt) {
-            clearInterval(timeInt)
-            timeInt = null
-        }
     },
     //------------------------------------分享end-----------------------------------------------------------
 
@@ -1313,31 +1317,6 @@ Page({
         }
     },
     // 踢人
-    handleKick (e) {
-        console.log(this.data.account);
-        console.log(this.data.roomData.ownerUserIm);
-        if (e.currentTarget.dataset.item.account === this.data.account) {
-            console.log('不能点自己');
-        } else {
-            if (this.data.roomData.ownerUserIm == this.data.account) {
-                //房主：踢人、投诉
-                this.setData({
-                    kickPopStatus: true,
-                    kickPlayer: e.currentTarget.dataset.item,
-                    kickPopType: 1
-                })
-            } else {
-                //成员：投诉
-                this.setData({
-                    kickPopStatus: true,
-                    kickPlayer: e.currentTarget.dataset.item,
-                    kickPopType: 2
-                })
-            }
-        }
-
-
-    },
     handleKickDone (e) {
         var that = this;
         var item = e.currentTarget.dataset.item
@@ -1634,7 +1613,7 @@ Page({
         })
         this.setData({
             show_speak_count_down: false,
-            jumpPopStatus4:false
+            jumpPopStatus4: false
         })
         if (this.data.personInd < (playerList.length - 1)) {
             //发言人index 小于 成员数量，切换下个人发言
@@ -1844,41 +1823,38 @@ Page({
     //查看用户发言
     viewPeopleMsg: function (e) {
         var datasetItem = e.currentTarget.dataset.item
-        console.log(datasetItem.account)
-        if (this.data.viewAccount === datasetItem.account) {
-            this.setData({
-                viewAccount: '',
-                stepCardList: this.data.stepCardListCopy
-            })
-
-        } else {
-            let arr = []
-            let obj = {
-                isBotMes: 0,
-                step: 1,
-                sysType: "sys",
-                cardList: []
-            }
-            this.data.stepCardListAll.forEach(item => {
-                item.cardList.forEach(part => {
-                    if (part.account == datasetItem.account) {
-                        obj.cardList.push(part)
+        if(datasetItem?.account){
+            if (this.data.viewAccount === datasetItem.account) {
+                this.setData({
+                    viewAccount: '',
+                    stepCardList: this.data.stepCardListCopy
+                })
+    
+            } else {
+                let arr = []
+                let obj = {
+                    isBotMes: 0,
+                    step: 1,
+                    sysType: "sys",
+                    cardList: []
+                }
+                this.data.stepCardListAll.forEach(item => {
+                    item.cardList.forEach(part => {
+                        if (part.account == datasetItem.account) {
+                            obj.cardList.push(part)
+                        }
+                    })
+                    if (obj.cardList.length > 0) {
+                        arr.push(obj)
                     }
                 })
-                if (obj.cardList.length > 0) {
-                    arr.push(obj)
-                }
-            })
-            this.setData({
-                viewAccount: datasetItem.account,
-                stepCardList: arr
-            })
-            console.log(arr, 'arrarrarrarr')
+                this.setData({
+                    viewAccount: datasetItem.account,
+                    stepCardList: arr
+                })
+                console.log(arr, 'arrarrarrarr')
+            }
         }
-
-        console.log(this.data.viewAccount)
-
-
     },
 
     //存储数据
@@ -2105,7 +2081,7 @@ Page({
         this.setData({
             isTuichufangjian: false
         })
-        if (this.data.isOwner) {
+        if (this.data.isOwner && this.data.isfriend) {
             //解散房间
             dissolveGroup({
                 id: this.data.roomData.id,
@@ -2141,8 +2117,16 @@ Page({
                 }
             }
         })
-
-
+    },
+    clickZhongTuQuitRoom () {
+        let that = this
+        this.sendCustomMsg(8, { account: that.data.account })
+    },
+    handleZhongTuTuiChu () {
+        this.setData({
+            isZhongTuTuiChu: true,
+            roomSetPopStatus: false
+        })
     },
     getUserName (account) {
         let nick = ''
@@ -2224,6 +2208,7 @@ Page({
             wx.removeStorageSync('roomData')
             wx.removeStorageSync('partyData')
             wx.removeStorageSync('roomPath')
+            wx.removeStorageSync('isLinShiFangZhu')
         }
     },
     //content滚动
@@ -2272,10 +2257,16 @@ Page({
     },
     handleIsLinShiFz () {
         this.setData({
-            isLinShiFangZhu: false
+            isLinShiFangZhu: false,
+            activityPopStatus: wx.getStorageSync('activeStatus') ? false : true
         })
         wx.setStorageSync('isLinShiFangZhu', 1)
         this.sendCustomMsg(4, { text: '您已成为临时房主（无踢人权限）,快去邀请更多的人参与派对吧~' })
+    },
+    handleOpenGuiZe () {
+        this.setData({
+            isRoomGuiZe: true
+        })
     },
     /**
      * 生命周期函数--监听页面加载

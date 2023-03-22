@@ -1,4 +1,7 @@
 {
+  "usingComponents": {
+    "backRoom": "../../components/fanHuiRoom/index"
+  },
   "navigationBarTitleText": "主题派对",
   "navigationStyle": "default"
 }

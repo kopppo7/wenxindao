@@ -1,0 +1,15 @@
+.back-room-other{
+  background: #4E3831;backdrop-filter: blur(43.5rpx);border-radius: 16rpx;padding: 0 24rpx;display: -webkit-flex;display: flex;align-items:center;line-height: 92rpx;height: 92rpx;
+}
+.back-room-other .title{flex-shrink: 0;font-size: 32rpx;color: #FFB58C;font-weight: 500;padding-right: 16rpx;margin-right: 16rpx;position: relative;}
+.back-room-other .title::after{
+  content: "";position: absolute;right: 0;top: 50%;width: 1rpx;height: 18rpx;background: #FFB58C;margin-top: -9rpx;
+}
+.back-room-other .step{flex-grow: 1;color: #FFB58C;}
+.back-room-other .back{flex-shrink: 0; display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;/* 垂直居中 */align-content:center;/* 多行一起垂直居中 */ font-size: 24rpx;color: #FFB58C;}
+.back-room-other .back image{width: 32rpx;height: 32rpx;}
+.back-room-other .back text{color: #FFB58C;margin-right: 16rpx;}
+.back-room-other{}
+.back-room-other{}
+.back-room-other{}
+.back-room-other{}
