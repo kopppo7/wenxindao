@@ -55,7 +55,7 @@
         </view>
         <view class="box2">
           <view class="{{isMine? 'box2-r':'box2-r notMine'}}">
-            <view class="tit">链接卡牌，回答问心精灵的问题。</view>
+            <view class="tit">用心感受画面获得启示。</view>
             <view class="cardContent">
               <view class="card-box {{itemlist.selectCard ? 'hide' : ''}}">
                 <view class="card-box-l">
@@ -133,7 +133,7 @@
                   后结束录音
                 </view>
                 <view class="textarea-box" wx:if="{{itemlist.putType != 5}}">
-                  <textarea wx:if="{{itemlist.putType == 1}}" data-idx="{{indexlist}}" bindinput="inspectText" placeholder="链接卡片回答问题...（最多500字）" maxlength="500" placeholder-style="color: #B6B2CF;" value="{{itemlist.contents.txt}}" />
+                  <textarea wx:if="{{itemlist.putType == 1}}" data-idx="{{indexlist}}" bindinput="inspectText" placeholder="在这里输入探索答案（上限500字）" maxlength="500" placeholder-style="color: #B6B2CF;" value="{{itemlist.contents.txt}}" />
                   <view class="btn-yuyin" bindtap="changePutType" data-type="0" data-idx="{{indexlist}}" wx:if="{{itemlist.putType == 1}}">
                     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>
                     语音输入

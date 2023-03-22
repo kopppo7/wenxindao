@@ -81,11 +81,6 @@ Page({
     })
   },
   openSharePop() {
-    // let that = this;
-    // that.setData({
-    //     sharePopStatus: true
-    // })
-    console.log(123)
     wx.redirectTo({
       url: '/probe/share/share?id=' + this.data.id,
     })
@@ -513,9 +508,6 @@ Page({
         step: Number(this.data.step) + 1
       });
     }
-
-    console.log(this.data.list)
-
   },
   // 切换第几部
   changeStep(e) {
@@ -531,6 +523,9 @@ Page({
     getProExpDetail({
       id: id
     }).then((res) => {
+      wx.setNavigationBarTitle({
+        title: res.data.data.title,
+      })
       if (res.data.data.activity) {
         res.data.data.activity = res.data.data.activity.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
           .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
@@ -541,7 +536,9 @@ Page({
         activity: res.data.data.tags,
         stepBg: Math.floor(100 / (res.data.data.details.length + 2)),
         probeId: res.data.data.probeId,
-        list: []
+        list: [],
+        probeTitle:res.data.data.title,
+        probeShareImg:res.data.data.shareImgUrl
       })
       let arr = res.data.data.details
       for (let i = 0; i < arr.length; i++) {
@@ -617,52 +614,16 @@ Page({
       url: '/pages/my/probedetail/probedetail?id=' + this.data.id,
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage() {
+     return {
+        title: this.data.probeTitle,
+        path: '/probe/detail/detail?id='+this.data.data.probeId,
+        imageUrl: this.data.probeShareImg
+      }
 
   },
 

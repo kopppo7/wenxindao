@@ -36,12 +36,13 @@ page{
 }
 .intro-row1 .txt .s4 text{
 	font-size: 22rpx;
-	width: 120rpx;
+	/* width: 120rpx; */
 	height: 48rpx;
 	line-height: 48rpx;
 	text-align: center;
 	background: rgba(255, 255, 255, 0.16);
-	border-radius: 60rpx;
+  border-radius: 60rpx;
+  padding: 0rpx 20rpx;
 }
 .intro-row1 .txt .s4 text + text{
 	margin-left: 16rpx;
