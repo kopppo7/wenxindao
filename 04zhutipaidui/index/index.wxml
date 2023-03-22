@@ -6,6 +6,7 @@
             {{item.typeName}}</view>
         <!-- <navigator url="" hover-class="none" class="detail">玩法详情</navigator> -->
     </view>
+    <backRoom></backRoom>
     <view class="z-list1" wx:if="{{themeList.length > 0}}">
         <view class="item" wx:for="{{themeList}}" wx:for-index="index"
         wx:for-item="item" bindtap="goDetail" data-id="{{item.id}}">

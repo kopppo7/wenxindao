@@ -104,3 +104,7 @@ export const addCardForRoom = function (data) {
 export const addRoomLog = function (data) {
     return http.post(handleURL('/room/addRoomLog'), data);
 }
+// 主题派对 判断房间状态
+export const checkRoomStatus = function (roomId) {
+    return http.post(handleURL('/room/checkRoom'), roomId);
+}

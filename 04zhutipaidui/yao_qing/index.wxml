@@ -1,0 +1,45 @@
+<!--04zhutipaidui/yao_qing/index.wxml-->
+<view class="yao-qing">
+  <block wx:if="{{isRoomHide}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">此派对邀请已失效</view>
+        <view class="desc">
+            <view>非常抱歉！</view>
+            <view>系统将为您匹配新房间</view>
+        </view>
+        <view class="btns">
+            <view class="btn close" bindtap="handleCancel">取消</view>
+            <view class="btn ok" bindtap="chongXinPiPei">确定</view>
+        </view>
+    </view>
+</block>
+<block wx:if="{{isRoomBegin}}">
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">此派对已开始</view>
+    <view class="desc">
+        <view>非常抱歉，您来晚了~</view>
+        <view>系统将为您匹配新房间</view>
+    </view>
+    <view class="btns">
+        <view class="btn close" bindtap="handleCancel">取消</view>
+        <view class="btn ok" bindtap="chongXinPiPei">确定</view>
+    </view>
+</view>
+</block>
+<block wx:if="{{isRoomFull}}">
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">此派对席位已满</view>
+    <view class="desc">
+        <view>非常抱歉！</view>
+        <view>系统将为您匹配新房间</view>
+    </view>
+    <view class="btns">
+        <view class="btn close" bindtap="handleCancel">取消</view>
+        <view class="btn ok" bindtap="chongXinPiPei">确定</view>
+    </view>
+</view>
+</block>
+</view>

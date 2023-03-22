@@ -456,6 +456,20 @@
           "query": "askId=14&roomId=302&isMatch=1&isfriend=undefined",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/yao_qing/index",
+          "query": "askId=14&roomId=459",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

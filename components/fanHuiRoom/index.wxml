@@ -1,0 +1,11 @@
+<view class="back-room-other" wx:if="{{isShow}}">
+  <view class="title">{{title}}</view>
+  <view class="step">{{status}}</view>
+  <view class="back" bindtap="backRoom">
+    <text>返回房间</text>
+    <image
+      src="https://file.wxdao.net/2023-03/6c4316cb-f1fe-4fb0-b55c-3d4bd0535da4.png"
+      mode="scaleToFill"
+    />
+  </view>
+</view>

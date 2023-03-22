@@ -86,6 +86,7 @@ Page({
     wx.showLoading({
       title: '随机生成头像昵称..',
     })
+    var yao_qing_op = JSON.parse(wx.getStorageSync('yao_qing_option')) || null;
     getUserMsg(token).then(customer => {
       var userInfo = customer.data.data;
       userInfo.wechatName = nickName;
@@ -104,6 +105,10 @@ Page({
           if (userInfo.phone == '' || userInfo.phone == null) {
             wx.redirectTo({
               url: '/pages/login/login',
+            })
+          } else if(yao_qing_op) {
+            wx.navigateTo({
+              url: `/04zhutipaidui/yao_qing/index?askId=${yao_qing_op.askId}&roomId=${yao_qing_op.roomId} `,
             })
           } else {
             wx.redirectTo({
@@ -142,6 +147,7 @@ Page({
       return
     }
     var token = wx.getStorageSync('tokenKey');
+    var yao_qing_op = JSON.parse(wx.getStorageSync('yao_qing_option')) || null;
     getUserMsg(token).then(customer => {
       var userInfo = customer.data.data;
       userInfo.wechatName = this.data.nickName;
@@ -160,6 +166,10 @@ Page({
           if (userInfo.phone == '' || userInfo.phone == null) {
             wx.redirectTo({
               url: '/pages/login/login',
+            })
+          } else if(yao_qing_op) {
+            wx.navigateTo({
+              url: `/04zhutipaidui/yao_qing/index?askId=${yao_qing_op.askId}&roomId=${yao_qing_op.roomId} `,
             })
           } else {
             wx.redirectTo({
