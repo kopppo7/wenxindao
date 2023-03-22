@@ -86,7 +86,10 @@ Page({
     wx.showLoading({
       title: '随机生成头像昵称..',
     })
-    var yao_qing_op = JSON.parse(wx.getStorageSync('yao_qing_option')) || null;
+    var yao_qing_op = null;
+    if(wx.getStorageSync('yao_qing_option')){
+      yao_qing_op = JSON.parse(wx.getStorageSync('yao_qing_option'));
+    }
     getUserMsg(token).then(customer => {
       var userInfo = customer.data.data;
       userInfo.wechatName = nickName;

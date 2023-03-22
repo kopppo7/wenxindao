@@ -621,7 +621,7 @@ Page({
   onShareAppMessage() {
      return {
         title: this.data.probeTitle,
-        path: '/probe/detail/detail?id='+this.data.data.probeId,
+        path: '/probe/detail/detail?id='+this.data.probeId,
         imageUrl: this.data.probeShareImg
       }
 
