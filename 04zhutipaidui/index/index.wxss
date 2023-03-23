@@ -4,7 +4,19 @@
 	padding: 0;
 	background: transparent;
 }
-
+.z-list1 .target{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.z-list1 .target view{
+  padding: 10rpx 16rpx;
+  font-size: 22rpx;
+  background-color: rgba(137, 235, 241, 0.3);
+  border-top-right-radius: 16rpx;
+  border-bottom-left-radius: 16rpx;
+  color: #89EBF1;
+}
 .z-list1 .item {
 	display: flex;
 	align-items: center;
