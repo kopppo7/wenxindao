@@ -18,6 +18,10 @@ Component({
           title: partyData?.themeDetail?.title,
           status: '正在进行中'
         })
+      }else{
+        this.setData({
+          isShow:false
+        })
       }
     }
   },

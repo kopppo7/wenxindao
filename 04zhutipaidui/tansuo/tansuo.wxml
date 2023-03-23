@@ -569,7 +569,7 @@
                 <view class="kick-tit">踢出玩家</view>
                 <view class="kick-list">
                     <block wx:for="{{playerList}}" wx:key="index">
-                    <view class="kick-item" wx:if="{{item && item.account && !isOwner}}">
+                    <view class="kick-item" wx:if="{{item && item.account && item.account!=roomData.ownerUserIm}}">
                         <view class="l">
                             <view class="face">
                                 <image src="{{item.avatar}}"></image>

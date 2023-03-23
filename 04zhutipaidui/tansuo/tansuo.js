@@ -2106,17 +2106,7 @@ Page({
     //退出房间
     clickQuitRoom: function () {
         var that = this
-        wx.showModal({
-            title: '提示',
-            content: '确定退出房间吗？',
-            success (res) {
-                if (res.confirm) {
-                    that.sendCustomMsg(8, { account: that.data.account })
-                } else if (res.cancel) {
-                    console.log('用户点击取消')
-                }
-            }
-        })
+        that.sendCustomMsg(8, { account: that.data.account })
     },
     clickZhongTuQuitRoom () {
         let that = this
