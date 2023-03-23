@@ -55,14 +55,12 @@ Page({
         this.setData({
             list: list
         })
-        console.log("我已经是最后了")
     });
     audioCtx.onStop(()=>{
         list[e.currentTarget.dataset.idx].playVoice = false
         this.setData({
             list: list
         })
-        console.log('我停止了');
     });
 
     list.map((item,index) => {
@@ -88,7 +86,9 @@ Page({
        this.setData({
         list: res.data.data.details,
         time: res.data.data.createTime,
-        id: options.id
+        id: options.id,
+        probeTitle:res.data.data.title,
+        probeShareImg:res.data.data.shareImgUrl
        })
     });
   },
@@ -96,7 +96,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage() {
-
+    return {
+       title: this.data.probeTitle,
+       path: '/probe/detail/detail?id='+this.data.probeId,
+       imageUrl: this.data.probeShareImg
+     }
   },
 
     openBig(e) {

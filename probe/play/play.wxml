@@ -15,7 +15,7 @@
       <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
       <view class="txt">
         <view>大家好，欢迎开启本次生命探索。</view>
-        <view>今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这种性格给我们带来什么样的影响，</view>
+        <!-- <view>今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这种性格给我们带来什么样的影响，</view> -->
       </view>
     </view>
     <view class="box2">
@@ -51,7 +51,7 @@
       <view wx:if="{{ step - 1 == indexlist }}">
         <view class="box1">
           <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
-          <view class="txt">{{itemlist.content}}</view>
+          <view class="txt"><text>{{itemlist.content}}</text></view>
         </view>
         <view class="box2">
           <view class="{{isMine? 'box2-r':'box2-r notMine'}}">
@@ -125,7 +125,9 @@
                   </view>
                 </view>
               </view>
-              <view class="cardTxt" wx:if="{{itemlist.selectCard}}">{{itemlist.selectCard.answer}}</view>
+              <view class="cardTxt" wx:if="{{itemlist.selectCard}}">
+              <text>{{itemlist.selectCard.answer}}</text>
+              </view>
               <!-- 文字输入 语音录入 -->
               <view class="form-z" wx:if="{{isMine}}">
                 <view class="count-down" wx:if="{{recodingTime <= 60000}}">
@@ -205,7 +207,8 @@
     <view class="box1">
       <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
       <view class="txt">
-        <rich-text nodes="{{activity}}"></rich-text>
+          <text style="display: inline;word-wrap: break-word;">{{tags}}</text>
+        <!-- <rich-text nodes="{{tags}}"></rich-text> -->
       </view>
       <!-- <view class="txt">
                       本次生命探索正式结束啦。
@@ -216,7 +219,9 @@
     <view class="box3">
       <view class="box3-item">
         <view class="tit">生命探索解析</view>
-        <view class="con">科学研究发现，我们的性格在小时候有80%的比例受到父母的影响。成年以后，这种影响会降低到40%左右，依然是个非常高的比例，在生命中发挥重要作用。</view>
+        <view class="con" >
+          <text style="display: inline;word-wrap: break-word;">{{tips}}</text>
+        </view>
       </view>
       <view class="box3-item">
         <view class="tit">想要更深入的了解自己？</view>

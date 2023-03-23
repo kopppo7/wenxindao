@@ -44,14 +44,9 @@ Page({
         }).then(res => {
             var content = JSON.parse(res.data.data.contents);
             var txt = content[0].txt
-
-
             var num = 70
             var txt1 = txt.substring(0,70)
             var txt2 = txt.substring(70,txt.length)
-            console.log(txt1)
-            console.log(txt2)
-
             that.setData({
                 content: content[0],
                 cardTime: res.data.data.addTime.substring(11, 16),
@@ -89,7 +84,6 @@ Page({
             size: true,
             scrollOffset: true
         }, data => {
-            console.log(data)
             let width = data.width + 56;
             let height = data.height;
             that.setData({
@@ -103,7 +97,6 @@ Page({
     },
     startDraw() {
         let that = this
-        console.log(that.data.width)
         // 创建wxml2canvas对象
         let drawMyImage = new Wxml2Canvas({
             width: that.data.width,
@@ -124,7 +117,6 @@ Page({
                 console.log(url);
             },
             error(res) { // 失败原因
-                console.log(res);
                 wx.hideLoading()
             }
         }, this);
