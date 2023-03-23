@@ -526,14 +526,21 @@ Page({
       wx.setNavigationBarTitle({
         title: res.data.data.title,
       })
-      if (res.data.data.activity) {
-        res.data.data.activity = res.data.data.activity.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
-          .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
-      }
+      // if (res.data.data.activity) {
+      //   res.data.data.activity = res.data.data.activity.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
+      //     .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
+      // }
+      // if (res.data.data.tags) {
+      //   res.data.data.tags = res.data.data.tags.split('\n').join('&hc');
+      // }
+      // if (res.data.data.tips) {
+      //   res.data.data.tips = res.data.data.tips.split('\n').join('&hc');
+      // }
       this.setData({
         stepList: res.data.data.details,
         step: res.data.data.current,
-        activity: res.data.data.tags,
+        tags: res.data.data.tags,
+        tips:res.data.data.tips,
         stepBg: Math.floor(100 / (res.data.data.details.length + 2)),
         probeId: res.data.data.probeId,
         list: [],
