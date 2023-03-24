@@ -21,7 +21,7 @@
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
+    "compileHotReLoad": true,
     "lazyloadPlaceholderEnable": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
@@ -42,17 +42,485 @@
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true,
-    "condition": false
+    "condition": false,
+    "bigPackageSizeSupport": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.25.2",
+  "libVersion": "2.29.0",
   "appid": "wxd40f4a1939d2f1f1",
-  "projectname": "huaruixcx",
+  "projectname": "wenxin-wx",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "condition": {}
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "裂变分享",
+          "pathName": "probe/detail/detail",
+          "query": "id=15&shareId=18",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=487&isfriend=1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "主题探索",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=10",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "投诉",
+          "pathName": "04zhutipaidui/tousu/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "列表",
+          "pathName": "04zhutipaidui/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "复盘畅聊",
+          "pathName": "04zhutipaidui/fupan/index",
+          "query": "roomId=65",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "支付",
+          "pathName": "07liebian/goumaixiwei/goumaixiwei",
+          "query": "id=9",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "隐私设置",
+          "pathName": "04zhutipaidui/setHouse/setHouse",
+          "query": "id=9",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "主题介绍",
+          "pathName": "04zhutipaidui/zhutijieshao/zhutijieshao",
+          "query": "id=10",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "分享海报页面调试",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "id=82",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "每日调频",
+          "pathName": "02meiritiaopin/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "分享",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "id=95",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "生命探索",
+          "pathName": "probe/play/play",
+          "query": "id=167",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "分享2",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "id=96",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的",
+          "pathName": "pages/my/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "生命探索详情",
+          "pathName": "pages/my/probedetail/probedetail",
+          "query": "id=167",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "123",
+          "pathName": "probe/play/play",
+          "query": "id=184",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "生命探索分享",
+          "pathName": "probe/share/share",
+          "query": "id=184",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pp",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=124&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "po",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=124&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "qqq",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=127&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "www",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=133&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "1",
+          "pathName": "04zhutipaidui/zhutijieshao/zhutijieshao",
+          "query": "id=14",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "share",
+          "pathName": "probe/share/share",
+          "query": "id=197",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "分享详情",
+          "pathName": "pages/my/fmdetail/fmdetail",
+          "query": "id=132",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "222",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=147&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=157&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=155&isMatch=true&isHaoyou=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=159&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=158&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=158&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "probe/play/play",
+          "query": "id=212",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "probe/play/play",
+          "query": "id=212",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "02meiritiaopin/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=179&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "02meiritiaopin/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=179&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=179&isMatch=true",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=213&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=216&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=214&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=216&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=217&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=217&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=229&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=229&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=230&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=230&isMatch=true&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=231&isMatch=undefined&isfriend=true",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=238&isMatch=0&isfriend=1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=238&isMatch=undefined&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=240&isMatch=undefined&isfriend=1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=245&isMatch=undefined&isfriend=1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=246&isMatch=undefined&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=254&isMatch=undefined&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=264&isMatch=undefined&isfriend=1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=264&isMatch=undefined&isfriend=1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=267&isMatch=1&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=283&isfriend=1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=476&isfriend=1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/zhutijieshao/zhutijieshao",
+          "query": "id=9",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=278&isMatch=1&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=14&roomId=302&isMatch=1&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/yao_qing/index",
+          "query": "askId=14&roomId=460",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  }
 }

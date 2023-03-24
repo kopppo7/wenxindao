@@ -591,6 +591,20 @@
         </view>
     </view>
 </block>
+<!-- 被踢出房间 -->
+<block wx:if="{{isBeiTi && beiTiAccount == account}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">提示</view>
+        <view class="desc">
+            <view>您已被房主</view>
+            <view>抱出房间</view>
+        </view>
+        <view class="btns">
+            <view class="btn ok" bindtap="leaveRoomClear">确定</view>
+        </view>
+    </view>
+</block>
 <!--投诉-->
 <block>
     <view class="tousu-wrap" wx:if="{{showTousuPop}}">

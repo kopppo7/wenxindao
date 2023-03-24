@@ -19,7 +19,7 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "askId=14&roomId=423",
+          "query": "askId=14&roomId=488&isfriend=1",
           "launchMode": "default",
           "scene": null
         },
@@ -411,7 +411,7 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "askId=14&roomId=264&isMatch=undefined&isfriend=1",
+          "query": "askId=14&roomId=488&isfriend=1",
           "launchMode": "default",
           "scene": null
         },
@@ -432,7 +432,7 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "askId=14&roomId=476&isfriend=1",
+          "query": "askId=14&roomId=487&isfriend=1",
           "launchMode": "default",
           "scene": null
         },
@@ -460,7 +460,7 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/yao_qing/index",
-          "query": "askId=14&roomId=459",
+          "query": "askId=14&roomId=460",
           "launchMode": "default",
           "scene": null
         },
