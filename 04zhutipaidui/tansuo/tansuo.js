@@ -120,7 +120,10 @@ Page({
         fupanIsVoice: true,
         isLinShiFangZhu: false,
         isZhongTuTuiChu: false,
-        isRoomGuiZe: false
+        isRoomGuiZe: false,
+        beiTiAccount: '',
+        isBeiTi: false,
+        ownerName: '', //房主昵称
     },
     //关闭弹窗
     closePop (clear) {
@@ -451,6 +454,7 @@ Page({
                 img: val?.imgUrl,      //发的图片
                 account: val?.account,      //房间人员变动
                 times: val?.times,      // 倒计时时间
+                tiRenInfo: val?.tiRenInfo,      // 倒计时时间
             }
         };
         var msg = nim.sendCustomMsg({
@@ -575,6 +579,7 @@ Page({
                 })
                 console.log(that.data.msgList);
             } else if (content.type == 5) {
+                // 发牌
                 var list = []
                 var allCard = []
                 // 筛选出当前人分的牌
@@ -664,16 +669,18 @@ Page({
                 that.setData({
                     msgList: msgList
                 })
-                console.log(that.data.account);
-                console.log(userAccount, userName);
                 if (that.data.account == userAccount) {
                     // 如果是本人离开的话
-                    clearTimeout(readyTimeout)
-                    quitRoom({
-                        roomId: that.data.roomData.id
-                    }).then(res => {
-                    })
-                    that.leaveRoomClear()
+                    if (readyTimeout) {
+                        clearTimeout(readyTimeout)
+                    }
+                    if (!that.data.isBeiTi) {
+                        quitRoom({
+                            roomId: that.data.roomData.id
+                        }).then(res => {
+                        })
+                        that.leaveRoomClear()
+                    }
                 }
                 else {
                     // 别人离开的话，更新人员信息
@@ -697,6 +704,13 @@ Page({
             } else if (content.type == 10) {
                 // 发言和思考倒计时
                 this.getDownTime(content.data.times, that.speak)
+            } else if (content.type == 11) {
+                // 被踢出房间
+                that.setData({
+                    roomSetPopStatus: false,
+                    beiTiAccount: content.data.tiRenInfo.beiTiAccount,
+                    isBeiTi: content.data.tiRenInfo.isBeiTi
+                })
             }
         } else {
             var msgObj = {
@@ -1160,6 +1174,7 @@ Page({
             that.sendCustomMsg(4, { text: msg.attach.users[0].nick + '进入房间' })
         } else if (msg.attach.type == 'removeTeamMembers') {
             // 踢人出群
+            // that.sendCustomMsg(8, { account: msg.attach.users[0].account })
             that.sendCustomMsg(4, { text: msg.attach.users[0].nick + '离开房间' })
         } else if (msg.attach.type == 'leaveTeam') {
             // 离开房间
@@ -1320,13 +1335,20 @@ Page({
     handleKickDone (e) {
         var that = this;
         var item = e.currentTarget.dataset.item
-        console.log(item)
+        that.sendCustomMsg(11, {
+            tiRenInfo: {
+                beiTiAccount: item.account,
+                isBeiTi: true
+            }
+        })
         kickingPlayer({
             yunId: item.account,
             roomId: that.data.roomData.id
         }).then(res => {
-            this.setData({
-
+            console.log(item.account, 'item.accountitem.account');
+            console.log(that.data.account);
+            that.setData({
+                roomSetPopStatus: false,
             })
         })
     },
@@ -1823,13 +1845,13 @@ Page({
     //查看用户发言
     viewPeopleMsg: function (e) {
         var datasetItem = e.currentTarget.dataset.item
-        if(datasetItem?.account){
+        if (datasetItem?.account) {
             if (this.data.viewAccount === datasetItem.account) {
                 this.setData({
                     viewAccount: '',
                     stepCardList: this.data.stepCardListCopy
                 })
-    
+
             } else {
                 let arr = []
                 let obj = {
@@ -2120,7 +2142,7 @@ Page({
     },
     getUserName (account) {
         let nick = ''
-        this.data.playerList.forEach(item => {
+        this.data.truePlayerList.forEach(item => {
             if (item?.account && account === item.account) {
                 nick = item.nick
             } else {
@@ -2146,7 +2168,7 @@ Page({
                 console.log('实例已被完全清除')
             }
         })
-        if (jump) {
+        if (jump === 1) {
             console.log('清除缓存');
         } else {
             wx.redirectTo({

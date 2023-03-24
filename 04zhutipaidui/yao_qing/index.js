@@ -35,6 +35,7 @@ Page({
       // 0正常,1房间不存在,2房间已经解散,3派对已经开始,请勿打扰,4派对已经满员,请勿打扰
       if (res.data.data.type == 0) {
         // 跳转到房间
+        
 
       } else if (res.data.data.type == 1) {
         this.setData({
