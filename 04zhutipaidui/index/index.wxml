@@ -31,6 +31,11 @@
                     <!-- <view class="s3-r s3-r3">9.9元 开始探索</view> -->
                 </view>
             </view>
+            <view class="target">
+              <view wx:if="{{item.isSeat==1&&item.isBao==0}}">已购席位</view>
+              <view wx:if="{{item.isSeat==0&&item.isBao==1}}">已购包场</view>
+              <view wx:if="{{item.isSeat==1&&item.isBao==1}}">已购席位/包场</view>
+            </view>
         </view>
     </view>
     <view class="nodata" wx:else>暂无数据</view>
