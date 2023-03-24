@@ -126,7 +126,7 @@
                 </view>
               </view>
               <view class="cardTxt" wx:if="{{itemlist.selectCard}}">
-              <text>{{itemlist.selectCard.answer}}</text>
+              <text style="display: inline;word-wrap: break-word;">{{itemlist.selectCard.answer}}</text>
               </view>
               <!-- 文字输入 语音录入 -->
               <view class="form-z" wx:if="{{isMine}}">
