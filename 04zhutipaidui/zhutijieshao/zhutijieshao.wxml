@@ -83,11 +83,16 @@
         <view class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
     </view> -->
     <view class="btn-box" wx:if="{{!roomData}}">
-        <view class="bottom-r bottom-r1" bindtap="openBuyPop" data-type="pipei">快速匹配</view>
-        <view class="bottom-r bottom-r1" bindtap="friendTogether"
-        data-type="haoyou"
-        >好友结伴</view>
+        <view class="btn-box-buy" wx:if="{{detailObj.isFree==0&&detailObj.isSeat==0&&detailObj.isBao==0}}" bindtap="openBuyPop">
+          立即购买
+        </view>
+        <block wx:else>
+          <view class="bottom-r bottom-r1" bindtap="openBuyPop" data-type="pipei">快速匹配</view>
+          <view class="bottom-r bottom-r1" bindtap="friendTogether"
+          data-type="haoyou"
+          >好友结伴</view>
         <view class="bottom-r bottom-r2" bindtap="openGwPop">写感悟</view>
+        </block>
     </view>
     <view class="btn-box" wx:else>
         <view class="bottom-r full" bindtap="toRoom" data-type="pipei">返回房间</view>

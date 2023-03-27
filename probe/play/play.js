@@ -614,26 +614,22 @@ Page({
       })
       this.getDetail(options.id)
     }
-
   },
   lookLog() {
     wx.redirectTo({
       url: '/pages/my/probedetail/probedetail?id=' + this.data.id,
     })
   },
-
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage() {
      return {
-        title: this.data.probeTitle,
+        title:"不睡觉也想探索的话题："+ this.data.probeTitle,
         path: '/probe/detail/detail?id='+this.data.probeId,
         imageUrl: this.data.probeShareImg
       }
-
   },
-
   //翻牌
   clickCard: function (e) {
     if (this.data.canClickCard) {

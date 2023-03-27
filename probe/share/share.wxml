@@ -81,7 +81,7 @@
 			</view>
 		</view>
 		<view class="eval-list">
-			<view data-type="text" class="title my_draw_canvas" data-text="精彩点评"
+			<!-- <view data-type="text" class="title my_draw_canvas" data-text="精彩点评"
 				>精彩点评</view
 			>
 			<block wx:for="{{ evalList }}" wx:key="index">
@@ -106,7 +106,7 @@
 						data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
 					></image>
 				</view>
-			</block>
+			</block> -->
 			<view class="bot-info">
 				<view class="left">
 					<view

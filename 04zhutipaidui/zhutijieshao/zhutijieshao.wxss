@@ -219,6 +219,16 @@ page{
 	text-align: center;
 }
 .bottom-box .btn-box{display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;padding: 0 20rpx;}
+.bottom-box .btn-box-buy{   
+   background: #7461E7;
+  flex: 1;
+  font-size: 26rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  text-align: center;
+  position: relative;
+  overflow: hidden;}
 .bottom-box .btn-box .bottom-r{margin: 0 20rpx;height: 64rpx;line-height: 64rpx;}
 .bottom-box .btn-box .bottom-r.bottom-r2{
 	background-color: #FFB58C;
