@@ -9,7 +9,3 @@
 .back-room-other .back{flex-shrink: 0; display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;/* 垂直居中 */align-content:center;/* 多行一起垂直居中 */ font-size: 24rpx;color: #FFB58C;}
 .back-room-other .back image{width: 32rpx;height: 32rpx;}
 .back-room-other .back text{color: #FFB58C;margin-right: 16rpx;}
-.back-room-other{}
-.back-room-other{}
-.back-room-other{}
-.back-room-other{}

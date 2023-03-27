@@ -1410,10 +1410,6 @@ Page({
                     downtimes--
                     var step = that.data.step
                     var speakTime = that.data.themeDetail.list[step - 1].speakTime || 10
-                    console.log(step, '==============');
-                    console.log(speakTime, 'speakTime');
-                    console.log(downtimes, 'downtimes');
-                    console.log(speakTime - downtimes, 'speakTime - downtimes');
                     // 判断几秒内没发言自动跳过
                     if (speakTime && speakTime - downtimes == 3 && that.data.show_speak_count_down) {
                         clearInterval(timeInt)
@@ -1789,7 +1785,14 @@ Page({
         if (this.data.step === this.data.themeDetail.list.length + 1) {
             console.log('这里是结语？？？');
         } else {
-            if (step <= this.data.step) {
+            let arr = []
+            let obj = {
+                isBotMes: 0,
+                step: step,
+                sysType: "sys",
+                cardList: []
+            }
+            if (step < this.data.step) {
                 //加类名
                 stepList.map(item => {
                     item.view = false
@@ -1800,13 +1803,42 @@ Page({
                 })
 
                 //找msgList中对应轮的数据
-                let arr = []
-                let obj = {
-                    isBotMes: 0,
-                    step: 1,
-                    sysType: "sys",
-                    cardList: []
+                debugger
+                bbq:
+                for (var j = 0; j < this.data.stepCardListAll.length; j++) {
+                    var item = this.data.stepCardListAll[j]
+                    ccc:
+                    for (var i = 0; i < item.cardList.length; i++) {
+                        var part = item.cardList[i]
+                        var part2 = item.cardList[i + 1]
+                        var part3 = item.cardList[i + 2]
+                        if (this.data.viewAccount) {
+                            if (part.account == this.data.viewAccount && item.step == step) {
+                                obj.cardList.push(part)
+                                obj.cardList.push(part2)
+                                obj.cardList.push(part3)
+                                arr.push(obj)
+                                break bbq; //直接跳出bbq外层循环
+                            }
+                        } else {
+                            if (part.account == this.data.account && item.step == step) {
+                                obj.cardList.push(part)
+                                obj.cardList.push(part2)
+                                obj.cardList.push(part3)
+                                arr.push(obj)
+                                break bbq; //直接跳出bbq外层循环
+                            }
+                        }
+                    }
                 }
+                console.log(this.data.stepCardListAll, 'stepCardListAll');
+                console.log(arr, 'arr');
+                this.setData({
+                    stepCardList: arr,
+                    showOtherStep: true
+                })
+            }
+            if (step === this.data.step) {
                 this.data.stepCardListAll.forEach(item => {
                     item.cardList.forEach(part => {
                         if (this.data.viewAccount) {
@@ -1819,17 +1851,8 @@ Page({
                             }
                         }
                     })
-                    if (obj.cardList.length > 0) {
-                        arr.push(obj)
-                    }
+                    arr.push(obj)
                 })
-
-                this.setData({
-                    stepCardList: arr,
-                    showOtherStep: true
-                })
-            }
-            if (step === this.data.step) {
                 stepList.map(item => {
                     item.view = false
                 })
@@ -1842,7 +1865,7 @@ Page({
 
         }
     },
-    //查看用户发言
+    //查看用户卡牌
     viewPeopleMsg: function (e) {
         var datasetItem = e.currentTarget.dataset.item
         if (datasetItem?.account) {
