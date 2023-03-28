@@ -18,6 +18,7 @@
   color: #89EBF1;
 }
 .z-list1 .item {
+  position: relative;
 	display: flex;
 	align-items: center;
 	background: rgba(182, 178, 207, 0.12);
