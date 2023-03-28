@@ -83,14 +83,12 @@
         <view class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
     </view> -->
     <view class="btn-box" wx:if="{{!roomData}}">
-        <view class="btn-box-buy" wx:if="{{detailObj.isFree==0&&detailObj.isSeat==0&&detailObj.isBao==0}}" bindtap="openBuyPop">
+        <view class="btn-box-buy" wx:if="{{detailObj.isFree==0&&detailObj.isSeat==0&&detailObj.isBao==0}}" bindtap="openBuy">
           立即购买
         </view>
         <block wx:else>
-          <view class="bottom-r bottom-r1" bindtap="openBuyPop" data-type="pipei">快速匹配</view>
-          <view class="bottom-r bottom-r1" bindtap="friendTogether"
-          data-type="haoyou"
-          >好友结伴</view>
+          <view class="bottom-r bottom-r1" bindtap="openBuy" data-type="pipei">快速匹配</view>
+          <view class="bottom-r bottom-r1" bindtap="openBuy" data-type="haoyou">好友结伴</view>
         <view class="bottom-r bottom-r2" bindtap="openGwPop">写感悟</view>
         </block>
     </view>
@@ -112,5 +110,19 @@
             <button form-type="submit" class="btn-buy"> 提交 </button>
         </form>
         
+    </view>
+</block>
+
+<block wx:if="{{buyTips}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">提示</view>
+        <view class="desc">
+            {{tips}}
+        </view>
+        <view class="btns">
+            <view style="background-color: rgba(182, 178, 207, 0.18);border: none;" class="btn" bindtap="closePop">取消</view>
+            <view class="btn ok" bindtap="toBuy">确认</view>
+        </view>
     </view>
 </block>

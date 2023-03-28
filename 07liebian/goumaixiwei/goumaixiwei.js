@@ -13,7 +13,8 @@ Page({
         themeId: '',
         detailObj: {},
         type: 2,
-        isShowPop: false
+        isShowPop: false,
+        only:0
     },
     initData () {
         findByAskPartyOne({ id: this.data.themeId }).then(res => {
@@ -29,7 +30,13 @@ Page({
     onLoad: function (options) {
         this.setData({
             themeId: options.id,
+            only:options.only
         })
+        if(options.only){
+          this.setData({
+            type:options.only*1
+          })
+        }
         this.initData()
     },
     //选择类型
@@ -44,10 +51,10 @@ Page({
         this.setData({
             isShowPop: false
         })
-        wx.showLoading({
-            title: '支付中',
-            mask: true,
-        })
+        // wx.showLoading({
+        //     title: '支付中',
+        //     mask: true,
+        // })
         getPayParty({
             id: that.data.themeId * 1,
             types: that.data.type

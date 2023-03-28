@@ -22,7 +22,7 @@
         </view>
     </view>
     <view class="buy-list">
-        <view class="item" bindtap="pickType" data-type="2">
+        <view class="item" bindtap="pickType" data-type="2" wx:if="{{only==0||only==2}}">
             <view class="buy-area">
                 <view class="text">
                     <view class="p1">快速匹配</view>
@@ -50,7 +50,7 @@
             </view>
             
         </view>
-        <view class="item item2" bindtap="pickType" data-type="1">
+        <view class="item item2" bindtap="pickType" data-type="1"  wx:if="{{only==0||only==1}}">
             <view class="buy-area">
                 <view class="text">
                     <view class="p1">好友结伴</view>

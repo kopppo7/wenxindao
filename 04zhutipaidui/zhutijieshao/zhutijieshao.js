@@ -25,39 +25,72 @@ Page({
         rating: 4,
         area: '',
         roomData: {},
-        roomPath: {}
+        roomPath: {},
+        buyTips:false,
+        tips:'',
+        buyType:''
+    },
+    toBuy(){
+      if(this.data.buyType=='pipei'){
+        this.closePop()
+        wx.navigateTo({
+            url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId+'&only=2',
+        })
+      }else if(this.data.buyType=='haoyou'){
+        this.closePop()
+        wx.navigateTo({
+            url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId+'&only=1',
+        })
+      }
     },
     // 快速匹配
-    openBuyPop (e) {
-        var type = e.currentTarget.dataset.type
+    openBuyPop () {
         var that = this;
+        roomMatchingPlay(that.data.themeId).then(res => {
+            if (res.data.ret === 203) {
+                wx.navigateTo({
+                    url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
+                })
+            } else if (res.data.ret === 200) {
+                wx.navigateTo({
+                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + (res.data.id || res.data.data) + '&isMatch=1',
+                })
+            }
+        })
+    },
+    openBuy(e){
+      var type = e.currentTarget.dataset.type;
+      if(type=='pipei'){
         if(this.data.detailObj.isSeat==1||this.data.detailObj.isFree==1){
-          roomMatchingPlay(that.data.themeId).then(res => {
-              if (res.data.ret === 203) {
-                  wx.navigateTo({
-                      url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
-                  })
-              } else if (res.data.ret === 200) {
-                  wx.navigateTo({
-                      url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + (res.data.id || res.data.data) + '&isMatch=1',
-                  })
-              }
+          this.openBuyPop();
+        }else{
+          this.setData({
+            buyTips:true,
+            tips:'您已购买私人派对是否继续购买单人匹配席位',
+            buyType:'pipei'
           })
         }
-        else if(this.data.detailObj.isFree==0&&this.data.detailObj.isSeat==0&&this.data.detailObj.isBao==1){
-          wx.showModal({
-            content:'您已购买私人派对是否继续购买单人匹配席位',
-            confirmText:'确认',
-            cancelText:'取消'
+      }else if(type=='haoyou'){
+        if(this.data.detailObj.isBao==1||this.data.detailObj.isFree==1){
+          this.friendTogether();
+        }else{
+          this.setData({
+            buyTips:true,
+            tips:'您已购买快速匹配是否继续购买私人派对',
+            buyType:'haoyou'
           })
         }
+      }else{
+        wx.navigateTo({
+            url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
+        })
+      }
     },
     // 好友结伴
     friendTogether () {
-        let params = {
-            askId: this.data.themeId,
-        }
-        createBaoRoom(params).then(res => {
+        createBaoRoom({
+          askId: this.data.themeId
+        }).then(res => {
             if (res.data.ret === 201) {
                 wx.navigateTo({
                     url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
@@ -75,7 +108,9 @@ Page({
         that.setData({
             buyPopStatus: false,
             yearPopStatus: false,
-            gwPopStatus: false
+            gwPopStatus: false,
+            buyTips:false,
+            buyType:''
         })
     },
 
@@ -175,8 +210,6 @@ Page({
         wx.redirectTo({
             url: url.replace('&', '?'),
         })
-
-
     },
     inputArea(e){
         console.log(e.detail.value.length);
