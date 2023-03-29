@@ -40,6 +40,7 @@ Page({
         roomSetPopStatus: false, //房间设置
         payMatching: false, //付费or匹配
         step: 0,
+        changeStep: 0,
         waitTime: '00',
         chatroom: null,
         account: "",
@@ -124,6 +125,7 @@ Page({
         beiTiAccount: '',
         isBeiTi: false,
         ownerName: '', //房主昵称
+        isFaYan:false,
     },
     //关闭弹窗
     closePop (clear) {
@@ -723,7 +725,8 @@ Page({
             }
             msgList.push(msgObj)
             that.setData({
-                msgList: msgList
+                msgList: msgList,
+                isFaYan:true
             })
         }
         that.saveData()
@@ -1411,7 +1414,7 @@ Page({
                     var step = that.data.step
                     var speakTime = that.data.themeDetail.list[step - 1].speakTime || 10
                     // 判断几秒内没发言自动跳过
-                    if (speakTime && speakTime - downtimes == 3 && that.data.show_speak_count_down) {
+                    if (speakTime && speakTime - downtimes == 5 && that.data.show_speak_count_down  && !that.data.isFaYan) {
                         clearInterval(timeInt)
                         that.setData({
                             jumpPopStatus4: true,
@@ -1454,6 +1457,7 @@ Page({
             jumpPopStatus2: false,
             jumpPopStatus3: false,
             jumpPopStatus4: false,
+            isFaYan:false
         })
 
         //话术
@@ -1782,6 +1786,9 @@ Page({
     viewStep: function (e) {
         var step = e.currentTarget.dataset.step
         var stepList = this.data.stepList
+        this.setData({
+            changeStep:step
+        })
         if (this.data.step === this.data.themeDetail.list.length + 1) {
             console.log('这里是结语？？？');
         } else {
@@ -1803,7 +1810,6 @@ Page({
                 })
 
                 //找msgList中对应轮的数据
-                debugger
                 bbq:
                 for (var j = 0; j < this.data.stepCardListAll.length; j++) {
                     var item = this.data.stepCardListAll[j]
@@ -1839,25 +1845,38 @@ Page({
                 })
             }
             if (step === this.data.step) {
-                this.data.stepCardListAll.forEach(item => {
-                    item.cardList.forEach(part => {
+                bbq2:
+                for (let i = 0; i < this.data.stepCardListAll.length; i++) {
+                    const item = this.data.stepCardListAll[i];
+                    for (let j = 0; j < item.cardList.length; j++) {
+                        var part = item.cardList[j]
+                        var part2 = item.cardList[j + 1]
+                        var part3 = item.cardList[j + 2]
                         if (this.data.viewAccount) {
-                            if (part.account == this.data.viewAccount) {
+                            if (part.account == this.data.viewAccount && item.step == step) {
                                 obj.cardList.push(part)
+                                obj.cardList.push(part2)
+                                obj.cardList.push(part3)
+                                arr.push(obj) 
+                                break bbq2; //直接跳出bbq外层循环
                             }
                         } else {
-                            if (part.account == this.data.account) {
+                            if (part.account == this.data.account && item.step == step) {
                                 obj.cardList.push(part)
+                                obj.cardList.push(part2)
+                                obj.cardList.push(part3)
+                                arr.push(obj)
+                                break bbq2; //直接跳出bbq外层循环
                             }
                         }
-                    })
-                    arr.push(obj)
-                })
+                    }
+                }
                 stepList.map(item => {
                     item.view = false
                 })
                 this.setData({
                     stepList: stepList,
+                    stepCardList:arr,
                     showOtherStep: false
 
                 })
@@ -1883,16 +1902,33 @@ Page({
                     sysType: "sys",
                     cardList: []
                 }
-                this.data.stepCardListAll.forEach(item => {
-                    item.cardList.forEach(part => {
-                        if (part.account == datasetItem.account) {
-                            obj.cardList.push(part)
+                bbq:
+                for (var j = 0; j < this.data.stepCardListAll.length; j++) {
+                    var item = this.data.stepCardListAll[j]
+                    ccc:
+                    for (var i = 0; i < item.cardList.length; i++) {
+                        var part = item.cardList[i]
+                        var part2 = item.cardList[i + 1]
+                        var part3 = item.cardList[i + 2]
+                        if (this.data.viewAccount) {
+                            if (part.account == datasetItem.account && item.step == this.data.changeStep) {
+                                obj.cardList.push(part)
+                                obj.cardList.push(part2)
+                                obj.cardList.push(part3)
+                                arr.push(obj)
+                                break bbq; //直接跳出bbq外层循环
+                            }
+                        } else {
+                            if (part.account == this.data.account && item.step == this.data.changeStep) {
+                                obj.cardList.push(part)
+                                obj.cardList.push(part2)
+                                obj.cardList.push(part3)
+                                arr.push(obj)
+                                break bbq; //直接跳出bbq外层循环
+                            }
                         }
-                    })
-                    if (obj.cardList.length > 0) {
-                        arr.push(obj)
                     }
-                })
+                }
                 this.setData({
                     viewAccount: datasetItem.account,
                     stepCardList: arr
