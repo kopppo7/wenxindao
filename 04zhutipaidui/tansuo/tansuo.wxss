@@ -1282,15 +1282,13 @@ image {
 .top-content .box {
 	padding: 24rpx 24rpx 0;
 }
-.top-content .item .name {
+.top-content .itemList .name {
 	color: rgba(255, 255, 255, 0.6);
 }
-.top-content .item .name .huang {
+.top-content .itemList .name .huang {
 	color: #ffb58c;
 }
-.top-content .item.sys .name {
-	color: #ffb58c;
-}
+
 .bot-content {
 	position: absolute;
 	bottom: -200rpx;
