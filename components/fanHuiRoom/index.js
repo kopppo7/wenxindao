@@ -34,7 +34,7 @@ Component({
       let roomPath = wx.getStorageSync('roomPath')
       if (roomPath) {
         wx.navigateTo({
-          url: '/04zhutipaidui/tansuo/tansuo?askId=' + roomPath.askId + 'isMatch' + roomPath.isMatch + 'isfriend' + roomPath.isfriend + 'roomId' + roomPath.roomId
+          url: '/04zhutipaidui/tansuo/tansuo?askId=' + roomPath.askId + '&isMatch=' + roomPath.isMatch + '&isfriend=' + roomPath.isfriend + '&roomId=' + roomPath.roomId
         })
       }
     }

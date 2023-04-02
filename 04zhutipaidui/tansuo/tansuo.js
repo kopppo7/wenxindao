@@ -735,6 +735,7 @@ Page({
 
     //渲染消息记录
     renderHistoryMsh (msg) {
+        console.log('这里是重新渲染消息记录');
         if (!this.data.showOtherStep) {
             this.contentScroll()
         }
@@ -2390,9 +2391,9 @@ Page({
                 this.initRoom()
                 console.log(this.data.yunMsgList, 'this.data.yunMsgList');
                 //处理存储的消息
-                this.data.yunMsgList.map(item => {
-                    this.renderHistoryMsh(item)
-                })
+                // this.data.yunMsgList.map(item => {
+                //     this.renderHistoryMsh(item)
+                // })
             } else {
                 //第一次进入页面
                 this.setData({
