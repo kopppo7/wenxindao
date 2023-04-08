@@ -8,7 +8,7 @@ import {
     kickingPlayer,
     openBaoRoomMate,
     getRoomDetails,
-    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate, addRoomLog, inviteFriendsRoom
+    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate, addRoomLog, inviteFriendsRoom, getIfFreeMy
 } from "../api";
 import { formatMsgList } from "../../utils/yun";
 import { findByOrderList, getUserMsg } from "../../utils/api";
@@ -126,6 +126,10 @@ Page({
         isBeiTi: false,
         ownerName: '', //房主昵称
         isFaYan: false,
+        isLastPeople: false,
+        lastPeoplePop1: false,
+        lastPeoplePop2: false,
+        leaveUserInfor: null, //离开房间人的信息
     },
     //关闭弹窗
     closePop (clear) {
@@ -150,7 +154,9 @@ Page({
             isTuichufangjian: false,
             isZhongTuTuiChu: false,
             isRoomGuiZe: false,
-            isLinShiFangZhu: false
+            isLinShiFangZhu: false,
+            lastPeoplePop1: false,
+            lastPeoplePop2: false,
         })
         if (clear == 1 && timeInt) {
             clearInterval(timeInt)
@@ -659,8 +665,16 @@ Page({
                 //玩家离开房间
                 var player = that.data.playerList;
                 var player2 = that.data.playerList;
+                console.log(content, 'content');
                 var userName = that.getUserName(content.data.account)
                 var userAccount = content.data.account
+                let userObj = {
+                    userName,
+                    userAccount
+                }
+                that.setData({
+                    leaveUserInfor: userObj
+                })
                 var msgObj = {
                     sysType: 'sys',
                     text: userName + '离开房间',
@@ -688,12 +702,29 @@ Page({
                     // 别人离开的话，更新人员信息
                     player.forEach((item, index) => {
                         if (item?.account && item?.account == userAccount) {
-                            player2.splice(index, 1)
+                            player2.splice(index, 1, {})
                         }
                     })
                     that.setData({
                         playerList: player2
                     })
+                    console.log(that.data.truePlayerList, 'that.data.playerList');
+                    if (that.data.truePlayerList.length <= 1 && that.data.isBeginPlay) {
+                        getIfFreeMy().then(res => {
+                            console.log(res);
+                            if (res.data.data.giveParty == 1) {
+                                that.setData({
+                                    lastPeoplePop2: true,
+                                    isLastPeople: true
+                                })
+                            } else {
+                                that.setData({
+                                    lastPeoplePop1: true,
+                                    isLastPeople: true
+                                })
+                            }
+                        })
+                    }
                 }
 
             } else if (content.type == 9) {
@@ -1909,7 +1940,7 @@ Page({
     //查看用户卡牌
     viewPeopleMsg: function (e) {
         var datasetItem = e.currentTarget.dataset.item
-        
+
         if (datasetItem?.account) {
             if (this.data.viewAccount === datasetItem.account) {
                 this.setData({
@@ -2216,7 +2247,7 @@ Page({
     },
     getUserName (account) {
         let nick = ''
-        this.data.truePlayerList.forEach(item => {
+        this.data.playerList.forEach(item => {
             if (item?.account && account === item.account) {
                 nick = item.nick
             } else {
