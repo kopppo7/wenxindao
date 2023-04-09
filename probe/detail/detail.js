@@ -211,10 +211,10 @@ Page({
           .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
       }
       if (res.data.data.powerExpiratTime == '长期') {
-        res.data.data.powerExpiratTime = '长期'
+        res.data.data.powerExpiratTime = '限时免费中'
       } else {
         let dateTime = formatTime(new Date(res.data.data.powerExpiratTime.replace(/-/g, '/')));
-        res.data.data.powerExpiratTime = dateTime.year + '年' + dateTime.month + '月' + dateTime.day + '日';
+        res.data.data.powerExpiratTime = '到期时间为 '+dateTime.year + '年' + dateTime.month + '月' + dateTime.day + '日';
       }
       this.setData({
         product: res.data.data,

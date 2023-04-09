@@ -12,24 +12,24 @@
 			<view
 				class="days my_draw_canvas"
 				data-type="text"
-				data-text="{{ nowDate.gregorianDay }}"
+				data-text="{{ nowDate.day }}"
 			>
-				{{ nowDate.gregorianDay }}
+				{{ nowDate.day }}
 			</view>
 			<view class="date-box my_draw_canvas" data-type="text">
 				<view
 					class="lc my_draw_canvas"
 					data-type="text"
-					data-text="{{ nowDate.chineseMonth }}{{ nowDate.chineseDay }}"
+					data-text="{{ nowDate.chineseMonth+nowDate.chineseDay }}"
 				>
-					{{ nowDate.chineseMonth }}{{ nowDate.chineseDay }}
+					{{ nowDate.chineseMonth+nowDate.chineseDay}}
 				</view>
 				<view class="gang my_draw_canvas" data-type="text" data-text="/">
 					/
 				</view>
 				<view class="date my_draw_canvas" data-type="text"
-                      data-text="{{nowDate.gregorianYear}}.{{nowDate.gregorianMonthBase1}}">
-                    {{nowDate.gregorianYear}}.{{nowDate.gregorianMonthBase1}}
+                      data-text="{{nowDate.year}}.{{nowDate.month}}">
+                    {{nowDate.year}}.{{nowDate.month}}
                 </view>
 			</view>
 		</view>

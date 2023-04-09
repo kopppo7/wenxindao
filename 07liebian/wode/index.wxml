@@ -126,7 +126,7 @@
                     </view>
                     <view class="title">#每日调频#</view>
                     <view class="type-list">
-                        <view class="type-item c3">每日意图</view>
+                        <view class="type-item c3">今日意图</view>
                     </view>
                     <view class="imgtxt">
                         <view class="txt">
@@ -154,7 +154,7 @@
                     </view>
                     <view class="title">#每日调频#</view>
                     <view class="type-list">
-                        <view class="type-item c3">每日意图</view>
+                        <view class="type-item c3">今日意图</view>
                     </view>
                     <view class="pic-list">
                         <image class="pic" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/del-h1.jpg"></image>
