@@ -290,6 +290,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    if(options.scene){
+      options.id = options.scene;
+    }
     this.setData({
       id: options.id,
       shareId: options.shareId || 0

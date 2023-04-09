@@ -220,7 +220,6 @@ Page({
         getProExpDetail({
             id: id
         }).then((res) => {
-            console.log(res.data.data)
             var data = res.data.data
             var introduce = res.data.data.introduce.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
                 .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
@@ -231,7 +230,8 @@ Page({
                 det:{
                     imgUrl:data.imgUrl,
                     title:data.title,
-                    introduce:data.tips
+                    introduce:data.tips,
+                    miniImgUrl:data.miniImgUrl
                 }
             })
             this.getEvaList()

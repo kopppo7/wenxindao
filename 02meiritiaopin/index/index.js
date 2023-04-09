@@ -370,7 +370,8 @@ Page({
         let params = {
             contents: JSON.stringify(this.data.contentsArray[this.data.activeIndex]),
             types: this.data.types,
-            isOpen: this.data.isOpen
+            isOpen: this.data.isOpen,
+            id:this.data.shareId
         }
         var that = this;
         addFm(params).then(res => {
@@ -722,15 +723,11 @@ Page({
         }
     },
     findMyFmForDay () {
-        console.log(this.data.contentsArray, 'this.data.contentsArray');
         findMyFmForDay({ types: this.data.types }).then(res => {
-            console.log(res.data.data, 'res.data.data');
             if (!!res.data.data) {
                 let arr = this.data.contentsArray
                 res.data.data.contents = JSON.parse(res.data.data.contents);
                 arr[this.data.activeIndex] = res.data.data.contents
-                // submitFmData.contents = cards
-                console.log(res.data.data, 'res.data');
                 this.setData({
                     isEditFm: false,
                     submitFmData: res.data.data.contents,

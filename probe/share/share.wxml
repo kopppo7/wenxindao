@@ -131,9 +131,9 @@
 				<view class="right">
 					<image
 						data-type="image"
-						data-url="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"
+						data-url="{{det.miniImgUrl}}"
 						class="my_draw_canvas"
-						src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"
+						src="{{det.miniImgUrl}}"
 					></image>
 				</view>
 			</view>
