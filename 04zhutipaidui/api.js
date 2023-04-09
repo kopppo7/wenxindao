@@ -108,3 +108,7 @@ export const addRoomLog = function (data) {
 export const checkRoomStatus = function (roomId) {
     return http.post(handleURL('/room/checkRoom'), roomId);
 }
+// 主题派对 判断房间状态
+export const getIfFreeMy = function (roomId) {
+    return http.get(handleURL('/getIfFreeMy'), roomId);
+}

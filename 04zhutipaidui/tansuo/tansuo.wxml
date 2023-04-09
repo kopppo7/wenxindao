@@ -18,7 +18,7 @@
         </block>
         <view class="item {{step == (themeDetail.list.length+1) ? 'active' : ''}}" data-step="{{themeDetail.list.length+1}}" bindtap="viewStep">结语</view>
     </scroll-view>
-    <view class="wp" wx:if="{{step !== (themeDetail.list.length+1)}}">
+    <view class="wp" wx:if="{{changeStep != themeDetail.list.length+1}}">
         <view class="room-theme">
             <view class="help">
                 <view class="left">
@@ -71,7 +71,7 @@
                                 wx:key="index"
                                 >
                                 <view class="name">{{item.cardList[0].nick}}
-                                    <text class="huang">拿到的牌：</text></view>
+                                    <text class="huang">(第{{item.step}}轮)</text>拿到的牌：</view>
                                 <view class="card-box">
                                     <view class="card-box-l">
                                         <view class="card-img {{item.cardList[0].isOpen && !item.cardList[0].isOpened ? 'open' : ''}} {{item.cardList[0].isOpened ? 'show' : ''}}"
@@ -159,7 +159,7 @@
             </view>
         </view>
     </view>
-    <view class="theme-bot" wx:if="{{step !== (themeDetail.list.length+1)}}">
+    <view class="theme-bot" wx:if="{{changeStep != themeDetail.list.length+1}}">
         <view class="play" bindtap="sendMsg">
             <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png" wx:if="{{voiceStatus == 1}}"></image>
             <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio2.png" wx:if="{{voiceStatus == 0}}"></image>
@@ -195,7 +195,7 @@
    
     <!-- 结语 -->
     <view class="wp">
-        <view class="yinyan-box yinyan-box5" wx:if="{{step == (themeDetail.list.length+1)}}">
+        <view class="yinyan-box yinyan-box5" wx:if="{{changeStep == (themeDetail.list.length+1)}}">
             <view class="box1">
                 <image class="avatar"
                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
@@ -229,7 +229,7 @@
 </view>
 
 <!--结尾畅聊-->
-<view class="fupan" wx:if="{{showFupan}}">
+<view class="fupan" wx:if="{{showFupan && !isLastPeople}}">
     <view class="title">
         <image
                 src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png"
@@ -749,3 +749,34 @@
         </view>
     </view>
 </block>
+<!-- 别的用户离开房间 -->
+<block wx:if="{{lastPeoplePop1}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">提示</view>
+        <view class="desc tac">
+            <view>很抱歉 <text class="num">{{leaveUserInfor.userName}}</text> 已离开</view>
+                <view>您是否继续进行派对？</view>
+                <view>（本次派对将免费赠送）</view>
+        </view>
+        <view class="btns">
+            <view class="btn close" bindtap="leaveRoomClear">离开</view>
+            <view class="btn ok" bindtap="closePop">继续</view>
+        </view>
+    </view>
+</block>
+<block wx:if="{{lastPeoplePop2}}">
+    <view class="pop-mask"></view>
+    <view class="pop-win2">
+        <view class="pop-tit">提示</view>
+        <view class="desc tac">
+            <view>很抱歉 <text class="num">{{leaveUserInfor.userName}}</text> 已离开</view>
+            <view>建议您继续完成本次派对~</view>
+        </view>
+        <view class="btns">
+            <view class="btn close" bindtap="leaveRoomClear">离开</view>
+            <view class="btn ok" bindtap="closePop">继续</view>
+        </view>
+    </view>
+</block>
+<!-- 别的用户离开房间 end -->

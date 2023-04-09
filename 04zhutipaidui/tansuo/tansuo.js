@@ -8,7 +8,7 @@ import {
     kickingPlayer,
     openBaoRoomMate,
     getRoomDetails,
-    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate, addRoomLog, inviteFriendsRoom
+    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate, addRoomLog, inviteFriendsRoom, getIfFreeMy
 } from "../api";
 import { formatMsgList } from "../../utils/yun";
 import { findByOrderList, getUserMsg } from "../../utils/api";
@@ -40,6 +40,7 @@ Page({
         roomSetPopStatus: false, //房间设置
         payMatching: false, //付费or匹配
         step: 0,
+        changeStep: 0,
         waitTime: '00',
         chatroom: null,
         account: "",
@@ -124,6 +125,11 @@ Page({
         beiTiAccount: '',
         isBeiTi: false,
         ownerName: '', //房主昵称
+        isFaYan: false,
+        isLastPeople: false,
+        lastPeoplePop1: false,
+        lastPeoplePop2: false,
+        leaveUserInfor: null, //离开房间人的信息
     },
     //关闭弹窗
     closePop (clear) {
@@ -148,7 +154,9 @@ Page({
             isTuichufangjian: false,
             isZhongTuTuiChu: false,
             isRoomGuiZe: false,
-            isLinShiFangZhu: false
+            isLinShiFangZhu: false,
+            lastPeoplePop1: false,
+            lastPeoplePop2: false,
         })
         if (clear == 1 && timeInt) {
             clearInterval(timeInt)
@@ -657,8 +665,16 @@ Page({
                 //玩家离开房间
                 var player = that.data.playerList;
                 var player2 = that.data.playerList;
+                console.log(content, 'content');
                 var userName = that.getUserName(content.data.account)
                 var userAccount = content.data.account
+                let userObj = {
+                    userName,
+                    userAccount
+                }
+                that.setData({
+                    leaveUserInfor: userObj
+                })
                 var msgObj = {
                     sysType: 'sys',
                     text: userName + '离开房间',
@@ -686,12 +702,29 @@ Page({
                     // 别人离开的话，更新人员信息
                     player.forEach((item, index) => {
                         if (item?.account && item?.account == userAccount) {
-                            player2.splice(index, 1)
+                            player2.splice(index, 1, {})
                         }
                     })
                     that.setData({
                         playerList: player2
                     })
+                    console.log(that.data.truePlayerList, 'that.data.playerList');
+                    if (that.data.truePlayerList.length <= 1 && that.data.isBeginPlay) {
+                        getIfFreeMy().then(res => {
+                            console.log(res);
+                            if (res.data.data.giveParty == 1) {
+                                that.setData({
+                                    lastPeoplePop2: true,
+                                    isLastPeople: true
+                                })
+                            } else {
+                                that.setData({
+                                    lastPeoplePop1: true,
+                                    isLastPeople: true
+                                })
+                            }
+                        })
+                    }
                 }
 
             } else if (content.type == 9) {
@@ -723,7 +756,8 @@ Page({
             }
             msgList.push(msgObj)
             that.setData({
-                msgList: msgList
+                msgList: msgList,
+                isFaYan: true
             })
         }
         that.saveData()
@@ -732,6 +766,7 @@ Page({
 
     //渲染消息记录
     renderHistoryMsh (msg) {
+        console.log('这里是重新渲染消息记录');
         if (!this.data.showOtherStep) {
             this.contentScroll()
         }
@@ -1411,7 +1446,7 @@ Page({
                     var step = that.data.step
                     var speakTime = that.data.themeDetail.list[step - 1].speakTime || 10
                     // 判断几秒内没发言自动跳过
-                    if (speakTime && speakTime - downtimes == 3 && that.data.show_speak_count_down) {
+                    if (speakTime && speakTime - downtimes == 5 && that.data.show_speak_count_down && !that.data.isFaYan) {
                         clearInterval(timeInt)
                         that.setData({
                             jumpPopStatus4: true,
@@ -1454,6 +1489,8 @@ Page({
             jumpPopStatus2: false,
             jumpPopStatus3: false,
             jumpPopStatus4: false,
+            isFaYan: false,
+            changeStep: step
         })
 
         //话术
@@ -1762,7 +1799,6 @@ Page({
                 })
             }, 1000)
         }
-
     },
     //放大卡牌
     showImg: function (e) {
@@ -1782,92 +1818,129 @@ Page({
     viewStep: function (e) {
         var step = e.currentTarget.dataset.step
         var stepList = this.data.stepList
-        if (this.data.step === this.data.themeDetail.list.length + 1) {
-            console.log('这里是结语？？？');
-        } else {
-            let arr = []
-            let obj = {
-                isBotMes: 0,
-                step: step,
-                sysType: "sys",
-                cardList: []
-            }
-            if (step < this.data.step) {
-                //加类名
-                stepList.map(item => {
-                    item.view = false
-                })
-                stepList[step - 1].view = true
-                this.setData({
-                    stepList: stepList,
-                })
 
-                //找msgList中对应轮的数据
-                debugger
-                bbq:
-                for (var j = 0; j < this.data.stepCardListAll.length; j++) {
-                    var item = this.data.stepCardListAll[j]
-                    ccc:
-                    for (var i = 0; i < item.cardList.length; i++) {
-                        var part = item.cardList[i]
-                        var part2 = item.cardList[i + 1]
-                        var part3 = item.cardList[i + 2]
-                        if (this.data.viewAccount) {
-                            if (part.account == this.data.viewAccount && item.step == step) {
-                                obj.cardList.push(part)
-                                obj.cardList.push(part2)
-                                obj.cardList.push(part3)
-                                arr.push(obj)
-                                break bbq; //直接跳出bbq外层循环
-                            }
-                        } else {
-                            if (part.account == this.data.account && item.step == step) {
-                                obj.cardList.push(part)
-                                obj.cardList.push(part2)
-                                obj.cardList.push(part3)
-                                arr.push(obj)
-                                break bbq; //直接跳出bbq外层循环
-                            }
-                        }
-                    }
-                }
-                console.log(this.data.stepCardListAll, 'stepCardListAll');
-                console.log(arr, 'arr');
-                this.setData({
-                    stepCardList: arr,
-                    showOtherStep: true
-                })
-            }
-            if (step === this.data.step) {
-                this.data.stepCardListAll.forEach(item => {
-                    item.cardList.forEach(part => {
-                        if (this.data.viewAccount) {
-                            if (part.account == this.data.viewAccount) {
-                                obj.cardList.push(part)
-                            }
-                        } else {
-                            if (part.account == this.data.account) {
-                                obj.cardList.push(part)
-                            }
-                        }
-                    })
-                    arr.push(obj)
-                })
-                stepList.map(item => {
-                    item.view = false
-                })
-                this.setData({
-                    stepList: stepList,
-                    showOtherStep: false
-
-                })
-            }
-
+        console.log(this.data.changeStep, 'this.data.changeStep');
+        if (step < this.data.step) {
+            //加类名
+            stepList.map(item => {
+                item.view = false
+            })
+            stepList[step - 1].view = true
+            this.setData({
+                stepList: stepList,
+                helpText: this.data.themeDetail.list[step - 1]?.guideWords || '',
+                changeStep: step
+            })
         }
+        if (step === this.data.step) {
+            stepList.map(item => {
+                item.view = false
+            })
+            this.setData({
+                stepList: stepList,
+                helpText: this.data.themeDetail.list[step - 1]?.guideWords || '',
+                changeStep: step
+            })
+        }
+        // if (this.data.step === this.data.themeDetail.list.length + 1) {
+        //     console.log('这里是结语？？？');
+        // } else {
+        //     let arr = []
+        //     let obj = {
+        //         isBotMes: 0,
+        //         step: step,
+        //         sysType: "sys",
+        //         cardList: []
+        //     }
+        //     if (step < this.data.step) {
+        //         //加类名
+        //         stepList.map(item => {
+        //             item.view = false
+        //         })
+        //         stepList[step - 1].view = true
+        //         this.setData({
+        //             stepList: stepList,
+        //         })
+
+        //         //找msgList中对应轮的数据
+        //         bbq:
+        //         for (var j = 0; j < this.data.stepCardListAll.length; j++) {
+        //             var item = this.data.stepCardListAll[j]
+        //             ccc:
+        //             for (var i = 0; i < item.cardList.length; i++) {
+        //                 var part = item.cardList[i]
+        //                 var part2 = item.cardList[i + 1]
+        //                 var part3 = item.cardList[i + 2]
+        //                 if (this.data.viewAccount) {
+        //                     if (part.account == this.data.viewAccount && item.step == step) {
+        //                         obj.cardList.push(part)
+        //                         obj.cardList.push(part2)
+        //                         obj.cardList.push(part3)
+        //                         arr.push(obj)
+        //                         break bbq; //直接跳出bbq外层循环
+        //                     }
+        //                 } else {
+        //                     if (part.account == this.data.account && item.step == step) {
+        //                         obj.cardList.push(part)
+        //                         obj.cardList.push(part2)
+        //                         obj.cardList.push(part3)
+        //                         arr.push(obj)
+        //                         break bbq; //直接跳出bbq外层循环
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //         console.log(this.data.stepCardListAll, 'stepCardListAll');
+        //         console.log(arr, 'arr');
+        //         this.setData({
+        //             stepCardList: arr,
+        //             showOtherStep: true
+        //         })
+        //     }
+        //     if (step === this.data.step) {
+        //         bbq2:
+        //         for (let i = 0; i < this.data.stepCardListAll.length; i++) {
+        //             const item = this.data.stepCardListAll[i];
+        //             for (let j = 0; j < item.cardList.length; j++) {
+        //                 var part = item.cardList[j]
+        //                 var part2 = item.cardList[j + 1]
+        //                 var part3 = item.cardList[j + 2]
+        //                 if (this.data.viewAccount) {
+        //                     if (part.account == this.data.viewAccount && item.step == step) {
+        //                         obj.cardList.push(part)
+        //                         obj.cardList.push(part2)
+        //                         obj.cardList.push(part3)
+        //                         arr.push(obj)
+        //                         break bbq2; //直接跳出bbq外层循环
+        //                     }
+        //                 } else {
+        //                     if (part.account == this.data.account && item.step == step) {
+        //                         obj.cardList.push(part)
+        //                         obj.cardList.push(part2)
+        //                         obj.cardList.push(part3)
+        //                         arr.push(obj)
+        //                         break bbq2; //直接跳出bbq外层循环
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //         stepList.map(item => {
+        //             item.view = false
+        //         })
+        //         this.setData({
+        //             stepList: stepList,
+        //             stepCardList: arr,
+        //             showOtherStep: false
+
+        //         })
+        //     }
+
+        // }
     },
     //查看用户卡牌
     viewPeopleMsg: function (e) {
         var datasetItem = e.currentTarget.dataset.item
+
         if (datasetItem?.account) {
             if (this.data.viewAccount === datasetItem.account) {
                 this.setData({
@@ -1877,27 +1950,35 @@ Page({
 
             } else {
                 let arr = []
-                let obj = {
-                    isBotMes: 0,
-                    step: 1,
-                    sysType: "sys",
-                    cardList: []
-                }
-                this.data.stepCardListAll.forEach(item => {
-                    item.cardList.forEach(part => {
+                bbq:
+                for (var j = 0; j < this.data.stepCardListAll.length; j++) {
+                    var item = this.data.stepCardListAll[j]
+                    let obj = {
+                        isBotMes: 0,
+                        step: item.step,
+                        sysType: "sys",
+                        cardList: []
+                    }
+                    ccc:
+                    for (var i = 0; i < item.cardList.length; i++) {
+                        var part = item.cardList[i]
+                        var part2 = item.cardList[i + 1]
+                        var part3 = item.cardList[i + 2]
                         if (part.account == datasetItem.account) {
                             obj.cardList.push(part)
+                            obj.cardList.push(part2)
+                            obj.cardList.push(part3)
+                            arr.push(obj)
+                            break ccc; //直接跳出bbq外层循环
                         }
-                    })
-                    if (obj.cardList.length > 0) {
-                        arr.push(obj)
                     }
-                })
+                }
                 this.setData({
                     viewAccount: datasetItem.account,
                     stepCardList: arr
                 })
                 console.log(arr, 'arrarrarrarr')
+                console.log(this.data.stepCardListAll, 'this.data.stepCardListAll')
             }
         }
     },
@@ -2116,7 +2197,8 @@ Page({
         this.setData({
             haveRoom: false,
             showFupan: false,
-            step: this.data.stepList.length + 1
+            step: this.data.stepList.length + 1,
+            changeStep: this.data.stepList.length + 1,
         })
         if (timeout) clearTimeout(timeout)
     },
@@ -2165,7 +2247,7 @@ Page({
     },
     getUserName (account) {
         let nick = ''
-        this.data.truePlayerList.forEach(item => {
+        this.data.playerList.forEach(item => {
             if (item?.account && account === item.account) {
                 nick = item.nick
             } else {
@@ -2340,9 +2422,9 @@ Page({
                 this.initRoom()
                 console.log(this.data.yunMsgList, 'this.data.yunMsgList');
                 //处理存储的消息
-                this.data.yunMsgList.map(item => {
-                    this.renderHistoryMsh(item)
-                })
+                // this.data.yunMsgList.map(item => {
+                //     this.renderHistoryMsh(item)
+                // })
             } else {
                 //第一次进入页面
                 this.setData({
