@@ -205,11 +205,13 @@ Page({
             appKey: '820499c93e45806d2420d75aa9ce9846',
             account: account,
             token: token || '',
-            db: false, //若不要开启数据库请设置false。SDK默认为true。
+            db: true, //若不要开启数据库请设置false。SDK默认为true。
             // 群成员更新
             onteammembers: that.onTeamMembers,
             // 连接成功
             onconnect: that.onConnect,
+            // 钩子函数-初始化同步完成的回调
+            onsyncdone: that.onsyncdone,
             //重新连接
             onwillreconnect: that.onWillReconnect,
             //断开连接
@@ -349,6 +351,7 @@ Page({
     },
     // 连接成功
     onConnect () {
+        let that = this
         // 是匹配并且是房主那此时用户就是临时房主
         if (this.data.isMatch && this.data.isOwner && !wx.getStorageSync('isLinShiFangZhu')) {
             this.setData({
@@ -356,6 +359,20 @@ Page({
             })
         }
         console.log('连接成功');
+    },
+    onsyncdone () {
+        let that = this
+        console.log('onsyncdone 成功');
+        nim.getHistoryMsgs({
+            scene: 'team',
+            to: that.data.teamId,
+            done: that.getHistoryMsgsDone,
+            beginTime: 0,
+            endTime: new Date().getTime()
+        });
+    },
+    getHistoryMsgsDone (error, obj) {
+        console.log(obj, '历史消息');
     },
     //重新连接
     onWillReconnect (obj) {
