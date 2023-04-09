@@ -35,7 +35,7 @@
   <view wx:else class="share-log">
     <view>
       <view class="btitle">解锁成功！</view>
-      <view class="txt">到期时间为 {{product.powerExpiratTime}}</view>
+      <view class="txt">{{product.powerExpiratTime}}</view>
     </view>
     <view class="share-sucess">
       <view>

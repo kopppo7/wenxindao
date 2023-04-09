@@ -44,9 +44,6 @@ Page({
             var num = 70
             var txt1 = txt.substring(0,70)
             var txt2 = txt.substring(70,txt.length)
-            console.log(txt1)
-            console.log(txt2)
-
             that.setData({
                 content: content[0],
                 cardTime: res.data.data.addTime.substring(11, 16),
@@ -64,7 +61,7 @@ Page({
         let that = this;
         dayForSignNumber().then(res => {
             that.setData({
-                nowDate: res.data.data.chinese
+                nowDate: res.data.data
             })
         })
     },

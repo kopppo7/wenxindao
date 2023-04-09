@@ -26,7 +26,7 @@ Page({
         isOpen: 1,
         playPopStatus: false,
         bigPopStatus: false,
-        tabs: ['每日意图', '要事规划', '复盘'],
+        tabs: ['今日意图', '今日要事', '今日复盘'],
         activeIndex: 0,
         cardList: [],
         cardShow: false,

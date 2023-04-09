@@ -23,7 +23,7 @@ page{
 }
 .index-row2 .item{
 	display: flex;
-	margin-bottom: 48rpx;
+	margin-bottom: 24rpx;
 }
 .index-row2 .item .avatar{
 	flex: 0 0 72rpx;

@@ -11,7 +11,7 @@
               wx:for-index="index"
               wx:for-item="item" bindtap="changeTab" data-ind="{{index}}">{{item}}
         </view>
-        <view class="detail" bindtap="openPlayPop">帮助</view>
+        <!-- <view class="detail" bindtap="openPlayPop">帮助</view> -->
     </view>
     <view class="date-count">
         <view class="date">
@@ -89,7 +89,7 @@
                 </view>
             </view>
             <view class="textarea-box">
-                <textarea bindinput="bindTextVal" placeholder="链接卡片回答问题...（最多500字）" maxlength="500"
+                <textarea bindinput="bindTextVal" placeholder="在这里输入探索答案（上限500字）" maxlength="500"
                           placeholder-style="color: #B6B2CF;" wx:if="{{content.putType == 1 || content.putType == 5}}"
                           value="{{content.txt}}" data-iid="{{idx}}"/>
                 <!-- <view class="btn-yuyin" bindtap="changePutType" data-type="0" wx:if="{{content.putType == 1}}"
@@ -176,7 +176,7 @@
                 </view>
             </view>
             <view class="textarea-box">
-                <textarea bindinput="bindTextVal" placeholder="链接卡片回答问题...（最多500字）" maxlength="500" placeholder-style="color: #B6B2CF;" value="{{content.txt}}" disabled />
+                <textarea bindinput="bindTextVal" placeholder="在这里输入探索答案（上限500字）" maxlength="500" placeholder-style="color: #B6B2CF;" value="{{content.txt}}" disabled />
                 <view class="btn-audio" bindtap="playAudio" data-type="{{idx}}" wx:if="{{content.voice}}">
                     <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image>
                     <text>{{content.times}}'</text>
