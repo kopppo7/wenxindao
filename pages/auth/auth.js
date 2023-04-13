@@ -150,7 +150,10 @@ Page({
       return
     }
     var token = wx.getStorageSync('tokenKey');
-    var yao_qing_op = JSON.parse(wx.getStorageSync('yao_qing_option')) || null;
+    var yao_qing_op =null;
+    if(yao_qing_op){
+      yao_qing_op = JSON.parse(wx.getStorageSync('yao_qing_option'));
+    }
     getUserMsg(token).then(customer => {
       var userInfo = customer.data.data;
       userInfo.wechatName = this.data.nickName;

@@ -54,11 +54,13 @@
   </view>
   <view class="intro-row3">
     <view class="z-tit1">活动流程</view>
-    <view class="g-box">
+    <!-- <view class="g-box">
       <view class="desc">
-        <rich-text nodes="{{product.activity}}"></rich-text>
       </view>
-    </view>
+    </view> -->
+    
+    <image src="https://file.wxdao.net/2023-04/f808edcc-c709-42f8-83a7-3c0cdf7ae663.png" style="width:100%;" mode="widthFix"></image>
+    <image src="https://file.wxdao.net/2023-04/324a7137-0bfb-4b84-a698-b01c44472374.png"  style="width:100%;margin-top:20rpx" mode="widthFix" ></image>
   </view>
   <view class="intro-row4">
     <view class="z-tit1">探索感悟</view>

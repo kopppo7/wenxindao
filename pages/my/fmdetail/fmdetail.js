@@ -98,7 +98,7 @@ Page({
    */
   onShareAppMessage() {
     var shareObj = {
-      path: 'pages/my/fmdetail/fmdetail?id=' + this.data.info.id, // 默认是当前页面，必须是以‘/’开头的完整路径
+      path: '02meiritiaopin/index/index',//'pages/my/fmdetail/fmdetail?id=' + this.data.info.id, // 默认是当前页面，必须是以‘/’开头的完整路径
       imageUrl: this.data.info.imgUrl, //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       title: '问心岛'
     };
