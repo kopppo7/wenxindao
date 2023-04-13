@@ -69,7 +69,8 @@ page{
 	color: #ffffff;
   padding-left: 22rpx;
   box-sizing: border-box;
-	margin-bottom: 32rpx;
+  padding: 32rpx 24rpx 32rpx;
+	/* margin-bottom: 32rpx; */
 }
 .z-tit1:before{
 	content: '';
