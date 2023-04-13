@@ -54,7 +54,17 @@ page{
 .index-row2 .txt .title{
 	font-size: 28rpx;
 	margin-bottom: 8rpx;
-	color: #B5A3FF;
+  color: #B5A3FF;
+  display:flex;
+  align-items:center;
+}
+.flow-target{
+  background-color: rgba(137, 235, 241, 0.3);
+  font-size: 22rpx;
+  margin-left:10rpx;
+  padding:5rpx 6rpx;
+  border-radius: 6rpx;
+  color:#89EBF1
 }
 .index-row2 .txt .title1{
 	color: #71D7A0;

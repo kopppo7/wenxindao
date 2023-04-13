@@ -143,10 +143,11 @@ page{
 	background: #FFFFFF;
 	width: 160rpx;
 	height: 160rpx;
-	border: 1px solid rgba(0, 0, 0, 0.1);
+	/* border: 1px solid rgba(0, 0, 0, 0.1); */
 	border-radius: 16rpx;
   padding: 12rpx;
   box-sizing: border-box;
+  margin-right: 12rpx;
 }
 .canvas-box .s5-r .qr{
 	display: block;

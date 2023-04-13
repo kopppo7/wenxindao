@@ -70,7 +70,7 @@ Page({
     let min = 0,
       max = _charStr.length - 1,
       _str = '';
-    let len = 10;
+    let len = 7;
     //循环生成字符串
     for (var i = 0, index; i < len; i++) {
       index = this.RandomIndex(min, max, i);
@@ -80,7 +80,7 @@ Page({
     //   nickName: "wenxin" + _str,
     //   headImg: "https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"
     // })
-    let nickName = "wenxin" + _str;
+    let nickName = "wxd" + _str;
     let headImg = "https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg";
     var token = wx.getStorageSync('tokenKey');
     wx.showLoading({

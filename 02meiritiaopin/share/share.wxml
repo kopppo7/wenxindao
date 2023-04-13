@@ -20,9 +20,9 @@
 				<view
 					class="lc my_draw_canvas"
 					data-type="text"
-					data-text="{{ nowDate.chineseMonth+nowDate.chineseDay }}"
+					data-text="{{ nowDate.chinese }}"
 				>
-					{{ nowDate.chineseMonth+nowDate.chineseDay}}
+					{{ nowDate.chinese}}
 				</view>
 				<view class="gang my_draw_canvas" data-type="text" data-text="/">
 					/
@@ -142,9 +142,9 @@
 			<view class="s5-r">
 				<image
 					data-type="image"
-					data-url="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"
+					data-url="https://file.wxdao.net/2023-04/0ad041a2-3e20-4de0-9945-faf97ea8572e.png"
 					class="qr my_draw_canvas"
-					src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qr.png"
+					src="https://file.wxdao.net/2023-04/0ad041a2-3e20-4de0-9945-faf97ea8572e.png"
 				></image>
 			</view>
 		</view>

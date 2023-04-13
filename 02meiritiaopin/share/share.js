@@ -39,11 +39,15 @@ Page({
         }).then(res => {
             var content = JSON.parse(res.data.data.contents);
             var txt = content[0].txt
-
-
             var num = 70
             var txt1 = txt.substring(0,70)
-            var txt2 = txt.substring(70,txt.length)
+            var txt2 = txt.substring(70,txt.length);
+            let nowDate = {
+              month:res.data.data.addTime.substring(5, 7),
+              day:res.data.data.addTime.substring(8, 10),
+              year:res.data.data.addTime.substring(0, 4),
+              chinese:res.data.data.chineseCalendar.split(' ')[1]
+            }
             that.setData({
                 content: content[0],
                 cardTime: res.data.data.addTime.substring(11, 16),
@@ -53,18 +57,19 @@ Page({
                 typeTit:res.data.data.target,
                 txt1:txt1,
                 txt2:txt2,
+                nowDate:nowDate
             })
             that.drawMyCanvas()
         })
     },
-    dayForSignNumber() {
-        let that = this;
-        dayForSignNumber().then(res => {
-            that.setData({
-                nowDate: res.data.data
-            })
-        })
-    },
+    // dayForSignNumber() {
+    //     let that = this;
+    //     dayForSignNumber().then(res => {
+    //         that.setData({
+    //             nowDate: res.data.data
+    //         })
+    //     })
+    // },
     findByIsFlagNumber() {
         let that = this;
         findByIsFlagNumber().then(res => {
@@ -81,7 +86,6 @@ Page({
             size: true,
             scrollOffset: true
         }, data => {
-            console.log(data)
             let width = data.width + 56;
             let height = data.height;
             that.setData({
@@ -94,8 +98,7 @@ Page({
         }).exec()
     },
     startDraw() {
-        let that = this
-        console.log(that.data.width)
+        let that = this;
         // 创建wxml2canvas对象
         let drawMyImage = new Wxml2Canvas({
             width: that.data.width,
@@ -106,17 +109,14 @@ Page({
             obj: that, // 传入当前组件的this
 
             progress(percent) { // 进度
-                // console.log(percent);
             },
             finish(url) { // 生成的图片
                 wx.hideLoading()
                 that.setData({
                     imgUrl: url
                 })
-                console.log(url);
             },
             error(res) { // 失败原因
-                console.log(res);
                 wx.hideLoading()
             }
         }, this);
@@ -194,7 +194,6 @@ Page({
             pageId: options.id
         })
         this.findByFmOne()
-        this.dayForSignNumber()
         this.findByIsFlagNumber()
     },
     /**

@@ -191,7 +191,6 @@ Page({
                 list: this.data.list,
                 total: res.data.data.total
             })
-            console.log(this.data.list)
             wx.stopPullDownRefresh()
             // wx.hideLoading();
         }).catch(err => {

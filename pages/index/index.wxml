@@ -16,7 +16,12 @@
          <view class="item item1" >
              <image class="avatar" src="{{item.userHeadImg}}"></image>
              <view class="txt">
-                 <view class="title" wx:if="{{item.category==0}}">#每日调频#</view>
+                 <view class="title" wx:if="{{item.category==0 || item.category==3||item.category==4}}">
+                 #每日调频#
+                 <view class="flow-target">
+                  {{item.category==4?'今日复盘':(item.category==3?'今日要事':'今日意图')}}
+                 </view>
+                 </view>
                  <view class="title title1" wx:if="{{item.category==1}}">#生命探索#</view>
                  <view class="title title2" wx:if="{{item.category==2}}">#主题派对#</view>
                  <view class="desc">{{item.content}}</view>

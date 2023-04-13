@@ -254,7 +254,6 @@ Page({
                     }
                     var cards = JSON.parse(res.data.data.contents);
                     var orgCards = JSON.parse(res.data.data.contents)
-                    console.log(cards)
                     var cardGroup = []
                     if (cards.length >= 3) {
                         cards = cards.splice(0, 3);
@@ -270,7 +269,6 @@ Page({
                         if (orgCards.length >= 12) {
                             cardGroup.push([])
                         }
-                        console.log(orgCards.length)
                         orgCards.map((item, index) => {
                             if (index <= 2) {
                                 cardGroup[0].push(item)
@@ -297,7 +295,6 @@ Page({
                     this.setData({
                         contentsArray: this.data.contentsArray
                     })
-                    console.log(this.data.contentsArray)
                 }
 
 
@@ -411,7 +408,6 @@ Page({
                 that.setData({
                     contentsArray: this.data.contentsArray
                 })
-                console.log(this.data.contentsArray)
             } else {
                 wx.showToast({
                     title: res.data.msg,
@@ -495,8 +491,6 @@ Page({
                 that.setData({
                     contentsArray: contentsArray
                 })
-
-                console.log(this.data.contentsArray)
             } else {
                 wx.showToast({
                     title: res.data.msg,
@@ -554,15 +548,12 @@ Page({
                 })
                 recorderManager.start(options);
                 recorderManager.onStart(() => {
-                    console.log('recorder start')
                 });
                 //错误回调
                 recorderManager.onError((res) => {
-                    console.log(res);
                 })
             },
             fail () {
-                console.log("第一次录音授权失败");
                 wx.showModal({
                     title: '提示',
                     content: '您未授权录音，功能将无法使用',
@@ -576,7 +567,6 @@ Page({
                                 success: (res) => {
                                     if (!res.authSetting['scope.record']) {
                                         //未设置录音授权
-                                        console.log("未设置录音授权");
                                         wx.showModal({
                                             title: '提示',
                                             content: '您未授权录音，功能将无法使用',
@@ -617,14 +607,12 @@ Page({
         var that = this;
         recorderManager.pause();
         recorderManager.onPause((res) => {
-            console.log(res);
             var arr = that.data.contentsArray;
             arr[that.data.activeIndex][e.currentTarget.dataset.iid]['autioStatus'] = 3
             arr[that.data.activeIndex][e.currentTarget.dataset.iid]['tempFilePath'] = res.tempFilePath
             that.setData({
                 contentsArray: arr
             })
-            console.log('暂停录音')
 
         })
     },
@@ -706,7 +694,6 @@ Page({
         })
     },
     playAudio (e) {
-        console.log(e.currentTarget.dataset.type);
         let ind = e.currentTarget.dataset.type;
         let vioces = this.data.contentsArray[this.data.activeIndex][ind]?.voice || '';
         audioCtx.src = vioces
@@ -767,13 +754,10 @@ Page({
         this.initData()
         this.findMyFmForDay()
         audioCtx.onPlay(() => {
-            console.log('kaishi ');
             that.setData({ isPlay: true })
         })
         audioCtx.onEnded(() => {
-            console.log('jieshu ');
             that.setData({ isPlay: false })
-            console.log();
         })
     },
     /**

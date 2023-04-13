@@ -37,45 +37,6 @@ Page({
         det:{},
         evalList:[]
     },
-    findByFmOne() {
-        let that = this;
-        findByFmOne({
-            id: this.data.pageId
-        }).then(res => {
-            var content = JSON.parse(res.data.data.contents);
-            var txt = content[0].txt
-            var num = 70
-            var txt1 = txt.substring(0,70)
-            var txt2 = txt.substring(70,txt.length)
-            that.setData({
-                content: content[0],
-                cardTime: res.data.data.addTime.substring(11, 16),
-                cardImg: content[0].imgUrl,
-                headImg: res.data.data.userHeadImg,
-                userName: res.data.data.userName,
-                typeTit:res.data.data.target,
-                txt1:txt1,
-                txt2:txt2,
-            })
-            that.drawMyCanvas()
-        })
-    },
-    dayForSignNumber() {
-        let that = this;
-        dayForSignNumber().then(res => {
-            that.setData({
-                nowDate: res.data.data.chinese
-            })
-        })
-    },
-    findByIsFlagNumber() {
-        let that = this;
-        findByIsFlagNumber().then(res => {
-            that.setData({
-                cardCount: res.data.data || 0
-            })
-        })
-    },
     drawMyCanvas() {
         wx.showLoading()
         const that = this
@@ -190,9 +151,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
         this.getDetail(options.id)
-        this.dayForSignNumber()
     },
     /**
      * 用户点击右上角分享
@@ -221,12 +180,17 @@ Page({
             id: id
         }).then((res) => {
             var data = res.data.data
-            var introduce = res.data.data.introduce.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
-                .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="max-width: 100%;height:auto" $1');
+            let nowDate = {
+              month:res.data.data.endTime.substring(5, 7),
+              day:res.data.data.endTime.substring(8, 10),
+              year:res.data.data.endTime.substring(0, 4),
+              chinese:res.data.data.chineseCalendar.split(' ')[1]
+            }
             this.setData({
                 probeId:data.probeId,
                 userName:data.userName,
                 headImg:data.userHeadImg,
+                nowDate:nowDate,
                 det:{
                     imgUrl:data.imgUrl,
                     title:data.title,
@@ -246,7 +210,6 @@ Page({
             id: this.data.probeId,
             category: 0, // 类型(0:生命探索,1:主题派对)
         }).then((res) => {
-            console.log(res.data.data.list)
             if (res.data.ret === 200){
                 this.setData({
                     evalList:res.data.data.list

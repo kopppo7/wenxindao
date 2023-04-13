@@ -53,6 +53,10 @@ Page({
           })
         }
       });
+    }else{
+      getUserMsg(wx.getStorageSync('tokenKey')).then(userInfo => {
+        setLoginInfo(userInfo.data.data);
+      });
     }
   },
   onLoad: async function (para) {
@@ -100,8 +104,12 @@ Page({
         })
         break;
       case "ztpd":
-        wx.navigateTo({
-          url: '/04zhutipaidui/index/index',
+        // wx.navigateTo({
+        //   url: '/04zhutipaidui/index/index',
+        // })
+        wx.showModal({
+          title: '主题派对正在开发中，敬请期待...',
+          showCancel:false
         })
         break;
       case "mrtp":
@@ -135,7 +143,7 @@ Page({
       if (this.data.page == 1) {
         this.data.list = res.data.data.list;
       } else {
-        this.data.list.concat(res.data.data.list);
+        this.data.list = this.data.list.concat(res.data.data.list);
       }
       this.setData({
         list: this.data.list,
