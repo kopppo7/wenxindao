@@ -43,7 +43,7 @@
       </view>
     </view>
   </view>
-<!-- 
+
   <view class="intro-row3">
     <view class="z-tit1">探索简介</view>
     <view class="g-box">
@@ -51,7 +51,7 @@
         <rich-text nodes="{{product.introduce}}"></rich-text>
       </view>
     </view>
-  </view> -->
+  </view>
   <view class="intro-row3">
     <view class="z-tit1">探索规则</view>
     <!-- <view class="g-box">

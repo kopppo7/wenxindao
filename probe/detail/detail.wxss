@@ -76,8 +76,8 @@ page{
 	content: '';
 	position: absolute;
 	left: 0;
-	top: 50%;
-	margin-top: -17rpx;
+  top: 50%;
+  transform:translateY(-43%);
 	width: 6rpx;
 	height: 34rpx;
 	background: #FFB58C;
