@@ -470,6 +470,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "07liebian/wode/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
