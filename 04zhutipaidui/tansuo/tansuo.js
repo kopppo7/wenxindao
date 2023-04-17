@@ -1479,6 +1479,7 @@ Page({
                 }
             }, 1000);
         } else {
+            // 以下是匹配倒计时 应该不需要了
             var time = setInterval(() => {
                 if (time1 > 9) {
                     clearInterval(time)
@@ -1496,7 +1497,7 @@ Page({
         }
     },
     //执行每一轮
-    runStep: function () {
+    runStep: function (isOnLoad) {
         var that = this;
         var step = this.data.step
         var stepData = this.data.themeDetail.list[step - 1]
@@ -1513,7 +1514,7 @@ Page({
         //话术
         var guideWords = stepData.guideWords
         //思考时间
-        var thinkTime = stepData.thinkTime || 3
+        var thinkTime = isOnLoad || stepData.thinkTime || 3
         // var thinkTime = 3
 
         //显示引导语言
@@ -1521,7 +1522,7 @@ Page({
             helpText: guideWords
         })
         //触发发牌
-        if (that.data.isOwner) {
+        if (that.data.isOwner && isOnLoad !== undefined) {
 
             that.sendCustomMsg(4, { text: '发牌中...' })
         }
@@ -1537,13 +1538,13 @@ Page({
         this.getDownTime(thinkTime, this.speak)
 
     },
-    //思考倒计时结束，开始发言
-    speak: function () {
+    //思考倒计时结束，开始发言 当重新进入页面时候调用方法并且设置->isOnLoad 倒计时剩余时间
+    speak: function (isOnLoad) {
         var that = this;
         var step = this.data.step
         var stepData = this.data.themeDetail.list[step - 1]
         //说话时间
-        var speakTime = stepData.speakTime || 10
+        var speakTime = isOnLoad || stepData.speakTime || 10
         // var speakTime = 30
         console.log('思考结束开始答题');
 
@@ -1565,7 +1566,7 @@ Page({
         //是否轮到本人发言
 
         // QAQ 这里判断是否是房主 房主发轮到谁的消息
-        if (that.data.isOwner) {
+        if (that.data.isOwner && isOnLoad !== undefined) {
             that.sendCustomMsg(4, { text: '轮到' + playerList[personInd].nick + '发言' })
         }
         //当前发言人账号
@@ -2314,10 +2315,10 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload () {
-        if (timeInt) clearInterval(timeInt)
-        if (timeout) clearInterval(timeout)
-        if (readyTimeout) clearInterval(readyTimeout)
-        if (startTimeout) clearInterval(startTimeout)
+        // if (timeInt) clearInterval(timeInt)
+        // if (timeout) clearInterval(timeout)
+        // if (readyTimeout) clearInterval(readyTimeout)
+        // if (startTimeout) clearInterval(startTimeout)
         if (this.data.haveRoom) {
             if (this.data.isOwner) {
                 //房主
@@ -2407,6 +2408,7 @@ Page({
      */
     async onLoad (options) {
         console.log(options, 'options');
+        var that = this;
         if (options.roomId) {
             // this.getUserInfo()
             this.contentScroll()
@@ -2421,17 +2423,22 @@ Page({
                     roomData: wx.getStorageSync('roomData'),
                     audioId: wx.getStorageSync('roomData').audioGroup,
                 })
-
+                var waitTime = this.data.waitTime
                 //重新进来，准备后的倒计时没有结束，继续显示
                 if (this.data.timePopStatus) {
                     clearTimeout(startTimeout)
-                    var waitTime = this.data.waitTime - 1
+                    var waitTime = this.data.waitTime
                     this.setData({
                         waitTime: waitTime
                     })
                     this.startCountDown()
                 }
-
+                if (this.data.show_think_count_down) {
+                    this.runStep(waitTime)
+                }
+                if (this.data.show_speak_count_down) {
+                    this.speak(waitTime)
+                }
                 // this.setData({
                 //     timePopStatus:false
                 // })

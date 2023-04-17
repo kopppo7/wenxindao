@@ -5,24 +5,21 @@ Component({
    * 组件的初始数据
    */
   data: {
-    title: '',
-    status: '',
-    isShow: true
+  },
+  properties: {
+    backTitle: {
+      type: String,
+      value: ''
+    },
+    backStatus: {
+      type: String,
+      value: ''
+    },
   },
   lifetimes: {
     // 页面创建时执行
     attached () {
-      if (wx.getStorageSync('partyData')) {
-        let partyData = wx.getStorageSync('partyData')
-        this.setData({
-          title: partyData?.themeDetail?.title,
-          status: '正在进行中'
-        })
-      }else{
-        this.setData({
-          isShow:false
-        })
-      }
+      console.log('重新渲染了');
     }
   },
 
