@@ -469,7 +469,7 @@ Page({
     sendCustomMsg (type, val) {
         var that = this;
         var content = {
-            type: type, //发言类型 1 玩家准备 2 玩家是否轮到发言 3玩家是否在线  4 系统文字消息 5 系统发牌消息 6 跳过发言 7 点赞
+            type: type, //发言类型 1 玩家准备 2 玩家是否轮到发言 3玩家是否在线  4 系统文字消息 5 系统发牌消息 6 跳过发言 7 点赞 
             data: {
                 status: val?.status,  //玩家是否准备 
                 value: val?.text,     //发的内容
@@ -753,7 +753,18 @@ Page({
                 console.log('开始倒计时')
             } else if (content.type == 10) {
                 // 发言和思考倒计时
-                this.getDownTime(content.data.times, that.speak)
+                /**
+                    1.如果正在倒计时,则跳过
+                    2.如果是发言阶段,倒计时结束之后执行nextPerson方法
+                    3.如果是不是发言阶段,那就是思考阶段,倒计时结束之后执行speak方法
+                 */
+                if (!timeInt) {
+                    if (that.data.isFaYan) {
+                        this.getDownTime(content.data.times, that.nextPerson)
+                    } else {
+                        this.getDownTime(content.data.times, that.speak)
+                    }
+                }
             } else if (content.type == 11) {
                 // 被踢出房间
                 that.setData({
@@ -1449,6 +1460,7 @@ Page({
         var that = this;
         if (downtimes) {
             timeInt = setInterval(() => {
+                that.sendCustomMsg(10, { times: downtimes })
                 if (downtimes <= 1) {
                     clearInterval(timeInt)
                     timeInt = null
@@ -1590,40 +1602,82 @@ Page({
         console.log('当前发言人：' + personInd + speakTime)
 
         //发言倒计时，倒计时完后下个人发言
-        this.getDownTime(speakTime, nextPerson)
+        this.getDownTime(speakTime, that.nextPerson)
 
-        function nextPerson () {
+        // function nextPerson () {
+        //     that.setData({
+        //         show_speak_count_down: false
+        //     })
+        //     if (that.data.personInd < (playerList.length - 1)) {
+        //         //发言人index 小于 成员数量，切换下个人发言
+        //         that.setData({
+        //             personInd: that.data.personInd + 1,
+        //         })
+        //         that.speak()
+        //     } else {
+        //         //记录本轮内容ƒ
+        //         that.addRecode()
+        //         console.log('全部人发言结束,进入下一轮')
+        //         if (that.data.step < that.data.themeDetail.list.length) {
+        //             //轮数 小于 全部轮数，切换下一轮
+        //             that.setData({
+        //                 step: that.data.step + 1,
+        //             })
+        //             that.runStep()
+        //         } else {
+        //             //全部结束
+        //             console.log('全部结束')
+        //             if (that.data.isOwner) {
+        //                 that.sendCustomMsg(4, { text: '全部结束' })
+        //             }
+        //             that.setData({
+        //                 showFupan: true
+        //             })
+        //             that.countDown()
+
+        //         }
+        //     }
+        // }
+    },
+    nextPerson () {
+        let that = this
+        //成员列表，去掉空的
+        var playerList = []
+        that.data.playerList.map(item => {
+            if (item && item.account) {
+                playerList.push(item)
+            }
+        })
+        that.setData({
+            show_speak_count_down: false
+        })
+        if (that.data.personInd < (playerList.length - 1)) {
+            //发言人index 小于 成员数量，切换下个人发言
             that.setData({
-                show_speak_count_down: false
+                personInd: that.data.personInd + 1,
             })
-            if (that.data.personInd < (playerList.length - 1)) {
-                //发言人index 小于 成员数量，切换下个人发言
+            that.speak()
+        } else {
+            //记录本轮内容ƒ
+            that.addRecode()
+            console.log('全部人发言结束,进入下一轮')
+            if (that.data.step < that.data.themeDetail.list.length) {
+                //轮数 小于 全部轮数，切换下一轮
                 that.setData({
-                    personInd: that.data.personInd + 1,
+                    step: that.data.step + 1,
                 })
-                that.speak()
+                that.runStep()
             } else {
-                //记录本轮内容ƒ
-                that.addRecode()
-                console.log('全部人发言结束,进入下一轮')
-                if (that.data.step < that.data.themeDetail.list.length) {
-                    //轮数 小于 全部轮数，切换下一轮
-                    that.setData({
-                        step: that.data.step + 1,
-                    })
-                    that.runStep()
-                } else {
-                    //全部结束
-                    console.log('全部结束')
-                    if (that.data.isOwner) {
-                        that.sendCustomMsg(4, { text: '全部结束' })
-                    }
-                    that.setData({
-                        showFupan: true
-                    })
-                    that.countDown()
-
+                //全部结束
+                console.log('全部结束')
+                if (that.data.isOwner) {
+                    that.sendCustomMsg(4, { text: '全部结束' })
                 }
+                that.setData({
+                    showFupan: true
+                })
+                that.countDown()
+
             }
         }
     },
@@ -2315,10 +2369,10 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload () {
-        // if (timeInt) clearInterval(timeInt)
-        // if (timeout) clearInterval(timeout)
-        // if (readyTimeout) clearInterval(readyTimeout)
-        // if (startTimeout) clearInterval(startTimeout)
+        if (timeInt) clearInterval(timeInt)
+        if (timeout) clearInterval(timeout)
+        if (readyTimeout) clearInterval(readyTimeout)
+        if (startTimeout) clearInterval(startTimeout)
         if (this.data.haveRoom) {
             if (this.data.isOwner) {
                 //房主
