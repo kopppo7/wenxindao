@@ -19,7 +19,7 @@
       </view>
     </view>
     <view class="box2">
-      <view class="s1">问心精灵将为您的内在探索提供问心卡牌师的真实记录作为参照。在探索过程中，点击他们的头像即可。我是我的问题，我也是我的答案，快来开启你的问心之旅吧</view>
+      <view class="s1">问心精灵将为您的内在探索提供问心教练的真实记录作为参照。在探索过程中，点击他们的头像即可。我是我的问题，我也是我的答案，快来开启你的问心之旅吧。<view>友情建议：请在相对安静的环境下探索并预留足够的时间。</view></view>
       <view class="s2">
         <view class="s2-item active">
           <view class="avatar-box">
@@ -31,14 +31,14 @@
         <view class="s2-item">
           <view class="avatar-box">
             <text>2</text>
-            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg"></image>
+            <image class="avatar" mode="aspectFill" src="https://file.wxdao.net/2023-04/14afeef2-fc13-4bd8-a36e-d0f6fccc60ca.jpg"></image>
           </view>
           <view class="name">参考1</view>
         </view>
         <view class="s2-item">
           <view class="avatar-box">
             <text>3</text>
-            <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg"></image>
+            <image class="avatar" mode="aspectFill"  src="https://file.wxdao.net/2023-04/1298c494-d724-46df-8c12-ce786ae986cc.jpg"></image>
           </view>
           <view class="name">参考2</view>
         </view>
@@ -187,7 +187,7 @@
              wx:for-index="index1" data-item="{{item1}}" data-index="{{index1}}" data-idx="{{indexlist}}" bindtap="changeCard">
               <view class="avatar-box">
                 <text></text>
-                <image class="avatar" src="{{item1.headImg}}"></image>
+                <image class="avatar" mode="aspectFill" src="{{item1.headImg}}"></image>
               </view>
               <view class="name">{{item1.cardMaster}}</view>
             </view>
@@ -225,7 +225,7 @@
       </view>
       <view class="box3-item">
         <view class="tit">想要更深入的了解自己？</view>
-        <view class="con">每个人都有自我认知的盲区。如果您想要更全面的探索本话题，获得问心认证卡牌师的专业反馈，或者体验问心岛线下活动，欢迎联系我们。</view>
+        <view class="con">每个人都有自我认知的盲区。如果您想要更全面的探索本话题，获得问心认证教练的专业反馈，或者体验问心岛线下活动，欢迎联系我们。</view>
       </view>
     </view>
     <view class="box4">

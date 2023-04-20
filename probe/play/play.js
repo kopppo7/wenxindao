@@ -39,7 +39,7 @@ Page({
     id: '',
     probeId: '',
     selectCard: '', // 选中的卡片 人物
-    selectMasterIndex:0,//选中的answer
+    selectMasterIndex: 0,//选中的answer
     userInfo: {}, // 个人信息
 
     // 录音相关
@@ -58,7 +58,7 @@ Page({
     endTime: 0, // 结束录音时间
     totalTime: 0,
     //人机头像地址，最多两个人机
-    robot: ['https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar2.jpg', 'https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar3.jpg'],
+    robot: ['https://file.wxdao.net/2023-04/14afeef2-fc13-4bd8-a36e-d0f6fccc60ca.jpg', 'https://file.wxdao.net/2023-04/1298c494-d724-46df-8c12-ce786ae986cc.jpg'],
     randomCard: [], //每一轮随机的卡牌池
     randomCardIndex: 0, //卡牌池选择序号
     activity: '', // 结束语
@@ -69,24 +69,24 @@ Page({
     isMine: true
   },
   // 放大看卡片
-  showImg(e) {
+  showImg (e) {
     this.setData({
       bigPopStatus: true,
       selectImgUrl: e.currentTarget.dataset.img
     })
   },
-  closeImgPop(e) {
+  closeImgPop (e) {
     this.setData({
       bigPopStatus: false
     })
   },
-  openSharePop() {
+  openSharePop () {
     wx.redirectTo({
       url: '/probe/share/share?id=' + this.data.id,
     })
 
   },
-  closePop() {
+  closePop () {
     let that = this;
     that.setData({
       sharePopStatus: false
@@ -94,7 +94,7 @@ Page({
   },
   // 语音输入相关
   // 检查文档是否合规
-  inspectText(e) {
+  inspectText (e) {
     let list = this.data.list
     let idx = e.target.dataset.idx
     list[idx].contents.txt = e.detail.value
@@ -125,7 +125,7 @@ Page({
     })
   },
   // 切换语音 文字输入
-  changePutType(e) {
+  changePutType (e) {
     let list = this.data.list
     let idx = e.target.dataset.idx
     list[idx].putType = e.currentTarget.dataset.type
@@ -134,7 +134,7 @@ Page({
     })
   },
   // 录音
-  start(e) {
+  start (e) {
     console.log('开始录音开始录音开始录音', e)
     let that = this
     // this.setData({
@@ -159,7 +159,7 @@ Page({
     //开始录音
     wx.authorize({
       scope: 'scope.record',
-      success() {
+      success () {
         console.log("录音授权成功");
         that.recodingCountDown()
         //第一次成功授权后 状态切换为2
@@ -177,7 +177,7 @@ Page({
           console.log(res);
         })
       },
-      fail() {
+      fail () {
         console.log("第一次录音授权失败");
         wx.showModal({
           title: '提示',
@@ -278,7 +278,7 @@ Page({
   //   })
   // },
   //停止录音
-  stop(e) {
+  stop (e) {
     let list = this.data.list
     let idx = e.currentTarget.dataset.idx
     list[idx].endTime = e.timeStamp
@@ -319,7 +319,7 @@ Page({
     })
   },
   //播放声音
-  play() {
+  play () {
     innerAudioContext.autoplay = true
     innerAudioContext.src = this.data.tempFilePath
     console.log('this.data.tempFilePath', this.data.tempFilePath)
@@ -332,7 +332,7 @@ Page({
     })
   },
   // 关闭
-  closeAudio(e) {
+  closeAudio (e) {
     let list = this.data.list
     let idx = e.currentTarget.dataset.idx
     list[idx].autioStatus = 1
@@ -344,7 +344,7 @@ Page({
     })
   },
   // 保存语音
-  saveAudio(e) {
+  saveAudio (e) {
     let that = this
     // recorderManager.stop();
     wx.uploadFile({
@@ -355,7 +355,7 @@ Page({
         'content-type': 'multipart/form-data',
         'token': wx.getStorageSync('tokenKey') || ''
       },
-      success(res) {
+      success (res) {
         let list = that.data.list
         let idx = e.currentTarget.dataset.idx
         list[idx].autioStatus = 0
@@ -373,7 +373,7 @@ Page({
     })
   },
   // 播放语音
-  playAudio() {
+  playAudio () {
     if (this.data.isPlay) {
       audioCtx.pause()
       this.setData({
@@ -387,7 +387,7 @@ Page({
     }
   },
   // 切换图片
-  changeImg(e) {
+  changeImg (e) {
     let idxp = e.currentTarget.dataset.idxp
     let idx = e.currentTarget.dataset.idx
     let list = this.data.list
@@ -398,27 +398,27 @@ Page({
     })
   },
   // 切换卡片
-  changeCard(e) {
+  changeCard (e) {
     let list = this.data.list
     if (e.currentTarget.dataset.item == 1) {
       list[e.currentTarget.dataset.idx].selectCard = ''
       this.setData({
         list: list,
         isMine: true,
-        selectMasterIndex:0
+        selectMasterIndex: 0
       })
     } else {
       list[e.currentTarget.dataset.idx].selectCard = e.currentTarget.dataset.item
       this.setData({
         list: list,
         isMine: false,
-        selectMasterIndex:e.currentTarget.dataset.index
+        selectMasterIndex: e.currentTarget.dataset.index
       })
       console.log(this.data.selectMasterIndex)
     }
   },
   // 返回我的探索
-  backMine(e) {
+  backMine (e) {
     let list = this.data.list
     list[e.currentTarget.dataset.idx].selectCard = ''
     this.setData({
@@ -427,7 +427,7 @@ Page({
     })
   },
   // 下一步
-  nextStep(e) {
+  nextStep (e) {
     if (this.data.step > 0 && this.data.step < this.data.stepList.length + 2) {
       //step>0<最后一个为循环
       //需要判断是否填写内容
@@ -510,7 +510,7 @@ Page({
     }
   },
   // 切换第几部
-  changeStep(e) {
+  changeStep (e) {
     if (e.target.dataset.idx <= this.data.curStep) {
       this.setData({
         step: e.target.dataset.idx,
@@ -519,7 +519,7 @@ Page({
 
   },
   // 获取详情
-  getDetail(id) {
+  getDetail (id) {
     getProExpDetail({
       id: id
     }).then((res) => {
@@ -540,12 +540,12 @@ Page({
         stepList: res.data.data.details,
         step: res.data.data.current,
         tags: res.data.data.tags,
-        tips:res.data.data.tips,
+        tips: res.data.data.tips,
         stepBg: Math.floor(100 / (res.data.data.details.length + 2)),
         probeId: res.data.data.probeId,
         list: [],
-        probeTitle:res.data.data.title,
-        probeShareImg:res.data.data.shareImgUrl
+        probeTitle: res.data.data.title,
+        probeShareImg: res.data.data.shareImgUrl
       })
       let arr = res.data.data.details
       for (let i = 0; i < arr.length; i++) {
@@ -603,7 +603,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
+  onLoad (options) {
     let info = getLoginInfo();
     this.setData({
       userInfo: info
@@ -615,7 +615,7 @@ Page({
       this.getDetail(options.id)
     }
   },
-  lookLog() {
+  lookLog () {
     wx.redirectTo({
       url: '/pages/my/probedetail/probedetail?id=' + this.data.id,
     })
@@ -623,12 +623,12 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() {
-     return {
-        title:"不睡觉也想探索的话题："+ this.data.probeTitle,
-        path: '/probe/detail/detail?id='+this.data.probeId,
-        imageUrl: this.data.probeShareImg
-      }
+  onShareAppMessage () {
+    return {
+      title: "不睡觉也想探索的话题：" + this.data.probeTitle,
+      path: '/probe/detail/detail?id=' + this.data.probeId,
+      imageUrl: this.data.probeShareImg
+    }
   },
   //翻牌
   clickCard: function (e) {
@@ -658,7 +658,7 @@ Page({
     }
 
   },
-  masterCilckCard:function(e){
+  masterCilckCard: function (e) {
     if (this.data.canClickCard) {
       this.setData({
         canClickCard: false

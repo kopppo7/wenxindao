@@ -9,103 +9,118 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tabList:[],
-    themeList:[],
-    listParams:{
-      types:1,
-      page:0,
-      pageSize:10,
+    tabList: [],
+    themeList: [],
+    listParams: {
+      types: 1,
+      page: 0,
+      pageSize: 10,
     },
-    tabParams:{
-      category:1,
+    tabParams: {
+      category: 1,
     },
-    activeIndex:0
+    activeIndex: 0,
+    // 组件的数据
+    isShowModel: false,
+    backTitle: '',
+    backStatus: ''
   },
-  initData(){
+  initData () {
     this.getTabList()
   },
-  getThemeList(){
-    getAskPartyList(this.data.listParams).then(res=>{
+  getThemeList () {
+    getAskPartyList(this.data.listParams).then(res => {
       this.setData({
-        themeList:res.data.data.list
+        themeList: res.data.data.list
       })
     })
   },
-  getTabList(){
-    categoryList(this.data.tabParams).then(res=>{
+  getTabList () {
+    categoryList(this.data.tabParams).then(res => {
       this.setData({
-        tabList:res.data,
-        'listParams.types':res.data[0].id,
+        tabList: res.data,
+        'listParams.types': res.data[0].id,
       })
       this.getThemeList()
     })
   },
-  changeTab(e){
+  changeTab (e) {
     console.log(e);
     this.setData({
-      'listParams.types':e.currentTarget.dataset.tid,
-      activeIndex:e.currentTarget.dataset.ind,
+      'listParams.types': e.currentTarget.dataset.tid,
+      activeIndex: e.currentTarget.dataset.ind,
     })
     this.getThemeList()
   },
-  goDetail(e){
+  goDetail (e) {
     wx.navigateTo({
-      url: '/04zhutipaidui/zhutijieshao/zhutijieshao?id='+e.currentTarget.dataset.id,
+      url: '/04zhutipaidui/zhutijieshao/zhutijieshao?id=' + e.currentTarget.dataset.id,
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
+  onLoad (options) {
     this.initData()
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() {
+  onReady () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {
-
+  onShow () {
+    if (wx.getStorageSync('partyData')) {
+      let partyData = wx.getStorageSync('partyData')
+      this.setData({
+        backTitle: partyData?.themeDetail?.title,
+        backStatus: '正在进行中',
+        isShowModel: true
+      })
+    } else {
+      this.setData({
+        isShowModel: false
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide() {
+  onHide () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {
+  onUnload () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {
+  onPullDownRefresh () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom() {
+  onReachBottom () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() {
+  onShareAppMessage () {
 
   }
 })

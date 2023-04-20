@@ -1,6 +1,6 @@
-<view class="back-room-other" wx:if="{{isShow}}">
-  <view class="title">{{title}}</view>
-  <view class="step">{{status}}</view>
+<view class="back-room-other">
+  <view class="title">{{backTitle}}</view>
+  <view class="step">{{backStatus}}</view>
   <view class="back" bindtap="backRoom">
     <text>返回房间</text>
     <image
