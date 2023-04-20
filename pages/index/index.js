@@ -125,9 +125,10 @@ Page({
     }
   },
   details(e){
-    if(e.currentTarget.dataset.category==0){
+    if(e.currentTarget.dataset.category==0||e.currentTarget.dataset.category==4||e.currentTarget.dataset.category==3||e.currentTarget.dataset.category==5){
       wx.navigateTo({
-        url: '/pages/my/fmdetail/fmdetail?id='+e.currentTarget.dataset.id+'&from=index',
+        //url: '/pages/my/fmdetail/fmdetail?id='+e.currentTarget.dataset.id+'&from=index',
+        url:'/02meiritiaopin/index/index'
       })
     }else if(e.currentTarget.dataset.category==1){
       wx.navigateTo({

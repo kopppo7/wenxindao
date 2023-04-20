@@ -24,7 +24,7 @@
       </image>
       <text class="times" wx:if="{{item.times}}">{{item.times}}'</text>
     </view>
-    <view wx:else class='desc'>{{item.txt}}</view>
+    <text wx:else class='desc' style="display: block;word-wrap: break-word;">{{item.txt}}</text>
     <view class="picBox">
       <image class="fakeImg" mode="widthFix" src="{{item.imgUrl}}"></image>
       <image catchtap="openBig" data-pinurl="{{item.imgUrl}}" class="btn-fan" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"></image>

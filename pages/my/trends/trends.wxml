@@ -27,9 +27,7 @@
                         <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
                     <view class="pictxt">
-                        <view class="txt">
-                          {{item.contents.data[0].txt}}
-                        </view>
+                        <text class="txt" style="max-height: 180rpx;overflow: hidden;display: block;margin:10rpx 0rpx">{{item.contents.data[0].txt}}</text>
                         <image class="pic"  src="{{item.contents.imgUrl}}"></image>
                     </view>
                 </view>
@@ -42,7 +40,7 @@
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
                     <view class="title title1">{{item.categoryText}}生命探索</view>
-                    <view class="type-list" wx:if="{{item.target.length > 0}}">
+                    <view class="type-list" style="margin-bottom: 20rpx;" wx:if="{{item.target.length > 0}}">
                         <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
                     <view class="imgtxt">

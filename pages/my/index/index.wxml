@@ -57,9 +57,7 @@
                         <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
                     <view>
-                        <view class="txt">
-                          {{item.contents.data[0].txt}}
-                        </view>
+                        <text class="txt">{{item.contents.data[0].txt}}</text>
                         <view class="picBox">
                           <image class="pic"  mode="widthFix" src="{{item.contents.imgUrl}}">
                           </image>
