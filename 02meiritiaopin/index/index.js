@@ -224,7 +224,8 @@ Page({
         var that = this;
         that.setData({
             activeIndex: e.currentTarget.dataset.ind,
-            types: e.currentTarget.dataset.ind
+            types: e.currentTarget.dataset.ind,
+            shareId:''
         })
         this.findMyTemp();
         this.findMyFmForDay();

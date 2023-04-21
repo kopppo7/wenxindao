@@ -38,7 +38,7 @@ Page({
             id: this.data.pageId
         }).then(res => {
             var content = JSON.parse(res.data.data.contents);
-            var txt = content[0].txt
+            var txt = content[0].txt||'';
             var num = 70
             var txt1 = txt.substring(0,70)
             var txt2 = txt.substring(70,txt.length);
@@ -48,6 +48,11 @@ Page({
               year:res.data.data.addTime.substring(0, 4),
               chinese:res.data.data.chineseCalendar.split(' ')[1]
             }
+            let txt1Arr = txt1.split(/[(\r\n)\r\n]+/);
+            //let txt1Html = '';
+            // for(let i=0;i<txt1Arr.length&&i<7;i++){
+            //   txt1Html+='<div>'+txt1Arr[i]+'</div>';
+            // }
             that.setData({
                 content: content[0],
                 cardTime: res.data.data.addTime.substring(11, 16),
@@ -59,7 +64,7 @@ Page({
                 txt2:txt2,
                 nowDate:nowDate
             })
-            that.drawMyCanvas()
+            
         })
     },
     // dayForSignNumber() {
@@ -104,13 +109,13 @@ Page({
             width: that.data.width,
             height: that.data.height,
             element: 'myCanvas', // canvas的id,
-            background: 'rgba(255,255,255,1)',
+            background: 'transparent',
             borderRadius:'50rpx',
             obj: that, // 传入当前组件的this
-
             progress(percent) { // 进度
             },
             finish(url) { // 生成的图片
+              debugger
                 wx.hideLoading()
                 that.setData({
                     imgUrl: url
@@ -180,9 +185,16 @@ Page({
         })
     },
     share1() {
-        wx.showShareImageMenu({
+      
+       this.drawMyCanvas()
+       setTimeout(() => {
+                wx.showShareImageMenu({
             path: this.data.imgUrl
         })
+       }, 3000);
+        // wx.showShareImageMenu({
+        //     path: this.data.imgUrl
+        // })
     },
     share2() {
     },

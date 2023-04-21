@@ -50,9 +50,7 @@
 							>
 						</view>
 						<view class="pictxt">
-							<view class="txt">
-								{{ item.contents.data[0].txt }}
-							</view>
+							<text class="txt" style="max-height: 180rpx;overflow: hidden;display: block;margin:10rpx 0rpx">{{item.contents.data[0].txt}}</text>
 							<image class="pic" src="{{ item.contents.imgUrl }}"></image>
 						</view>
 					</view>

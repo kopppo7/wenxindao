@@ -308,7 +308,7 @@
 .form-z .textarea-box textarea {
 	display: block;
 	width: 100%;
-	height: 100rpx;
+	height: calc(100% - 66rpx);
 }
 
 .form-z .textarea-box .btn-yuyin {

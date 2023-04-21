@@ -24,7 +24,7 @@
                  </view>
                  <view class="title title1" wx:if="{{item.category==1}}">#生命探索#</view>
                  <view class="title title2" wx:if="{{item.category==2}}">#主题派对#</view>
-                 <view class="desc">{{item.content}}</view>
+                 <text class="desc">{{item.content}}</text>
                  <view class="jump_href" data-category="{{item.category}}" data-id="{{item.objectId}}" bindtap="details">查看更多</view>
              </view>
          </view>

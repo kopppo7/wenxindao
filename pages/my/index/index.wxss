@@ -123,7 +123,10 @@ page{
 	height: 56rpx;
 }
 .trend-item .txt{
-  padding: 20rpx 0rpx;
+  margin: 20rpx 0rpx;
+  max-height:200rpx;
+  overflow: hidden;
+  display: block;
 }
 .nav .item .txt{
 	font-size: 24rpx;
