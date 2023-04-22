@@ -63,7 +63,7 @@ Page({
     this.setData({
       pagePara: para.look
     })
-    if (wx.getStorageSync('loginInfo').relieveTime) {
+    if (wx.getStorageSync('loginInfo')&&wx.getStorageSync('loginInfo').relieveTime) {
       this.setData({
         relieveTime: wx.getStorageSync('loginInfo').relieveTime,
         stopUse: true

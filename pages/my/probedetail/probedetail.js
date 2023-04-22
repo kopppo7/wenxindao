@@ -88,7 +88,8 @@ Page({
         time: res.data.data.createTime,
         id: options.id,
         probeTitle:res.data.data.title,
-        probeShareImg:res.data.data.shareImgUrl
+        probeShareImg:res.data.data.shareImgUrl,
+        probeId:res.data.data.probeId
        })
     });
   },

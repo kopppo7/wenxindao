@@ -29,7 +29,7 @@
                 </image>
                 <text class="times" wx:if="{{item.answerVoiceTime}}">{{item.answerVoiceTime}}'</text>
             </view>
-            <view wx:if="{{item.answerText}}" class='texts'>{{item.answerText}}</view>
+            <text wx:if="{{item.answerText}}" class='texts'>{{item.answerText}}</text>
         </view>
     </view>
 </view>

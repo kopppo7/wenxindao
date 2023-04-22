@@ -4,7 +4,7 @@ function wxPromisify(fn) {
         return new Promise((resolve, reject) => {
             obj.success = function (res) {
                 // 成功
-                if(res.data.msg == '未能读取到有效Token'|| res.data.msg == 'Token无效'){
+                if(res.data.msg && (res.data.msg == '未能读取到有效Token'|| res.data.msg.indexOf('Token无效')>-1)){
                     wx.reLaunch({
                       url: '/pages/login/login',
                     })
