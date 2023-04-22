@@ -478,7 +478,7 @@ Page({
                 video: val?.video,    //发的视频
                 img: val?.imgUrl,      //发的图片
                 account: val?.account,      //房间人员变动
-                times: val?.times,      // 倒计时时间
+                downInfor: val?.downInfor,      // 倒计时信息
                 tiRenInfo: val?.tiRenInfo,      // 倒计时时间
             }
         };
@@ -758,13 +758,9 @@ Page({
                     2.如果是发言阶段,倒计时结束之后执行nextPerson方法
                     3.如果是不是发言阶段,那就是思考阶段,倒计时结束之后执行speak方法
                  */
-                if (!timeInt) {
-                    if (that.data.isFaYan) {
-                        this.getDownTime(content.data.times, that.nextPerson)
-                    } else {
-                        this.getDownTime(content.data.times, that.speak)
-                    }
-                }
+                let { time, type, personInd, step } = content.data.downInfor
+                console.log('content.data.downInfor', content.data.downInfor);
+                that.getDownTime2(time, type, personInd, step)
             } else if (content.type == 11) {
                 // 被踢出房间
                 that.setData({
@@ -1454,13 +1450,42 @@ Page({
         })
     },
     //页面执行************************************************
+    /**
+     * 发言和思考倒计时
+     * @param {*} time 倒计时时间
+     * @param {*} type 类型，1 思考 2 发言
+     * @param {*} personInd  轮到哪个人
+     */
+    getDownTime2 (time, type, personInd, step) {
+        this.setData({
+            personInd: personInd,
+            waitTime: time - 1,
+            step
+        })
+        if (time <= 1 && type == 1) {
+            this.speak()
+        } else if (time <= 1 && type == 2) {
+            this.nextPerson()
+        } else {
+            setTimeout(() => {
+                this.sendCustomMsg(10, {
+                    downInfor: {
+                        time: time - 1,
+                        type,
+                        personInd,
+                        step,
+                    }
+                })
+            }, 1000);
+        }
+    },
     //倒计时
     getDownTime (downtimes, fun) {
         var time1 = 0;
         var that = this;
         if (downtimes) {
             timeInt = setInterval(() => {
-                that.sendCustomMsg(10, { times: downtimes })
+
                 if (downtimes <= 1) {
                     clearInterval(timeInt)
                     timeInt = null
@@ -1475,7 +1500,7 @@ Page({
                     var step = that.data.step
                     var speakTime = that.data.themeDetail.list[step - 1].speakTime || 10
                     // 判断几秒内没发言自动跳过
-                    if (speakTime && speakTime - downtimes == 5 && that.data.show_speak_count_down && !that.data.isFaYan) {
+                    if (speakTime && speakTime - downtimes == 30 && that.data.show_speak_count_down && !that.data.isFaYan) {
                         clearInterval(timeInt)
                         that.setData({
                             jumpPopStatus4: true,
@@ -1542,16 +1567,26 @@ Page({
         this.setData({
             // timePopStatus: true,
             //思考倒计时
-            waitTime: thinkTime > 9 ? thinkTime : '0' + thinkTime,
+            waitTime: thinkTime,
             show_think_count_down: true,
             personInd: 0,
             inputStatus: false
         })
-        this.getDownTime(thinkTime, this.speak)
+        // this.getDownTime(thinkTime, this.speak)
+        // this.getDownTime2(thinkTime, 1, that.data.personInd)
+        this.sendCustomMsg(10, {
+            downInfor: {
+                time: thinkTime,
+                type: 1,
+                personInd: 0,
+                step: this.data.step,
+            }
+        })
 
     },
     //思考倒计时结束，开始发言 当重新进入页面时候调用方法并且设置->isOnLoad 倒计时剩余时间
     speak: function (isOnLoad) {
+        debugger
         var that = this;
         var step = this.data.step
         var stepData = this.data.themeDetail.list[step - 1]
@@ -1602,7 +1637,8 @@ Page({
         console.log('当前发言人：' + personInd + speakTime)
 
         //发言倒计时，倒计时完后下个人发言
-        this.getDownTime(speakTime, that.nextPerson)
+        // this.getDownTime(speakTime, that.nextPerson)
+        this.getDownTime2(speakTime, 2, that.data.personInd)
 
         // function nextPerson () {
         //     that.setData({
@@ -1640,6 +1676,7 @@ Page({
         // }
     },
     nextPerson () {
+        debugger
         let that = this
         //成员列表，去掉空的
         var playerList = []
@@ -2486,12 +2523,6 @@ Page({
                         waitTime: waitTime
                     })
                     this.startCountDown()
-                }
-                if (this.data.show_think_count_down) {
-                    this.runStep(waitTime)
-                }
-                if (this.data.show_speak_count_down) {
-                    this.speak(waitTime)
                 }
                 // this.setData({
                 //     timePopStatus:false
