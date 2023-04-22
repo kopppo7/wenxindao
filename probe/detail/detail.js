@@ -178,6 +178,33 @@ Page({
         url: '../play/play?id=' + this.data.product.userProbeId,
       })
     } else {
+      var loginInfo = getLoginInfo();
+      if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
+        wx.showModal({
+          title: '当前未授权手机号，请授权后进行体验',
+          success: function (auth) {
+            if (auth.confirm) {
+              wx.redirectTo({
+                url: '/pages/login/login',
+              })
+            }
+          }
+        })
+        return;
+      } else if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
+        wx.showModal({
+          title: '当前未完善您的头像和昵称，请完善后进行体验',
+          success: function (auth) {
+            if (auth.confirm) {
+              wx.redirectTo({
+                url: '/pages/auth/auth',
+              })
+            }
+          }
+        })
+        return;
+      }
+
       wx.showLoading({
         title: '加载中',
         mask: true,
@@ -202,11 +229,11 @@ Page({
     })
     getProDetail(id).then((res) => {
       wx.hideLoading()
-      if(res.data.data.activity){
+      if (res.data.data.activity) {
         res.data.data.activity = res.data.data.activity.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
           .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="width: 100%;height:auto" $1');
       }
-      if(res.data.data.introduce){
+      if (res.data.data.introduce) {
         res.data.data.introduce = res.data.data.introduce.replace(/style/g, 'data').replace(/<p([\s\w"=\/\.:;]+)((?:(style="[^"]+")))/ig, '<p')
           .replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img style="width: 100%;height:auto" $1');
       }
@@ -214,7 +241,7 @@ Page({
         res.data.data.powerExpiratTime = '限时免费中'
       } else {
         let dateTime = formatTime(new Date(res.data.data.powerExpiratTime.replace(/-/g, '/')));
-        res.data.data.powerExpiratTime = '到期时间为 '+dateTime.year + '年' + dateTime.month + '月' + dateTime.day + '日';
+        res.data.data.powerExpiratTime = '到期时间为 ' + dateTime.year + '年' + dateTime.month + '月' + dateTime.day + '日';
       }
       this.setData({
         product: res.data.data,
@@ -290,7 +317,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    if(options.scene){
+    if (options.scene) {
       options.id = options.scene;
     }
     this.setData({

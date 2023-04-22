@@ -477,6 +477,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "分享生命探索详情",
+          "pathName": "probe/detail/detail",
+          "query": "id=44",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
