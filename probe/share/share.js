@@ -63,10 +63,9 @@ Page({
             width: that.data.width,
             height: that.data.height,
             element: 'myCanvas', // canvas的id,
-            background: 'rgba(255,255,255,1)',
+            background: 'transparent',
             borderRadius:'50rpx',
             obj: that, // 传入当前组件的this
-
             progress(percent) { // 进度
                 // console.log(percent);
             },
@@ -75,7 +74,6 @@ Page({
                 that.setData({
                     imgUrl: url
                 })
-                console.log(url);
             },
             error(res) { // 失败原因
                 wx.hideLoading()
@@ -186,15 +184,23 @@ Page({
               year:res.data.data.endTime.substring(0, 4),
               chinese:res.data.data.chineseCalendar.split(' ')[1]
             }
+            let tips = data.tips;
+            if(tips&&tips.length>32){
+              tips = tips.substring(0,32)+'...';
+            }
+            let userName = data.userName;
+            if(userName&&userName.length>6){
+              userName = userName.substring(0,6)+'...';
+            }
             this.setData({
                 probeId:data.probeId,
-                userName:data.userName,
+                userName:userName,
                 headImg:data.userHeadImg,
                 nowDate:nowDate,
                 det:{
                     imgUrl:data.imgUrl,
                     title:data.title,
-                    introduce:data.tips,
+                    introduce:tips,
                     miniImgUrl:data.miniImgUrl
                 }
             })
