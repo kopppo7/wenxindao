@@ -55,7 +55,7 @@
         </view>
         <view class="box2">
           <view class="{{isMine? 'box2-r':'box2-r notMine'}}">
-            <view class="tit">用心感受画面获得启示</view>
+            <view class="tit">用心感受画面获得启示（每个问题对应一张卡牌）</view>
             <view class="cardContent">
               <view class="card-box {{itemlist.selectCard ? 'hide' : ''}}">
                 <view class="card-box-l">
@@ -130,7 +130,7 @@
               </view>
               <!-- 文字输入 语音录入 -->
               <view class="form-z" wx:if="{{isMine}}">
-                <view class="count-down" wx:if="{{recodingTime <= 60000}}">
+                <view class="count-down" wx:if="{{recodingTime <= 60000&&recodingTime>0}}">
                   <view class="num">{{recodingTime/1000}}s</view>
                   后结束录音
                 </view>
@@ -225,12 +225,13 @@
       </view>
       <view class="box3-item">
         <view class="tit">想要更深入的了解自己？</view>
-        <view class="con">每个人都有自我认知的盲区。如果您想要更全面的探索本话题，获得问心认证教练的专业反馈，或者体验问心岛线下活动，欢迎联系我们。</view>
+        <view class="con">每个人都有自我认知的盲区。如果您想要更深入的开启内在探索，欢迎参加问心教练带领的活动。</view>
+        <view>截图扫码领取（限新人）</view>
       </view>
     </view>
     <view class="box4">
       <image class="box4-l" src="https://file.wxdao.net/2023-02/655ac759-acc1-4fc8-af91-14543152a35c.png"></image>
-      <image class="box4-r" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
+      <image class="box4-r" src="https://file.wxdao.net/2023-04/1ceaf875-b2fe-443b-81dc-1a3b05603d6e.jpg"></image>
     </view>
     <view class="box5">
       <view class="g-submit" bindtap="lookLog">查看本次记录</view>

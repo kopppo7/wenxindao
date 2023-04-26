@@ -104,13 +104,13 @@ Page({
         })
         break;
       case "ztpd":
-        wx.navigateTo({
-          url: '/04zhutipaidui/index/index',
-        })
-        // wx.showModal({
-        //   title: '主题派对正在开发中，敬请期待...',
-        //   showCancel:false
+        // wx.navigateTo({
+        //   url: '/04zhutipaidui/index/index',
         // })
+        wx.showModal({
+          title: '主题派对正在开发中，敬请期待...',
+          showCancel:false
+        })
         break;
       case "mrtp":
         wx.navigateTo({

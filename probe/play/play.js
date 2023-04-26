@@ -30,7 +30,7 @@ Page({
    */
   data: {
     list: [], // 需要循环的数据
-
+    recordIndex:'',//倒计时所处的轮次
     sharePopStatus: false,
     step: 0,
     stepBg: 20,
@@ -160,7 +160,9 @@ Page({
     wx.authorize({
       scope: 'scope.record',
       success () {
-        console.log("录音授权成功");
+        that.setData({
+          recordIndex:idx
+        })
         that.recodingCountDown()
         //第一次成功授权后 状态切换为2
         list[idx].autioStatus = 2
@@ -193,7 +195,6 @@ Page({
                   console.log(res.authSetting);
                   if (!res.authSetting['scope.record']) {
                     //未设置录音授权
-                    console.log("未设置录音授权");
                     wx.showModal({
                       title: '提示',
                       content: '您未授权录音，功能将无法使用',
@@ -204,7 +205,6 @@ Page({
                     })
                   } else {
                     //第二次才成功授权
-                    console.log("设置录音授权成功");
                     // that.setData({
                     //   autioStatus: 2,
                     // })
@@ -250,6 +250,12 @@ Page({
         })
         that.recodingCountDown()
       }, 1000)
+    }else{
+      let endTimespan=this.data.list[this.data.recordIndex].startTime+300000;
+      this.setData({
+        recodingTime:300000
+      })
+      this.stop({currentTarget:{dataset:{idx:this.data.recordIndex}},timeStamp: endTimespan})
     }
   },
   //暂停录音
@@ -285,7 +291,6 @@ Page({
     this.setData({
       list: list
     })
-    console.log('停止录音停止录音', e)
     // this.setData({
     //   endTime: e.timeStamp, // 结束录音时间
     // })
