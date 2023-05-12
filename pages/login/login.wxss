@@ -87,10 +87,10 @@ page{
 .label-agree text.active:after{
 	content: '';
 	position: absolute;
-	top: 12rpx;
-	left: 6rpx;
-	width: 16rpx;
-	height: 16rpx;
+	top: 16rpx;
+	left: 7rpx;
+	width: 17rpx;
+	height: 17rpx;
 	background: #7461E7;
 	border-radius: 50%;
 }

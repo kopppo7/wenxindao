@@ -16,6 +16,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        isNone:false,
         userInfo: {
             headImg: '',
             wechatName: ''
@@ -163,6 +164,9 @@ Page({
         // wx.showLoading({
         //   title: '加载中...',
         // });
+        this.setData({
+          isNone:false,
+        })
         findMyTrends({
             page: this.data.page,
             pageSize: 20,
@@ -189,7 +193,8 @@ Page({
             })
             this.setData({
                 list: this.data.list,
-                total: res.data.data.total
+                total: res.data.data.total,
+                isNone:true
             })
             wx.stopPullDownRefresh()
             // wx.hideLoading();

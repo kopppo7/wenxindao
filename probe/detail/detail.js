@@ -23,6 +23,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isHavePhone:true,
     buyPopStatus: false,
     yearPopStatus: false,
     gwPopStatus: false,
@@ -41,9 +42,22 @@ Page({
   },
   // 打开购买本探索弹窗
   openBuyPop() {
-    this.setData({
-      buyPopStatus: true
-    })
+    if (!this.data.isHavePhone) {
+      wx.showModal({
+        title: '当前未授权手机号，请授权后进行体验',
+        success: function (auth) {
+          if (auth.confirm) {
+            wx.navigateTo({
+              url: '/pages/login/login',
+            })
+          }
+        }
+      })
+    }else{
+      this.setData({
+        buyPopStatus: true
+      })
+    }
   },
   // 关闭弹窗
   closePop() {
@@ -324,6 +338,14 @@ Page({
       id: options.id,
       shareId: options.shareId || 0
     })
+    getUserMsg(wx.getStorageSync('tokenKey')).then(userInfo => {
+      setLoginInfo(userInfo.data.data);
+      if(!userInfo.data.phone){
+        this.setData({
+          isHavePhone:false
+        })
+      }
+    });
   },
   onShow() {
     var that = this;
@@ -379,18 +401,31 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: async function (option) {
-    var shareId = '';
-    if (option.target.dataset.type == 'liebian') {
-      await sendAskInvite(this.data.id).then(res => {
-        shareId = res.data.data.id
+    if (!this.data.isHavePhone) {
+      wx.showModal({
+        title: '当前未授权手机号，请授权后进行体验',
+        success: function (auth) {
+          if (auth.confirm) {
+            wx.navigateTo({
+              url: '/pages/login/login',
+            })
+          }
+        }
       })
+    }else{
+      var shareId = '';
+      if (option.target.dataset.type == 'liebian') {
+        await sendAskInvite(this.data.id).then(res => {
+          shareId = res.data.data.id
+        })
+      }
+      var shareObj = {
+        path: 'probe/detail/detail?id=' + this.data.id + '&shareId=' + shareId,
+        imageUrl: this.data.product.shareImgUrl,
+        title: '我发现了一个线上多人语音活动，一起探索《' + this.data.product.title + '》吧',
+        desc: '这是开启心灵对话的派对之旅'
+      }
+      return shareObj;
     }
-    var shareObj = {
-      path: 'probe/detail/detail?id=' + this.data.id + '&shareId=' + shareId,
-      imageUrl: this.data.product.shareImgUrl,
-      title: '我发现了一个线上多人语音活动，一起探索《' + this.data.product.title + '》吧',
-      desc: '这是开启心灵对话的派对之旅'
-    }
-    return shareObj;
   }
 })

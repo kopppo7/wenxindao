@@ -50,13 +50,14 @@ export const checkLogInfo = (token,callback) => {
       yunId : userInfo.data.data.yunId,
     };
     setLoginInfo(userInfo.data.data);
-    if(user.phone==''||user.phone==null||user.phone==undefined){
-      wx.redirectTo({
-        url: '/pages/login/login',
-      })
-      return;
-    }
-    else if(user.wechatName==''||user.wechatName==null||user.wechatName==undefined){
+    // if(user.phone==''||user.phone==null||user.phone==undefined){
+    //   wx.redirectTo({
+    //     url: '/pages/login/login',
+    //   })
+    //   return;
+    // }
+    //else
+     if(user.wechatName==''||user.wechatName==null||user.wechatName==undefined){
       wx.redirectTo({
         url: '/pages/auth/auth',
       })

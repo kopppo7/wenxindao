@@ -105,11 +105,12 @@ Page({
           })
         } else {
           setLoginInfo(userInfo);
-          if (userInfo.phone == '' || userInfo.phone == null) {
-            wx.redirectTo({
-              url: '/pages/login/login',
-            })
-          } else if(yao_qing_op) {
+          // if (userInfo.phone == '' || userInfo.phone == null) {
+          //   wx.redirectTo({
+          //     url: '/pages/login/login',
+          //   })
+          // } else 
+          if(yao_qing_op) {
             wx.navigateTo({
               url: `/04zhutipaidui/yao_qing/index?askId=${yao_qing_op.askId}&roomId=${yao_qing_op.roomId} `,
             })

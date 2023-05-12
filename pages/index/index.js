@@ -72,19 +72,20 @@ Page({
   },
   jump(e) {
     var loginInfo = getLoginInfo();
-    if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
-      wx.showModal({
-        title: '当前未授权手机号，请授权后进行体验',
-        success: function (auth) {
-          if (auth.confirm) {
-            wx.redirectTo({
-              url: '/pages/login/login',
-            })
-          }
-        }
-      })
-      return;
-    } else if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
+    // if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
+    //   wx.showModal({
+    //     title: '当前未授权手机号，请授权后进行体验',
+    //     success: function (auth) {
+    //       if (auth.confirm) {
+    //         wx.redirectTo({
+    //           url: '/pages/login/login',
+    //         })
+    //       }
+    //     }
+    //   })
+    //   return;
+    // } else 
+    if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
       wx.showModal({
         title: '当前未完善您的头像和昵称，请完善后进行体验',
         success: function (auth) {

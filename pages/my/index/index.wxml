@@ -44,7 +44,10 @@
             <!-- <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-filter.svg"></image> -->
         </view>
         <view class="trend-list">
-            <view class="trend-item" wx:for="{{list}}"  wx:for-item="item" wx:key="id">
+          <view style="display: flex; justify-content: center;" wx:if="{{list.length==0&&isNone}}">
+            <image src="https://file.wxdao.net/2023-05/9e138ea0-79e0-461a-a07b-73184eb1ff50.png" mode="widthFix" style="height: 376rpx;width:280rpx"></image>
+          </view>
+            <view class="trend-item" wx:if="{{list.length>0}}" wx:for="{{list}}"  wx:for-item="item" wx:key="id">
                <!-- 每日调频  wx:if="{{item.category==0}}" -->
             <view class="trend-item" wx:if="{{item.category==0}}" bindtap="detail" data-type="0" data-id="{{item.id}}">
                 <view class="time mb12">{{item.addTime}}</view>
@@ -139,7 +142,11 @@
     <block wx:if="{{pageTabIndex === 1}}">
         <view class="wp">
             <view class="order-list" >
-                <view class="item mb12" wx:for="{{list2}}" wx:for-item="item" wx:key="id">
+            
+                <view style="display: flex; justify-content: center;" wx:if="{{list.length==0&&isNone}}">
+                  <image src="https://file.wxdao.net/2023-05/9e138ea0-79e0-461a-a07b-73184eb1ff50.png" mode="widthFix" style="height: 376rpx;width:280rpx"></image>
+                </view>
+                <view class="item mb12"  wx:if="{{list.length==0}}" wx:for="{{list2}}" wx:for-item="item" wx:key="id">
                     <view class="s1">
                         <view class="s1-l">订单号：{{item.payId}}</view>
                         <view class="s1-r">¥
