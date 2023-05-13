@@ -74,7 +74,7 @@ Page({
     var loginInfo = getLoginInfo();
     // if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
     //   wx.showModal({
-    //     title: '当前未授权手机号，请授权后进行体验',
+    //     title: '请登录授权进入下一步',
     //     success: function (auth) {
     //       if (auth.confirm) {
     //         wx.redirectTo({

@@ -342,7 +342,7 @@ Page({
   async addFm() {
     if (!this.data.isHavePhone) {
       wx.showModal({
-        title: '当前未授权手机号，请授权后进行体验',
+        title: '请登录授权进入下一步',
         success: function (auth) {
           if (auth.confirm) {
             wx.navigateTo({
@@ -437,7 +437,7 @@ Page({
     let that = this;
     if (!that.data.isHavePhone) {
       wx.showModal({
-        title: '当前未授权手机号，请授权后进行体验',
+        title: '请登录授权进入下一步',
         success: function (auth) {
           if (auth.confirm) {
             wx.navigateTo({
@@ -553,7 +553,7 @@ Page({
   bindTextVal(e) {
     if (!this.data.isHavePhone) {
       wx.showModal({
-        title: '当前未授权手机号，请授权后进行体验',
+        title: '请登录授权进入下一步',
         success: function (auth) {
           if (auth.confirm) {
             wx.navigateTo({
