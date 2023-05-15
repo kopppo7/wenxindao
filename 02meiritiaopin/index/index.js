@@ -806,8 +806,7 @@ Page({
   onLoad(options) {
     let that = this
     getUserMsg(wx.getStorageSync('tokenKey')).then(userInfo => {
-      setLoginInfo(userInfo.data.data);
-      if(!userInfo.data.phone){
+      if(!userInfo.data.data.phone){
         that.setData({
           isHavePhone:false
         })

@@ -339,8 +339,7 @@ Page({
       shareId: options.shareId || 0
     })
     getUserMsg(wx.getStorageSync('tokenKey')).then(userInfo => {
-      setLoginInfo(userInfo.data.data);
-      if(!userInfo.data.phone){
+      if(!userInfo.data.data.phone){
         this.setData({
           isHavePhone:false
         })
