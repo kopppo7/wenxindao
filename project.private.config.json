@@ -484,6 +484,34 @@
           "query": "id=44",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "probe/share/share",
+          "query": "id=504",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "02meiritiaopin/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/my/about/about",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "id=411",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

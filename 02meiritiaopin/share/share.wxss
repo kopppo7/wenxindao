@@ -212,7 +212,7 @@ page{
 	-webkit-transform: rotate(30deg);-moz-transform: rotate(30deg);-ms-transform: rotate(30deg);-o-transform: rotate(30deg);transform: rotate(30deg);
 }
 .date-mod .date-box .date{
-	font-size: 40rpx;
+	font-size: 36rpx;
 	line-height: 1;
 }
 .head-img{
@@ -239,6 +239,7 @@ page{
 .text-mod-top{
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 12rpx;
 }
 .text-mod-top .l{
 	flex:0 0 200rpx
@@ -265,6 +266,7 @@ page{
 	color: #222537;
   /* text-indent: 20px; */
   padding-left: 20px;
+	line-height: 42rpx;
 }
 .content .text.text2{
 	float: none;
