@@ -91,6 +91,9 @@ Page({
         probeShareImg:res.data.data.shareImgUrl,
         probeId:res.data.data.probeId
        })
+       wx.setNavigationBarTitle({
+        title: res.data.data.title
+      })
     });
   },
   /**

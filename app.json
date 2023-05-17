@@ -61,7 +61,10 @@
         "safe/safe",
         "feedback/detail/detail",
         "feedback/submit/submit",
-        "partydetail/partydetail"
+        "partydetail/partydetail",
+        "fuWu/index",
+        "yinSi/index",
+        "zhiQing/index"
       ]
     },
     {

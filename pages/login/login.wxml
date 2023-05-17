@@ -11,9 +11,9 @@
         <view class="item" bindtap="lookSelf">随便看看</view>
     </view>
     <view class="label-agree">
-        <text bindtap="clickAgree" class="{{agreeStatus ? 'active' : ''}}">同意</text><navigator url="" hover-class="none">《用户服务协议》
+        <text bindtap="clickAgree" class="{{agreeStatus ? 'active' : ''}}">同意</text><navigator url="/pages/my/fuWu/index" hover-class="none">《用户服务协议》
     </navigator>和
         <navigator
-            url="" hover-class="none">《隐私协议保护协议》</navigator>
+            url="/pages/my/yinSi/index" hover-class="none">《隐私协议保护协议》</navigator>
     </view>
 </view>

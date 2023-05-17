@@ -1,0 +1,5 @@
+/* pages/my/fuWu/index.wxss */
+.fuWu{color: #fff;line-height: 44rpx;padding: 20rpx 40rpx;}
+.fuWu .tit{line-height: 100rpx;border-bottom: 1px solid rgba(255,255,255,.1);font-size: 36rpx;margin-bottom: 20rpx;}
+.fuWu .con .h2{font-size: 32rpx;margin-bottom: 4rpx;}
+.fuWu .con .p{font-size: 28rpx;}
