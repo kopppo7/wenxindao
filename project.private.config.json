@@ -4,7 +4,7 @@
   "setting": {
     "compileHotReLoad": true,
     "bigPackageSizeSupport": true,
-    "urlCheck": false
+    "urlCheck": true
   },
   "condition": {
     "miniprogram": {
@@ -19,7 +19,7 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "askId=14&roomId=488&isfriend=1",
+          "query": "askId=14&roomId=487&isfriend=1",
           "launchMode": "default",
           "scene": null
         },
@@ -411,7 +411,7 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "askId=14&roomId=488&isfriend=1",
+          "query": "askId=14&roomId=264&isMatch=undefined&isfriend=1",
           "launchMode": "default",
           "scene": null
         },
@@ -432,7 +432,7 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "askId=14&roomId=487&isfriend=1",
+          "query": "askId=14&roomId=476&isfriend=1",
           "launchMode": "default",
           "scene": null
         },
@@ -467,69 +467,6 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/index/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "",
-          "pathName": "07liebian/wode/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "分享生命探索详情",
-          "pathName": "probe/detail/detail",
-          "query": "id=44",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "",
-          "pathName": "probe/share/share",
-          "query": "id=504",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "",
-          "pathName": "02meiritiaopin/index/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "",
-          "pathName": "pages/my/about/about",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "",
-          "pathName": "02meiritiaopin/share/share",
-          "query": "id=411",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "",
-          "pathName": "pages/my/yinSi/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "",
-          "pathName": "pages/login/login",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "",
-          "pathName": "pages/login/login",
           "query": "",
           "launchMode": "default",
           "scene": null
