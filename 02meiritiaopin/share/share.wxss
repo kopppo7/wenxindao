@@ -242,10 +242,12 @@ page{
 	margin-bottom: 12rpx;
 }
 .text-mod-top .l{
-	flex:0 0 200rpx
+	width: 200rpx;
+	flex-shrink: 0;
+	margin-right: 10rpx;
 }
 .text-mod-top .r{
-	flex:0 0 350rpx;
+	flex-grow: 1;
 }
 .content .card{
 	width: 350rpx;
@@ -267,6 +269,7 @@ page{
   /* text-indent: 20px; */
   padding-left: 20px;
 	line-height: 42rpx;
+	display: block;word-wrap: break-word;max-height: 378rpx;overflow: hidden;max-width: 180rpx;
 }
 .content .text.text2{
 	float: none;

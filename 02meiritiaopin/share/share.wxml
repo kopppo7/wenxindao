@@ -71,7 +71,6 @@
 						data-text="{{ txt1 }}"
 					>{{ txt1 }}</text> -->
           <text	class="text my_draw_canvas"
-            style="display: block;word-wrap: break-word;max-height: 378rpx;overflow: hidden;"
             wx:for="{{txt1}}" wx:key="index"
             data-type="text"
             data-text="{{item }}"

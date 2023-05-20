@@ -15,7 +15,7 @@
   </view>
   <view class="share-log" wx:if="{{product.isPower != 1 }}">
     <view>
-      <view class="btitle">还缺{{4-shareNum}}人解锁 一起努力</view>
+      <view class="btitle">邀请{{4-shareNum}}位新人集体免费解锁</view>
       <view class="txt">使用期一年</view>
     </view>
     <view class="hasNum" wx:if="{{shareNum>0}}">
