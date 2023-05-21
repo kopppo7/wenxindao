@@ -16,7 +16,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        agreeStatus: true,
+        agreeStatus: false,
         useInfor: {
             phone: "",
             nickname: "",
