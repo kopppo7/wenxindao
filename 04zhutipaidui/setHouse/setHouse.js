@@ -64,7 +64,6 @@ Page({
         }
     },
     formSubmit(e) {
-        console.log(e.detail.value);
         let val = e.detail.value
         if (val.checkbox[0] == '1') {
           if (val.radio == '0') {
@@ -80,16 +79,11 @@ Page({
                   nickname: val.input
               }
               updateImMsg(param).then(res => {
-
-                  wx.redirectTo({
-                      url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
-                  })
+                this.matchGame();
               })
             }
           } else {
-              wx.redirectTo({
-                  url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
-              })
+            this.matchGame();
           }
         } else {
             wx.showToast({
@@ -139,53 +133,36 @@ Page({
         })
         this.getRoomDet()
     },
+    matchGame(){
+      wx.showLoading({
+        title: '匹配中...',
+      });
+      let startTimespan = new Date().valueOf();
 
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
-
+      roomMatchingPlay(this.data.themeId).then(res=>{
+        let endTimespan = new Date().valueOf();
+        if(endTimespan-startTimespan>10000){
+          wx.hideLoading({
+            success: (s) => {
+              wx.redirectTo({
+                url: '/04zhutipaidui/play/play?askId='+this.data.themeId+'&roomId='+res.data.data+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
+              })
+            },
+          })
+        }else{
+          setTimeout(() => {
+            wx.hideLoading({
+              success: (s) => {
+                wx.redirectTo({
+                  url: '/04zhutipaidui/play/play?askId='+this.data.themeId+'&roomId='+res.data.data+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
+                })
+              },
+            })
+          }, endTimespan-startTimespan);
+        }
+      })
+    //   wx.redirectTo({
+    //     url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+this.data.roomId+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
+    // })
     }
 })

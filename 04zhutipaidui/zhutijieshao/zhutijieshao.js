@@ -3,8 +3,7 @@ import {
     findByAskPartyOne,
     evaluateList,
     insertEvaluate,
-    createBaoRoom,
-    roomMatchingPlay
+    createBaoRoom
 } from "../api";
 Page({
 
@@ -45,17 +44,8 @@ Page({
     },
     // 快速匹配
     openBuyPop () {
-        var that = this;
-        roomMatchingPlay(that.data.themeId).then(res => {
-            if (res.data.ret === 203) {
-                wx.navigateTo({
-                    url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
-                })
-            } else if (res.data.ret === 200) {
-                wx.navigateTo({
-                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + (res.data.id || res.data.data) + '&isMatch=1',
-                })
-            }
+        wx.navigateTo({
+            url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId,
         })
     },
     openBuy(e){

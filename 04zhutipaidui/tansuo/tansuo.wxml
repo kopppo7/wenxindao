@@ -6,8 +6,6 @@
         </view>
         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet"/>
     </view>
-    <!--<view class="end-test" bindtap="toEnd">结束</view>-->
-    <!-- <view class="end-test" bindtap="dismissTeam">解散</view> -->
     <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
         <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
         <block wx:for="{{stepList}}" wx:key="index">
