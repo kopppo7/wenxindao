@@ -1,4 +1,4 @@
-import SDK from '../../IM_SDK/NIM_Web_SDK_miniapp'
+import SDK from '../../NIM_Web_SDK_miniapp_v9.6.3'
 import {
   getRoomDetails,
 } from "../api";
