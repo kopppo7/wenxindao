@@ -123,7 +123,6 @@ Page({
         that.setData({
           imgUrl: url
         })
-        wx.hideLoading()
         if(isPreview===true){
           wx.showShareImageMenu({
             path: url
@@ -146,6 +145,7 @@ Page({
     }
     // 绘制canvas
     drawMyImage.draw(data, this);
+    wx.hideLoading()
   },
   savePoster() {
     const that = this

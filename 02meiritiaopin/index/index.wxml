@@ -27,31 +27,22 @@
         </view>
     </view>
     <view class="m-ask" wx:if="{{activeIndex === 0}}">
-        <view>设定意图可以让我们的每一天都保持生命的鲜活！</view>
+        <view>设定生命意图可以让我们的每一天都过得生机盎然！</view>
         <view class="item">试着问问自己：</view>
-        <view class="item dian">今天想用什么样的心情度过这一天？</view>
-        <view class="item">任意选择一张卡牌来回答即可。</view>
-        <view class="item">备选问题（可以自行设定哦~）：</view>
-        <view class="item dian">今天我想要创造或者表达些什么？</view>
-        <view class="item dian">今天我想为自己，为他人和社会带来什么样的价值和影响？</view>
+        <view class="item dian">我想要用什么样的心情来度过今天，想要创造什么样的生命体验？</view>
+        <view class="item">任意选择一张问心卡牌来探索即可。</view>
     </view>
     <view class="m-ask" wx:if="{{activeIndex === 1}}">
         <view class="item">设定每日要事可以让我们对生活的焦点保持觉察。</view>
         <view class="item">试着问问自己：</view>
         <view class="item dian">今天有什么对我的生命是极其重要的？</view>
-        <view class="item">任意选择一张卡牌来回答即可。</view>
-        <view class="item">备选问题（可以自行设定哦~）：</view>
-        <view class="item dian">今天有什么结果是我想要拿到的？</view>
-        <view class="item dian">今天有什么人事物是我想要认真链接的？</view>
+        <view class="item">任意选择一张问心卡牌来探索即可。</view>
     </view>
     <view class="m-ask" wx:if="{{activeIndex === 2}}">
         <view class="item">每日复盘可以让我们把生活体验沉淀为生命的智慧。</view>
         <view class="item">试着这样总结：</view>
-        <view class="item dian">今天我对自己、他人和世界有什么新的看见？</view>
-        <view class="item">任意选择一张卡牌来回答即可。</view>
-        <view class="item">备选问题（可以自行设定哦~）：</view>
-        <view class="item dian">此刻我想铭记的是什么？</view>
-        <view class="item dian">此刻我想感恩的是什么？</view>
+        <view class="item dian">我今天的收获是什么，又有什么是需要铭记和感恩的？</view>
+        <view class="item">任意选择一张问心卡牌来探索即可。</view>
     </view>
     <form catchsubmit="addFm" class="form-z" wx:if="{{isEditFm}}">
         <view wx:for="{{contentsArray[activeIndex]}}" wx:for-index="idx" wx:for-item="content" wx:key="idx">

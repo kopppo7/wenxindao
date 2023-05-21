@@ -176,5 +176,23 @@ Page({
       this.data.page += 1;
       this.getData();
     }
-  }
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+    var shareObj = {
+      imageUrl: 'https://file.wxdao.net/2023-05/19edb398-123b-4d1c-8442-627a277a18ea.png', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+      title: '到这里激活内心的力量'
+    };
+    return shareObj;
+  },
+  onShareTimeline() {
+    var shareObj = {
+      imageUrl: 'https://file.wxdao.net/2023-05/19edb398-123b-4d1c-8442-627a277a18ea.png', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+      title: '到这里激活内心的力量'
+    };
+    return shareObj;
+  },
+
 });

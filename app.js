@@ -27,5 +27,8 @@ App({
   },
   onLaunch: async function() {
     //await login()
-  }
+  },
+  onShareTimeline() {
+    
+  },
 });
