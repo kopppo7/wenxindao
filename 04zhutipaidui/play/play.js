@@ -125,6 +125,24 @@ Page({
       endTime: new Date().getTime()
     });
   },
+  sendMsg(val){
+    debugger
+    console.log(val.detail.value);
+    var that = this;
+    console.log(this.data.teamId);
+    var msg = pageIMInstance.sendText({
+        scene: 'team',
+        to: this.data.roomData.imGroup,
+        text: val.detail.value,
+        done: that.pushMsg
+    });
+    this.setData({
+        inputText: ''
+    })
+  },
+  pushMsg(err,msg){
+    debugger
+  },
   //断开连接
   onDisconnect(error) {
     // 此时说明 SDK 处于断开状态, 开发者此时应该根据错误码提示相应的错误信息, 并且跳转到登录页面

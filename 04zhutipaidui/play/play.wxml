@@ -168,11 +168,12 @@
         <view class="inp">
             <input type="text"
                    value="{{inputText}}"
-                   wx:if="{{inputStatus}}"
-                   disabled="{{!inputStatus}}"
                    placeholder="说点什么吧..."
                    confirm-type="send"
                    bindconfirm="sendMsg"/>
+                   
+                   <!-- wx:if="{{inputStatus}}"
+                   disabled="{{!inputStatus}}" -->
         </view>
         <view class="btn" bindtap="handleReady"
               wx:if="{{(!isReady&&!isOwner) && !isOwner && !isBeginPlay}}">
