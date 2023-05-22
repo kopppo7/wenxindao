@@ -338,17 +338,8 @@ Page({
       id: options.id,
       shareId: options.shareId || 0
     })
-    getUserMsg(wx.getStorageSync('tokenKey')).then(userInfo => {
-      if(!userInfo.data.data.phone){
-        this.setData({
-          isHavePhone:false
-        })
-      }
-    });
-  },
-  onShow() {
-    var that = this;
-    if (that.data.shareId) {
+    if(this.data.shareId||!wx.getStorageSync('tokenKey')){
+      var that = this;
       wx.login({
         success: function (res) {
           var obj = {
@@ -373,7 +364,21 @@ Page({
           })
         }
       });
+    }else{
+      getUserMsg(wx.getStorageSync('tokenKey')).then(userInfo => {
+        if(!userInfo.data.data.phone){
+          this.setData({
+            isHavePhone:false
+          })
+        }
+      });
     }
+  },
+  onShow() {
+    var that = this;
+    // if (that.data.shareId) {
+      
+    // }
     that.getDetail(that.data.id)
     that.getReceiveDetail(that.data.shareId, that.data.id)
     that.getEvaList()

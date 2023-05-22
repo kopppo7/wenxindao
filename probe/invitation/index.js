@@ -165,21 +165,21 @@ Page({
         fissionInfo: res.data.data
       })
     })
-    wx.login({
-      success: function (res) {
-        var obj = {
-          code: res.code,
-          role: 1
-        };
-        appletsLogin(obj).then(res => {
-          wx.setStorageSync('tokenKey', res.data.data.token);
-          getUserMsg(res.data.data.token).then(userInfo => {
-            if (userInfo.data.data.phone != null && userInfo.data.data.wechatName != null) {
-              wx.navigateBack();
-            }
-          })
-        })
+    
+    getUserMsg(wx.getStorageSync('tokenKey')).then(userInfo => {
+      if (userInfo.data.data.phone != null && userInfo.data.data.wechatName != null) {
+        wx.navigateBack();
       }
-    });
+    })
+    // wx.login({
+    //   success: function (res) {
+    //     var obj = {
+    //       code: res.code,
+    //       role: 1
+    //     };
+    //     appletsLogin(obj).then(res => {
+    //     })
+    //   }
+    // });
   }
 })
