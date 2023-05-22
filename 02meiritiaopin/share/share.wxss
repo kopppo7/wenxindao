@@ -191,9 +191,10 @@ page{
 	display: flex;
 	align-items: center;
 	line-height: 1;
+	white-space: nowrap;
 }
 .date-mod .days{
-	font-size: 112rpx;
+	font-size: 100rpx;
 	line-height: 1;
 }
 .date-mod .date-box{
@@ -201,7 +202,7 @@ page{
 	font-size: 0;
 }
 .date-mod .date-box .lc{
-	font-size: 32rpx;
+	font-size: 30rpx;
 	line-height: 1;
 }
 .date-mod .date-box .gang{

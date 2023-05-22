@@ -405,6 +405,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: async function (option) {
+    console.log(option);
     if (!this.data.isHavePhone) {
       wx.showModal({
         title: '请登录授权进入下一步',
@@ -418,7 +419,7 @@ Page({
       })
     }else{
       var shareId = '';
-      if (option.target.dataset.type == 'liebian') {
+      if (option.target && option.target.dataset.type == 'liebian') {
         await sendAskInvite(this.data.id).then(res => {
           shareId = res.data.data.id
         })

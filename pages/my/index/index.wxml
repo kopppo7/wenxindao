@@ -77,6 +77,7 @@
                         <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/h-icon-dot.png"></image>
                     </view>
                     <view class="title title1">{{item.categoryText}}</view>
+                    <view class="title title1">{{item.askName}}</view>
                     <view class="type-list" wx:if="{{item.target.length > 0}}">
                         <view class="type-item c3" wx:for="{{item.target}}" wx:for-item="item1" wx:key="*this">{{item1}}</view>
                     </view>
