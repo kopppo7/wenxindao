@@ -192,14 +192,19 @@ page{
 	align-items: center;
 	line-height: 1;
 	white-space: nowrap;
+	width: 280rpx;
+	text-align: right;
 }
 .date-mod .days{
 	font-size: 100rpx;
 	line-height: 1;
+	min-width: 120rpx;
 }
 .date-mod .date-box{
 	margin-left: 8rpx;
 	font-size: 0;
+	text-align: left;
+	min-width: 140rpx;
 }
 .date-mod .date-box .lc{
 	font-size: 30rpx;
@@ -211,6 +216,7 @@ page{
 	display: inline-block;
 	-webkit-transform-origin: 50% 50%;-moz-transform-origin: 50% 50%;-ms-transform-origin: 50% 50%;-o-transform-origin: 50% 50%;transform-origin: 50% 50%;
 	-webkit-transform: rotate(30deg);-moz-transform: rotate(30deg);-ms-transform: rotate(30deg);-o-transform: rotate(30deg);transform: rotate(30deg);
+
 }
 .date-mod .date-box .date{
 	font-size: 36rpx;
