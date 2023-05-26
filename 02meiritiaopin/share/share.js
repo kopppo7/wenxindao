@@ -42,8 +42,8 @@ Page({
       var content = JSON.parse(res.data.data.contents);
       var txt = content[0].txt || '';
       var num = 70
-      var txt1 = txt.substring(0, 70)
-      var txt2 = txt.substring(70, txt.length);
+      var txt1 = txt.substring(0, 48)
+      var txt2 = txt.substring(48, txt.length);
       let nowDate = {
         month: res.data.data.addTime.substring(5, 7),
         day: res.data.data.addTime.substring(8, 10),
@@ -69,7 +69,9 @@ Page({
         txt2: txt2,
         nowDate: nowDate
       })
-      that.drawMyCanvas()
+      setTimeout(() => {
+        that.drawMyCanvas()
+      }, 500);
     })
   },
   // dayForSignNumber() {
@@ -104,7 +106,7 @@ Page({
       })
       setTimeout(() => {
         that.startDraw(isPreview)
-      }, 10);
+      }, 100);
     }).exec()
   },
   startDraw(isPreview) {
@@ -118,6 +120,7 @@ Page({
       borderRadius: '50rpx',
       obj: that, // 传入当前组件的this
       progress(percent) { // 进度
+        console.log(percent);
       },
       finish(url) { // 生成的图片
         that.setData({
@@ -149,6 +152,7 @@ Page({
   },
   savePoster() {
     const that = this
+    
     wx.saveImageToPhotosAlbum({
       filePath: that.data.imgUrl,
       success: function () {
@@ -192,6 +196,7 @@ Page({
         }
       }
     })
+    
   },
   share1() {
     wx.showShareImageMenu({

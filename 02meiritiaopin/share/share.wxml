@@ -6,6 +6,7 @@
 		data-url="https://file.wxdao.net/2023-04/75970e21-b858-452f-8f7c-06e5598be3e9.png"
 		data-type="image"
 		src="https://file.wxdao.net/2023-04/75970e21-b858-452f-8f7c-06e5598be3e9.png"
+		
 	></image>
 	<view class="my_draw_canvas canvas-content">
 		<view class="date-mod my_draw_canvas">
@@ -16,7 +17,7 @@
 			>
 				{{ nowDate.day }}
 			</view>
-			<view class="date-box my_draw_canvas" data-type="text">
+			<view class="date-box my_draw_canvas">
 				<view
 					class="lc my_draw_canvas"
 					data-type="text"
@@ -40,6 +41,7 @@
 				src="{{ headImg }}"
 				data-type="image"
 				data-url="{{ headImg }}"
+				
 			></image>
 			<view
 				class="name my_draw_canvas"
@@ -63,6 +65,7 @@
 						src="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
 						data-type="image"
 						data-url="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
+						
 					></image>
 					<!-- <text
 						data-type="text"
@@ -82,6 +85,7 @@
             src="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
             data-type="image"
             data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+						
           ></image>
 				</div>
 				<div class="r">
@@ -91,6 +95,7 @@
 							src="{{ cardImg }}"
 							data-type="image"
 							data-url="{{ cardImg }}"
+							
 						></image>
 					</view>
 				</div>
@@ -107,6 +112,7 @@
 					src="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
 					data-type="image"
 					data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+					
 				></image>
 			</view>
 		</view>
@@ -150,6 +156,7 @@
 					data-url="https://file.wxdao.net/2023-04/0ad041a2-3e20-4de0-9945-faf97ea8572e.png"
 					class="qr my_draw_canvas"
 					src="https://file.wxdao.net/2023-04/0ad041a2-3e20-4de0-9945-faf97ea8572e.png"
+					
 				></image>
 			</view>
 		</view>

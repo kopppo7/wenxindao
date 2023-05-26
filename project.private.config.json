@@ -29,6 +29,13 @@
           "query": "id=44&shareId=41",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "id=538",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

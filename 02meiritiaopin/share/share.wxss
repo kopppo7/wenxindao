@@ -196,13 +196,13 @@ page {
 	align-items: center;
 	line-height: 1;
 	white-space: nowrap;
-	width: 280rpx;
+	width: 300rpx;
 	text-align: right;
 }
 .date-mod .days {
 	font-size: 100rpx;
 	line-height: 1;
-	min-width: 120rpx;
+	min-width: 130rpx;
 }
 .date-mod .date-box {
 	margin-left: 8rpx;
