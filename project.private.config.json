@@ -36,6 +36,13 @@
           "query": "id=538",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "probe/share/share",
+          "query": "id=664",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

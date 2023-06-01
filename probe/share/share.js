@@ -192,6 +192,9 @@ Page({
             if(userName&&userName.length>6){
               userName = userName.substring(0,6)+'...';
             }
+            if(data.title&&data.title.length>9){
+                data.title = data.title.substring(0,9)+'...';
+              }
             this.setData({
                 probeId:data.probeId,
                 userName:userName,
