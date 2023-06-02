@@ -42,18 +42,20 @@ Page({
       var content = JSON.parse(res.data.data.contents);
       var txt = content[0].txt || '';
       var num = 70
-      var txt1 = txt.substring(0, 48)
-      var txt2 = txt.substring(48, txt.length);
+      var txt1 = txt.substring(0, 115)+'...'
+      console.log(txt1);
+      console.log(txt);
+      // var txt2 = txt.substring(40, txt.length);
       let nowDate = {
         month: res.data.data.addTime.substring(5, 7),
         day: res.data.data.addTime.substring(8, 10),
         year: res.data.data.addTime.substring(0, 4),
         chinese: res.data.data.chineseCalendar.split(' ')[1]
       }
-      let txt1Arr = txt1.split(/[(\r\n)\r\n]+/);
-      if (txt1Arr.length > 7) {
-        txt1Arr = txt1Arr.splice(0, 7);
-      }
+      // let txt1Arr = txt1.split(/[(\r\n)\r\n]+/);
+      // if (txt1Arr.length > 7) {
+      //   txt1Arr = txt1Arr.splice(0, 7);
+      // }
       // let txt1Html = '';
       // for(let i=0;i<txt1Arr.length&&i<7;i++){
       //   txt1Html+='<div>'+txt1Arr[i]+'</div>';
@@ -65,8 +67,8 @@ Page({
         headImg: res.data.data.userHeadImg,
         userName: res.data.data.userName,
         typeTit: res.data.data.target,
-        txt1: txt1Arr,
-        txt2: txt2,
+        txt1: txt1,
+        // txt2: txt2,
         nowDate: nowDate
       })
       setTimeout(() => {

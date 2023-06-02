@@ -241,6 +241,9 @@ page {
 	top: 155rpx;
 	width: 245rpx;
 }
+.head-img .title{
+	position: absolute;left: 300rpx;top: 0;width: 200rpx;top: 50%;line-height: 60rpx;margin-top: -46rpx;
+}
 .head-img .name {
 	flex: 1;
 	width: 0;
@@ -257,9 +260,8 @@ page {
 	overflow: hidden;
 }
 .text-mod-top {
-	display: flex;
-	justify-content: space-between;
 	margin-bottom: 12rpx;
+	display: -webkit-flex;display: flex;justify-content: center;/* 水平居中 */align-items:center;
 }
 .text-mod-top .l {
 	width: 200rpx;
@@ -286,19 +288,18 @@ page {
 	font-size: 28rpx;
 	color: #222537;
 	/* text-indent: 20px; */
-	padding-left: 20px;
 	line-height: 42rpx;
 	display: block;
 	word-wrap: break-word;
-	max-height: 378rpx;
 	overflow: hidden;
-	max-width: 180rpx;
 }
 .content .text.text2 {
 	float: none;
 	width: auto;
 	text-indent: 0;
-	max-width: 10000px;
+	max-height:252rpx;
+	display: -webkit-box;display: box; -webkit-box-orient: vertical;-webkit-line-clamp: 6;overflow: hidden;
+	-wekit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;
 }
 
 .content .yin {

@@ -49,17 +49,18 @@
 				data-text="{{ userName }}"
 				>{{ userName }}</view
 			>
+			<view
+				data-type="text"
+				class="title my_draw_canvas"
+				data-text="{{ typeTit }}"
+			>
+				{{ typeTit }}
+			</view>
 		</view>
 		<view class="content my_draw_canvas">
 			<div class="text-mod-top">
-				<div class="l">
-					<view
-						data-type="text"
-						class="title my_draw_canvas"
-						data-text="{{ typeTit }}"
-					>
-						{{ typeTit }}
-					</view>
+				<!-- <div class="l">
+					
 					<image
 						class="my_draw_canvas yin"
 						src="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
@@ -67,53 +68,33 @@
 						data-url="https://file.wxdao.net/2023-01/999d11d6-5268-4358-9ec5-42f25e74a64b.png"
 						
 					></image>
-					<!-- <text
-						data-type="text"
-						class="text my_draw_canvas"
-            style="display: block;word-wrap: break-word;max-height: 340rpx;overflow: hidden;"
-						data-text="{{ txt1 }}"
-					>{{ txt1 }}</text> -->
-          <text	class="text my_draw_canvas"
-            wx:for="{{txt1}}" wx:key="index"
-            data-type="text"
-            data-text="{{item }}"
-            >{{item}}</text>
-          <!-- <rich-text nodes="{{txt1}}" class="text my_draw_canvas" data-text="{{ txt1 }}"  data-type="html">{{ txt1 }}</rich-text> -->
-          <image
-            wx:if="{{ !txt2 }}"
-            class="my_draw_canvas yin end"
-            src="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
-            data-type="image"
-            data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
+				</div> -->
+				<!-- <div class="r">
+				</div> -->
+				<view class="card my_draw_canvas">
+					<image
+						class="my_draw_canvas"
+						src="{{ cardImg }}"
+						data-type="image"
+						data-url="{{ cardImg }}"
 						
-          ></image>
-				</div>
-				<div class="r">
-					<view class="card my_draw_canvas">
-						<image
-							class="my_draw_canvas"
-							src="{{ cardImg }}"
-							data-type="image"
-							data-url="{{ cardImg }}"
-							
-						></image>
-					</view>
-				</div>
+					></image>
+				</view>
 			</div>
 			<view
 				data-type="text"
-				wx:if="{{ txt2 }}"
+				wx:if="{{ txt1 }}"
 				class="text text2 my_draw_canvas"
-				data-text="{{ txt2 }}"
+				data-text="{{ txt1 }}"
 			>
-				{{ txt2 }}
-				<image
+				{{ txt1 }}
+				<!-- <image
 					class="my_draw_canvas yin end"
 					src="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
 					data-type="image"
 					data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
 					
-				></image>
+				></image> -->
 			</view>
 		</view>
 		<view class="s5 my_draw_canvas">

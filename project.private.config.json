@@ -43,6 +43,20 @@
           "query": "id=664",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "id=648",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "id=648",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

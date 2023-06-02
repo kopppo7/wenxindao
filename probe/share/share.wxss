@@ -328,7 +328,7 @@ page{
 }
 .ts-det .txt .title{
 	white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
-	font-size: 40rpx;
+	font-size: 28rpx;
 	color: #222537;
 	line-height: 60rpx;
 	height: 60rpx;
