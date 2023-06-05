@@ -57,6 +57,13 @@
           "query": "id=648",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "02meiritiaopin/share/share",
+          "query": "id=750",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

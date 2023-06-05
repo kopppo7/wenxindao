@@ -58,7 +58,7 @@
 			</view>
 		</view>
 		<view class="content my_draw_canvas">
-			<div class="text-mod-top">
+			<view class="text-mod-top">
 				<!-- <div class="l">
 					
 					<image
@@ -80,7 +80,7 @@
 						
 					></image>
 				</view>
-			</div>
+			</view>
 			<view
 				data-type="text"
 				wx:if="{{ txt1 }}"
@@ -88,13 +88,14 @@
 				data-text="{{ txt1 }}"
 			>
 				{{ txt1 }}
-				<!-- <image
-					class="my_draw_canvas yin end"
-					src="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
-					data-type="image"
-					data-url="https://file.wxdao.net/2023-01/b4585614-4151-4ace-ab0b-93635de5a39c.png"
-					
-				></image> -->
+			</view>
+			<view
+				data-type="text"
+				wx:if="{{ txt1 }}"
+				class="text text2 my_draw_canvas"
+				data-text="{{ txt1 }}"
+			>
+				{{ txt1 }}
 			</view>
 		</view>
 		<view class="s5 my_draw_canvas">
