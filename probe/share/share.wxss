@@ -190,17 +190,17 @@ page{
 	display: flex;
 	align-items: center;
 	line-height: 1;
-	width: 280rpx;
+	width: 300rpx;
 }
 .date-mod .days{
 	font-size: 112rpx;
 	line-height: 1;
-	min-width: 130rpx;
+	min-width: 150rpx;
 }
 .date-mod .date-box{
 	margin-left: 8rpx;
 	font-size: 0;
-	min-width: 140rpx;
+	min-width: 150rpx;
 }
 .date-mod .date-box .lc{
 	font-size: 30rpx;
@@ -334,10 +334,11 @@ page{
 	height: 60rpx;
 }
 .ts-det .txt .desc{
-	overflow: hidden;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;
+	overflow: hidden;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;
 	font-size: 26rpx;
 	color: #222537;
 	opacity: .7;
+	text-align: justify;
 }
 .eval-list{
 	margin-top: 70rpx;

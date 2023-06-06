@@ -185,8 +185,8 @@ Page({
               chinese:res.data.data.chineseCalendar.split(' ')[1]
             }
             let tips = data.tips;
-            if(tips&&tips.length>32){
-              tips = tips.substring(0,32)+'...';
+            if(tips&&tips.length>48){
+              tips = tips.substring(0,48)+'...';
             }
             let userName = data.userName;
             if(userName&&userName.length>6){
