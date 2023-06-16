@@ -89,14 +89,6 @@
 			>
 				{{ txt1 }}
 			</view>
-			<view
-				data-type="text"
-				wx:if="{{ txt1 }}"
-				class="text text2 my_draw_canvas"
-				data-text="{{ txt1 }}"
-			>
-				{{ txt1 }}
-			</view>
 		</view>
 		<view class="s5 my_draw_canvas">
 			<view class="s5-l">
