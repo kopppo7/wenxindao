@@ -78,6 +78,69 @@
           "query": "id=907",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=15&roomId=680&isMatch=undefined&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=15&roomId=686&isMatch=undefined&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=15&isMatch=undefined&isfriend=undefined&roomId=690",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=15&roomId=689&isMatch=undefined&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=15&roomId=692&isMatch=undefined&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=15&roomId=690&isMatch=undefined&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=15&isMatch=undefined&isfriend=undefined&roomId=692",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=15&roomId=693&isMatch=undefined&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=15&roomId=693&isMatch=undefined&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

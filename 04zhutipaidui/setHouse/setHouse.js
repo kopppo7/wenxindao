@@ -145,7 +145,7 @@ Page({
           wx.hideLoading({
             success: (s) => {
               wx.redirectTo({
-                url: '/04zhutipaidui/play/play?askId='+this.data.themeId+'&roomId='+res.data.data+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
+                url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+res.data.data+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
               })
             },
           })
@@ -154,7 +154,7 @@ Page({
             wx.hideLoading({
               success: (s) => {
                 wx.redirectTo({
-                  url: '/04zhutipaidui/play/play?askId='+this.data.themeId+'&roomId='+res.data.data+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
+                  url: '/04zhutipaidui/tansuo/tansuo?askId='+this.data.themeId+'&roomId='+res.data.data+'&isMatch='+this.data.isMatch+'&isfriend='+this.data.isfriend,
                 })
               },
             })

@@ -1291,7 +1291,7 @@ image {
 
 .bot-content {
 	position: absolute;
-	bottom: -200rpx;
+	bottom: -350rpx;
 	left: 0;
 	width: 100%;
 	background: rgba(182, 178, 207, 0.18);

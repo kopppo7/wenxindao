@@ -83,6 +83,7 @@ Page({
         jumpPopStatus2: false,
         jumpPopStatus3: false,
         jumpPopStatus4: false,
+        jumpPopStatus5: false,
         stepList: [],//轮导航列表
         showOtherStep: false,//显示其他轮
         stepMsgList: [],//其他轮信息内容
@@ -130,6 +131,9 @@ Page({
         lastPeoplePop1: false,
         lastPeoplePop2: false,
         leaveUserInfor: null, //离开房间人的信息
+        socket: null,
+        SocketInterval: null,
+        isOnloadSocket: false
     },
     //关闭弹窗
     closePop (clear) {
@@ -205,13 +209,11 @@ Page({
             appKey: '820499c93e45806d2420d75aa9ce9846',
             account: account,
             token: token || '',
-            db: true, //若不要开启数据库请设置false。SDK默认为true。
+            db: false, //若不要开启数据库请设置false。SDK默认为true。
             // 群成员更新
             onteammembers: that.onTeamMembers,
             // 连接成功
             onconnect: that.onConnect,
-            // 钩子函数-初始化同步完成的回调
-            onsyncdone: that.onsyncdone,
             //重新连接
             onwillreconnect: that.onWillReconnect,
             //断开连接
@@ -351,7 +353,6 @@ Page({
     },
     // 连接成功
     onConnect () {
-        let that = this
         // 是匹配并且是房主那此时用户就是临时房主
         if (this.data.isMatch && this.data.isOwner && !wx.getStorageSync('isLinShiFangZhu')) {
             this.setData({
@@ -359,20 +360,6 @@ Page({
             })
         }
         console.log('连接成功');
-    },
-    onsyncdone () {
-        let that = this
-        console.log('onsyncdone 成功');
-        nim.getHistoryMsgs({
-            scene: 'team',
-            to: that.data.teamId,
-            done: that.getHistoryMsgsDone,
-            beginTime: 0,
-            endTime: new Date().getTime()
-        });
-    },
-    getHistoryMsgsDone (error, obj) {
-        console.log(obj, '历史消息');
     },
     //重新连接
     onWillReconnect (obj) {
@@ -469,7 +456,7 @@ Page({
     sendCustomMsg (type, val) {
         var that = this;
         var content = {
-            type: type, //发言类型 1 玩家准备 2 玩家是否轮到发言 3玩家是否在线  4 系统文字消息 5 系统发牌消息 6 跳过发言 7 点赞 
+            type: type, //发言类型 1 玩家准备 2 玩家是否轮到发言 3玩家是否在线  4 系统文字消息 5 系统发牌消息 6 跳过发言 7 点赞
             data: {
                 status: val?.status,  //玩家是否准备 
                 value: val?.text,     //发的内容
@@ -478,8 +465,9 @@ Page({
                 video: val?.video,    //发的视频
                 img: val?.imgUrl,      //发的图片
                 account: val?.account,      //房间人员变动
-                downInfor: val?.downInfor,      // 倒计时信息
+                times: val?.times,      // 倒计时时间
                 tiRenInfo: val?.tiRenInfo,      // 倒计时时间
+                isOver: val?.isOver,      // 倒计时时间
             }
         };
         var msg = nim.sendCustomMsg({
@@ -726,41 +714,48 @@ Page({
                         playerList: player2
                     })
                     console.log(that.data.truePlayerList, 'that.data.playerList');
-                    if (that.data.truePlayerList.length <= 1 && that.data.isBeginPlay) {
-                        getIfFreeMy().then(res => {
-                            console.log(res);
-                            if (res.data.data.giveParty == 1) {
-                                that.setData({
-                                    lastPeoplePop2: true,
-                                    isLastPeople: true
-                                })
-                            } else {
-                                that.setData({
-                                    lastPeoplePop1: true,
-                                    isLastPeople: true
-                                })
-                            }
-                        })
+                    if (content.data?.isOver) {
+                        return
+                    } else {
+                        if (that.data.truePlayerList.length <= 1 && that.data.isBeginPlay) {
+                            getIfFreeMy().then(res => {
+                                console.log(res);
+                                if (res.data.data.giveParty == 1) {
+                                    that.setData({
+                                        lastPeoplePop2: true,
+                                        isLastPeople: true
+                                    })
+                                } else {
+                                    that.setData({
+                                        lastPeoplePop1: true,
+                                        isLastPeople: true
+                                    })
+                                }
+                            })
+                        }
                     }
                 }
 
             } else if (content.type == 9) {
-                this.setData({
-                    timePopStatus: true,
-                    waitTime: 10
-                })
-                this.startCountDown()
+
+                // 这个是开始派对的倒计时
+                // this.startCountDown()
+                let obj = {
+                    downTime: 10,
+                    type: 1
+                }
+                setTimeout(() => {
+                    this.setData({
+                        timePopStatus: true,
+                        waitTime: 10
+                    })
+                    this.sendSocketMsg(obj)
+                }, 1000);
                 console.log('开始倒计时')
             } else if (content.type == 10) {
                 // 发言和思考倒计时
-                /**
-                    1.如果正在倒计时,则跳过
-                    2.如果是发言阶段,倒计时结束之后执行nextPerson方法
-                    3.如果是不是发言阶段,那就是思考阶段,倒计时结束之后执行speak方法
-                 */
-                let { time, type, personInd, step } = content.data.downInfor
-                console.log('content.data.downInfor', content.data.downInfor);
-                that.getDownTime2(time, type, personInd, step)
+                // 这里是思考和发言倒计时
+                // this.getDownTime(content.data.times, that.speak)
             } else if (content.type == 11) {
                 // 被踢出房间
                 that.setData({
@@ -1006,7 +1001,19 @@ Page({
                 }
             })
             if (num === readyNum && num >= 2) {
-                this.sendCustomMsg(9, {})
+                // this.sendCustomMsg(9, {})
+                this.setData({
+                    timePopStatus: true,
+                    waitTime: 10
+                })
+                let obj = {
+                    type: 1,
+                    downTime: 10,
+                    isJump: 0
+                }
+                setTimeout(() => {
+                    vm.sendSocketMsg(obj)
+                }, 1000);
             } else {
                 console.log('还没准备好')
             }
@@ -1041,60 +1048,6 @@ Page({
             }
             console.log('还没准备好')
         }
-    },
-    //开始倒计时
-    startCountDown: function () {
-        clearTimeout(startTimeout)
-        var that = this;
-        startTimeout = setTimeout(function () {
-            var waitTime = that.data.waitTime
-            that.setData({
-                waitTime: waitTime - 1
-            })
-            console.log(that.data.waitTime)
-            if (that.data.waitTime > 0) {
-                that.startCountDown()
-                if (that.data.waitTime === 3) {
-                    var routeList = getCurrentPages()
-                    if (routeList[routeList.length - 1].route !== '04zhutipaidui/tansuo/tansuo') {
-                        console.log('该回来了')
-                        wx.showModal({
-                            title: '提示',
-                            content: '派对即将开始，请返回房间',
-                            success (res) {
-                                if (res.confirm) {
-                                    var url = '/04zhutipaidui/tansuo/tansuo'
-                                    var roomPath = that.data.pageOptions
-                                    for (const roomPathKey in roomPath) {
-                                        url = url + '&' + roomPathKey + '=' + roomPath[roomPathKey]
-                                    }
-                                    url.replace('&', '?')
-                                    wx.redirectTo({
-                                        url: url.replace('&', '?'),
-                                    })
-                                } else if (res.cancel) {
-                                    console.log('用户点击取消')
-                                    //退出房间
-                                    quitRoom({
-                                        id: this.data.roomData.id
-                                    }).then(res => {
-                                        that.leaveRoomClear()
-                                    })
-                                }
-                            }
-                        })
-                    }
-                }
-
-            } else {
-                clearTimeout(startTimeout)
-                that.handleBegin()
-                that.setData({
-                    timePopStatus: false
-                })
-            }
-            that.saveData()
-        }, 1000)
     },
 
     //准备弹窗是否显示
@@ -1319,31 +1272,7 @@ Page({
     },
 
 
-    //邀请好友
-    onShareAppMessage () {
-        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1');
-        return {
-            title: this.data.themeDetail.title,
-            query: 'askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
-            imageUrl: '',
-        }
-    },
-    //邀请好友
-    onShareTimeline () {
-        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1');
-        return {
-            title: this.data.themeDetail.title,
-            query: 'askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
-            imageUrl: '',
-        }
-    },
-    handleInviFriend () {
-        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1');
-        return {
-            title: '弹出分享时显示的分享标题',
-            path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
-        }
-    },
+
     //快速开始
     handleBegin () {
         var num = 0;
@@ -1449,92 +1378,112 @@ Page({
 
         })
     },
-    //页面执行************************************************
-    /**
-     * 发言和思考倒计时
-     * @param {*} time 倒计时时间
-     * @param {*} type 类型，1 思考 2 发言
-     * @param {*} personInd  轮到哪个人
-     */
-    getDownTime2 (time, type, personInd, step) {
-        this.setData({
-            personInd: personInd,
-            waitTime: time - 1,
-            step
-        })
-        if (time <= 1 && type == 1) {
-            this.speak()
-        } else if (time <= 1 && type == 2) {
-            this.nextPerson()
-        } else {
-            setTimeout(() => {
-                this.sendCustomMsg(10, {
-                    downInfor: {
-                        time: time - 1,
-                        type,
-                        personInd,
-                        step,
+
+    //开始派对的倒计时(没用了)
+    startCountDown: function () {
+        clearTimeout(startTimeout)
+        var that = this;
+        startTimeout = setTimeout(function () {
+            var waitTime = that.data.waitTime
+            that.setData({
+                waitTime: waitTime - 1
+            })
+            console.log(that.data.waitTime)
+            if (that.data.waitTime > 0) {
+                that.startCountDown()
+                if (that.data.waitTime === 3) {
+                    var routeList = getCurrentPages()
+                    if (routeList[routeList.length - 1].route !== '04zhutipaidui/tansuo/tansuo') {
+                        console.log('该回来了')
+                        wx.showModal({
+                            title: '提示',
+                            content: '派对即将开始，请返回房间',
+                            success (res) {
+                                if (res.confirm) {
+                                    var url = '/04zhutipaidui/tansuo/tansuo'
+                                    var roomPath = that.data.pageOptions
+                                    for (const roomPathKey in roomPath) {
+                                        url = url + '&' + roomPathKey + '=' + roomPath[roomPathKey]
+                                    }
+                                    url.replace('&', '?')
+                                    wx.redirectTo({
+                                        url: url.replace('&', '?'),
+                                    })
+                                } else if (res.cancel) {
+                                    console.log('用户点击取消')
+                                    //退出房间
+                                    quitRoom({
+                                        id: this.data.roomData.id
+                                    }).then(res => {
+                                        that.leaveRoomClear()
+                                    })
+                                }
+                            }
+                        })
                     }
+                }
+
+            } else {
+                clearTimeout(startTimeout)
+                that.handleBegin()
+                that.setData({
+                    timePopStatus: false
                 })
-            }, 1000);
-        }
+            }
+            that.saveData()
+        }, 1000)
     },
-    //倒计时
+    //页面执行************************************************
+    //发言和思考倒计时(没用了)
     getDownTime (downtimes, fun) {
         var time1 = 0;
         var that = this;
-        if (downtimes) {
-            timeInt = setInterval(() => {
-
-                if (downtimes <= 1) {
+        timeInt = setInterval(() => {
+            if (downtimes <= 1) {
+                clearInterval(timeInt)
+                timeInt = null
+                that.setData({
+                    timePopStatus: false,
+                })
+                if (fun) {
+                    fun()
+                }
+            } else {
+                downtimes--
+                var step = that.data.step
+                var speakTime = that.data.themeDetail.list[step - 1].speakTime || 10
+                // 判断几秒内没发言自动跳过
+                if (speakTime && speakTime - downtimes == 5 && that.data.show_speak_count_down && !that.data.isFaYan) {
                     clearInterval(timeInt)
-                    timeInt = null
                     that.setData({
-                        timePopStatus: false,
+                        jumpPopStatus4: true,
                     })
-                    if (fun) {
-                        fun()
-                    }
-                } else {
-                    downtimes--
-                    var step = that.data.step
-                    var speakTime = that.data.themeDetail.list[step - 1].speakTime || 10
-                    // 判断几秒内没发言自动跳过
-                    if (speakTime && speakTime - downtimes == 30 && that.data.show_speak_count_down && !that.data.isFaYan) {
-                        clearInterval(timeInt)
-                        that.setData({
-                            jumpPopStatus4: true,
-                        })
-                        downtimes = speakTime
-                    }
-                    if (downtimes < 10) {
-                        downtimes = '0' + downtimes
-                    }
-                    that.setData({
-                        waitTime: downtimes
-                    })
+                    downtimes = speakTime
                 }
-            }, 1000);
-        } else {
-            // 以下是匹配倒计时 应该不需要了
-            var time = setInterval(() => {
-                if (time1 > 9) {
-                    clearInterval(time)
-                    that.initRoom()
-                } else {
-                    time1++
-                    if (time1 < 10) {
-                        time1 = '0' + time1
-                    }
-                    that.setData({
-                        waitTime: time1
-                    })
+                if (downtimes < 10) {
+                    downtimes = '0' + downtimes
                 }
-            }, 1000);
+                that.setData({
+                    waitTime: downtimes
+                })
+            }
+        }, 1000);
+    },
+
+    //这个是派对结束之后结尾畅聊的倒计时
+    countDown: function () {
+        let that = this
+        let obj = {
+            type: 4,
+            playNum: this.data.step,
+            downTime: 60
         }
+        setTimeout(() => {
+            that.sendSocketMsg(obj)
+        }, 1000);
     },
     //执行每一轮
-    runStep: function (isOnLoad) {
+    runStep: function () {
         var that = this;
         var step = this.data.step
         var stepData = this.data.themeDetail.list[step - 1]
@@ -1551,7 +1500,7 @@ Page({
         //话术
         var guideWords = stepData.guideWords
         //思考时间
-        var thinkTime = isOnLoad || stepData.thinkTime || 3
+        var thinkTime = stepData.thinkTime || 3
         // var thinkTime = 3
 
         //显示引导语言
@@ -1559,7 +1508,7 @@ Page({
             helpText: guideWords
         })
         //触发发牌
-        if (that.data.isOwner && isOnLoad !== undefined) {
+        if (that.data.isOwner) {
 
             that.sendCustomMsg(4, { text: '发牌中...' })
         }
@@ -1567,37 +1516,36 @@ Page({
         this.setData({
             // timePopStatus: true,
             //思考倒计时
-            waitTime: thinkTime,
-            show_think_count_down: true,
+            waitTime: thinkTime > 9 ? thinkTime : '0' + thinkTime,
             personInd: 0,
             inputStatus: false
         })
+        // 发送一条开始思考倒计时的消息
+        let obj = {
+            type: 2,
+            playNum: step,
+            downTime: thinkTime + 1
+        }
+        setTimeout(() => {
+            that.sendSocketMsg(obj)
+        }, 1000);
         // this.getDownTime(thinkTime, this.speak)
-        // this.getDownTime2(thinkTime, 1, that.data.personInd)
-        this.sendCustomMsg(10, {
-            downInfor: {
-                time: thinkTime,
-                type: 1,
-                personInd: 0,
-                step: this.data.step,
-            }
-        })
 
     },
-    //思考倒计时结束，开始发言 当重新进入页面时候调用方法并且设置->isOnLoad 倒计时剩余时间
-    speak: function (isOnLoad) {
-        debugger
+    //思考倒计时结束，开始发言
+    speak: function () {
         var that = this;
         var step = this.data.step
         var stepData = this.data.themeDetail.list[step - 1]
         //说话时间
-        var speakTime = isOnLoad || stepData.speakTime || 10
+        var speakTime = stepData.speakTime || 10
         // var speakTime = 30
         console.log('思考结束开始答题');
 
         //隐藏思考倒计时
         that.setData({
-            show_think_count_down: false
+            show_think_count_down: false,
+            isFaYan: false
         })
 
         //当前发言人index
@@ -1613,33 +1561,23 @@ Page({
         //是否轮到本人发言
 
         // QAQ 这里判断是否是房主 房主发轮到谁的消息
-        if (that.data.isOwner && isOnLoad !== undefined) {
+        if (that.data.isOwner) {
             that.sendCustomMsg(4, { text: '轮到' + playerList[personInd].nick + '发言' })
-        }
-        //当前发言人账号
-        let curAcc = playerList[personInd].account
-        //我的账号
-        let myAcc = wx.getStorageSync('loginInfo').yunId
-        if (curAcc == myAcc) {
-            that.setData({
-                inputStatus: 1,
-                show_speak_count_down: true,
-                waitTime: speakTime,
-                isJump: false
-            })
-        } else {
-            that.setData({
-                inputStatus: 0,
-                waitTime: speakTime,
-                show_speak_count_down: false
-            })
         }
         console.log('当前发言人：' + personInd + speakTime)
 
         //发言倒计时，倒计时完后下个人发言
-        // this.getDownTime(speakTime, that.nextPerson)
-        this.getDownTime2(speakTime, 2, that.data.personInd)
-
+        let obj = {
+            type: 3,
+            playNum: that.data.step,
+            downTime: speakTime + 1,
+            readyPerson: personInd,
+            isJump: 0
+        }
+        setTimeout(() => {
+            that.sendSocketMsg(obj)
+        }, 1000);
+        // this.getDownTime(speakTime, nextPerson)
         // function nextPerson () {
         //     that.setData({
         //         show_speak_count_down: false
@@ -1676,17 +1614,16 @@ Page({
         // }
     },
     nextPerson () {
-        debugger
         let that = this
+        that.setData({
+            show_speak_count_down: false
+        })
         //成员列表，去掉空的
         var playerList = []
         that.data.playerList.map(item => {
             if (item && item.account) {
                 playerList.push(item)
             }
-        })
-        that.setData({
-            show_speak_count_down: false
         })
         if (that.data.personInd < (playerList.length - 1)) {
             //发言人index 小于 成员数量，切换下个人发言
@@ -1710,9 +1647,6 @@ Page({
                 if (that.data.isOwner) {
                     that.sendCustomMsg(4, { text: '全部结束' })
                 }
-                that.setData({
-                    showFupan: true
-                })
                 that.countDown()
 
             }
@@ -1737,19 +1671,17 @@ Page({
             })
         }
     },
+    jumpConfirmChaoShi () {
+        this.setData({
+            jumpPopStatus5: false,
+        })
+    },
     //确认跳过
     jumpConfirm: function () {
         var that = this
+        this.sendCustomMsg(6, { text: '跳过发言' })
         if (this.data.jumpNum == 2) {
-            quitRoom({
-                roomId: this.data.roomData.id
-            }).then(res => {
-                if (res.data.ret === 200) {
-                    that.leaveRoomClear()
-                }
-            })
-        } else {
-            this.sendCustomMsg(6, { text: '跳过发言' })
+            this.clickZhongTuQuitRoom()
         }
         this.setData({
             isJump: true,
@@ -1767,7 +1699,13 @@ Page({
     },
     //处理跳过发言
     handleJumpSpeak: function () {
-        clearInterval(timeInt)
+        timeInt && clearInterval(timeInt)
+        let vm = this
+        let obj = {
+            isJump: 1,
+            cmd: 'msg002'
+        }
+        vm.sendSocketMsg(obj)
         //成员列表，去掉空的
         var playerList = []
         this.data.playerList.map(item => {
@@ -1801,9 +1739,6 @@ Page({
                 if (this.data.isOwner) {
                     this.sendCustomMsg(4, { text: '全部结束' })
                 }
-                this.setData({
-                    showFupan: true
-                })
                 this.countDown()
             }
 
@@ -2082,6 +2017,11 @@ Page({
                         }
                     }
                 }
+                arr.forEach(element => {
+                    element?.cardList.forEach(item => {
+                        item['isOpen'] = 1
+                    });
+                });
                 this.setData({
                     viewAccount: datasetItem.account,
                     stepCardList: arr
@@ -2285,20 +2225,6 @@ Page({
 
 
     },
-    //倒计时
-    countDown: function () {
-        var that = this;
-        timeout = setTimeout(function () {
-            that.setData({
-                sec: (that.data.sec - 1)
-            })
-            if (that.data.sec > 0) {
-                that.countDown()
-            } else {
-                that.handleTiaoguo()
-            }
-        }, 1000)
-    },
     // 跳过复盘
     handleTiaoguo () {
         var that = this
@@ -2309,7 +2235,9 @@ Page({
             step: this.data.stepList.length + 1,
             changeStep: this.data.stepList.length + 1,
         })
-        if (timeout) clearTimeout(timeout)
+        that.socket.close()
+        that.socket = null
+
     },
     //离开
     quit: function () {
@@ -2342,6 +2270,7 @@ Page({
     //退出房间
     clickQuitRoom: function () {
         var that = this
+        // that.sendCustomMsg(8, { account: that.data.account, isOver: 1 })
         that.sendCustomMsg(8, { account: that.data.account })
     },
     clickZhongTuQuitRoom () {
@@ -2435,6 +2364,9 @@ Page({
             wx.removeStorageSync('partyData')
             wx.removeStorageSync('roomPath')
             wx.removeStorageSync('isLinShiFangZhu')
+            if (this.socket) {
+
+            }
         }
     },
     //content滚动
@@ -2494,12 +2426,287 @@ Page({
             isRoomGuiZe: true
         })
     },
+    webSocketInit () {
+        let vm = this
+        let that = this
+        vm.socket = wx.connectSocket({
+            url: 'ws://171.12.11.123:20016/wc',
+            success (res) {
+                console.log('WebSocket 连接成功: ', res)
+                vm.pingSocket()
+            },
+            fail (err) {
+                console.log('WebSocket 连接失败: ', err)
+            }
+        })
+        // onOpen
+        vm.socket.onOpen((ret) => {
+            console.log('打开 WebSocket 连接111')
+            console.log(vm.data.isOnloadSocket);
+            if (vm.data.isOnloadSocket) {
+                vm.sendSocketMsg()
+                vm.setData({
+                    isOnloadSocket: false
+                })
+            }
+        })
+        // onMessage
+        vm.socket.onMessage((ret) => {
+            let socketData = JSON.parse(ret.data)
+            let nextPerson = ''; //下一个玩家是谁
+            let nextPlayNum = ''; //下一轮是哪一轮
+            let type = Number(socketData.type) //是轮到发言还是
+            //成员列表，去掉空的
+            var playerList = []
+            that.data.playerList.map(item => {
+                if (item && item.account) {
+                    playerList.push(item)
+                }
+            })
+            console.log(socketData);
+            if (socketData.downTime === 0) {
+                if (type === 1) {
+                    // 开始倒计时结束,开始游戏
+                    that.handleBegin()
+                    that.setData({
+                        timePopStatus: false
+                    })
+
+                } else if (type === 2) {
+                    // 思考倒计时结束,此时轮到第一个人发言,同时type改为发言倒计时
+
+                    that.speak()
+                } else if (type === 3) {
+                    // 发言倒计时结束
+                    // 先判断下一个发言倒计时的是哪个人
+                    // 如果当前是最后一个的话应该开始下一轮的思考倒计时
+                    that.nextPerson()
+
+                } else if (type === 4) {
+                    // 结尾倒计时结束
+                    that.handleTiaoguo()
+                }
+            } else if (that.data.waitTime === 3) {
+                var routeList = getCurrentPages()
+                if (routeList[routeList.length - 1].route !== '04zhutipaidui/tansuo/tansuo') {
+                    console.log('该回来了')
+                    wx.showModal({
+                        title: '提示',
+                        content: '派对即将开始，请返回房间',
+                        success (res) {
+                            if (res.confirm) {
+                                var url = '/04zhutipaidui/tansuo/tansuo'
+                                var roomPath = that.data.pageOptions
+                                for (const roomPathKey in roomPath) {
+                                    url = url + '&' + roomPathKey + '=' + roomPath[roomPathKey]
+                                }
+                                url.replace('&', '?')
+                                wx.redirectTo({
+                                    url: url.replace('&', '?'),
+                                })
+                            } else if (res.cancel) {
+                                console.log('用户点击取消')
+                                //退出房间
+                                quitRoom({
+                                    id: that.data.roomData.id
+                                }).then(res => {
+                                    that.leaveRoomClear()
+                                })
+                            }
+                        }
+                    })
+                }
+                vm.setData({
+                    waitTime: socketData.downTime
+                })
+            }
+            else {
+                if (type === 1) {
+                    // 开始倒计时进行中
+                    vm.setData({
+                        waitTime: socketData.downTime
+                    })
+                } else if (type === 2) {
+                    // 思考倒计时进心中
+                    vm.setData({
+                        waitTime: socketData.downTime,
+                        show_think_count_down: true,
+                        show_speak_count_down: false,
+                    })
+                } else if (type === 3) {
+                    // 发言倒计时进行中
+
+                    //当前发言人账号
+                    let curAcc = playerList[socketData.readyPerson]?.account
+                    //我的账号
+                    let myAcc = wx.getStorageSync('loginInfo').yunId
+                    let totalTime = that.data.themeDetail.list[socketData.playNum - 1].speakTime
+                    if (curAcc == myAcc) {
+                        that.setData({
+                            inputStatus: 1,
+                            show_speak_count_down: true,
+                            waitTime: socketData.downTime,
+                            show_think_count_down: false,
+                            isJump: false
+                        })
+                    } else {
+                        that.setData({
+                            inputStatus: 0,
+                            waitTime: socketData.downTime,
+                            show_think_count_down: false,
+                            show_speak_count_down: false
+                        })
+                    }
+                    console.log(totalTime, 'totalTime', socketData.downTime, 'socketData.downTime', socketData);
+                    if (totalTime - socketData.downTime > 10 && that.data.show_speak_count_down && !that.data.isFaYan) {
+                        that.setData({
+                            jumpPopStatus5: true
+                        })
+                        that.jumpConfirm()
+                    }
+                } else if (type === 4) {
+                    // 结尾倒计时结束
+                    vm.setData({
+                        sec: socketData.downTime,
+                        showFupan: true,
+                        show_think_count_down: false,
+                        show_speak_count_down: false
+                    })
+                }
+            }
+            that.saveData()
+        })
+        // onError
+        vm.socket.onError((err) => {
+            console.log('WebSocket 连接失败：', err)
+        })
+        // onClose
+        vm.socket.onClose((ret) => {
+            console.log('断开 WebSocket 连接', ret)
+            clearInterval(vm.SocketInterval)
+            vm.SocketInterval = null
+        })
+    },
+    // WebSocket 断线重连
+    reconnectSocket () {
+        const vm = this
+        if (vm.data.step < this.data.stepList.length + 1) {
+            vm.webSocketInit()
+        }
+    },
+    // send message
+    /**
+     * 
+     * @param {*} type 倒计时类型(开始倒计时 1,思考时间倒计时2,发言时间倒计时3,结尾倒计时4)
+     * @param {*} readyPerson 准备发言人员(如果是思考时间类型的话)/正在发言人员(如果是发言倒计时的话)
+     * @param {*} playNum 当前是游戏第几轮
+     * @param {*} downTime 倒计时时间
+     * @param {*} isJump 是否跳过
+     * @param {*} note 其他信息的对象字符串
+     */
+    sendSocketMsg (params) {
+        const vm = this
+        let obj = JSON.stringify({
+            type: params?.type,
+            readyPerson: params?.readyPerson,
+            roomId: vm.data?.roomData?.id || 2,
+            playNum: params?.playNum,
+            downTime: params?.downTime,
+            isJump: params?.isJump || 0,
+            userId: wx.getStorageSync('loginInfo').id || 1,
+            note: params?.note,
+            cmd: 'msg002'
+        })
+        vm.socket.send({
+            data: obj,
+            success (res) {
+                console.log('WebSocket 消息发送成功', res)
+            },
+            fail (err) {
+                console.log('WebSocket 消息发送失败', err)
+            }
+        })
+    },
+    refreshSendSocketMsg () {
+        const vm = this
+        let obj = JSON.stringify({
+            roomId: vm.data.roomData.id,
+            userId: vm.data.account,
+            isJump: 0,
+            cmd: 'msg002'
+        })
+        vm.socket.send({
+            data: obj,
+            success (res) {
+                console.log('WebSocket 消息发送成功', res)
+            },
+            fail (err) {
+                console.log('WebSocket 消息发送失败', err)
+            }
+        })
+    },
+    // 跳过
+    jumpSocket () {
+        let vm = this
+        let obj = {
+            roomId: vm.data.roomData.id,
+            isJump: 1,
+            userId: vm.data.account,
+            cmd: 'msg002'
+        }
+        vm.sendSocketMsg(obj)
+    },
+    // socket心跳，由客户端发起
+    pingSocket () {
+        const vm = this
+        let times = 0
+        let obj = JSON.stringify({
+            "cmd": "msg001",
+            "heart": "1"
+        })
+        // 每 10 秒钟由客户端发送一次心跳
+        vm.SocketInterval = setInterval(function () {
+            if (vm.socket?.readyState == 1) {
+                vm.socket.send({
+                    data: obj,
+                    success (res) {
+                        // console.log('心跳发送成功', res)
+                    },
+                    fail (err) {
+                        // console.log('心跳发送失败', err)
+                    }
+                })
+            } else {
+                times += 1
+                // 超时重连，最多尝试 10 次
+                if (times >= 10) {
+                    wx.showToast({
+                        title: 'WebSocket 连接已断开~',
+                        icon: 'none',
+                        duration: 3000
+                    })
+                    clearInterval(vm.SocketInterval)
+                } else {
+                    vm.reconnectSocket()
+                }
+            }
+        }, 10000)
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     async onLoad (options) {
         console.log(options, 'options');
-        var that = this;
+        if (this.socket) {
+            this.socket.close({
+                success (res) {
+                    console.log('关闭成功', res)
+                },
+                fail (err) {
+                    console.log('关闭失败', err)
+                }
+            })
+        }
         if (options.roomId) {
             // this.getUserInfo()
             this.contentScroll()
@@ -2513,17 +2720,19 @@ Page({
                     teamId: partyData.teamId,
                     roomData: wx.getStorageSync('roomData'),
                     audioId: wx.getStorageSync('roomData').audioGroup,
+                    isOnloadSocket: true
                 })
-                var waitTime = this.data.waitTime
+
                 //重新进来，准备后的倒计时没有结束，继续显示
                 if (this.data.timePopStatus) {
                     clearTimeout(startTimeout)
-                    var waitTime = this.data.waitTime
+                    var waitTime = this.data.waitTime - 1
                     this.setData({
                         waitTime: waitTime
                     })
                     this.startCountDown()
                 }
+
                 // this.setData({
                 //     timePopStatus:false
                 // })
@@ -2584,6 +2793,9 @@ Page({
                     }
                 }
             }
+            if (!this.socket) {
+                this.webSocketInit()
+            }
         } else {
             this.setData({
                 haveRoom: false
@@ -2592,7 +2804,34 @@ Page({
                 url: '/pages/index/index',
             })
         }
-
-
+    },
+    onUnload () {
+        const vm = this;
+        vm.socket && vm.socket.close()
+    },
+    //邀请好友
+    onShareAppMessage () {
+        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1');
+        return {
+            title: this.data.themeDetail.title,
+            query: 'askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
+            imageUrl: '',
+        }
+    },
+    //邀请好友
+    onShareTimeline () {
+        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1');
+        return {
+            title: this.data.themeDetail.title,
+            query: 'askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
+            imageUrl: '',
+        }
+    },
+    handleInviFriend () {
+        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1');
+        return {
+            title: '弹出分享时显示的分享标题',
+            path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.teamId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
+        }
     }
 })

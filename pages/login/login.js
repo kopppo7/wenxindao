@@ -57,7 +57,6 @@ Page({
                     var userInfo = customer.data.data;
                     userInfo.phone = json.phoneNumber;
                     setLoginInfo(userInfo);
-                    debugger
                     if(userInfo.wechatName==''||userInfo.wechatName==null){
                       wx.redirectTo({
                         url: '/pages/auth/auth',

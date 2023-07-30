@@ -20,7 +20,7 @@
         <view class="room-theme">
             <view class="help">
                 <view class="left">
-                    <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg">
+                    <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg" bindtap="sendmsgggg">
                     </image>
                     <view class="ico" bindtap="handleOpenGuiZe">
                         <image
@@ -457,7 +457,7 @@
         </view>
     </view>
 </block>
-<block wx:if="{{jumpPopStatus4 && inputStatus}}">
+<block wx:if="{{jumpPopStatus5 && inputStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <view class="pop-tit">提示</view>

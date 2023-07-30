@@ -84,7 +84,6 @@ Page({
         //断开连接
         ondisconnect: this.onDisconnect,
         onteams: function(teams){
-          debugger
           let team = teams.find(x=>x.teamId == that.data.roomData.imGroup);
         },
       })
@@ -103,7 +102,6 @@ Page({
       pageIMInstance.getTeamMembers({
         teamId: that.data.roomData.imGroup,
         done: function(error,members){
-          debugger;
         }
     });
     wx.hideLoading()
@@ -119,14 +117,12 @@ Page({
       scene: 'team',
       to: this.data.roomData.imGroup,
       done: function(log){
-        debugger
       },
       beginTime: 0,
       endTime: new Date().getTime()
     });
   },
   sendMsg(val){
-    debugger
     console.log(val.detail.value);
     var that = this;
     console.log(this.data.teamId);
@@ -141,7 +137,6 @@ Page({
     })
   },
   pushMsg(err,msg){
-    debugger
   },
   //断开连接
   onDisconnect(error) {
@@ -179,7 +174,6 @@ Page({
 
   // 群成员更新
   onTeamMembers(obj) {
-    debugger
     console.log('收到群成员', obj);
   },
 })

@@ -73,7 +73,6 @@ Page({
     async updateInfo() {
       await login();
       let info = getLoginInfo();
-      debugger
       this.setData({
         userInfo:info
       });
