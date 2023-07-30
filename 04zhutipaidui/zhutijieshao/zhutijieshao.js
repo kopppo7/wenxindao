@@ -45,14 +45,16 @@ Page({
     // 快速匹配
     openBuyPop () {
         wx.navigateTo({
-            url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId,
+            url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.data.id + '&isfriend=1',
         })
     },
     openBuy(e){
       var type = e.currentTarget.dataset.type;
       if(type=='pipei'){
         if(this.data.detailObj.isSeat==1||this.data.detailObj.isFree==1){
-          this.openBuyPop();
+            wx.navigateTo({
+                url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId  + '&isMatch=1',
+            })
         }else{
           this.setData({
             buyTips:true,

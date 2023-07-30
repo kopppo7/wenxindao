@@ -457,7 +457,7 @@
         </view>
     </view>
 </block>
-<block wx:if="{{jumpPopStatus5 && inputStatus}}">
+<block wx:if="{{jumpPopStatus5}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <view class="pop-tit">提示</view>
@@ -469,7 +469,7 @@
             </view>
         </view>
         <view class="btns">
-            <view class="btn ok" bindtap="jumpConfirm">确定</view>
+            <view class="btn ok" bindtap="jumpConfirmChaoShi">确定</view>
         </view>
     </view>
 </block>

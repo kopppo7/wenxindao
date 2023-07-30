@@ -2486,7 +2486,7 @@ Page({
                     // 结尾倒计时结束
                     that.handleTiaoguo()
                 }
-            } else if (that.data.waitTime === 3) {
+            } else if (that.data.waitTime == 3) {
                 var routeList = getCurrentPages()
                 if (routeList[routeList.length - 1].route !== '04zhutipaidui/tansuo/tansuo') {
                     console.log('该回来了')
@@ -2549,6 +2549,12 @@ Page({
                             show_think_count_down: false,
                             isJump: false
                         })
+                        if (totalTime - socketData.downTime > 30 && that.data.show_speak_count_down && !that.data.isFaYan) {
+                            that.setData({
+                                jumpPopStatus5: true
+                            })
+                            that.jumpConfirm()
+                        }
                     } else {
                         that.setData({
                             inputStatus: 0,
@@ -2558,12 +2564,7 @@ Page({
                         })
                     }
                     console.log(totalTime, 'totalTime', socketData.downTime, 'socketData.downTime', socketData);
-                    if (totalTime - socketData.downTime > 10 && that.data.show_speak_count_down && !that.data.isFaYan) {
-                        that.setData({
-                            jumpPopStatus5: true
-                        })
-                        that.jumpConfirm()
-                    }
+                    
                 } else if (type === 4) {
                     // 结尾倒计时结束
                     vm.setData({
