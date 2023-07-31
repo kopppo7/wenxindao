@@ -130,7 +130,19 @@
                     </view>
                 </scroll-view>
             </view>
-            <view>
+            <view class="speak-con">
+                <!--思考倒计时-->
+                <view class="count-down" wx:if="{{show_think_count_down}}">思考倒计时
+                    <view>
+                        {{waitTime}}s
+                    </view>
+                </view>
+                <!--发言倒计时-->
+                <view class="count-down" wx:if="{{show_speak_count_down}}">发言倒计时
+                    <view>
+                        {{waitTime}}s
+                    </view>
+                </view>
                 <scroll-view
                     class="bot-content"
                     scroll-into-view="{{scrollTo}}"
@@ -307,18 +319,7 @@
     </view>
 </view>
 
-<!--思考倒计时-->
-<view class="count-down" wx:if="{{show_think_count_down}}">思考倒计时
-    <view>
-        {{waitTime}}s
-    </view>
-</view>
-<!--发言倒计时-->
-<view class="count-down" wx:if="{{show_speak_count_down}}">发言倒计时
-    <view>
-        {{waitTime}}s
-    </view>
-</view>
+
 
 <!-- 倒计时 -->
 <view class="timeDown" wx:if="{{ timePopStatus}}">{{waitTime}}</view>

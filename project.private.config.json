@@ -141,6 +141,13 @@
           "query": "askId=15&roomId=693&isMatch=undefined&isfriend=undefined",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=15&isMatch=1&isfriend=undefined&roomId=770",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
