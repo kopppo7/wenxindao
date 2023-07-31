@@ -2018,8 +2018,9 @@ Page({
                     }
                 }
                 arr.forEach(element => {
-                    element?.cardList.forEach(item => {
+                    element?.cardList.forEach((item, index) => {
                         item['isOpen'] = 1
+                        item['isOpened'] = 1
                     });
                 });
                 this.setData({
@@ -2564,7 +2565,7 @@ Page({
                         })
                     }
                     console.log(totalTime, 'totalTime', socketData.downTime, 'socketData.downTime', socketData);
-                    
+
                 } else if (type === 4) {
                     // 结尾倒计时结束
                     vm.setData({
