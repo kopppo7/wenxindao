@@ -2,7 +2,7 @@
     <view class="hourse-set">
         <view class="txt">
             <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
-            <text>人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
+            <text bindtap="leaveAudioRoom">人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
         </view>
         <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet"/>
     </view>
@@ -170,7 +170,7 @@
         </view>
     </view>
     <view class="theme-bot" wx:if="{{changeStep != themeDetail.list.length+1}}">
-        <view class="play" bindtap="sendMsg">
+        <view class="play" bindtap="publishAudio">
             <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png" wx:if="{{voiceStatus == 1}}"></image>
             <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio2.png" wx:if="{{voiceStatus == 0}}"></image>
             <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
@@ -237,7 +237,41 @@
         </view>
     </view>
 </view>
+<view wx:if="{{audioPushUrl!==''}}" >
+    <live-pusher  
+        wx:key="livePusher" 
+        style="display:inline-block;width:20px;height:20px;" 
+        mode="RTC" 
+        url="{{audioPushUrl}}" 
+        bindstatechange="pusherStateChangeHandler"
+        bindnetstatus="pusherNetstatusHandler"
+        binderror="pusherErrorHandler"
+        autopush="true"
+        enable-mic="{{audioPushUrl?true:false}}"
+    />  
+</view>
+  
 
+
+<view wx:for="{{remoteStreams}}" wx:if="{{remoteStreams.length > 0}}">
+    <live-player 
+    bindtap='videoClickHandler' 
+    style="display:inline-block;width:20px;height:20px;" 
+    data-user="{{uid}}"
+    wx:if="{{item.uid !== uid}}" 
+    src="{{item.url}}"  
+    mode="RTC" 
+    debug="true" 
+    min-cache="0.2"  
+    max-cache="0.8"  
+    auto-pause-if-navigate= "true"
+    auto-pause-if-open-native= "true"
+    bindstatechange="pullerStateChangeHandler" 
+    bindnetstatus="pullerNetstatusHandler" 
+    autoplay="true" 
+    />
+</view>
+  
 <!--结尾畅聊-->
 <view class="fupan" wx:if="{{showFupan && !isLastPeople}}">
     <view class="title">

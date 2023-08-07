@@ -1,5 +1,5 @@
 // 03shenmingtansuo/tansuo/tansuo.js
-import NERTC from '../../NERTC_Miniapp_SDK_v4.6.11'
+import YunXinMiniappSDK from '../../NERTC_Miniapp_SDK_v4.6.11'
 import SDK from '../../NIM_Web_SDK_miniapp_v9.6.3'
 import config from "../../utils/config";
 import {
@@ -14,6 +14,7 @@ import { formatMsgList } from "../../utils/yun";
 import { findByOrderList, getUserMsg } from "../../utils/api";
 
 var nim = null;
+var YunXinNertc = null;
 var downTime = Math.random() * 10 + 5;
 var downTime2 = Math.random() * 10;
 var APP = getApp();
@@ -133,7 +134,13 @@ Page({
         leaveUserInfor: null, //离开房间人的信息
         socket: null,
         SocketInterval: null,
-        isOnloadSocket: false
+        isOnloadSocket: false,
+        audioPlayUrl: '',
+        audioPushUrl: '',
+        uid: '',//音视频房间自己的uid
+        remoteStreams: [],
+        localStream: [],
+
     },
     //关闭弹窗
     closePop (clear) {
@@ -247,6 +254,244 @@ Page({
         }
         console.log(nim);
     },
+    leaveAudioRoom () {
+        let that = this
+        YunXinNertc.leave({
+            channelName: that.data.roomData.audioGroup,
+            uid: that.data.uid,
+        }).then((data) => {
+            console.log('离开房间成功');
+        }).catch((error) => {
+            console.error('离开房间失败：');
+        });
+    },
+    /**
+     * 初始化音视频通话
+     */
+    initNertc () {
+        let that = this
+        that.setData({
+            uid: wx.getStorageSync('loginInfo').id
+        })
+        YunXinNertc = YunXinMiniappSDK.Client({
+            debug: true,
+            appkey: '820499c93e45806d2420d75aa9ce9846'
+        });
+        that.joinChannel()
+        YunXinNertc.on('error', (data) => {
+            console.log('音视频通知：错误')
+        })
+        //监听事件
+        YunXinNertc.on('peer-online', (evt) => {
+            console.log(`${evt.uid} 加入房间`);
+        });
+
+        YunXinNertc.on('peer-leave', (evt) => {
+            console.log(`${evt.uid} 离开房间`);
+            let list = that.data.remoteStreams
+            list = list.filter(
+                (item) => !!item.uid && item.uid !== evt.uid
+            );
+            that.setData({
+                remoteStreams: list
+            })
+        });
+        YunXinNertc.on('stream-added', (evt) => {
+            //收到房间中其他成员发布自己的媒体的通知，对端同一个人同时开启了麦克风、摄像头、屏幕贡献，这里会通知多次
+            console.log(evt,'evtttttttt');
+            const userId = evt.uid;
+            // const userId = that.data.uid;
+            const mediaType = evt.mediaType;
+            console.log(`stream-added 收到 ${userId} 的发布 ${evt.mediaType} 的通知`)
+            that.subscribe(userId, mediaType);
+        });
+
+        YunXinNertc.on('stream-removed', (evt) => {
+            const userId = evt.uid;
+            console.log(`收到 ${userId} 的停止发布 ${evt.mediaType} 的通知`) // mediaType为：'audio' | 'video' | 'screen'
+            let list = that.data.remoteStreams
+            let stream = {
+                uid: userId,
+                mediaType: evt.mediaType,
+                url: ''
+            }
+            list = list.map((item) =>
+                item.uid === userId ? stream : item
+            );
+            that.setData({
+                remoteStreams: list
+            })
+            console.log('远端流停止订阅，需要更新', userId, stream);
+        });
+
+        // YunXinNertc.on('stream-subscribed', (evt) => {
+        //     const userId = evt.stream.getId();
+        //     console.log(`收到订阅 ${userId} 的 ${evt.mediaType} 成功的通知`) // mediaType为：'audio' | 'video' | 'screen'
+        //     console.log(evt, 'stream-subscribed');
+        // });
+        YunXinNertc.on('uid-duplicate', () => {
+            console.log('==== uid重复，你被踢出');
+        });
+
+        YunXinNertc.on('error', (type) => {
+            console.error('===== 发生错误事件：', type);
+            if (type === 'SOCKET_ERROR') {
+                console.log('==== 网络异常，已经退出房间');
+            }
+        });
+
+        YunXinNertc.on('accessDenied', (type) => {
+            console.log(`==== ${type}设备开启的权限被禁止`);
+        });
+
+        YunXinNertc.on('connection-state-change', (evt) => {
+            console.log(
+                `网络状态变更: ${evt.prevState} => ${evt.curState}, 当前是否在重连：${evt.reconnect}`
+            );
+        });
+        //通知应用程序socket建立成功。  
+        YunXinNertc.on('open', (data) => {
+            console.log('音视频通知：和服务器socket建立成功')
+        })
+
+        //通知应用程序音视频socket关闭。  
+        YunXinNertc.on('disconnect', (data) => {
+            console.log('音视频通知：和服务器socket关闭了')
+        })
+
+        //通知应用程序准备重连。  
+        YunXinNertc.on('willreconnect', (data) => {
+            console.log('音视频通知：准备重新建立和服务器之间的联系')
+        })
+
+        //通知应用程序 SDK 信令发送超时。  
+        YunXinNertc.on('sendCommandOverTime', (data) => {
+            console.log('音视频通知：sdk信令发送超时')
+        })
+
+        //通知应用程序房间被解散。  
+        YunXinNertc.on('liveRoomClose', (data) => {
+            console.log('音视频通知：房间解散了')
+        })
+    },
+    subscribe (userId, mediaType) {
+        let that = this
+        YunXinNertc
+            .subscribe(userId, mediaType)
+            .then((res) => {
+                let stream = {
+                    uid: userId,
+                    mediaType: mediaType,
+                    url: res.url
+                }
+                let list = that.data.remoteStreams
+                if (list.some((item) => item.uid === userId)) {
+                    console.log('收到已订阅的远端发布，需要更新', stream);
+                    list = list.map((item) =>
+                        item?.uid === userId ? stream : item
+                    );
+                    //订阅其发布的媒体，可以渲染播放
+                } else if (list.length < that.data.roomData.maxNumber - 1) {
+                    console.log('收到新的远端发布消息', stream);
+                    list = list.concat(stream);
+                    //订阅其发布的媒体，可以渲染播放
+                } else {
+                    console.log('房间人数已满');
+                }
+                that.setData({
+                    remoteStreams: list
+                })
+                console.log('本地 subscribe 成功');
+            })
+            .catch((err) => {
+                console.log('本地 subscribe 失败: ', err);
+            });
+    },
+    joinChannel () {
+        let that = this
+        if (!YunXinNertc) {
+            console.log('内部错误，请重新加入房间');
+            return;
+        }
+        console.log('开始加入房间: ', that.data.roomData.audioGroup);
+        YunXinNertc.join({
+            channelName: that.data.roomData.audioGroup,
+            uid: that.data.uid,
+            recordAudio: 1,
+        })
+            .then((data) => {
+                console.log('加入房间成功，开始初始化本地音视频流', data);
+                // that.initLocalStream();
+            })
+            .catch((error) => {
+                console.error('加入房间失败：', error);
+                that.returnJoin();
+            });
+    },
+    publishAudio () {
+        console.log('开始发布视频流');
+        let that = this
+        //发布本地媒体给房间对端
+        if (that.data.voiceStatus === 0) {
+            that.setData({
+                voiceStatus: 1
+            })
+            YunXinNertc
+                .publish('audio')
+                .then((url) => {
+                    console.log('本地 publish 成功', url);
+                    that.setData({
+                        audioPushUrl: url
+                    })
+                })
+                .catch((err) => {
+                    console.error('本地 publish 失败: ', err);
+                });
+        }
+        else {
+            that.setData({
+                voiceStatus: 0,
+                audioPushUrl: ''
+            })
+            YunXinNertc
+                .unpublish('audio')
+                .then((url) => {
+                    console.log('关闭mic成功');
+                })
+                .catch((err) => {
+                    console.error('关闭mic成功失败: ', err);
+                });
+        }
+    },
+    pullerNetstatusHandler (params) {
+        console.log(params, 'params');
+    },
+    videoClickHandler (params) {
+        console.log(params, 'params');
+    },
+    pullerStateChangeHandler (params) {
+        console.log(params, 'params');
+    },
+    /**
+     * 打开或者关闭音频
+     */
+    openOrCloseAudio () {
+        let that = this
+        if (this.data.voiceStatus === 0) {
+            YunXinNertc.publish().then(url => {
+                console.log('推流成功, 获取推流地址: ', url);
+                //业务层将推流 url 设置的live-pusher组件中
+                that.setData({
+                    audioPushUrl: url
+                })
+            }).catch(e => {
+                console.log('推流失败，原因: ', e);
+            })
+        }
+        that.setData({
+            voiceStatus: this.data.voiceStatus === 1 ? 0 : 1
+        })
+    },
     // 群组信息
     onTeams (e) {
         var that = this;
@@ -359,6 +604,7 @@ Page({
                 isLinShiFangZhu: true
             })
         }
+        this.initNertc()
         console.log('连接成功');
     },
     //重新连接
@@ -2431,7 +2677,7 @@ Page({
         let vm = this
         let that = this
         vm.socket = wx.connectSocket({
-            url: 'ws://171.12.11.123:20016/wc',
+            url: 'ws://wenxin.wxdao.net:20016/wc',
             success (res) {
                 console.log('WebSocket 连接成功: ', res)
                 vm.pingSocket()
@@ -2810,6 +3056,13 @@ Page({
     onUnload () {
         const vm = this;
         vm.socket && vm.socket.close()
+        try {
+            YunXinNertc.leave()
+            YunXinNertc.destroy()
+            YunXinNertc = null
+        } catch (e) {
+            console.log(e,'eeeeeeeeeeee');
+        }
     },
     //邀请好友
     onShareAppMessage () {
