@@ -239,35 +239,29 @@
 </view>
 <view wx:if="{{audioPushUrl!==''}}" >
     <live-pusher  
-        wx:key="livePusher" 
-        style="display:inline-block;width:20px;height:20px;" 
-        mode="RTC" 
-        url="{{audioPushUrl}}" 
-        bindstatechange="pusherStateChangeHandler"
-        bindnetstatus="pusherNetstatusHandler"
-        binderror="pusherErrorHandler"
+        wx:key="livePusher"
+        style="display:inline-block;width:20px;height:20px;"
+        mode="RTC"
+        url="{{audioPushUrl}}"
         autopush="true"
-        enable-mic="{{audioPushUrl?true:false}}"
+        enable-mic="{{pushIsMuted}}"
     />  
 </view>
-  
 
 
 <view wx:for="{{remoteStreams}}" wx:if="{{remoteStreams.length > 0}}">
     <live-player 
-    bindtap='videoClickHandler' 
     style="display:inline-block;width:20px;height:20px;" 
     data-user="{{uid}}"
     wx:if="{{item.uid !== uid}}" 
     src="{{item.url}}"  
     mode="RTC" 
     debug="true" 
-    min-cache="0.2"  
+    min-cache="0.2"
+    muted="{{playIsMuted}}"
     max-cache="0.8"  
     auto-pause-if-navigate= "true"
     auto-pause-if-open-native= "true"
-    bindstatechange="pullerStateChangeHandler" 
-    bindnetstatus="pullerNetstatusHandler" 
     autoplay="true" 
     />
 </view>

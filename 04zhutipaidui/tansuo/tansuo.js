@@ -140,6 +140,8 @@ Page({
         uid: '',//音视频房间自己的uid
         remoteStreams: [],
         localStream: [],
+        playIsMuted: false, //音频是否静音
+        pushIsMuted: true, //是否开启麦克风
 
     },
     //关闭弹窗
@@ -298,7 +300,7 @@ Page({
         });
         YunXinNertc.on('stream-added', (evt) => {
             //收到房间中其他成员发布自己的媒体的通知，对端同一个人同时开启了麦克风、摄像头、屏幕贡献，这里会通知多次
-            console.log(evt,'evtttttttt');
+            console.log(evt, 'evtttttttt');
             const userId = evt.uid;
             // const userId = that.data.uid;
             const mediaType = evt.mediaType;
@@ -323,12 +325,6 @@ Page({
             })
             console.log('远端流停止订阅，需要更新', userId, stream);
         });
-
-        // YunXinNertc.on('stream-subscribed', (evt) => {
-        //     const userId = evt.stream.getId();
-        //     console.log(`收到订阅 ${userId} 的 ${evt.mediaType} 成功的通知`) // mediaType为：'audio' | 'video' | 'screen'
-        //     console.log(evt, 'stream-subscribed');
-        // });
         YunXinNertc.on('uid-duplicate', () => {
             console.log('==== uid重复，你被踢出');
         });
@@ -407,6 +403,18 @@ Page({
                 console.log('本地 subscribe 失败: ', err);
             });
     },
+    stopAllSubscribe () {
+        this.data.remoteStreams.forEach(item => {
+            YunXinNertc.unsubscribe(item.uid, 'audio').then(res => {
+                console.log('取消订阅audio 完成: ', uid)
+            })
+        })
+    },
+    subscribeAll () {
+        this.data.remoteStreams.forEach(item => {
+            this.subscribe(item.uid, 'audio')
+        })
+    },
     joinChannel () {
         let that = this
         if (!YunXinNertc) {
@@ -429,39 +437,87 @@ Page({
             });
     },
     publishAudio () {
-        console.log('开始发布视频流');
         let that = this
-        //发布本地媒体给房间对端
-        if (that.data.voiceStatus === 0) {
-            that.setData({
-                voiceStatus: 1
-            })
-            YunXinNertc
-                .publish('audio')
-                .then((url) => {
-                    console.log('本地 publish 成功', url);
-                    that.setData({
-                        audioPushUrl: url
+        var playerList = []
+        let personInd = that.data.personInd
+        that.data.playerList.map(item => {
+            if (item && item.account) {
+                if (item.account === wx.getStorageSync('loginInfo').yunId) {
+                    item['id'] = wx.getStorageSync('loginInfo').id
+                }
+                playerList.push(item)
+            }
+        })
+        console.log('开始发布视频流', that.data.uid, personInd, playerList, that.data.playerList);
+        if (playerList[personInd].account !== that.data.account) {
+            // 如果当前发言的不是自己的话点击无效
+            return
+        } else {
+            //发布本地媒体给房间对端
+            if (that.data.voiceStatus === 0) {
+                that.setData({
+                    voiceStatus: 1
+                })
+                YunXinNertc
+                    .publish('audio')
+                    .then((url) => {
+                        console.log('本地 publish 成功', url);
+                        that.setData({
+                            audioPushUrl: url,
+                            pushIsMuted: true
+                        })
                     })
+                    .catch((err) => {
+                        console.error('本地 publish 失败: ', err);
+                    });
+            }
+            else {
+                that.setData({
+                    voiceStatus: 0,
+                    audioPushUrl: '',
+                    pushIsMuted: false
                 })
-                .catch((err) => {
-                    console.error('本地 publish 失败: ', err);
-                });
+                YunXinNertc
+                    .unpublish('audio')
+                    .then((url) => {
+                        console.log('关闭mic成功');
+                    })
+                    .catch((err) => {
+                        console.error('关闭mic成功失败: ', err);
+                    });
+            }
         }
-        else {
-            that.setData({
-                voiceStatus: 0,
-                audioPushUrl: ''
+    },
+    // 结束倒计时的时候都可以发言
+    publishAllAudio () {
+        YunXinNertc
+            .publish('audio')
+            .then((url) => {
+                console.log('本地 publish所有人 成功', url);
+                that.setData({
+                    audioPushUrl: url,
+                    pushIsMuted: true
+                })
             })
-            YunXinNertc
-                .unpublish('audio')
-                .then((url) => {
-                    console.log('关闭mic成功');
-                })
-                .catch((err) => {
-                    console.error('关闭mic成功失败: ', err);
-                });
-        }
+            .catch((err) => {
+                console.error('本地 publish所有人 失败: ', err);
+            });
+    },
+    stopPublishAudio () {
+        let that = this
+        that.setData({
+            voiceStatus: 0,
+            audioPushUrl: '',
+            pushIsMuted: false
+        })
+        YunXinNertc
+            .unpublish('audio')
+            .then(() => {
+                console.log('关闭mic成功');
+            })
+            .catch((err) => {
+                console.error('关闭mic成功失败: ', err);
+            });
     },
     pullerNetstatusHandler (params) {
         console.log(params, 'params');
@@ -471,26 +527,6 @@ Page({
     },
     pullerStateChangeHandler (params) {
         console.log(params, 'params');
-    },
-    /**
-     * 打开或者关闭音频
-     */
-    openOrCloseAudio () {
-        let that = this
-        if (this.data.voiceStatus === 0) {
-            YunXinNertc.publish().then(url => {
-                console.log('推流成功, 获取推流地址: ', url);
-                //业务层将推流 url 设置的live-pusher组件中
-                that.setData({
-                    audioPushUrl: url
-                })
-            }).catch(e => {
-                console.log('推流失败，原因: ', e);
-            })
-        }
-        that.setData({
-            voiceStatus: this.data.voiceStatus === 1 ? 0 : 1
-        })
     },
     // 群组信息
     onTeams (e) {
@@ -1726,6 +1762,7 @@ Page({
         }
         setTimeout(() => {
             that.sendSocketMsg(obj)
+            that.publishAllAudio()
         }, 1000);
     },
     //执行每一轮
@@ -1774,6 +1811,7 @@ Page({
         }
         setTimeout(() => {
             that.sendSocketMsg(obj)
+            that.stopPublishAudio()
         }, 1000);
         // this.getDownTime(thinkTime, this.speak)
 
@@ -1822,42 +1860,14 @@ Page({
         }
         setTimeout(() => {
             that.sendSocketMsg(obj)
+            // 如果当前发言的人是自己的话开始推流,其他人停止推流
+            if (playerList[personInd].account
+                === that.data.account) {
+                that.publishAudio()
+            } else {
+                that.stopPublishAudio()
+            }
         }, 1000);
-        // this.getDownTime(speakTime, nextPerson)
-        // function nextPerson () {
-        //     that.setData({
-        //         show_speak_count_down: false
-        //     })
-        //     if (that.data.personInd < (playerList.length - 1)) {
-        //         //发言人index 小于 成员数量，切换下个人发言
-        //         that.setData({
-        //             personInd: that.data.personInd + 1,
-        //         })
-        //         that.speak()
-        //     } else {
-        //         //记录本轮内容ƒ
-        //         that.addRecode()
-        //         console.log('全部人发言结束,进入下一轮')
-        //         if (that.data.step < that.data.themeDetail.list.length) {
-        //             //轮数 小于 全部轮数，切换下一轮
-        //             that.setData({
-        //                 step: that.data.step + 1,
-        //             })
-        //             that.runStep()
-        //         } else {
-        //             //全部结束
-        //             console.log('全部结束')
-        //             if (that.data.isOwner) {
-        //                 that.sendCustomMsg(4, { text: '全部结束' })
-        //             }
-        //             that.setData({
-        //                 showFupan: true
-        //             })
-        //             that.countDown()
-
-        //         }
-        //     }
-        // }
     },
     nextPerson () {
         let that = this
@@ -2476,6 +2486,7 @@ Page({
     handleTiaoguo () {
         var that = this
         console.log(this.data.isOwner)
+        this.stopPublishAudio()
         this.setData({
             haveRoom: false,
             showFupan: false,
@@ -2649,12 +2660,15 @@ Page({
     },
     handleToggleFupanIsSay () {
         this.setData({
-            fupanIsSay: !this.data.fupanIsSay
+            fupanIsSay: !this.data.fupanIsSay,
+            pushIsMuted: !this.data.pushIsMuted,
         })
     },
+    // 复盘是否接受别人的音频声音
     handleToggleFupanIsVoice () {
         this.setData({
-            fupanIsVoice: !this.data.fupanIsVoice
+            fupanIsVoice: !this.data.fupanIsVoice,
+            playIsMuted: !this.data.playIsMuted,
         })
     },
     backPrev () {
@@ -2721,7 +2735,6 @@ Page({
 
                 } else if (type === 2) {
                     // 思考倒计时结束,此时轮到第一个人发言,同时type改为发言倒计时
-
                     that.speak()
                 } else if (type === 3) {
                     // 发言倒计时结束
@@ -2820,6 +2833,7 @@ Page({
                         show_think_count_down: false,
                         show_speak_count_down: false
                     })
+                    that.stopPublishAudio()
                 }
             }
             that.saveData()
@@ -3061,7 +3075,7 @@ Page({
             YunXinNertc.destroy()
             YunXinNertc = null
         } catch (e) {
-            console.log(e,'eeeeeeeeeeee');
+            console.log(e, 'eeeeeeeeeeee');
         }
     },
     //邀请好友
