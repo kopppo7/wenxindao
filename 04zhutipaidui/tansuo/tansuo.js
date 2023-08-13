@@ -280,7 +280,7 @@ Page({
             uid: wx.getStorageSync('loginInfo').id
         })
         YunXinNertc = YunXinMiniappSDK.Client({
-            debug: true,
+            debug: false,
             appkey: '820499c93e45806d2420d75aa9ce9846'
         });
         that.joinChannel()
@@ -691,12 +691,42 @@ Page({
     //有人走了
     onRemoveTeamMembers (teamMember) {
         console.log('有人走了', teamMember.accounts[0]);
+        let that =this
         var arr = this.data.playerList;
         arr.forEach((item, index) => {
             if (item.account == teamMember.accounts[0]) {
                 arr[index] = {}
             }
         })
+        let truePlayerList = that.data.truePlayerList
+        truePlayerList.forEach((item, index) => {
+            if (item.account == teamMember.accounts[0]) {
+                truePlayerList.splice(index,1)
+            }
+        })
+        if(truePlayerList.length <= 1 && !that.data.isBeginPlay && !that.data.isOwner){
+            arr.forEach((item,index)=>{
+                if(item.account){
+                    item['isReady'] = false
+                    arr.splice(0,1,item)
+                    arr.splice(index,1,{})
+                }
+            })
+            truePlayerList.forEach((item,index)=>{
+                if(item.account){
+                    item['isReady'] = false
+                    truePlayerList.splice(0,1,item)
+                    truePlayerList.splice(index,1)
+                }
+            })
+            console.log(truePlayerList,'truePlayerList');
+            that.setData({
+                isLinShiFangZhu:true,
+                isOwner:true,
+                truePlayerList,
+                isReady:false,
+            })
+        }
         this.setData({
             playerList: arr
         })
@@ -985,8 +1015,8 @@ Page({
                         quitRoom({
                             roomId: that.data.roomData.id
                         }).then(res => {
+                            that.leaveRoomClear()
                         })
-                        that.leaveRoomClear()
                     }
                 }
                 else {
@@ -1273,6 +1303,7 @@ Page({
     //-------------------------------------准备----------------------------------------------------------
     //判断是否都准备了
     handleReadyStatus: function () {
+        let vm = this
         if (!this.data.isBeginPlay) {
             //游戏没有开始
             var player = this.data.playerList
@@ -1373,16 +1404,6 @@ Page({
                 if (readyTimeout) clearTimeout(readyTimeout)
             }
         }, 1000)
-    },
-    //立即准备
-    clickReady: function () {
-        clearTimeout(readyTimeout)
-        this.setData({
-            isReady: true,
-            readyTime: 5,
-            readyPopStatus: false
-        })
-        this.sendCustomMsg(1, { status: this.data.isReady })
     },
     //取消准备
     cancelReady: function () {
@@ -1535,7 +1556,7 @@ Page({
         })
     },
     // 获取房间详情
-    getRoomDetails (roomId) {
+    getRoomDetails (roomId,isInitRoom) {
         var that = this
         getRoomDetails({ roomId: roomId }).then(res => {
             that.setData({
@@ -1544,7 +1565,11 @@ Page({
                 roomData: res.data.data
             })
             wx.setStorageSync('roomData', res.data.data)
-            that.initRoom()
+            if(isInitRoom===0){
+                return
+            }else{
+                that.initRoom()
+            }
             // 是匹配还是包房
             // if (wx.getStorageSync('roomData').matchType == 1) {
             //     that.initRoom()
@@ -2576,7 +2601,7 @@ Page({
         if (jump === 1) {
             console.log('清除缓存');
         } else {
-            wx.redirectTo({
+            wx.reLaunch({
                 url: '/pages/index/index',
             })
         }
@@ -2658,7 +2683,7 @@ Page({
         this.setData({
             isPaiduiKaishi: false
         })
-        wx.redirectTo({
+        wx.reLaunch({
             url: '/pages/index/index',
         })
     },
@@ -3064,7 +3089,7 @@ Page({
             this.setData({
                 haveRoom: false
             })
-            wx.redirectTo({
+            wx.reLaunch({
                 url: '/pages/index/index',
             })
         }
