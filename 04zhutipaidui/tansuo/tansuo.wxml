@@ -244,14 +244,14 @@
         mode="RTC"
         url="{{audioPushUrl}}"
         autopush="true"
-        enable-mic="{{pushIsMuted}}"
+        enable-mic="{{ pushIsMuted }}"
     />  
 </view>
 
 
 <view wx:for="{{remoteStreams}}" wx:if="{{remoteStreams.length > 0}}">
     <live-player 
-    style="display:inline-block;width:20px;height:20px;" 
+    style="display:inline-block;width:0;height:0;" 
     data-user="{{uid}}"
     wx:if="{{item.uid !== uid}}" 
     src="{{item.url}}"  

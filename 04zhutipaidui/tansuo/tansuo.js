@@ -92,7 +92,7 @@ Page({
         contPasserPopStatus: false, //继续等待路人
         showFupan: false,
         showPlayerList: [],
-        sec: 60,//复盘倒计时
+        sec: 1160,//复盘倒计时
         inputText: '',
 
         //准备弹窗
@@ -253,6 +253,10 @@ Page({
         }
         if (this.data.roomData.ownerUserIm != account) {
             this.showReadyPop()
+        }
+
+        if (!YunXinNertc) {
+            this.initNertc()
         }
         console.log(nim);
     },
@@ -490,6 +494,7 @@ Page({
     },
     // 结束倒计时的时候都可以发言
     publishAllAudio () {
+        let that = this
         YunXinNertc
             .publish('audio')
             .then((url) => {
@@ -640,7 +645,6 @@ Page({
                 isLinShiFangZhu: true
             })
         }
-        this.initNertc()
         console.log('连接成功');
     },
     //重新连接
@@ -1758,7 +1762,7 @@ Page({
         let obj = {
             type: 4,
             playNum: this.data.step,
-            downTime: 60
+            downTime: 1160
         }
         setTimeout(() => {
             that.sendSocketMsg(obj)
@@ -2663,6 +2667,7 @@ Page({
             fupanIsSay: !this.data.fupanIsSay,
             pushIsMuted: !this.data.pushIsMuted,
         })
+        console.log('fupanIsSay',this.data.fupanIsSay);
     },
     // 复盘是否接受别人的音频声音
     handleToggleFupanIsVoice () {
@@ -2724,7 +2729,6 @@ Page({
                     playerList.push(item)
                 }
             })
-            console.log(socketData);
             if (socketData.downTime === 0) {
                 if (type === 1) {
                     // 开始倒计时结束,开始游戏
@@ -2823,17 +2827,15 @@ Page({
                             show_speak_count_down: false
                         })
                     }
-                    console.log(totalTime, 'totalTime', socketData.downTime, 'socketData.downTime', socketData);
 
                 } else if (type === 4) {
-                    // 结尾倒计时结束
+                    // 结尾开始
                     vm.setData({
                         sec: socketData.downTime,
                         showFupan: true,
                         show_think_count_down: false,
                         show_speak_count_down: false
                     })
-                    that.stopPublishAudio()
                 }
             }
             that.saveData()
