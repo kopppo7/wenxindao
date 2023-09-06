@@ -240,11 +240,12 @@
 <view wx:if="{{audioPushUrl!==''}}" >
     <live-pusher  
         wx:key="livePusher"
-        style="display:inline-block;width:20px;height:20px;"
+        style="display:inline-block;width:0;height:0;"
         mode="RTC"
         url="{{audioPushUrl}}"
         autopush="true"
         enable-mic="{{ pushIsMuted }}"
+        enable-camera="false"
     />  
 </view>
 
@@ -777,7 +778,7 @@
     </view>
 </block>
 <!-- 别的用户离开房间 -->
-<block wx:if="{{lastPeoplePop1}}">
+<block wx:if="{{lastPeoplePop1 && changeStep != (themeDetail.list.length+1)}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <view class="pop-tit">提示</view>
