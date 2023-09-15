@@ -88,5 +88,6 @@
     "navigationStyle": "default",
     "navigationBarTextStyle": "white"
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "__usePrivacyCheck__":true
 }

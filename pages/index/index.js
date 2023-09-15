@@ -16,6 +16,8 @@ const app = getApp();
 
 Page({
   data: {
+    privacyContractName: '《问心岛隐私保护指引》',
+    showPrivacy: false,
     lists: [],
     stopUse: false,
     phoneNumber: "999 9090",
@@ -25,6 +27,59 @@ Page({
     total: 0,
     pagePara: ''
   },
+  // 打开隐私协议页面
+  openPrivacyContract() {
+    const _ = this
+    wx.openPrivacyContract({
+        fail: () => {
+            wx.showToast({
+                title: '遇到错误',
+                icon: 'error'
+            })
+        }
+    })
+  },
+// 拒绝隐私协议
+exitMiniProgram() {
+  // 直接退出小程序
+  wx.exitMiniProgram()
+},
+// 同意隐私协议
+handleAgreePrivacyAuthorization() {
+  const _ = this
+  _.setData({
+      showPrivacy: false
+  })
+},
+getPrivacyAgreementDataFn(){ //查询隐私协议
+  console.log(11111)
+  if (wx.getPrivacySetting) {
+    console.log(333333)
+      wx.getPrivacySetting({
+          success: res => {
+            console.log(66666)
+            console.log(res) // 返回结果为: res = { needAuthorization: true/false, privacyContractName: '《xxx隐私保护指引》' }
+            if (res.needAuthorization) {
+              // 需要弹出隐私协议
+              this.setData({
+                showPrivacy: true
+              })
+            } else {
+              console.log("77777777")
+              // 用户已经同意过隐私协议，所以不需要再弹出隐私协议，也能调用隐私接口
+  // this.goStore()
+            }
+          },
+          fail: () => {
+            console.log(55555)
+          },
+        })
+        console.log(44444)
+  }else{
+      // this.goStore()
+      console.log(2222)
+  }
+},
   callNum() {
     wx.makePhoneCall({
       phoneNumber: this.data.phoneNumber,
@@ -36,6 +91,7 @@ Page({
     })
   },
   onShow() {
+    this.getPrivacyAgreementDataFn()
     this.getData();
     var user = getLoginInfo();
     if (user == '') {
