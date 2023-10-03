@@ -80,19 +80,22 @@ Page({
     },
     // 好友结伴
     friendTogether () {
-        createBaoRoom({
-          askId: this.data.themeId
-        }).then(res => {
-            if (res.data.ret === 201) {
-                wx.navigateTo({
-                    url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
-                })
-            } else if (res.data.ret === 200) {
-                wx.navigateTo({
-                    url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.data.id + '&isfriend=1'
-                })
-            }
+        wx.navigateTo({
+            url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId  + '&isJieBan=1'
         })
+        // createBaoRoom({
+        //   askId: this.data.themeId
+        // }).then(res => {
+        //     if (res.data.ret === 201) {
+        //         wx.navigateTo({
+        //             url: '/07liebian/goumaixiwei/goumaixiwei?id=' + this.data.themeId,
+        //         })
+        //     } else if (res.data.ret === 200) {
+        //         wx.navigateTo({
+        //             url: '/04zhutipaidui/setHouse/setHouse?id=' + this.data.themeId + '&roomId=' + res.data.data.id + '&isJieBan=1'
+        //         })
+        //     }
+        // })
     },
     // 关闭弹窗
     closePop () {
