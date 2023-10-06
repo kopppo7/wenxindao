@@ -12,7 +12,14 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
-          "query": "askId=15&roomId=958&isfriend=1",
+          "query": "askId=15&roomId=1007&isfriend=1",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/setHouse/setHouse",
+          "query": "id=15&isMatch=1",
           "launchMode": "default",
           "scene": null
         },

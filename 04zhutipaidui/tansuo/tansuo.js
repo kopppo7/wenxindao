@@ -7,7 +7,7 @@ import {
     startPlayRoom,
     kickingPlayer,
     openBaoRoomMate,
-    getRoomDetails,
+    getRoomDetails, roomMatchingPlay,
     findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate, addRoomLog, inviteFriendsRoom, getIfFreeMy
 } from "../api";
 import { formatMsgList } from "../../utils/yun";
@@ -210,6 +210,7 @@ Page({
     //-------------------------------------云信-----------------------------------------------------------
     //初始化房间
     initRoom () {
+
         var token = wx.getStorageSync('loginInfo').yunToken;
         var account = wx.getStorageSync('loginInfo').yunId;
         var that = this;
@@ -639,6 +640,7 @@ Page({
     },
     // 连接成功
     onConnect () {
+
         // 是匹配并且是房主那此时用户就是临时房主
         if (this.data.isMatch && this.data.isOwner && !wx.getStorageSync('isLinShiFangZhu')) {
             this.setData({
@@ -691,7 +693,7 @@ Page({
     //有人走了
     onRemoveTeamMembers (teamMember) {
         console.log('有人走了', teamMember.accounts[0]);
-        let that =this
+        let that = this
         var arr = this.data.playerList;
         arr.forEach((item, index) => {
             if (item.account == teamMember.accounts[0]) {
@@ -701,30 +703,30 @@ Page({
         let truePlayerList = that.data.truePlayerList
         truePlayerList.forEach((item, index) => {
             if (item.account == teamMember.accounts[0]) {
-                truePlayerList.splice(index,1)
+                truePlayerList.splice(index, 1)
             }
         })
-        if(truePlayerList.length <= 1 && !that.data.isBeginPlay && !that.data.isOwner){
-            arr.forEach((item,index)=>{
-                if(item.account){
+        if (truePlayerList.length <= 1 && !that.data.isBeginPlay && !that.data.isOwner) {
+            arr.forEach((item, index) => {
+                if (item.account) {
                     item['isReady'] = false
-                    arr.splice(0,1,item)
-                    arr.splice(index,1,{})
+                    arr.splice(0, 1, item)
+                    arr.splice(index, 1, {})
                 }
             })
-            truePlayerList.forEach((item,index)=>{
-                if(item.account){
+            truePlayerList.forEach((item, index) => {
+                if (item.account) {
                     item['isReady'] = false
-                    truePlayerList.splice(0,1,item)
-                    truePlayerList.splice(index,1)
+                    truePlayerList.splice(0, 1, item)
+                    truePlayerList.splice(index, 1)
                 }
             })
-            console.log(truePlayerList,'truePlayerList');
+            console.log(truePlayerList, 'truePlayerList');
             that.setData({
-                isLinShiFangZhu:true,
-                isOwner:true,
+                isLinShiFangZhu: true,
+                isOwner: true,
                 truePlayerList,
-                isReady:false,
+                isReady: false,
             })
         }
         this.setData({
@@ -1456,16 +1458,16 @@ Page({
                 contPasserPopStatus: false,
                 waitTime: 10
             })
-            this.getDownTime(10, contWait)
+            // this.getDownTime(10, contWait)
 
-            function contWait () {
-                if (that.data.playerList.length <= num) {
-                    that.setData({
-                        contPasserPopStatus: true,
-                        matePopStatus: false
-                    })
-                }
-            }
+            // function contWait () {
+            //     if (that.data.playerList.length <= num) {
+            //         that.setData({
+            //             contPasserPopStatus: true,
+            //             matePopStatus: false
+            //         })
+            //     }
+            // }
         })
     },
     //-------------------------------------匹配路人end-----------------------------------------------------------
@@ -1556,7 +1558,7 @@ Page({
         })
     },
     // 获取房间详情
-    getRoomDetails (roomId,isInitRoom) {
+    getRoomDetails (roomId, isInitRoom) {
         var that = this
         getRoomDetails({ roomId: roomId }).then(res => {
             that.setData({
@@ -1565,11 +1567,12 @@ Page({
                 roomData: res.data.data
             })
             wx.setStorageSync('roomData', res.data.data)
-            if(isInitRoom===0){
-                return
-            }else{
-                that.initRoom()
-            }
+            that.initRoom()
+            // if(isInitRoom===0){
+            //     return
+            // }else{
+            //     that.initRoom()
+            // }
             // 是匹配还是包房
             // if (wx.getStorageSync('roomData').matchType == 1) {
             //     that.initRoom()
@@ -2692,7 +2695,7 @@ Page({
             fupanIsSay: !this.data.fupanIsSay,
             pushIsMuted: !this.data.pushIsMuted,
         })
-        console.log('fupanIsSay',this.data.fupanIsSay);
+        console.log('fupanIsSay', this.data.fupanIsSay);
     },
     // 复盘是否接受别人的音频声音
     handleToggleFupanIsVoice () {
@@ -2702,6 +2705,7 @@ Page({
         })
     },
     backPrev () {
+        this.clickZhongTuQuitRoom()
         wx.navigateBack();
     },
     handleIsLinShiFz () {
@@ -2986,6 +2990,7 @@ Page({
      */
     async onLoad (options) {
         console.log(options, 'options');
+
         if (this.socket) {
             this.socket.close({
                 success (res) {
@@ -3045,7 +3050,7 @@ Page({
                     isMatch: Number(options.isMatch) ? true : false,
                 })
                 //派对详情
-                that.getPartyDet()
+                await that.getPartyDet()
                 //活动须知弹窗，不再显示
                 if (wx.getStorageSync('activeStatus')) {
                     this.setData({
@@ -3064,7 +3069,14 @@ Page({
                     // 没有房间数据
                     // 如果是邀请好友的话带isfriend参数直接初始化房间 或者 是匹配的
                     if (Number(options.isMatch)) {
-                        that.getRoomDetails(options.roomId)
+                        // if (options.isYaoQing) {
+                        //     roomMatchingPlay(options.askId).then(res => {
+                        //         that.getRoomDetails(options.roomId)
+                        //     })
+                        // }else{
+                        //     that.getRoomDetails(options.roomId)
+                        // }
+                        await that.getRoomDetails(options.roomId)
                     } else if (Number(options.isfriend)) {
                         inviteFriendsRoom({ roomId: options.roomId }).then(res => {
                             console.log('好友进入房间了', res.data.ret);
@@ -3107,7 +3119,7 @@ Page({
     },
     //邀请好友
     onShareAppMessage () {
-        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1');
+        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1'+ '&isYaoQing=1');
         return {
             title: this.data.themeDetail.title,
             query: 'askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
@@ -3124,7 +3136,7 @@ Page({
         }
     },
     handleInviFriend () {
-        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1');
+        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&isYaoQing=2');
         return {
             title: this.data.themeDetail.title,
             path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
