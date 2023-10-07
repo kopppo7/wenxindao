@@ -3076,7 +3076,7 @@ Page({
                         // }else{
                         //     that.getRoomDetails(options.roomId)
                         // }
-                        await that.getRoomDetails(options.roomId)
+                        that.getRoomDetails(options.roomId)
                     } else if (Number(options.isfriend)) {
                         inviteFriendsRoom({ roomId: options.roomId }).then(res => {
                             console.log('好友进入房间了', res.data.ret);
@@ -3122,8 +3122,7 @@ Page({
         console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1'+ '&isYaoQing=1');
         return {
             title: this.data.themeDetail.title,
-            query: 'askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
-            imageUrl: '',
+            path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1',
         }
     },
     //邀请好友
@@ -3135,11 +3134,11 @@ Page({
             imageUrl: '',
         }
     },
-    handleInviFriend () {
-        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&isYaoQing=2');
-        return {
-            title: this.data.themeDetail.title,
-            path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
-        }
-    }
+    // handleInviFriend () {
+    //     console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&isYaoQing=2');
+    //     return {
+    //         title: this.data.themeDetail.title,
+    //         path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
+    //     }
+    // }
 })

@@ -12,6 +12,13 @@
         {
           "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
+          "query": "askId=15&roomId=1014&isMatch=1&isfriend=undefined",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "04zhutipaidui/tansuo/tansuo",
           "query": "askId=15&roomId=1007&isfriend=1",
           "launchMode": "default",
           "scene": null

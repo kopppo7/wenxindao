@@ -245,7 +245,7 @@
         url="{{audioPushUrl}}"
         autopush="true"
         enable-mic="{{ pushIsMuted }}"
-        enable-camera="false"
+        enable-camera="{{false}}"
     />  
 </view>
 
