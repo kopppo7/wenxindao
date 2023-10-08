@@ -690,7 +690,11 @@ image {
 	margin-left: -12rpx;
 }
 .timeDown {
-	position: fixed;
+	position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: 9999;
+	background-color: rgba(0,0,0,.2);
+}
+.timeDown view{
+	position: absolute;
 	left: 50%;
 	top: 50%;
 	width: 200rpx;

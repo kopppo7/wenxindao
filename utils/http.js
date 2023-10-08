@@ -6,7 +6,7 @@ function wxPromisify(fn) {
                 // 成功
                 if(res.data.msg && (res.data.msg == '未能读取到有效Token'|| res.data.msg.indexOf('Token无效')>-1)){
                     wx.reLaunch({
-                      url: '/pages/login/login',
+                      url: '/pages/index/index',
                     })
                 }
                 resolve(res)
