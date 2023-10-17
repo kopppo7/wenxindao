@@ -2842,12 +2842,12 @@ Page({
                             show_think_count_down: false,
                             isJump: false
                         })
-                        if (totalTime - socketData.downTime > 30 && that.data.show_speak_count_down && !that.data.isFaYan) {
-                            that.setData({
-                                jumpPopStatus5: true
-                            })
-                            that.jumpConfirm()
-                        }
+                        // if (totalTime - socketData.downTime > 30 && that.data.show_speak_count_down && !that.data.isFaYan) {
+                        //     that.setData({
+                        //         jumpPopStatus5: true
+                        //     })
+                        //     that.jumpConfirm()
+                        // }
                     } else {
                         that.setData({
                             inputStatus: 0,
