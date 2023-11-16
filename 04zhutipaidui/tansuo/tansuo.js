@@ -8,7 +8,7 @@ import {
     kickingPlayer,
     openBaoRoomMate,
     getRoomDetails, roomMatchingPlay,
-    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate, addRoomLog, inviteFriendsRoom, getIfFreeMy
+    findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate, addRoomLog, inviteFriendsRoom, getIfFreeMy, insertEvaluate
 } from "../api";
 import { formatMsgList } from "../../utils/yun";
 import { findByOrderList, getUserMsg } from "../../utils/api";
@@ -142,6 +142,8 @@ Page({
         localStream: [],
         playIsMuted: false, //音频是否静音
         pushIsMuted: true, //是否开启麦克风
+        gwPopStatus: false,//感悟弹窗
+        rating: 4,
 
     },
     //关闭弹窗
@@ -170,6 +172,7 @@ Page({
             isLinShiFangZhu: false,
             lastPeoplePop1: false,
             lastPeoplePop2: false,
+            gwPopStatus: false,
         })
         if (clear == 1 && timeInt) {
             clearInterval(timeInt)
@@ -2551,10 +2554,11 @@ Page({
             })
         }
     },
+    // 写感悟
     handleXieganwu () {
-        this.leaveRoomClear(1)
-        wx.navigateTo({
-            url: '/04zhutipaidui/zhutijieshao/zhutijieshao?id=' + this.data.themeDetail.id + '&open=1',
+        var that = this;
+        that.setData({
+            gwPopStatus: true
         })
     },
     //退出房间
@@ -3119,7 +3123,7 @@ Page({
     },
     //邀请好友
     onShareAppMessage () {
-        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1'+ '&isYaoQing=1');
+        console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&isYaoQing=1');
         return {
             title: this.data.themeDetail.title,
             path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1',
@@ -3133,6 +3137,36 @@ Page({
             query: 'askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
             imageUrl: '',
         }
+    },
+    /**
+     * 写感悟方面的方法
+     * @param {*} e 
+     */
+    inputArea(e){
+        if (e.detail.value.length >= 500) {
+            wx.showToast({
+                title: '最多输入500个字',
+                icon: 'none'
+            })
+        }
+    },
+    changeRating (e) {
+        this.setData({
+            rating: e.detail
+        })
+    },
+    bindFormSubmit (e) {
+        let params = {
+            category: 1,
+            objectId: this.data.themeDetail.id,
+            score: this.data.rating,
+            evaluate: e.detail.value.textarea,
+        }
+        insertEvaluate(params).then(res => {
+            this.setData({
+                gwPopStatus: false
+            })
+        })
     },
     // handleInviFriend () {
     //     console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&isYaoQing=2');

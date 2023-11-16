@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "原生家庭-性格探索",
+  "usingComponents": {
+    "rating": "../../components/rating/index"
+  },
   "navigationStyle": "default"
 }
