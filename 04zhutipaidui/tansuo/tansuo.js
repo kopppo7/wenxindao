@@ -92,7 +92,7 @@ Page({
         contPasserPopStatus: false, //继续等待路人
         showFupan: false,
         showPlayerList: [],
-        sec: 1160,//复盘倒计时
+        sec: 1200,//复盘倒计时
         inputText: '',
 
         //准备弹窗
@@ -1793,7 +1793,7 @@ Page({
         let obj = {
             type: 4,
             playNum: this.data.step,
-            downTime: 1160
+            downTime: 1200
         }
         setTimeout(() => {
             that.sendSocketMsg(obj)

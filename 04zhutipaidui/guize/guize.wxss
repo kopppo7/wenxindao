@@ -1,0 +1,4 @@
+/* 04zhutipaidui/guize/guize.wxss */
+.guize{
+  padding: 30rpx;
+}

@@ -1,0 +1,4 @@
+<!--04zhutipaidui/guize/guize.wxml-->
+<view class="guize">
+  <rich-text class="" nodes="{{contents}}"></rich-text>
+</view>

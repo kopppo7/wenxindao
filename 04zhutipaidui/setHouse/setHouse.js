@@ -88,7 +88,7 @@ Page({
       }
     } else {
       wx.showToast({
-        title: '请选择遵守玩家规则',
+        title: '请选择遵守用户知情同意书',
         icon: 'none',
         duration: 1500
       })

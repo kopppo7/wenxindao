@@ -4,7 +4,9 @@ import http from 'http.js';
 function handleURL(url) {
     return config.getDomain + url;
 }
-
+function handleAdminURL(url) {
+  return config.ADMIN + url;
+}
 // 接口地址命名加前缀 url，接口导出变量加前缀 api
 
 // 登录相关
@@ -164,6 +166,10 @@ export const dissolveGroup = function (id) {
 // 查询主题派对游玩详情
 export const getMyRoomUserInfo = function (roomUserId) {
   return http.get(handleURL('/my/getMyRoomUserInfo?roomUserId='+roomUserId));
+}
+// 查询主题派对游玩详情
+export const getProtocolOneForType = function (type) {
+  return http.get(handleAdminURL('/protocol/protocolOneForType?type='+type));
 }
 
 

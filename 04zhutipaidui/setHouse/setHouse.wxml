@@ -33,13 +33,13 @@
                 <checkbox-group name="checkbox">
                     <label>
                         <checkbox value="1"/>
-                        <text class="cb">需遵守《玩家规则》</text>
+                        <text class="cb">需遵守《用户知情同意书》</text>
                     </label>
                 </checkbox-group>
             </view>
             <view class="copy2">
                 <text>进入房间则代表已阅读和同意</text>
-                <navigator url="/pages/" open-type="navigate" hover-class="navigator-hover" class="link">《玩家规则》
+                <navigator url="/04zhutipaidui/guize/guize" open-type="navigate" hover-class="navigator-hover" class="link">《用户知情同意书》
                 </navigator>
                 <text>条款</text>
             </view>

@@ -781,6 +781,7 @@
     </view>
 </block>
 <!-- 别的用户离开房间 -->
+<!-- 第一次出现赠送 -->
 <block wx:if="{{lastPeoplePop1 && changeStep != (themeDetail.list.length+1)}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
@@ -796,6 +797,7 @@
         </view>
     </view>
 </block>
+<!-- 第一次之后不再出现赠送 -->
 <block wx:if="{{lastPeoplePop2}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">

@@ -11,6 +11,13 @@
       "list": [
         {
           "name": "",
+          "pathName": "04zhutipaidui/guize/guize",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
           "pathName": "04zhutipaidui/tansuo/tansuo",
           "query": "askId=15&roomId=1014&isMatch=1&isfriend=undefined",
           "launchMode": "default",
