@@ -18,7 +18,7 @@ Page({
     this.getData()
   },
   getData () {
-    getProtocolOneForType(2).then(res => {
+    getProtocolOneForType(3).then(res => {
       console.log(res);
       if (res.data.ret === 200) {
         this.setData({
