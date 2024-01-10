@@ -1062,13 +1062,13 @@ Page({
                 // 这个是开始派对的倒计时
                 // this.startCountDown()
                 let obj = {
-                    downTime: 10,
+                    downTime: 3,
                     type: 1
                 }
                 setTimeout(() => {
                     this.setData({
                         timePopStatus: true,
-                        waitTime: 10
+                        waitTime: 3
                     })
                     this.sendSocketMsg(obj)
                 }, 1000);
@@ -1326,11 +1326,11 @@ Page({
                 // this.sendCustomMsg(9, {})
                 this.setData({
                     timePopStatus: true,
-                    waitTime: 10
+                    waitTime: 3
                 })
                 let obj = {
                     type: 1,
-                    downTime: 10,
+                    downTime: 3,
                     isJump: 0
                 }
                 setTimeout(() => {
@@ -1459,7 +1459,7 @@ Page({
                 passerPopStatus: false,
                 matePopStatus: true,
                 contPasserPopStatus: false,
-                waitTime: 10
+                waitTime: 3
             })
             // this.getDownTime(10, contWait)
 
@@ -1855,6 +1855,7 @@ Page({
     speak: function () {
         var that = this;
         var step = this.data.step
+        console.log(step, that.data.personInd, 'speak这儿');
         var stepData = this.data.themeDetail.list[step - 1]
         //说话时间
         var speakTime = stepData.speakTime || 10
@@ -2743,7 +2744,7 @@ Page({
             console.log('打开 WebSocket 连接111')
             console.log(vm.data.isOnloadSocket);
             if (vm.data.isOnloadSocket) {
-                vm.sendSocketMsg()
+                vm.refreshSendSocketMsg()
                 vm.setData({
                     isOnloadSocket: false
                 })
@@ -2772,6 +2773,7 @@ Page({
 
                 } else if (type === 2) {
                     // 思考倒计时结束,此时轮到第一个人发言,同时type改为发言倒计时
+                    console.log("这里是不是走了两次??????");
                     that.speak()
                 } else if (type === 3) {
                     // 发言倒计时结束
@@ -2844,7 +2846,8 @@ Page({
                             show_speak_count_down: true,
                             waitTime: socketData.downTime,
                             show_think_count_down: false,
-                            isJump: false
+                            isJump: false,
+                            voiceStatus: 1
                         })
                         // if (totalTime - socketData.downTime > 30 && that.data.show_speak_count_down && !that.data.isFaYan) {
                         //     that.setData({
@@ -2857,7 +2860,8 @@ Page({
                             inputStatus: 0,
                             waitTime: socketData.downTime,
                             show_think_count_down: false,
-                            show_speak_count_down: false
+                            show_speak_count_down: false,
+                            voiceStatus: 0
                         })
                     }
 
@@ -2870,6 +2874,18 @@ Page({
                         show_speak_count_down: false
                     })
                 }
+            }
+            console.log(socketData, 'socketData');
+            if (socketData.readyPerson && socketData.playNum) {
+                that.setData({
+                    step: Number(socketData.playNum),
+                    personInd: Number(socketData.readyPerson),
+                })
+            } else if (socketData.playNum) {
+                that.setData({
+                    step: Number(socketData.playNum),
+                    personInd: 0,
+                })
             }
             that.saveData()
         })
@@ -2988,6 +3004,33 @@ Page({
                 }
             }
         }, 10000)
+    },
+    onShow () {
+        var partyData = wx.getStorageSync('partyData')
+        if (partyData) {
+            this.setData({
+                roomId: partyData.roomId,
+                teamId: partyData.teamId,
+                roomData: wx.getStorageSync('roomData'),
+                audioId: wx.getStorageSync('roomData').audioGroup,
+                isOnloadSocket: true
+            })
+            this.webSocketInit()
+            console.log(partyData, 'partyData');
+        }
+    },
+    onHide () {
+        if (this.socket) {
+            this.socket.close({
+                success (res) {
+                    console.log('关闭成功', res)
+                },
+                fail (err) {
+                    console.log('关闭失败', err)
+                }
+            })
+            this.socket = null
+        }
     },
     /**
      * 生命周期函数--监听页面加载
@@ -3142,7 +3185,7 @@ Page({
      * 写感悟方面的方法
      * @param {*} e 
      */
-    inputArea(e){
+    inputArea (e) {
         if (e.detail.value.length >= 500) {
             wx.showToast({
                 title: '最多输入500个字',
