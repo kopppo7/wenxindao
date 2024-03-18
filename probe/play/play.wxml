@@ -15,7 +15,6 @@
       <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
       <view class="txt">
         <view>大家好，欢迎开启本次生命探索。</view>
-        <!-- <view>今天我们要探索性格和原生家庭的关系，我们都知道自己有些性格是遗传自老爸老妈，那么我们也要看到这种性格给我们带来什么样的影响，</view> -->
       </view>
     </view>
     <view class="box2">
