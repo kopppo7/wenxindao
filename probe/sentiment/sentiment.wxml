@@ -1,0 +1,40 @@
+<!--03shenmingtansuo/zhutijieshao/zhutijieshao.wxml-->
+<view class="wp">
+  <view class="intro-row4">
+    <view class="z-list3">
+      <view class="item g-box" wx:for="{{evaluateList}}" data-id="{{item.id}}" wx:for-item="item" wx:key="id">
+        <view class="tit-box">
+          <view class="left-box">
+            <image class="avatar" src="{{item.userHeadImg}}"></image>
+            <view class="name-time">
+              <view class="name">{{item.wechatName}}</view>
+              <view class="time">{{item.addTime}}</view>
+            </view>
+          </view>
+          <view class="right-box">
+            <view class="edit-img">
+              <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-edit.png" bindtap="editImg"></image>
+            </view>
+            <!-- <view class="winnow-img">
+              <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-winnow.png"></image>
+            </view> -->
+          </view>
+        </view>
+        <view class="desc">{{item.evaluate}}</view>
+        <!-- ...<text>更多</text> -->
+      </view>
+    </view>
+  </view>
+  <view wx:if="evaluateList.length === 0">暂无评论</view>
+</view>
+<!--写感悟弹窗-->
+<block wx:if="{{gwPopStatus}}">
+  <view class="pop-mask"></view>
+  <view class="pop-win">
+    <view class="pop-tit">修改此感悟</view>
+    <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
+    <rating showRating rating="{{score}}" bind:click="change"></rating>
+    <textarea bindinput="getValue" maxlength="150" class="content" placeholder="您认为本次的引导设计如何？您收获了什么？您的感受如何？可以记录下来..." />
+    <view class="btn-buy" bindtap="addPercep">提交</view>
+  </view>
+</block>

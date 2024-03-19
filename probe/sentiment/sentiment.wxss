@@ -1,0 +1,73 @@
+/* 03shenmingtansuo/zhutijieshao/zhutijieshao.wxss */
+page{
+	padding-bottom: 200rpx;
+}
+
+.g-box{
+	background: rgba(182, 178, 207, 0.12);
+	border-radius: 16rpx;
+	padding: 24rpx;
+  margin-bottom: 24rpx;
+  box-sizing: border-box;
+}
+.intro-row3 .desc{
+	font-size: 26rpx;
+	color: #ffffff;
+}
+.intro-row3 .box .desc text{
+	color: #ffb58c;
+}
+.z-list3 .tit-box{
+  display: flex;
+  justify-content: space-between;
+	align-items: center;
+	margin-bottom: 24rpx;
+}
+.z-list3 .tit-box .avatar{
+	width: 72rpx;
+	height: 72rpx;
+	margin-right: 10rpx;
+  border-radius: 50%;
+}
+.z-list3 .tit-box .name-time{
+  display: inline-block;
+}
+.z-list3 .tit-box .name-time .name{
+	font-size: 28rpx;
+}
+.z-list3 .tit-box .name-time .time{
+	font-size: 22rpx;
+	opacity: .5;
+}
+.z-list3 .desc{
+	font-size: 28rpx;
+}
+
+.right-box {
+  display: flex;
+}
+
+.edit-img {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-img .icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.winnow-img {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20rpx;
+}
+
+.winnow-img .icon {
+  width: 60rpx;
+  height: 60rpx;
+}

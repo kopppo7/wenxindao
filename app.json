@@ -21,6 +21,7 @@
         "index/index",
         "detail/detail",
         "play/play",
+        "sentiment/sentiment",
         "invitation/index",
         "share/share"
       ]

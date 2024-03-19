@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+      "rating":"../../components/rating/index"
+  },
+  "navigationBarTitleText": "我的感悟",
+  "navigationStyle": "default"
+}
