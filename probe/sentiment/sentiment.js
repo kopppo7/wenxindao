@@ -1,6 +1,7 @@
 import {
   getProEvaList,
   submitScore,
+  getMyProEvaList
 } from '../../utils/api'
 import {
   getLoginInfo,
@@ -19,14 +20,17 @@ Page({
     total: 0,
     gwPopStatus: false,
     evaluate: '', // 提交的评价
+    userId: '',  // 用户 id
+    title: '给本次的生命探索引导打分',
+    clickSentimentType: 'new', // 来自哪个按钮
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options, 'ssss')
     this.setData({
       id: options.id,
+      userId: options.userId
     })
   },
   onShow() {
@@ -40,6 +44,7 @@ Page({
       pageSize: 20,
       id: this.data.id,
       category: 0, // 类型(0:生命探索,1:主题派对)
+      userId: this.data.userId
     }).then((res) => {
       // this.setData({
       //   evaluateList: res.data.data,
@@ -77,9 +82,10 @@ Page({
   /* 
     点击编辑 icon，打开编辑弹框
   */
-  editImg() {
+  openPop(e) {
     this.setData({
-      gwPopStatus: true
+      gwPopStatus: true,
+      clickSentimentType: e.target.dataset.type
     })
   },
   // 关闭弹窗
@@ -108,6 +114,7 @@ Page({
       })
       return
     }
+    // clickSentimentType
     submitScore({
       score: this.data.score,
       evaluate: this.data.evaluate,

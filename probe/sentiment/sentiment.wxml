@@ -13,7 +13,7 @@
           </view>
           <view class="right-box">
             <view class="edit-img">
-              <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-edit.png" bindtap="editImg"></image>
+              <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-edit.png" bindtap="openPop" data-type="old"></image>
             </view>
             <!-- <view class="winnow-img">
               <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-winnow.png"></image>
@@ -25,13 +25,16 @@
       </view>
     </view>
   </view>
-  <view wx:if="evaluateList.length === 0">暂无评论</view>
+  <view class="writeNew">
+    <view class="writeNewBtn" bindtap="openPop" data-type="new">写新感悟</view>
+  </view>
+  <view wx:if="{{ evaluateList.length === 0 }}">暂无评论</view>
 </view>
 <!--写感悟弹窗-->
 <block wx:if="{{gwPopStatus}}">
   <view class="pop-mask"></view>
   <view class="pop-win">
-    <view class="pop-tit">修改此感悟</view>
+    <view class="pop-tit">{{title}}</view>
     <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
     <rating showRating rating="{{score}}" bind:click="change"></rating>
     <textarea bindinput="getValue" maxlength="150" class="content" placeholder="您认为本次的引导设计如何？您收获了什么？您的感受如何？可以记录下来..." />

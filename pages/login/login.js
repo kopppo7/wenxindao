@@ -32,6 +32,7 @@ Page({
         })
     },
     getPhone(e) {
+      console.log(e, 'getPhone ----- ')
       if(!this.data.agreeStatus){
         wx.showToast({
           title: '请先阅读并勾选《用户服务协议》和《隐私协议保护协议》',

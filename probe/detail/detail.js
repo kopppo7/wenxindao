@@ -238,8 +238,7 @@ Page({
     // 我的感悟
     toSentiment() {
       wx.redirectTo({
-        url: '../sentiment/sentiment?id=' + this.data.id,
-        // this.data.product.userProbeId,
+        url: '../sentiment/sentiment?id=' + this.data.id + '&userId=' + getLoginInfo().id,
       })
     },
 

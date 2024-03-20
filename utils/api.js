@@ -123,6 +123,10 @@ export const getProEvaList = function (data) {
 export const submitScore = function (data) {
     return http.post(handleURL('/probe/insertEvaluate'),data);
 }
+// 生命探索详情 我的感悟 评价列表
+export const getMyProEvaList = function (data) {
+  return http.post(handleURL('/probe/evaluateUserList'),data);
+}
 // 生命探索详情 获取继续探索id
 export const getExpId = function (data) {
   return http.post(handleURL('/userprobe/init'),data);
