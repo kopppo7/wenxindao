@@ -20,7 +20,6 @@ Page({
     total: 0,
     gwPopStatus: false,
     evaluate: '', // 提交的评价
-    userId: '',  // 用户 id
     title: '给本次的生命探索引导打分',
     clickSentimentType: 'new', // 来自哪个按钮
   },
@@ -30,7 +29,6 @@ Page({
   onLoad(options) {
     this.setData({
       id: options.id,
-      userId: options.userId
     })
   },
   onShow() {
@@ -39,12 +37,11 @@ Page({
   },
   // 评价
   getEvaList() {
-    getProEvaList({
+    getMyProEvaList({
       page: this.data.page,
       pageSize: 20,
       id: this.data.id,
       category: 0, // 类型(0:生命探索,1:主题派对)
-      userId: this.data.userId
     }).then((res) => {
       // this.setData({
       //   evaluateList: res.data.data,

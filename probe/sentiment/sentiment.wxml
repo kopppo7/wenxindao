@@ -15,9 +15,9 @@
             <view class="edit-img">
               <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-edit.png" bindtap="openPop" data-type="old"></image>
             </view>
-            <!-- <view class="winnow-img">
+            <view class="winnow-img" wx:if="item.isCarefully">
               <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-winnow.png"></image>
-            </view> -->
+            </view>
           </view>
         </view>
         <view class="desc">{{item.evaluate}}</view>
@@ -28,7 +28,7 @@
   <view class="writeNew">
     <view class="writeNewBtn" bindtap="openPop" data-type="new">写新感悟</view>
   </view>
-  <view wx:if="{{ evaluateList.length === 0 }}">暂无评论</view>
+  <view class="empty" wx:if="{{ evaluateList.length === 0 }}">暂无评论</view>
 </view>
 <!--写感悟弹窗-->
 <block wx:if="{{gwPopStatus}}">

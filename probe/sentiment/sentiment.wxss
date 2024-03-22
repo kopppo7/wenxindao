@@ -92,3 +92,8 @@ page{
   text-align: center;
   line-height: 80rpx;
 }
+
+.empty {
+  text-align: center;
+  margin-top: 200rpx;
+}

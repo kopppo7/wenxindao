@@ -89,9 +89,17 @@
     <button wx:if="{{product.isPower != 1 }}" open-type="share" class="bottom-r bottom-r1 share" data-type="liebian">分享</button>
     <view wx:if="{{product.isPower != 1 }}" class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
   </view>
+
+  <!-- 新人限免 -->
+  <!-- <view class="freeBottomBox" wx:if="{{product.isPower == 0}}">
+    <view class="freeBtn" wx:if="{{!product.userProbeId}}" catchtap="toExplore">
+      新人限免，开始第 {{product.learnNum + 1 }} 次探索
+    </view>
+  </view> -->
+
   <view class="buyBox" wx:if="{{product.isPower == 1 }}">
     <view class="percep " wx:if="{{product.learnNum > 0}}" bindtap="openPercepPop">写感悟</view>
-    <!-- <view class="percep " wx:if="{{product.learnNum > 0}}" bindtap="toSentiment">我的感悟</view> -->
+    <view class="percep " wx:if="{{product.learnNum > 0}}" bindtap="toSentiment">我的感悟</view>
     <view class="{{product.learnNum > 0 ? 'progress' : 'progressNum'}}" wx:if="{{product.userProbeId}}" catchtap="toExplore">
       <text class="inner" style="width:{{product.progress }}%"></text>
       继续 {{product.progress}}%

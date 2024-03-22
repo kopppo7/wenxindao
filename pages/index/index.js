@@ -4,11 +4,13 @@ import {
 import {
   indexFlow,
   getUserMsg,
-  appletsLogin
+  appletsLogin,
+  getUserConfigList
 } from "../../utils/api";
 import {
   getLoginInfo,
-  setLoginInfo
+  setLoginInfo,
+  setUserConfigList
 } from "../../utils/stoage"
 
 //获取应用实例
@@ -106,12 +108,18 @@ getPrivacyAgreementDataFn(){ //查询隐私协议
             getUserMsg(tk.data.data.token).then(userInfo => {
               setLoginInfo(userInfo.data.data);
             });
+            getUserConfigList(tk.data.data.token).then(userConfigList => {
+              setUserConfigList(userConfigList.data.data);
+            });
           })
         }
       });
     }else{
       getUserMsg(wx.getStorageSync('tokenKey')).then(userInfo => {
         setLoginInfo(userInfo.data.data);
+      });
+      getUserConfigList(wx.getStorageSync('tokenKey')).then(userConfigList => {
+        setUserConfigList(userConfigList.data.data);
       });
     }
   },

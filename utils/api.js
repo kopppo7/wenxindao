@@ -29,6 +29,11 @@ export const getUserMsg = function (params) {
     return http.get(handleURL('/getUserMsg'), params);
 };
 
+// 获取参数配置列表
+export const getUserConfigList = function (params) {
+  return http.get(handleAdminURL('/config/list'), params);
+};
+
 // 用户退出
 export const userLoginOut = function (params) {
     return http.get(handleURL('/userLoginOut'), params);
@@ -126,6 +131,10 @@ export const submitScore = function (data) {
 // 生命探索详情 我的感悟 评价列表
 export const getMyProEvaList = function (data) {
   return http.post(handleURL('/probe/evaluateUserList'),data);
+}
+// 生命探索详情 我的感悟 评价列表
+export const getUserProbeIsFree = function (params) {
+  return http.get(handleURL('/userprobe/freeNum'), params);
 }
 // 生命探索详情 获取继续探索id
 export const getExpId = function (data) {
