@@ -76,11 +76,53 @@ Page({
                     }
                   })
                 } else{
-                  wx.hideLoading();
-                  wx.showToast({
-                    title: '授权失败，请稍后再试',
-                    icon:'error'
-                  });
+                  // 再次调用
+                  wx.login({
+                    success: function (res) {
+                      decodePhone({
+                        iv: e.detail.iv,
+                        encryptedData:e.detail.encryptedData,
+                        code:res.code
+                      }).then(res=>{
+                        if(res.data.ret==200){
+                          var json =JSON.parse(res.data.data);
+                          var token = wx.getStorageSync('tokenKey');
+                          getUserMsg(token).then(customer=>{
+                            var userInfo = customer.data.data;
+                            userInfo.phone = json.phoneNumber;
+                            setLoginInfo(userInfo);
+                            if(userInfo.wechatName==''||userInfo.wechatName==null){
+                              wx.redirectTo({
+                                url: '/pages/auth/auth',
+                              })
+                            }else{
+                              updateUserMsg({
+                                phone:json.phoneNumber,
+                                nickname:userInfo.wechatName,
+                                headimgurl:userInfo.headImg
+                              }).then(up=>{
+                                wx.hideLoading();
+                                wx.redirectTo({
+                                  url: '/pages/index/index',
+                                })
+                              })
+                            }
+                          })
+                        } else{
+                          wx.hideLoading();
+                          wx.showToast({
+                            title: '授权失败，请稍后再试',
+                            icon:'error'
+                          });
+                        }
+                      })
+                    }
+                  })
+                  // wx.hideLoading();
+                  // wx.showToast({
+                  //   title: '授权失败，请稍后再试',
+                  //   icon:'error'
+                  // });
                 }
               })
             }

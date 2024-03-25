@@ -1,12 +1,7 @@
 import {
-  getProEvaList,
   submitScore,
   getMyProEvaList
 } from '../../utils/api'
-import {
-  getLoginInfo,
-  setLoginInfo
-} from '../../utils/stoage'
 Page({
 
   /**
@@ -43,9 +38,6 @@ Page({
       id: this.data.id,
       category: 0, // 类型(0:生命探索,1:主题派对)
     }).then((res) => {
-      // this.setData({
-      //   evaluateList: res.data.data,
-      // })
       if (this.data.page == 1) {
         this.data.evaluateList = res.data.data.list;
       } else {

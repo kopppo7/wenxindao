@@ -8,7 +8,8 @@ import {
   findInviteById,
   receiveDetail,
   appletsLogin,
-  getUserMsg
+  getUserMsg,
+  getMyProEvaList
 } from '../../utils/api'
 import {
   getLoginInfo,
@@ -38,7 +39,33 @@ Page({
     isShowVoice: false,
     shareList: [],
     areadyShareList: [], // 已分享
-    shareNum: 0
+    shareNum: 0,
+    myProEvaList: [], // 我的感悟列表
+  },
+  
+  // 获取我的感悟列表
+  getMyProEvaList() {
+    getMyProEvaList({
+      page: 0,
+      pageSize: 0,
+      id: this.data.id,
+      category: 0, // 类型(0:生命探索,1:主题派对)
+    }).then((res) => {
+      this.setData({
+        myProEvaList: res.data.data.list
+      })
+      // if (this.data.page == 1) {
+      //   this.data.evaluateList = res.data.data.list;
+      // } else {
+      //   this.data.evaluateList.concat(res.data.data.list);
+      // }
+      // this.setData({
+      //   evaluateList: this.data.evaluateList,
+      //   total: res.data.data.total
+      // })
+      // wx.stopPullDownRefresh()
+      // wx.hideLoading();
+    })
   },
   // 打开购买本探索弹窗
   openBuyPop() {
@@ -121,6 +148,7 @@ Page({
       })
       wx.hideLoading()
       this.getEvaList()
+      this.getMyProEvaList()
       this.closePop()
     })
   },
@@ -389,6 +417,7 @@ Page({
     that.getDetail(that.data.id)
     that.getReceiveDetail(that.data.shareId, that.data.id)
     that.getEvaList()
+    that.getMyProEvaList()
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作

@@ -98,8 +98,8 @@
   </view> -->
 
   <view class="buyBox" wx:if="{{product.isPower == 1 }}">
-    <view class="percep " wx:if="{{product.learnNum > 0}}" bindtap="openPercepPop">写感悟</view>
-    <view class="percep " wx:if="{{product.learnNum > 0}}" bindtap="toSentiment">我的感悟</view>
+    <view class="percep " wx:if="{{product.learnNum > 0 && myProEvaList.length === 0}}" bindtap="openPercepPop">写感悟</view>
+    <view class="percep " wx:if="{{ product.learnNum > 0 && myProEvaList.length !== 0 }}" bindtap="toSentiment">我的感悟</view>
     <view class="{{product.learnNum > 0 ? 'progress' : 'progressNum'}}" wx:if="{{product.userProbeId}}" catchtap="toExplore">
       <text class="inner" style="width:{{product.progress }}%"></text>
       继续 {{product.progress}}%
