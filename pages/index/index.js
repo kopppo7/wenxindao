@@ -150,7 +150,7 @@ getPrivacyAgreementDataFn(){ //查询隐私协议
     //   })
     //   return;
     // } else 
-    if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
+    if (!loginInfo || loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
       wx.showModal({
         title: '当前未完善您的头像和昵称，请完善后进行体验',
         success: function (auth) {

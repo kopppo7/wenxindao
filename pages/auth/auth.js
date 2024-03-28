@@ -28,7 +28,10 @@ Page({
           role: 1
         };
         appletsLogin(obj).then(res => {
-          wx.setStorageSync('tokenKey', res.data.data.token);
+          if(res.data.data.token){
+            wx.setStorageSync('tokenKey', res.data.data.token);
+          }
+          
         })
       }
     });
@@ -128,7 +131,7 @@ Page({
       numStart = _charStr.length - 10;
     //如果字符串第一位是数字，则递归重新获取
     if (i == 0 && index >= numStart) {
-      index = RandomIndex(min, max, i);
+      index = this.RandomIndex(min, max, i);
     }
     //返回最终索引值
     return index;
