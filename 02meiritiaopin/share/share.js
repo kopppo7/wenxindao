@@ -206,7 +206,6 @@ Page({
     })
     //this.drawMyCanvas(true)
     // wx.showLoading()
-    // debugger
     // setTimeout(() => {
     //   wx.showShareImageMenu({
     //     path: this.data.imgUrl,

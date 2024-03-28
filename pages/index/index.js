@@ -1,5 +1,5 @@
 import {
-  login
+  getConfigList
 } from '../../utils/common'
 import {
   indexFlow,
@@ -53,33 +53,27 @@ handleAgreePrivacyAuthorization() {
       showPrivacy: false
   })
 },
-getPrivacyAgreementDataFn(){ //查询隐私协议
-  console.log(11111)
+getPrivacyAgreementDataFn(){ 
+  //查询隐私协议
   if (wx.getPrivacySetting) {
-    console.log(333333)
       wx.getPrivacySetting({
           success: res => {
-            console.log(66666)
-            console.log(res) // 返回结果为: res = { needAuthorization: true/false, privacyContractName: '《xxx隐私保护指引》' }
+            // 返回结果为: res = { needAuthorization: true/false, privacyContractName: '《xxx隐私保护指引》' }
             if (res.needAuthorization) {
               // 需要弹出隐私协议
               this.setData({
                 showPrivacy: true
               })
             } else {
-              console.log("77777777")
               // 用户已经同意过隐私协议，所以不需要再弹出隐私协议，也能调用隐私接口
   // this.goStore()
             }
           },
           fail: () => {
-            console.log(55555)
           },
         })
-        console.log(44444)
   }else{
       // this.goStore()
-      console.log(2222)
   }
 },
   callNum() {
@@ -93,6 +87,7 @@ getPrivacyAgreementDataFn(){ //查询隐私协议
     })
   },
   onShow() {
+    // debugger
     this.getPrivacyAgreementDataFn()
     this.getData();
     var user = getLoginInfo();
@@ -108,9 +103,7 @@ getPrivacyAgreementDataFn(){ //查询隐私协议
             getUserMsg(tk.data.data.token).then(userInfo => {
               setLoginInfo(userInfo.data.data);
             });
-            getUserConfigList(tk.data.data.token).then(userConfigList => {
-              setStoreConfigList(userConfigList.data.data);
-            });
+            getConfigList(tk.data.data.token)
           })
         }
       });
@@ -118,14 +111,12 @@ getPrivacyAgreementDataFn(){ //查询隐私协议
       getUserMsg(wx.getStorageSync('tokenKey')).then(userInfo => {
         setLoginInfo(userInfo.data.data);
       });
-      getUserConfigList(wx.getStorageSync('tokenKey')).then(userConfigList => {
-        setStoreConfigList(userConfigList.data.data);
-      });
+      getConfigList(wx.getStorageSync('tokenKey'))
     }
   },
-  onLoad: async function (para) {
+  onLoad(option) {
     this.setData({
-      pagePara: para.look
+      pagePara: option.look ? option.look : ''
     })
     if (wx.getStorageSync('loginInfo')&&wx.getStorageSync('loginInfo').relieveTime) {
       this.setData({
@@ -136,7 +127,6 @@ getPrivacyAgreementDataFn(){ //查询隐私协议
   },
   jump(e) {
     var loginInfo = getLoginInfo();
-    console.log(loginInfo)
     // if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
     //   wx.showModal({
     //     title: '请登录授权进入下一步',
