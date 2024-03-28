@@ -2,6 +2,9 @@ import { login } from '../../../utils/common'
 import {
   findByOrderList
 } from "../../../utils/api";
+import {
+    getLoginInfo
+} from "../../../utils/stoage"
 Page({
 
     /**
@@ -26,7 +29,8 @@ Page({
       });
       findByOrderList({
         page:this.data.page2,
-        pageSize:20
+        pageSize:20,
+        userId: getLoginInfo().id
       }).then(res=>{
         if(this.data.page2==1){
           this.data.list2 = res.data.data.list;

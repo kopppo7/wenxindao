@@ -1,10 +1,11 @@
 import {
   appletsLogin,
   getUserMsg,
-  updateUserMsg
+  updateUserMsg,
+  getUserConfigList
 } from "./api";
 import { formatTime } from "./util";
-import { getLoginInfo, setLoginInfo } from "./stoage"
+import { getLoginInfo, setLoginInfo, setStoreConfigList } from "./stoage"
 
 export const login = (callback) => {
   let token = wx.getStorageSync('tokenKey');
@@ -67,4 +68,9 @@ export const checkLogInfo = (token,callback) => {
       callback(token);
     }
   })
+}
+export const getConfigList = (token) => {
+  getUserConfigList(token).then(res => {
+    setStoreConfigList(res.data.data);
+  });
 }

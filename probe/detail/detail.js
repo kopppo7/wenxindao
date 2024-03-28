@@ -13,11 +13,15 @@ import {
 } from '../../utils/api'
 import {
   getLoginInfo,
-  setLoginInfo
+  setLoginInfo,
+  getStoreConfigList
 } from '../../utils/stoage'
 import {
   formatTime
 } from '../../utils/util'
+import {
+  getConfigList
+} from '../../utils/common'
 Page({
 
   /**
@@ -51,20 +55,11 @@ Page({
       id: this.data.id,
       category: 0, // 类型(0:生命探索,1:主题派对)
     }).then((res) => {
-      this.setData({
-        myProEvaList: res.data.data.list
-      })
-      // if (this.data.page == 1) {
-      //   this.data.evaluateList = res.data.data.list;
-      // } else {
-      //   this.data.evaluateList.concat(res.data.data.list);
-      // }
-      // this.setData({
-      //   evaluateList: this.data.evaluateList,
-      //   total: res.data.data.total
-      // })
-      // wx.stopPullDownRefresh()
-      // wx.hideLoading();
+      if(res.ret === 200) {
+        this.setData({
+          myProEvaList: res.data.data.list
+        })
+      }
     })
   },
   // 打开购买本探索弹窗
@@ -148,8 +143,9 @@ Page({
       })
       wx.hideLoading()
       this.getEvaList()
-      this.getMyProEvaList()
       this.closePop()
+      // 获取我的评价列表
+      this.getMyProEvaList()
     })
   },
   // 关闭弹框
@@ -327,9 +323,9 @@ Page({
     receiveDetail(shareId, id).then((res) => {
       let list = []
       if (res.data.data) {
-        this.setData({
-          shareNum: res.data.data.length
-        })
+        // this.setData({
+        //   shareNum: res.data.data.length
+        // })
         for (let i = 0; i < 4; i++) {
           if (i < res.data.data.length) {
             list[i] = res.data.data[i]
@@ -362,6 +358,20 @@ Page({
       })
     })
   },
+  /* 
+    处理分享人数
+  */
+  handleShareNum() {
+    let shareNumObj = {}
+    getStoreConfigList().forEach(item => {
+      if(item.configKey === 'share.user.num') {
+        shareNumObj = item
+      }
+    })
+    this.setData({
+      shareNum: shareNumObj.configValue
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -373,7 +383,8 @@ Page({
       id: options.id,
       shareId: options.shareId || 0
     })
-    if(this.data.shareId||!wx.getStorageSync('tokenKey')){
+    // this.data.shareId||
+    if(!wx.getStorageSync('tokenKey')){
       var that = this;
       wx.login({
         success: function (res) {
@@ -395,10 +406,16 @@ Page({
               } else {
                 setLoginInfo(userInfo.data.data)
               }
+            }).then(res => {
+              getConfigList(wx.getStorageSync('tokenKey'))
+              // 获取我的评价列表（需要 token）
+              that.getMyProEvaList()
+              that.handleShareNum()
             })
           })
         }
       });
+
     }else{
       getUserMsg(wx.getStorageSync('tokenKey')).then(userInfo => {
         if(!userInfo.data.data.phone){
@@ -406,6 +423,9 @@ Page({
             isHavePhone:false
           })
         }
+        // 获取我的评价列表（需要 token）
+        this.getMyProEvaList()
+        this.handleShareNum()
       });
     }
   },
@@ -417,7 +437,6 @@ Page({
     that.getDetail(that.data.id)
     that.getReceiveDetail(that.data.shareId, that.data.id)
     that.getEvaList()
-    that.getMyProEvaList()
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作

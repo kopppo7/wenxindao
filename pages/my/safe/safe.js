@@ -190,7 +190,8 @@ Page({
             that.count()
           }else{
             wx.showToast({
-              title: res.msg,
+              title: res.data.msg,
+              icon: 'none',
             })
           }
         })

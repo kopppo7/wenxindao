@@ -10,7 +10,7 @@ import {
 import {
   getLoginInfo,
   setLoginInfo,
-  setUserConfigList
+  setStoreConfigList
 } from "../../utils/stoage"
 
 //获取应用实例
@@ -109,7 +109,7 @@ getPrivacyAgreementDataFn(){ //查询隐私协议
               setLoginInfo(userInfo.data.data);
             });
             getUserConfigList(tk.data.data.token).then(userConfigList => {
-              setUserConfigList(userConfigList.data.data);
+              setStoreConfigList(userConfigList.data.data);
             });
           })
         }
@@ -119,7 +119,7 @@ getPrivacyAgreementDataFn(){ //查询隐私协议
         setLoginInfo(userInfo.data.data);
       });
       getUserConfigList(wx.getStorageSync('tokenKey')).then(userConfigList => {
-        setUserConfigList(userConfigList.data.data);
+        setStoreConfigList(userConfigList.data.data);
       });
     }
   },
@@ -136,6 +136,7 @@ getPrivacyAgreementDataFn(){ //查询隐私协议
   },
   jump(e) {
     var loginInfo = getLoginInfo();
+    console.log(loginInfo)
     // if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
     //   wx.showModal({
     //     title: '请登录授权进入下一步',

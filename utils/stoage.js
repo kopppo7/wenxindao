@@ -4,9 +4,9 @@ export const setLoginInfo = (para)=>{
 export const getLoginInfo = () =>{
   return wx.getStorageSync('loginInfo');
 }
-export const setUserConfigList = (para)=>{
+export const setStoreConfigList = (para)=>{
   wx.setStorageSync('userConfigList', para)
 }
-export const getUserConfigList = () =>{
+export const getStoreConfigList = () =>{
   return wx.getStorageSync('userConfigList');
 }

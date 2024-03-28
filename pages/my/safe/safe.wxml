@@ -27,7 +27,7 @@
   </view>
 </view>
 <view class="bot-btns">
-  <!-- <view class="btn btn1" catchtap="lagout">退出登录</view> -->
+  <view class="btn btn1" catchtap="lagout">退出登录</view>
   <!-- <view class="btn btn2">注销账号</view> -->
 </view>
 
