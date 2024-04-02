@@ -9,7 +9,8 @@ import {
   receiveDetail,
   appletsLogin,
   getUserMsg,
-  getMyProEvaList
+  getMyProEvaList,
+  getUserProbeIsFree
 } from '../../utils/api'
 import {
   getLoginInfo,
@@ -43,8 +44,9 @@ Page({
     isShowVoice: false,
     shareList: [],
     areadyShareList: [], // 已分享
-    shareNum: 0,
+    shareNum: 2,
     myProEvaList: [], // 我的感悟列表
+    isFree: false, // 是否处于新人免费
   },
   
   // 获取我的感悟列表
@@ -292,6 +294,15 @@ Page({
         product: res.data.data,
         labels: res.data.data.labels ? res.data.data.labels.split(',') : []
       })
+      // 如果类型是付费则查询isFree并赋值
+      if(res.data.data.isPay === 1) {
+        // 查询是否超出免费次数
+        this.getIsFree()
+      } else {
+        this.setData({
+          isFree: false
+        })
+      }
     })
   },
   // 评价
@@ -323,10 +334,7 @@ Page({
     receiveDetail(shareId, id).then((res) => {
       let list = []
       if (res.data.data) {
-        // this.setData({
-        //   shareNum: res.data.data.length
-        // })
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < this.data.shareNum; i++) {
           if (i < res.data.data.length) {
             list[i] = res.data.data[i]
           } else {
@@ -454,6 +462,16 @@ Page({
       this.data.page += 1;
       this.getEvaList();
     }
+  },
+
+  
+  // 获取是否超出免费次数
+  getIsFree() {
+    getUserProbeIsFree(wx.getStorageSync('tokenKey')).then(res => {
+      this.setData({
+        isFree: res.data
+      })
+    });
   },
 
   /**

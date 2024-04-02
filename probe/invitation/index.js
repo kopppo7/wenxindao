@@ -23,7 +23,7 @@ Page({
     shareId: '',
     fissionInfo: {},
     headImg: '',
-    nickName: ''
+    nickName: '',
   },
   openBig (e) {
     this.setData({

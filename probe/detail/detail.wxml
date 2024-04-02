@@ -18,7 +18,7 @@
       <view class="btitle">邀请{{4-shareNum}}位新人集体免费解锁</view>
       <view class="txt">使用期一年</view>
     </view>
-    <view class="hasNum" wx:if="{{shareNum>0}}">
+    <view class="hasNum" wx:if="{{shareList[0].rname}}">
       <view class="invi-person">
          <!-- 需要循环的 -->
          <view class="invi-box" wx:for="{{shareList}}"  wx:for-item="item" wx:key="*this">
@@ -80,7 +80,7 @@
 </view>
 <view class="bottom-box">
   <!-- 没有购买过 product.isPower == 0 -->
-  <view class="box" wx:if="{{product.isPower == 0}}">
+  <view class="box" wx:if="{{product.isPower == 0 && !isFree }}">
     <view class="bottom-l">
       <view class="money">¥<text>{{product.amount}}</text></view>
       <view class="year">/使用期1年</view>
@@ -91,13 +91,19 @@
   </view>
 
   <!-- 新人限免 -->
-  <!-- <view class="freeBottomBox" wx:if="{{product.isPower == 0}}">
-    <view class="freeBtn" wx:if="{{!product.userProbeId}}" catchtap="toExplore">
-      新人限免，开始第 {{product.learnNum + 1 }} 次探索
+  <view class="freeBottomBox buyBox" wx:if="{{isFree}}">
+    <view class="percep " wx:if="{{product.learnNum > 0 && myProEvaList.length === 0}}" bindtap="openPercepPop" style="margin-right: 15rpx;">写感悟</view>
+    <view class="percep " wx:if="{{ product.learnNum > 0 && myProEvaList.length !== 0 }}" bindtap="toSentiment" style="margin-right: 15rpx;">我的感悟</view>
+    <view class="{{product.learnNum > 0 ? 'progress' : 'progressNum'}}" wx:if="{{product.userProbeId}}" catchtap="toExplore">
+      <text class="inner" style="width:{{product.progress }}%"></text> 继续 {{product.progress}}%
     </view>
-  </view> -->
 
-  <view class="buyBox" wx:if="{{product.isPower == 1 }}">
+    <view class="freeBtn" wx:if="{{!product.userProbeId}}" catchtap="toExplore">
+      新人限免中，开始第 {{product.learnNum + 1 }} 次探索
+    </view>
+  </view>
+
+  <view class="buyBox" wx:if="{{product.isPower == 1 && !isFree }}">
     <view class="percep " wx:if="{{product.learnNum > 0 && myProEvaList.length === 0}}" bindtap="openPercepPop">写感悟</view>
     <view class="percep " wx:if="{{ product.learnNum > 0 && myProEvaList.length !== 0 }}" bindtap="toSentiment">我的感悟</view>
     <view class="{{product.learnNum > 0 ? 'progress' : 'progressNum'}}" wx:if="{{product.userProbeId}}" catchtap="toExplore">

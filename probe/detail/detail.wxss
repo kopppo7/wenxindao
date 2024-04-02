@@ -381,7 +381,7 @@ page{
 
 .bottom-box .freeBottomBox .freeBtn {
   width: 80%;
-  background-color: #ffb58c;
+  background-color: #ef8046;
   color: rgb(255, 255, 255);
   margin: 30rpx auto;
   height: 76rpx;

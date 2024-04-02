@@ -1,5 +1,5 @@
 // 03shenmingtansuo/index/index.js
-import{ getCateList , getCateDataList ,getPayProbe, getUserProbeIsFree } from '../../utils/api'
+import{ getCateList , getCateDataList ,getPayProbe  } from '../../utils/api'
 Page({
 
   /**
@@ -12,7 +12,6 @@ Page({
     page: 1,
     pageSize: 1000,
     total: 0,  // 总共多少数据
-    isFree: false
   },
   // 切换分类
   change(e) {
@@ -136,8 +135,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    // 查询是否超出免费次数
-    this.getIsFree()
   },
 
   /**

@@ -87,11 +87,10 @@ getPrivacyAgreementDataFn(){
     })
   },
   onShow() {
-    // debugger
     this.getPrivacyAgreementDataFn()
     this.getData();
     var user = getLoginInfo();
-    if (user == '') {
+    if (!user) {
       wx.login({
         success: function (res) {
           var obj = {
