@@ -250,7 +250,8 @@ Page({
         mask: true,
       })
       getExpId({
-        probeId: this.data.product.id
+        probeId: this.data.product.id,
+        inFree: this.data.product.isPay === 1 ? "N" : "Y"
       }).then((res) => {
         wx.hideLoading()
         wx.redirectTo({
