@@ -57,7 +57,7 @@ Page({
       id: this.data.id,
       category: 0, // 类型(0:生命探索,1:主题派对)
     }).then((res) => {
-      if(res.ret === 200) {
+      if(res.data.ret === 200) {
         this.setData({
           myProEvaList: res.data.data.list
         })
@@ -251,7 +251,7 @@ Page({
       })
       getExpId({
         probeId: this.data.product.id,
-        inFree: this.data.product.isPay === 1 ? "N" : "Y"
+        inFree: !this.data.isFree === 1 ? "N" : "Y"
       }).then((res) => {
         wx.hideLoading()
         wx.redirectTo({
@@ -295,15 +295,9 @@ Page({
         product: res.data.data,
         labels: res.data.data.labels ? res.data.data.labels.split(',') : []
       })
-      // 如果类型是付费则查询isFree并赋值
-      if(res.data.data.isPay === 1) {
+    }).then(res => {
         // 查询是否超出免费次数
         this.getIsFree()
-      } else {
-        this.setData({
-          isFree: false
-        })
-      }
     })
   },
   // 评价
@@ -470,7 +464,7 @@ Page({
   getIsFree() {
     getUserProbeIsFree(wx.getStorageSync('tokenKey')).then(res => {
       this.setData({
-        isFree: res.data
+        isFree: res.data.data
       })
     });
   },
@@ -479,7 +473,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: async function (option) {
-    console.log(option);
     if (!this.data.isHavePhone) {
       wx.showModal({
         title: '请登录授权进入下一步',
