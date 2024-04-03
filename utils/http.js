@@ -69,7 +69,27 @@ function postRequest(url, data) {
     })
 }
 
+/**
+ * @description 微信请求 put 方法
+ * @param {String} url 接口地址
+ * @param {Object} data 参数数据
+ */
+function putRequest(url, data) {
+  let putRequest = wxPromisify(wx.request);
+  let token = wx.getStorageSync('tokenKey');
+  return putRequest({
+      url: url,
+      method: 'PUT',
+      data: data,
+      header: {
+          'content-type': 'application/json',
+          'token': token
+      },
+  })
+}
+
 module.exports = {
     get: getRequest,
-    post: postRequest
+    post: postRequest,
+    put: putRequest
 };

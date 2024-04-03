@@ -13,7 +13,7 @@
           </view>
           <view class="right-box">
             <view class="edit-img">
-              <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-edit.png" bindtap="openPop" data-type="old"></image>
+              <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-edit.png" bindtap="openPop" data-type="edit" data-id="{{item.id}}"></image>
             </view>
             <view class="winnow-img" wx:if="item.isCarefully">
               <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-winnow.png"></image>
@@ -26,7 +26,7 @@
     </view>
   </view>
   <view class="writeNew">
-    <view class="writeNewBtn" bindtap="openPop" data-type="new">写新感悟</view>
+    <view class="writeNewBtn" bindtap="openPop" data-type="rewrite">写新感悟</view>
   </view>
   <view class="empty" wx:if="{{ evaluateList.length === 0 }}">暂无评论</view>
 </view>

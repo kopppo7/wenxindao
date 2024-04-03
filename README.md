@@ -12,7 +12,7 @@
 
 ## ./utils/http.js
 
-项目 AJAX 封装，导出两个常用方法 fetch 和 post
+项目 AJAX 封装，导出常用方法 fetch 和 post 和 put
 
 ## ./pages/index/index.js
 

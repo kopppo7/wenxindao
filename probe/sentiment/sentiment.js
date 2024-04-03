@@ -1,7 +1,11 @@
 import {
   submitScore,
+  editScore,
   getMyProEvaList
 } from '../../utils/api'
+import {
+  getLoginInfo
+} from '../../utils/stoage'
 Page({
 
   /**
@@ -16,7 +20,7 @@ Page({
     gwPopStatus: false,
     evaluate: '', // 提交的评价
     title: '给本次的生命探索引导打分',
-    clickSentimentType: 'new', // 来自哪个按钮
+    clickSentimentType: 'rewrite', // 来自哪个按钮
   },
   /**
    * 生命周期函数--监听页面加载
@@ -74,7 +78,8 @@ Page({
   openPop(e) {
     this.setData({
       gwPopStatus: true,
-      clickSentimentType: e.target.dataset.type
+      clickSentimentType: e.target.dataset.type,
+      itemId: e.target.dataset.id
     })
   },
   // 关闭弹窗
@@ -103,20 +108,34 @@ Page({
       })
       return
     }
-    // clickSentimentType
-    submitScore({
+
+    const params = {
+      id: this.data.itemId,
       score: this.data.score,
       evaluate: this.data.evaluate,
       objectId: this.data.id,
       category: 0, // 类型(0:生命探索,1:主题派对)
-    }).then((res) => {
-      wx.showToast({
-        title: '提交成功',
+    }
+
+    if(this.data.clickSentimentType === 'rewrite') {
+      submitScore(params).then((res) => {
+        wx.showToast({
+          title: '提交成功',
+        })
+        wx.hideLoading()
+        this.getEvaList()
+        this.closePop()
       })
-      wx.hideLoading()
-      this.getEvaList()
-      this.closePop()
-    })
+    } else if(this.data.clickSentimentType === 'edit') {
+      editScore(params).then((res) => {
+        wx.showToast({
+          title: '提交成功',
+        })
+        wx.hideLoading()
+        this.getEvaList()
+        this.closePop()
+      })
+    }
   },
   // 获取评价内容
   getValue(e) {
