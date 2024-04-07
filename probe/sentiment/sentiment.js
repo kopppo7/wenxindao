@@ -109,7 +109,7 @@ Page({
       return
     }
 
-    const params = {
+    const params = { 
       id: this.data.itemId,
       score: this.data.score,
       evaluate: this.data.evaluate,

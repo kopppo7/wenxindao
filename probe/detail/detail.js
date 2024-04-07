@@ -251,7 +251,7 @@ Page({
       })
       getExpId({
         probeId: this.data.product.id,
-        inFree: !this.data.isFree === 1 ? "N" : "Y"
+        inFree: !this.data.isFree ? "N" : "Y"
       }).then((res) => {
         wx.hideLoading()
         wx.redirectTo({
@@ -296,6 +296,12 @@ Page({
         labels: res.data.data.labels ? res.data.data.labels.split(',') : []
       })
     }).then(res => {
+      if(this.data.product.progress) {
+        this.setData({
+          isFree: true
+        })
+        return false
+      }
         // 查询是否超出免费次数
         this.getIsFree()
     })
