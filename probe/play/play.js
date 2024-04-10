@@ -30,7 +30,7 @@ Page({
    */
   data: {
     list: [], // 需要循环的数据
-    recordIndex:'',//倒计时所处的轮次
+    recordIndex: '', //倒计时所处的轮次
     sharePopStatus: false,
     step: 0,
     stepBg: 20,
@@ -39,7 +39,7 @@ Page({
     id: '',
     probeId: '',
     selectCard: '', // 选中的卡片 人物
-    selectMasterIndex: 0,//选中的answer
+    selectMasterIndex: 0, //选中的answer
     userInfo: {}, // 个人信息
 
     // 录音相关
@@ -50,7 +50,7 @@ Page({
       txt: "",
       voice: ""
     },
-    autioStatus: 1,
+    autioStatus: 1, // 1 录音未开始，2 正在录音，3 录音结束
     tempFilePath: "",
     audioStr: "",
     isPlay: false,
@@ -63,30 +63,31 @@ Page({
     randomCardIndex: 0, //卡牌池选择序号
     activity: '', // 结束语
     selectImgUrl: '', // 选中的图片地址
-    recodingTime: 300000,
     canClickCard: true,
     curStep: 0,
-    isMine: true
+    isMine: true,
+    timeFlag: 240000, // 用来做计时器（与 MaxRecordingTime 一致）
+    MaxRecordingTime: 240000, // 录音上限时长
   },
   // 放大看卡片
-  showImg (e) {
+  showImg(e) {
     this.setData({
       bigPopStatus: true,
       selectImgUrl: e.currentTarget.dataset.img
     })
   },
-  closeImgPop (e) {
+  closeImgPop(e) {
     this.setData({
       bigPopStatus: false
     })
   },
-  openSharePop () {
+  openSharePop() {
     wx.redirectTo({
       url: '/probe/share/share?id=' + this.data.id,
     })
 
   },
-  closePop () {
+  closePop() {
     let that = this;
     that.setData({
       sharePopStatus: false
@@ -94,7 +95,7 @@ Page({
   },
   // 语音输入相关
   // 检查文档是否合规
-  inspectText (e) {
+  inspectText(e) {
     let list = this.data.list
     let idx = e.target.dataset.idx
     list[idx].contents.txt = e.detail.value
@@ -125,7 +126,7 @@ Page({
     })
   },
   // 切换语音 文字输入
-  changePutType (e) {
+  changePutType(e) {
     let list = this.data.list
     let idx = e.target.dataset.idx
     list[idx].putType = e.currentTarget.dataset.type
@@ -134,7 +135,7 @@ Page({
     })
   },
   // 录音
-  start (e) {
+  start(e) {
     console.log('开始录音开始录音开始录音', e)
     let that = this
     // this.setData({
@@ -149,7 +150,7 @@ Page({
     })
 
     const options = {
-      duration: 300000, //指定录音的时长，单位 ms
+      duration: this.data.MaxRecordingTime, //指定录音的时长，单位 ms
       sampleRate: 16000, //采样率
       numberOfChannels: 2, //录音通道数
       encodeBitRate: 96000, //编码码率
@@ -159,9 +160,9 @@ Page({
     //开始录音
     wx.authorize({
       scope: 'scope.record',
-      success () {
+      success() {
         that.setData({
-          recordIndex:idx
+          recordIndex: idx
         })
         that.recodingCountDown()
         //第一次成功授权后 状态切换为2
@@ -170,16 +171,8 @@ Page({
           list: list
         })
         recorderManager.start(options);
-        recorderManager.onStart(() => {
-          console.log('recorder start')
-
-        });
-        //错误回调
-        recorderManager.onError((res) => {
-          console.log(res);
-        })
       },
-      fail () {
+      fail() {
         console.log("第一次录音授权失败");
         wx.showModal({
           title: '提示',
@@ -214,13 +207,6 @@ Page({
                     })
 
                     recorderManager.start(options);
-                    recorderManager.onStart(() => {
-                      console.log('recorder start')
-                    });
-                    //错误回调
-                    recorderManager.onError((res) => {
-                      console.log(res);
-                    })
                   }
                 },
                 fail: function () {
@@ -241,21 +227,28 @@ Page({
   },
   //录音倒计时
   recodingCountDown: function () {
-    var recodingTime = this.data.recodingTime
+    var timeFlag = this.data.timeFlag
     var that = this;
-    if (recodingTime > 0) {
+    if (timeFlag > 0) {
       recodingTimeout = setTimeout(function () {
         that.setData({
-          recodingTime: recodingTime - 1000
+          timeFlag: timeFlag - 1000
         })
         that.recodingCountDown()
       }, 1000)
-    }else{
-      let endTimespan=this.data.list[this.data.recordIndex].startTime+300000;
+    } else {
+      let endTimespan = this.data.list[this.data.recordIndex].startTime + that.data.MaxRecordingTime;
       this.setData({
-        recodingTime:300000
+        timeFlag: that.data.MaxRecordingTime
       })
-      this.stop({currentTarget:{dataset:{idx:this.data.recordIndex}},timeStamp: endTimespan})
+      this.stop({
+        currentTarget: {
+          dataset: {
+            idx: this.data.recordIndex
+          }
+        },
+        timeStamp: endTimespan
+      })
     }
   },
   //暂停录音
@@ -284,7 +277,7 @@ Page({
   //   })
   // },
   //停止录音
-  stop (e) {
+  stop(e) {
     let list = this.data.list
     let idx = e.currentTarget.dataset.idx
     list[idx].endTime = e.timeStamp
@@ -295,7 +288,7 @@ Page({
     //   endTime: e.timeStamp, // 结束录音时间
     // })
     this.setData({
-      recodingTime: 300000
+      timeFlag: this.data.MaxRecordingTime
     })
     clearTimeout(recodingTimeout)
     let that = this;
@@ -313,9 +306,8 @@ Page({
       //   tempFilePath: res.tempFilePath,
       //   totalTime: Math.ceil((this.data.endTime - this.data.startTime) / 1000)
       // })
-      console.log('停止录音', res.tempFilePath)
       that.setData({
-        recodingTime: 300000
+        timeFlag: this.data.MaxRecordingTime
       })
       clearTimeout(recodingTimeout)
       const {
@@ -324,7 +316,7 @@ Page({
     })
   },
   //播放声音
-  play () {
+  play() {
     innerAudioContext.autoplay = true
     innerAudioContext.src = this.data.tempFilePath
     console.log('this.data.tempFilePath', this.data.tempFilePath)
@@ -337,7 +329,7 @@ Page({
     })
   },
   // 关闭
-  closeAudio (e) {
+  closeAudio(e) {
     let list = this.data.list
     let idx = e.currentTarget.dataset.idx
     list[idx].autioStatus = 1
@@ -349,7 +341,7 @@ Page({
     })
   },
   // 保存语音
-  saveAudio (e) {
+  saveAudio(e) {
     let that = this
     // recorderManager.stop();
     wx.uploadFile({
@@ -360,7 +352,7 @@ Page({
         'content-type': 'multipart/form-data',
         'token': wx.getStorageSync('tokenKey') || ''
       },
-      success (res) {
+      success(res) {
         let list = that.data.list
         let idx = e.currentTarget.dataset.idx
         list[idx].autioStatus = 0
@@ -378,7 +370,7 @@ Page({
     })
   },
   // 播放语音
-  playAudio () {
+  playAudio() {
     if (this.data.isPlay) {
       audioCtx.pause()
       this.setData({
@@ -392,7 +384,7 @@ Page({
     }
   },
   // 切换图片
-  changeImg (e) {
+  changeImg(e) {
     let idxp = e.currentTarget.dataset.idxp
     let idx = e.currentTarget.dataset.idx
     let list = this.data.list
@@ -403,7 +395,7 @@ Page({
     })
   },
   // 切换卡片
-  changeCard (e) {
+  changeCard(e) {
     let list = this.data.list
     if (e.currentTarget.dataset.item == 1) {
       list[e.currentTarget.dataset.idx].selectCard = ''
@@ -423,7 +415,7 @@ Page({
     }
   },
   // 返回我的探索
-  backMine (e) {
+  backMine(e) {
     let list = this.data.list
     list[e.currentTarget.dataset.idx].selectCard = ''
     this.setData({
@@ -432,11 +424,13 @@ Page({
     })
   },
   // 下一步
-  nextStep (e) {
+  nextStep(e) {
     if (this.data.step > 0 && this.data.step < this.data.stepList.length + 2) {
       //step>0<最后一个为循环
       //需要判断是否填写内容
       let list = this.data.list
+      console.log(list[e.currentTarget.dataset.idx].contents.txt, "txt")
+      console.log(list[e.currentTarget.dataset.idx].contents.voice, "voice")
       if (!list[e.currentTarget.dataset.idx].contents.txt && !list[e.currentTarget.dataset.idx].contents.voice) {
         wx.showToast({
           title: '请先录音或输入内容',
@@ -515,7 +509,7 @@ Page({
     }
   },
   // 切换第几部
-  changeStep (e) {
+  changeStep(e) {
     if (e.target.dataset.idx <= this.data.curStep) {
       this.setData({
         step: e.target.dataset.idx,
@@ -524,7 +518,7 @@ Page({
 
   },
   // 获取详情
-  getDetail (id) {
+  getDetail(id) {
     getProExpDetail({
       id: id
     }).then((res) => {
@@ -608,7 +602,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad (options) {
+  onLoad(options) {
     let info = getLoginInfo();
     this.setData({
       userInfo: info
@@ -620,7 +614,7 @@ Page({
       this.getDetail(options.id)
     }
   },
-  lookLog () {
+  lookLog() {
     wx.redirectTo({
       url: '/pages/my/probedetail/probedetail?id=' + this.data.id,
     })
@@ -628,7 +622,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage () {
+  onShareAppMessage() {
     return {
       title: "不睡觉也想探索的话题：" + this.data.probeTitle,
       path: '/probe/detail/detail?id=' + this.data.probeId,
@@ -688,5 +682,5 @@ Page({
         })
       }, 1000)
     }
-  }
+  },
 })

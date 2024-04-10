@@ -144,10 +144,9 @@
                     文字输入
                   </view>
                   <view class="m-luyin" wx:if="{{itemlist.putType == 0}}">
-                    <!-- bindtap="start" -->
-                    <button class="btn-luyin" bindtap="start" data-idx="{{indexlist}}" wx:if="{{itemlist.autioStatus == 1 }}">
+                    <button class="btn-luyin" bindtap="start" data-idx="{{indexlist}}" wx:if="{{itemlist.autioStatus == 1 }}" style="width: 400rpx;">
                       <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
-                      <view class="txt">点击录音</view>
+                      <view class="txt">点击录音（上限四分钟）</view>
                     </button>
                     <view class="btn-luyin" data-idx="{{indexlist}}" bindtap="stop" wx:if="{{itemlist.autioStatus == 2}}">
                       <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
