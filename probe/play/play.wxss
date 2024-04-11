@@ -317,7 +317,7 @@
 .form-z .textarea-box {
 	position: relative;
 	margin-bottom: 24rpx;
-	height: 320rpx;
+	height: 250rpx;
 	background: rgba(29, 31, 48, 0.8);
 	border: 0.5px solid rgba(255, 255, 255, 0.2);
 	backdrop-filter: blur(12.2323px);

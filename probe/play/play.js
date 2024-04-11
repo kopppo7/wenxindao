@@ -44,7 +44,7 @@ Page({
 
     // 录音相关
     bigPopStatus: false, // 放大卡牌
-    putType: 1,
+    putType: 1,   // 0 语音输入，1 文字输入，5 不显示
     content: [],
     contents: {
       txt: "",

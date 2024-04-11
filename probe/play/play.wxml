@@ -127,8 +127,59 @@
               <view class="cardTxt" wx:if="{{itemlist.selectCard}}">
               <text style="display: inline;word-wrap: break-word;">{{itemlist.selectCard.answer}}</text>
               </view>
-              <!-- 文字输入 语音录入 -->
+              <!-- 文字 & 语音输入模块 -->
               <view class="form-z" wx:if="{{isMine}}">
+                <view class="count-down" wx:if="{{recodingTime <= 60000&&recodingTime>0}}">
+                  <view class="num">{{recodingTime/1000}}s</view>
+                  后结束录音
+                </view>
+                <view class="textarea-box" wx:if="{{itemlist.putType != 5}}">
+                  <view class="m-luyin">
+                    <button class="btn-luyin" bindtap="start" data-idx="{{indexlist}}" wx:if="{{itemlist.autioStatus == 1 }}" style="width: 400rpx;">
+                      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
+                      <view class="txt">点击录音（上限四分钟）</view>
+                    </button>
+                    <view class="btn-luyin" data-idx="{{indexlist}}" bindtap="stop" wx:if="{{itemlist.autioStatus == 2}}">
+                      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
+                      <view class="txt">点击暂停</view>
+                    </view>
+                    <view class="close" data-idx="{{indexlist}}" bindtap="closeAudio" wx:if="{{itemlist.autioStatus == 3}}">
+                      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
+                    </view>
+                    <view class="saveAudio" data-idx="{{indexlist}}" bindtap="saveAudio" wx:if="{{itemlist.autioStatus == 3}}">
+                      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-ok.png"></image>
+                    </view>
+                    <view class="btn-luyin" data-idx="{{indexlist}}" bindtap="play" wx:if="{{itemlist.autioStatus == 3}}">
+                      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-luyin.png"></image>
+                      <view class="txt">点击播放</view>
+                    </view>
+                  </view>
+                </view>
+                <view class="btn-audio" data-type="0" data-idx="{{indexlist}}" wx:if="{{itemlist.putType == 5}}" style="margin-bottom: 20rpx;">
+                  <image bindtap="playAudio" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/audio.png"></image>
+                  <text>{{itemlist.totalTime}}'</text>
+                  <image data-idx="{{indexlist}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/audio-del.png" class="close" bindtap="closeAudio"></image>
+                </view>
+              </view>
+              <view class="form-z" wx:if="{{isMine}}">
+                <view class="count-down" wx:if="{{recodingTime <= 60000&&recodingTime>0}}">
+                  <view class="num">{{recodingTime/1000}}s</view>
+                  后结束录音
+                </view>
+                <view class="textarea-box">
+                  <textarea data-idx="{{indexlist}}" bindinput="inspectText" placeholder="在这里输入探索答案（上限500字）" maxlength="500" placeholder-style="color: #B6B2CF;" value="{{itemlist.contents.txt}}" />
+                  <!-- <view class="btn-yuyin" bindtap="changePutType" data-type="0" data-idx="{{indexlist}}" wx:if="{{itemlist.putType == 1}}">
+                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>
+                    语音输入
+                  </view>
+                  <view class="btn-yuyin" bindtap="changePutType" data-type="1" data-idx="{{indexlist}}" wx:if="{{itemlist.putType == 0}}">
+                    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-yuyin.png"></image>
+                    文字输入
+                  </view> -->
+                </view>
+              </view>
+              <!-- 文字输入 语音录入 -->
+              <!-- <view class="form-z" wx:if="{{isMine}}">
                 <view class="count-down" wx:if="{{recodingTime <= 60000&&recodingTime>0}}">
                   <view class="num">{{recodingTime/1000}}s</view>
                   后结束录音
@@ -169,7 +220,7 @@
                   <text>{{itemlist.totalTime}}'</text>
                   <image data-idx="{{indexlist}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/audio-del.png" class="close" bindtap="closeAudio"></image>
                 </view>
-              </view>
+              </view> -->
             </view>
           </view>
 
