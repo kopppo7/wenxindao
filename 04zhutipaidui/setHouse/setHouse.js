@@ -150,6 +150,7 @@ Page({
           })
           return
         } else if (res.data.ret === 200) {
+          wx.setStorageSync('roomData', res.data.data)
           let endTimespan = new Date().valueOf();
           if (endTimespan - startTimespan > 10000) {
             wx.hideLoading({

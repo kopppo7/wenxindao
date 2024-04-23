@@ -216,6 +216,7 @@ Page({
 
         var token = wx.getStorageSync('loginInfo').yunToken;
         var account = wx.getStorageSync('loginInfo').yunId;
+        
         var that = this;
         nim = SDK.getInstance({
             debug: false, // 是否开启日志，将其打印到console。集成开发阶段建议打开。
@@ -1541,7 +1542,6 @@ Page({
             askId: this.data.askId,
             payId: this.data.themeDetail.baoPayId
         }
-
         createBaoRoom(params).then(res => {
             wx.setStorageSync('roomData', res.data.data)
             that.setData({
@@ -3078,6 +3078,7 @@ Page({
                 //     timePopStatus:false
                 // })
                 //真实环境，考虑删除initRoom？
+                console.log("开始进入初始化房间 initRoom")
                 this.initRoom()
                 console.log(this.data.yunMsgList, 'this.data.yunMsgList');
                 //处理存储的消息
