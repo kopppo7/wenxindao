@@ -217,7 +217,7 @@ Page({
             page: 1,
             pageSize: 20,
             id: this.data.probeId,
-            category: 0, // 类型(0:生命探索,1:主题派对)
+            category: 0, // 类型(0:生命探索,1:心灵对话)
         }).then((res) => {
             if (res.data.ret === 200){
                 this.setData({

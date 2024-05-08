@@ -28,7 +28,7 @@ Page({
                 type: '2',
             },
             {
-                title: '主题派对',
+                title: '心灵对话',
                 num: '',
                 type: '1'
             }

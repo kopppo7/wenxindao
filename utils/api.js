@@ -72,7 +72,7 @@ export const findByOrderList = function (params) {
 export const findMyTrends = function (params) {
   return http.post(handleURL('/my/mytrends'),params);
 }
-//查询我的动态 每日调频 生命探索 主题派对
+//查询我的动态 每日调频 生命探索 心灵对话
 export const findMyUser = function (params) {
   return http.post(handleURL('/my/findByLogCountForUser'),params);
 }
@@ -104,15 +104,15 @@ export const addFeedback = function (data){
 export const getHelpOne = function (id) {
   return http.get(handleURL('/help/getHelpOne?id='+id));
 }
-// 生命探索&主题派对
+// 生命探索&心灵对话
 export const getCateList = function (category) {
   return http.get(handleURL('/category/list?category='+category));
 }
-// 生命探索&主题派对 列表数据
+// 生命探索&心灵对话 列表数据
 export const getCateDataList = function (data) {
   return http.post(handleURL('/probe/probeList'),data);
 }
-// 生命探索&主题派对 支付
+// 生命探索&心灵对话 支付
 export const getPayProbe = function (data) {
   return http.post(config.getOrder+'/payProbe',data);
 }
@@ -180,11 +180,11 @@ export const receiveDetail = function (id,askId) {
 export const dissolveGroup = function (id) {
   return http.get(handleURL('/room/dissolveGroup?id=213'));
 }
-// 查询主题派对游玩详情
+// 查询心灵对话游玩详情
 export const getMyRoomUserInfo = function (roomUserId) {
   return http.get(handleURL('/my/getMyRoomUserInfo?roomUserId='+roomUserId));
 }
-// 查询主题派对游玩详情
+// 查询心灵对话游玩详情
 export const getProtocolOneForType = function (type) {
   return http.get(handleAdminURL('/protocol/protocolOneForType?type='+type));
 }

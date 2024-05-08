@@ -1,6 +1,6 @@
 <!--pages/my/fuWu/index.wxml-->
 <view class="fuWu">
-  <view class="tit">主题派对知情书</view>
+  <view class="tit">心灵对话知情书</view>
   <view class="con">
     <view class="p">欢迎来到月食君的聊愈空间</view>
     <view class="p">为了保障你的权益，请在开启对话之前 阅读并同意使用须知</view>

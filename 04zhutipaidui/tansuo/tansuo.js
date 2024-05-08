@@ -2866,7 +2866,6 @@ Page({
                     }
 
                 } else if (type === 4) {
-                  console.log(1)
                     // 结尾开始
                     vm.setData({
                         sec: socketData.downTime,

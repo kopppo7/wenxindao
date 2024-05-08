@@ -6,16 +6,16 @@ function handleURL (url) {
 }
 
 
-// (生命探索&主题派对）分类
+// (生命探索&心灵对话）分类
 export const categoryList = function (data) {
     return http.get(handleURL('/category/list'), data);
 };
-// 查询主题派对列表
+// 查询心灵对话列表
 export const getAskPartyList = function (data) {
     return http.post(handleURL('/askParty/getAskPartyList'), data);
 };
 
-// 查看主题派对详情
+// 查看心灵对话详情
 export const findByAskPartyOne = function (data) {
     return http.get(handleURL('/askParty/findByAskPartyOne'), data);
 };
@@ -78,11 +78,11 @@ export const inviteFriendsRoom = function (params) {
 export const kickingPlayer = function (params) {
     return http.post(handleURL('/room/kickingPlayer'), params);
 }
-// 主题派对 支付
+// 心灵对话 支付
 export const getPayParty = function (data) {
     return http.post(config.getOrder+'/payParty',data);
 }
-// 主题派对 匹配游戏
+// 心灵对话 匹配游戏
 export const roomMatchingPlay = function (id) {
     return http.get(handleURL('/room/matchingPlay?id='+id));
 }

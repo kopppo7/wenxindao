@@ -2,6 +2,6 @@
   "usingComponents": {
     "backRoom": "../../components/fanHuiRoom/index"
   },
-  "navigationBarTitleText": "主题派对",
+  "navigationBarTitleText": "心灵对话",
   "navigationStyle": "default"
 }

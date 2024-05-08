@@ -55,7 +55,7 @@ Page({
       page: 0,
       pageSize: 0,
       id: this.data.id,
-      category: 0, // 类型(0:生命探索,1:主题派对)
+      category: 0, // 类型(0:生命探索,1:心灵对话)
     }).then((res) => {
       if(res.data.ret === 200) {
         this.setData({
@@ -138,7 +138,7 @@ Page({
       score: this.data.score,
       evaluate: this.data.evaluate,
       objectId: this.data.id,
-      category: 0, // 类型(0:生命探索,1:主题派对)
+      category: 0, // 类型(0:生命探索,1:心灵对话)
     }).then((res) => {
       wx.showToast({
         title: '提交成功',
@@ -312,7 +312,7 @@ Page({
       page: this.data.page,
       pageSize: 20,
       id: this.data.id,
-      category: 0, // 类型(0:生命探索,1:主题派对)
+      category: 0, // 类型(0:生命探索,1:心灵对话)
     }).then((res) => {
       // this.setData({
       //   evaluateList: res.data.data,

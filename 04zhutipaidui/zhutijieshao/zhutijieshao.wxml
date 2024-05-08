@@ -102,7 +102,7 @@
 <block wx:if="{{gwPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win">
-        <view class="pop-tit">给本次的主题派对打分</view>
+        <view class="pop-tit">给本次的心灵对话打分</view>
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <rating showRating  rating="{{rating}}" bind:click="change"></rating>
         <form bindsubmit="bindFormSubmit">

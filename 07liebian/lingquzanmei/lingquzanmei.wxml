@@ -15,7 +15,7 @@
          <view class="item item1">
              <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/home-avatar1.png"></image>
              <view class="txt">
-                 <view class="title title1">#主题派对#</view>
+                 <view class="title title1">#心灵对话#</view>
                  <view class="desc">在遥远的时空之外，有一座神奇的岛屿-问心岛。据说，每个人的灵魂，都会在这里被看见。</view>
              </view>
          </view>

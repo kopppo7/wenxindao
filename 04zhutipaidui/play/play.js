@@ -9,7 +9,7 @@ Page({
    */
   data: {
     loadOptions: {
-      askId: '', //主题派对ID
+      askId: '', //心灵对话ID
       roomId: '', //房间ID
     }, //进入房间页面参数
     IMTeemInfo: {}, //IM当前游玩的群组信息

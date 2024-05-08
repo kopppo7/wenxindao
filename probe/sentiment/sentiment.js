@@ -40,7 +40,7 @@ Page({
       page: this.data.page,
       pageSize: 20,
       id: this.data.id,
-      category: 0, // 类型(0:生命探索,1:主题派对)
+      category: 0, // 类型(0:生命探索,1:心灵对话)
     }).then((res) => {
       if (this.data.page == 1) {
         this.data.evaluateList = res.data.data.list;
@@ -114,7 +114,7 @@ Page({
       score: this.data.score,
       evaluate: this.data.evaluate,
       objectId: this.data.id,
-      category: 0, // 类型(0:生命探索,1:主题派对)
+      category: 0, // 类型(0:生命探索,1:心灵对话)
     }
 
     if(this.data.clickSentimentType === 'rewrite') {

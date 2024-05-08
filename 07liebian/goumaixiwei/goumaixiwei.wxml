@@ -89,7 +89,7 @@
     <view class="pop-win2">
         <view class="pop-tit">购买须知</view>
         <view class="desc">
-            主题派对购买后仅限单次使用
+            心灵对话购买后仅限单次使用
         </view>
         <view class="btns">
             <view class="btn ok" bindtap="pay">知道了</view>

@@ -6,16 +6,16 @@ function handleURL (url) {
 }
 
 
-// (生命探索&主题派对）分类
+// (生命探索&心灵对话）分类
 export const categoryList = function (data) {
     return http.get(handleURL('/category/list'), data);
 };
-// 查询主题派对列表
+// 查询心灵对话列表
 export const getAskPartyList = function (data) {
     return http.post(handleURL('/askParty/getAskPartyList'), data);
 };
 
-// 查看主题派对详情
+// 查看心灵对话详情
 export const findByAskPartyOne = function (data) {
     return http.get(handleURL('/askParty/findByAskPartyOne'), data);
 };
@@ -78,37 +78,37 @@ export const inviteFriendsRoom = function (params) {
 export const kickingPlayer = function (params) {
     return http.post(handleURL('/room/kickingPlayer'), params);
 }
-// 主题派对 支付
+// 心灵对话 支付
 export const getPayParty = function (data) {
   return http.post(config.getOrder+'/payParty',data);
 }
-// 主题派对 匹配游戏
+// 心灵对话 匹配游戏
 export const roomMatchingPlay = function (id) {
   return http.get(handleURL('/room/matchingPlay?id='+id));
 }
 
-// 主题派对 查询房间详情
+// 心灵对话 查询房间详情
 export const getRoomDetails = function (data) {
     return http.post(handleURL('/room/getRoomDetails'), data);
 }
-// 主题派对 查询当前轮次卡牌
+// 心灵对话 查询当前轮次卡牌
 export const findByCard = function (data) {
     return http.get(handleURL('/room/findByCard'), data);
 }
-// 主题派对 新增当前人当轮卡牌
+// 心灵对话 新增当前人当轮卡牌
 export const addCardForRoom = function (data) {
     return http.post(handleURL('/room/addCardForRoom'), data);
 }
 // /room/addRoomLog
-// 主题派对 保存房间游玩记录
+// 心灵对话 保存房间游玩记录
 export const addRoomLog = function (data) {
     return http.post(handleURL('/room/addRoomLog'), data);
 }
-// 主题派对 判断房间状态
+// 心灵对话 判断房间状态
 export const checkRoomStatus = function (roomId) {
     return http.post(handleURL('/room/checkRoom'), roomId);
 }
-// 主题派对 判断房间状态
+// 心灵对话 判断房间状态
 export const getIfFreeMy = function (roomId) {
     return http.get(handleURL('/getIfFreeMy'), roomId);
 }

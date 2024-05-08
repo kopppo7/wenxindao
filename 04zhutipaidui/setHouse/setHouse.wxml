@@ -2,7 +2,7 @@
 <view class="setHouse">
     <view class="top">
         <image class="pic" src="{{detailObj.imgUrl}}"></image>
-        <view class="txt">您即将进入主题派对语音房，请确保您所处环境可以语音交流，可以准备耳机收听声音。</view>
+        <view class="txt">您即将进入心灵对话语音房，请确保您所处环境可以语音交流，可以准备耳机收听声音。</view>
     </view>
     <view class="bot">
         <form catchsubmit="formSubmit">
