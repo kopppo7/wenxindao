@@ -83,8 +83,8 @@ export const getPayParty = function (data) {
   return http.post(config.getOrder+'/payParty',data);
 }
 // 心灵对话 匹配游戏
-export const roomMatchingPlay = function (id) {
-  return http.get(handleURL('/room/matchingPlay?id='+id));
+export const roomMatchingPlay = function (id, inFree) {
+  return http.get(handleURL('/room/matchingPlay?id='+id+'&inFree='+inFree));
 }
 
 // 心灵对话 查询房间详情
@@ -111,4 +111,9 @@ export const checkRoomStatus = function (roomId) {
 // 心灵对话 判断房间状态
 export const getIfFreeMy = function (roomId) {
     return http.get(handleURL('/getIfFreeMy'), roomId);
+}
+
+// 心灵对话 判断房间状态
+export const checkRoomIsFree = function (params) {
+  return http.get(handleURL('/room/freeNum'), params);
 }

@@ -1,30 +1,30 @@
 <!--03shenmingtansuo/zhutijieshao/zhutijieshao.wxml-->
 <view class="wp">
-    <view class="intro-row1">
-        <image class="pic" src="{{detailObj.imgUrl}}"></image>
-        <view class="txt">
-            <view class="s1">{{detailObj.title}}</view>
-            <rich-text nodes="{{detailObj.detailsText}}" type="text" class="s2"></rich-text>
-            <view class="s3">预计{{detailObj.meanTime}}分钟</view>
-            <view class="s4">
-                <text wx:for="{{detailObj.tips}}" wx:for-item="item">{{item}}</text>
-            </view>
-        </view>
+  <view class="intro-row1">
+    <image class="pic" src="{{detailObj.imgUrl}}"></image>
+    <view class="txt">
+      <view class="s1">{{detailObj.title}}</view>
+      <rich-text nodes="{{detailObj.detailsText}}" type="text" class="s2"></rich-text>
+      <view class="s3">预计{{detailObj.meanTime}}分钟</view>
+      <view class="s4">
+        <text wx:for="{{detailObj.tips}}" wx:for-item="item">{{item}}</text>
+      </view>
     </view>
-    <!-- <view class="intro-row2">
+  </view>
+  <!-- <view class="intro-row2">
         <text>语音参与须知</text>
     </view> -->
-    <view class="intro-row3">
-        <view class="z-tit1">主题简介</view>
-        <view class="g-box">
-            <rich-text nodes="{{detailObj.detailsText}}" type="text" class="desc"></rich-text>
-        </view>
-        <view class="z-tit1">活动流程</view>
-        <view class="g-box">
-            <view class="z-tit2">语音参与者</view>
-            <rich-text nodes="{{detailObj.flowText}}" type="text" class="desc"></rich-text>
-        </view>
-        <!-- <view class="g-box">
+  <view class="intro-row3">
+    <view class="z-tit1">主题简介</view>
+    <view class="g-box">
+      <rich-text nodes="{{detailObj.detailsText}}" type="text" class="desc"></rich-text>
+    </view>
+    <view class="z-tit1">活动流程</view>
+    <view class="g-box">
+      <view class="z-tit2">语音参与者</view>
+      <rich-text nodes="{{detailObj.flowText}}" type="text" class="desc"></rich-text>
+    </view>
+    <!-- <view class="g-box">
             <view class="z-tit2">茶话会环节</view>
             <view class="z-list2">
                 <view class="item">
@@ -53,28 +53,28 @@
                 </view>
             </view>
         </view> -->
-    </view>
-    <view class="intro-row4" wx:if="{{evalList.length > 0}}">
-        <view class="z-tit1">主题感悟</view>
-        <view class="z-list3">
-            <view class="item g-box" wx:for="{{evalList}}" wx:for-item="item" wx:for-index="index">
-                <view class="tit-box">
-                    <image class="avatar" src="{{item.userHeadImg}}"></image>
-                    <view class="name-time">
-                        <view class="name">{{item.wechatName}}</view>
-                        <view class="time">{{item.addTime}}</view>
-                    </view>
-                </view>
-                <view class="desc">
-                    {{item.evaluate}}
-                    <!-- <text>更多</text> -->
-                </view>
-            </view>
+  </view>
+  <view class="intro-row4" wx:if="{{evalList.length > 0}}">
+    <view class="z-tit1">主题感悟</view>
+    <view class="z-list3">
+      <view class="item g-box" wx:for="{{evalList}}" wx:for-item="item" wx:for-index="index">
+        <view class="tit-box">
+          <image class="avatar" src="{{item.userHeadImg}}"></image>
+          <view class="name-time">
+            <view class="name">{{item.wechatName}}</view>
+            <view class="time">{{item.addTime}}</view>
+          </view>
         </view>
+        <view class="desc">
+          {{item.evaluate}}
+          <!-- <text>更多</text> -->
+        </view>
+      </view>
     </view>
+  </view>
 </view>
 <view class="bottom-box">
-    <!-- <view class="box">
+  <!-- <view class="box">
         <view class="bottom-l">
             <view class="money">¥<text>20</text></view>
             <view class="year">/使用期1年</view>
@@ -82,47 +82,55 @@
         </view>
         <view class="bottom-r bottom-r1" bindtap="openBuyPop">购买</view>
     </view> -->
-    <view class="btn-box" wx:if="{{!roomData}}">
-        <view class="btn-box-buy" wx:if="{{detailObj.isFree==0&&detailObj.isSeat==0&&detailObj.isBao==0}}" bindtap="openBuy">
-          立即购买
-        </view>
-        <block wx:else>
-          <view class="bottom-r bottom-r1" bindtap="openBuy" data-type="pipei">快速匹配</view>
-          <view class="bottom-r bottom-r1" bindtap="openBuy" data-type="haoyou">好友结伴</view>
+  <view wx:if="{{!roomData}}" class="btn-box">
+    <block wx:if="{{!isFree}}">
+      <view class="btn-box-buy" wx:if="{{detailObj.isFree==0&&detailObj.isSeat==0&&detailObj.isBao==0}}" bindtap="openBuy">
+        立即购买
+      </view>
+      <block wx:else>
+        <view class="bottom-r bottom-r1" bindtap="openBuy" data-type="pipei">快速匹配</view>
+        <view class="bottom-r bottom-r1" bindtap="openBuy" data-type="haoyou">好友结伴</view>
         <view class="bottom-r bottom-r2" bindtap="openGwPop">写感悟</view>
-        </block>
-    </view>
-    <view class="btn-box" wx:else>
-        <view class="bottom-r full" bindtap="toRoom" data-type="pipei">返回房间</view>
-    </view>
+      </block>
+    </block>
+    <block wx:else>
+      <view class="bottom-r bottom-r1" bindtap="openBuy" data-type="pipei">快速匹配</view>
+      <view class="bottom-r bottom-r1" bindtap="openBuy" data-type="haoyou">好友结伴</view>
+      <view class="bottom-r bottom-r2" bindtap="openGwPop">写感悟</view>
+    </block>
+
+  </view>
+  <view class="btn-box" wx:else>
+    <view class="bottom-r full" bindtap="toRoom" data-type="pipei">返回房间</view>
+  </view>
 </view>
 
 
 <!--写感悟弹窗-->
 <block wx:if="{{gwPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win">
-        <view class="pop-tit">给本次的心灵对话打分</view>
-        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
-        <rating showRating  rating="{{rating}}" bind:click="change"></rating>
-        <form bindsubmit="bindFormSubmit">
-            <textarea class="content" placeholder="您认为本次的派对设计如何？您收获了什么？您的感受如何？可以记录下来..." name="textarea" maxlength="500" bindinput="inputArea" />
-            <button form-type="submit" class="btn-buy"> 提交 </button>
-        </form>
-        
-    </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win">
+    <view class="pop-tit">给本次的心灵对话打分</view>
+    <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
+    <rating showRating rating="{{rating}}" bind:click="change"></rating>
+    <form bindsubmit="bindFormSubmit">
+      <textarea class="content" placeholder="您认为本次的派对设计如何？您收获了什么？您的感受如何？可以记录下来..." name="textarea" maxlength="500" bindinput="inputArea" />
+      <button form-type="submit" class="btn-buy"> 提交 </button>
+    </form>
+
+  </view>
 </block>
 
 <block wx:if="{{buyTips}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">提示</view>
-        <view class="desc">
-            {{tips}}
-        </view>
-        <view class="btns">
-            <view style="background-color: rgba(182, 178, 207, 0.18);border: none;" class="btn" bindtap="closePop">取消</view>
-            <view class="btn ok" bindtap="toBuy">确认</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">提示</view>
+    <view class="desc">
+      {{tips}}
     </view>
+    <view class="btns">
+      <view style="background-color: rgba(182, 178, 207, 0.18);border: none;" class="btn" bindtap="closePop">取消</view>
+      <view class="btn ok" bindtap="toBuy">确认</view>
+    </view>
+  </view>
 </block>

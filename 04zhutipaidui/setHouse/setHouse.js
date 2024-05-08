@@ -132,7 +132,9 @@ Page({
       isMatch: options.isMatch,
       isfriend: options.isfriend,
       isJieBan: options.isJieBan,
+      inFree: JSON.parse(options.inFree) === true ? 'Y' : 'N'
     })
+    console.log(this.data.inFree);
     this.getRoomDet()
   },
   matchGame () {
@@ -142,7 +144,8 @@ Page({
     let startTimespan = new Date().valueOf();
     if (this.data.isJieBan) {
       createBaoRoom({
-        askId: this.data.themeId
+        askId: this.data.themeId,
+        inFree: this.data.inFree
       }).then(res => {
         if (res.data.ret === 201) {
           wx.navigateTo({
@@ -175,7 +178,7 @@ Page({
 
       })
     } else {
-      roomMatchingPlay(this.data.themeId).then(res => {
+      roomMatchingPlay(this.data.themeId, this.data.inFree).then(res => {
         let endTimespan = new Date().valueOf();
         if (endTimespan - startTimespan > 10000) {
           wx.hideLoading({
