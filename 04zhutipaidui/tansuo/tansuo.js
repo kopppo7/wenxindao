@@ -1793,7 +1793,7 @@ Page({
         let obj = {
             type: 4,
             playNum: this.data.step,
-            downTime: 1200
+            downTime: that.data.themeDetail.coChatTime
         }
         setTimeout(() => {
             that.sendSocketMsg(obj)
@@ -2866,6 +2866,7 @@ Page({
                     }
 
                 } else if (type === 4) {
+                  console.log(1)
                     // 结尾开始
                     vm.setData({
                         sec: socketData.downTime,
