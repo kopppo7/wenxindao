@@ -2757,6 +2757,7 @@ Page({
             let nextPlayNum = ''; //下一轮是哪一轮
             let type = Number(socketData.type) //是轮到发言还是
             //成员列表，去掉空的
+            console.log('onMessage', type);
             var playerList = []
             that.data.playerList.map(item => {
                 if (item && item.account) {
@@ -2875,7 +2876,7 @@ Page({
                     })
                 }
             }
-            console.log(socketData, 'socketData');
+            // console.log(socketData, 'socketData');
             if (socketData.readyPerson && socketData.playNum) {
                 that.setData({
                     step: Number(socketData.playNum),
@@ -3015,7 +3016,9 @@ Page({
                 audioId: wx.getStorageSync('roomData').audioGroup,
                 isOnloadSocket: true
             })
-            this.webSocketInit()
+            setTimeout(() => {
+              this.webSocketInit()
+            }, 1000);
             console.log(partyData, 'partyData');
         }
     },

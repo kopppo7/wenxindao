@@ -143,6 +143,10 @@
                         {{waitTime}}s
                     </view>
                 </view>
+                <!--闭麦时提示信息-->
+                <view class="count-down" wx:if="{{false}}">
+                  如需发言请手动开麦
+                </view>
                 <scroll-view
                     class="bot-content"
                     scroll-into-view="{{scrollTo}}"
@@ -250,7 +254,7 @@
 </view>
 
 
-<view wx:for="{{remoteStreams}}" wx:if="{{remoteStreams.length > 0}}">
+<view wx:for="{{remoteStreams}}" wx:key="url" wx:if="{{remoteStreams.length > 0}}">
     <live-player 
     style="display:inline-block;width:0;height:0;" 
     data-user="{{uid}}"
