@@ -1467,3 +1467,6 @@ image {
 	color: #ffb58c;
 	-ms-transform:translateX(-50%);-moz-transform:translateX(-50%);-webkit-transform:translateX(-50%);-o-transform:translateX(-50%);transform:translateX(-50%);
 }
+.want_to_speck {
+  width: 271rpx;
+}

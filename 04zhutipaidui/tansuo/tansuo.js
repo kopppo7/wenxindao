@@ -68,6 +68,7 @@ Page({
         tousuResaon: '',//投诉理由,
         show_speak_count_down: false,//显示发言倒计时
         show_think_count_down: false,//显示思考倒计时
+        show_want_to_speck: false,//显示如需发言
         endId: '',
         scrollTo: 0,
         bottomHeight: 10,
@@ -458,43 +459,42 @@ Page({
             }
         })
         console.log('开始发布视频流', that.data.uid, personInd, playerList, that.data.playerList);
-        if (playerList[personInd].account !== that.data.account) {
-            // 如果当前发言的不是自己的话点击无效
-            return
-        } else {
-            //发布本地媒体给房间对端
-            if (that.data.voiceStatus === 0) {
-                that.setData({
-                    voiceStatus: 1
-                })
-                YunXinNertc
-                    .publish('audio')
-                    .then((url) => {
-                        console.log('本地 publish 成功', url);
-                        that.setData({
-                            audioPushUrl: url,
-                            pushIsMuted: true
-                        })
+        // 只有在别人或自己发言时才能开麦
+        if (that.data.show_want_to_speck || that.data.show_speak_count_down) {
+          //发布本地媒体给房间对端
+          if (that.data.voiceStatus === 0) {
+            that.setData({
+                voiceStatus: 1
+            })
+            YunXinNertc
+                .publish('audio')
+                .then((url) => {
+                    console.log('本地 publish 成功', url);
+                    that.setData({
+                        audioPushUrl: url,
+                        pushIsMuted: true
                     })
-                    .catch((err) => {
-                        console.error('本地 publish 失败: ', err);
-                    });
-            }
-            else {
-                that.setData({
-                    voiceStatus: 0,
-                    audioPushUrl: '',
-                    pushIsMuted: false
                 })
-                YunXinNertc
-                    .unpublish('audio')
-                    .then((url) => {
-                        console.log('关闭mic成功');
-                    })
-                    .catch((err) => {
-                        console.error('关闭mic成功失败: ', err);
-                    });
-            }
+                .catch((err) => {
+                    console.error('本地 publish 失败: ', err);
+                });
+        }
+        else {
+          console.log(' publishAudio else ');
+            that.setData({
+                voiceStatus: 0,
+                audioPushUrl: '',
+                pushIsMuted: false
+            })
+            YunXinNertc
+                .unpublish('audio')
+                .then((url) => {
+                    console.log('关闭mic成功');
+                })
+                .catch((err) => {
+                    console.error('关闭mic成功失败: ', err);
+                });
+        }
         }
     },
     // 结束倒计时的时候都可以发言
@@ -1908,8 +1908,10 @@ Page({
     nextPerson () {
         let that = this
         that.setData({
-            show_speak_count_down: false
+            show_speak_count_down: false,
+            show_want_to_speck: true
         })
+        console.log('nextPerson speck', this.data.show_want_to_speck);
         //成员列表，去掉空的
         var playerList = []
         that.data.playerList.map(item => {
@@ -2007,7 +2009,8 @@ Page({
         })
         this.setData({
             show_speak_count_down: false,
-            jumpPopStatus4: false
+            jumpPopStatus4: false,
+            show_want_to_speck: false
         })
         if (this.data.personInd < (playerList.length - 1)) {
             //发言人index 小于 成员数量，切换下个人发言
@@ -2757,7 +2760,6 @@ Page({
             let nextPlayNum = ''; //下一轮是哪一轮
             let type = Number(socketData.type) //是轮到发言还是
             //成员列表，去掉空的
-            console.log('onMessage', type);
             var playerList = []
             that.data.playerList.map(item => {
                 if (item && item.account) {
@@ -2827,11 +2829,12 @@ Page({
                         waitTime: socketData.downTime
                     })
                 } else if (type === 2) {
-                    // 思考倒计时进心中
+                    // 思考倒计时进行中
                     vm.setData({
                         waitTime: socketData.downTime,
                         show_think_count_down: true,
                         show_speak_count_down: false,
+                        show_want_to_speck: false
                     })
                 } else if (type === 3) {
                     // 发言倒计时进行中
@@ -2848,7 +2851,8 @@ Page({
                             waitTime: socketData.downTime,
                             show_think_count_down: false,
                             isJump: false,
-                            voiceStatus: 1
+                            voiceStatus: 1,
+                            show_want_to_speck: false
                         })
                         // if (totalTime - socketData.downTime > 30 && that.data.show_speak_count_down && !that.data.isFaYan) {
                         //     that.setData({
@@ -2862,7 +2866,9 @@ Page({
                             waitTime: socketData.downTime,
                             show_think_count_down: false,
                             show_speak_count_down: false,
-                            voiceStatus: 0
+                            // 不是当前人发言也可以开语音，所以注释
+                            // voiceStatus: 0,
+                            show_want_to_speck: true
                         })
                     }
 
@@ -2872,7 +2878,8 @@ Page({
                         sec: socketData.downTime,
                         showFupan: true,
                         show_think_count_down: false,
-                        show_speak_count_down: false
+                        show_speak_count_down: false,
+                        show_want_to_speck: false
                     })
                 }
             }

@@ -144,8 +144,10 @@
                     </view>
                 </view>
                 <!--闭麦时提示信息-->
-                <view class="count-down" wx:if="{{false}}">
-                  如需发言请手动开麦
+                <view class="count-down want_to_speck" wx:if="{{show_want_to_speck}}">
+                  <view>
+                    如需发言请手动开麦
+                  </view>
                 </view>
                 <scroll-view
                     class="bot-content"
