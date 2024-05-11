@@ -302,8 +302,10 @@ Page({
         })
         return false
       }
-        // 查询是否超出免费次数
+      if(this.data.product.isPay === 1) {
+        // 如果收费项目则查询是否超出免费次数
         this.getIsFree()
+      }
     })
   },
   // 评价

@@ -237,3 +237,90 @@ page{
 .bottom-box .btn-box .bottom-r.full{
 	width: 100%;
 }
+
+
+.share-log{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 16rpx;
+  background-color: rgba(182, 178, 207, 0.12);
+  height: 160rpx;
+}
+.share-log>view:first-child{
+  padding: 24rpx 0rpx 24rpx 24rpx;
+  flex: 1;
+  border-radius: 10rpx;
+}
+/* .share-log>view{
+  width: 50%;
+  float: left;
+} */
+.share-log .btitle{
+  color: #FFB58C;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+}
+.share-log .txt{
+  font-size: 24rpx;
+}
+.share-log .invi-person{
+  text-align: right;
+  margin-bottom: 10rpx;
+}
+.share-log .hasNum{
+  padding: 24rpx 24rpx 24rpx 0rpx;
+  height: 100%;
+  display: flex;
+  justify-content:center;
+  align-items:flex-start;
+  flex-direction: column;
+}
+.share-log .share-btn{
+  padding: 24rpx 24rpx 24rpx 0rpx;
+  height: 100%;
+  display: flex;
+  justify-content:center;
+  align-items:flex-start;
+  flex-direction: column;
+}
+.share-log .share-btn{
+  padding: 24rpx 24rpx 24rpx 0rpx;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.share-log .share-btn button{
+  border:none;
+  background-color: #FFB58C;
+  color: #333;
+  padding: 12rpx 40rpx;
+  border-radius: 40rpx;
+  font-weight: 800;
+}
+.share-log .share-sucess{
+  padding: 0rpx 40rpx;
+  height: 100%;
+  border-top-left-radius: 100rpx;
+  border-bottom-left-radius: 100rpx;
+  border-top-right-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+  background-color: rgba(113, 215, 160, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.share-log .share-sucess>view{
+  background-color: rgba(113, 215, 160,0.4);
+  border-radius: 50rpx;
+  width: 100rpx !important;
+  height: 100rpx !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.share-log .share-sucess image{
+  width: 50rpx;
+  height: 50rpx;
+}

@@ -7,6 +7,7 @@ import {
   sendCodeForUpdate,userLoginOut,updatePhone,updateUserMsg,getUserMsg
 } from "../../../utils/api";
 import { login } from '../../../utils/common'
+import config from "../../utils/config";
 Page({
 
     /**
@@ -228,7 +229,7 @@ Page({
     chooseAvatar (e) {
       var that = this;
       wx.uploadFile({
-        url: 'https://wenxin.wxdao.net/user/oss/upload/uploadFile',
+        url: config.getDomain + '/oss/upload/uploadFile',
         filePath: e.detail.avatarUrl,
         name: 'file',
         header: {

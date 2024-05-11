@@ -14,6 +14,18 @@
   <!-- <view class="intro-row2">
         <text>语音参与须知</text>
     </view> -->
+    
+  <view class="share-log" wx:if="{{isFree}}">
+    <view>
+      <view class="btitle">解锁成功！</view>
+      <view class="txt">新人限免中</view>
+    </view>
+    <view class="share-sucess">
+      <view>
+        <image src="/static/dui.png"></image>
+      </view>
+    </view>
+  </view>
   <view class="intro-row3">
     <view class="z-tit1">主题简介</view>
     <view class="g-box">
