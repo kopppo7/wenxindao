@@ -21,6 +21,7 @@ Page({
     evaluate: '', // 提交的评价
     title: '给本次的生命探索引导打分',
     clickSentimentType: 'rewrite', // 来自哪个按钮
+    currentContent: null, // 当前评价内容
   },
   /**
    * 生命周期函数--监听页面加载
@@ -79,6 +80,7 @@ Page({
     this.setData({
       gwPopStatus: true,
       clickSentimentType: e.target.dataset.type,
+      currentContent: e.target.dataset.evaluate ? e.target.dataset.evaluate : null,
       itemId: e.target.dataset.id
     })
   },

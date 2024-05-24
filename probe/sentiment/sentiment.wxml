@@ -13,7 +13,7 @@
           </view>
           <view class="right-box">
             <view class="edit-img">
-              <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-edit.png" bindtap="openPop" data-type="edit" data-id="{{item.id}}"></image>
+              <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-edit.png" bindtap="openPop" data-type="edit" data-id="{{item.id}}" data-evaluate="{{item.evaluate}}"></image>
             </view>
             <view class="winnow-img" wx:if="item.isCarefully">
               <image class="icon" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/sentiment-winnow.png"></image>
@@ -37,7 +37,7 @@
     <view class="pop-tit">{{title}}</view>
     <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
     <rating showRating rating="{{score}}" bind:click="change"></rating>
-    <textarea bindinput="getValue" maxlength="150" class="content" placeholder="您认为本次的引导设计如何？您收获了什么？您的感受如何？可以记录下来..." />
+    <textarea bindinput="getValue" maxlength="150" class="content" placeholder="您认为本次的引导设计如何？您收获了什么？您的感受如何？可以记录下来..." value="{{currentContent}}" />
     <view class="btn-buy" bindtap="addPercep">提交</view>
   </view>
 </block>

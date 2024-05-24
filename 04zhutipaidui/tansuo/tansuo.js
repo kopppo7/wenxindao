@@ -214,7 +214,6 @@ Page({
     //-------------------------------------云信-----------------------------------------------------------
     //初始化房间
     initRoom () {
-
         var token = wx.getStorageSync('loginInfo').yunToken;
         var account = wx.getStorageSync('loginInfo').yunId;
         
@@ -823,6 +822,7 @@ Page({
         var stepListAll = this.data.stepCardListAll
         var that = this;
         console.log('渲染消息111', msg)
+        console.log('content', msg.content)
         if (msg.content) {
             var content = JSON.parse(msg.content)
             let nick = ''
@@ -1018,6 +1018,7 @@ Page({
                         clearTimeout(readyTimeout)
                     }
                     if (!that.data.isBeiTi) {
+                      console.log('pushMsg  quitRoom')
                         quitRoom({
                             roomId: that.data.roomData.id
                         }).then(res => {
