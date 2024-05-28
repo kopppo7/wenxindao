@@ -188,6 +188,7 @@
                    disabled="{{!inputStatus}}"
                    placeholder="说点什么吧..."
                    confirm-type="send"
+                   bindinput="inputChange"
                    bindconfirm="sendMsg"/>
         </view>
         <view class="btn" bindtap="handleReady"
@@ -197,6 +198,9 @@
         <view  bindtap="cancelReady" class="btn disabled"
                wx:if="{{isReady && !isOwner  && !isBeginPlay}}">
             取消准备
+        </view>
+        <view class="btn disabled" bindtap="sendMsg"  wx:if="{{inputStatus}}">
+            发送
         </view>
         <view class="btn disabled" bindtap="jumpSpeak" wx:if="{{isBeginPlay && inputStatus && !isJump}}">
             跳过
@@ -349,6 +353,7 @@
                     />
                 </view>
             </view>
+            <!-- <view class="leave" bindtap="handleTiaoguo">跳过</view> -->
             <view class="leave" bindtap="handleTiaoguo">跳过</view>
         </view>
     </view>

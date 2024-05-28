@@ -49,7 +49,7 @@ Page({
         teamId: "",
         audioId: "",
         voiceStatus: 0,//1可以说话2开始点击0禁止说话
-        inputStatus: 0,//1可以输入 0 禁止输入
+        inputStatus: false,// true 可以输入 false 禁止输入
         activeStatus: true,//活动提示
         mesList: [],
         isfriend: false,
@@ -757,6 +757,11 @@ Page({
                 break;
         }
     },
+    inputChange: function(e) {
+      this.setData({
+        inputText: e.detail.value  // 当input值改变时更新inputText
+      });
+    },
     // 发送消息
     sendMsg (val) {
         console.log(val.detail.value);
@@ -765,7 +770,7 @@ Page({
         var msg = nim.sendText({
             scene: 'team',
             to: that.data.teamId,
-            text: val.detail.value,
+            text: val.detail.value || that.data.inputText,
             done: that.pushMsg
         });
         this.setData({
@@ -1980,7 +1985,7 @@ Page({
         }
         this.setData({
             isJump: true,
-            inputStatus: false,
+            inputStatus: true,
             jumpPopStatus: false,
             jumpPopStatus2: false,
             jumpPopStatus3: false,
@@ -2847,7 +2852,7 @@ Page({
                     let totalTime = that.data.themeDetail.list[socketData.playNum - 1].speakTime
                     if (curAcc == myAcc) {
                         that.setData({
-                            inputStatus: 1,
+                            inputStatus: true,
                             show_speak_count_down: true,
                             waitTime: socketData.downTime,
                             show_think_count_down: false,
@@ -2863,7 +2868,8 @@ Page({
                         // }
                     } else {
                         that.setData({
-                            inputStatus: 0,
+                          // 不是当前人发言也可以开语音，所以为true
+                            inputStatus: true,
                             waitTime: socketData.downTime,
                             show_think_count_down: false,
                             show_speak_count_down: false,
@@ -2871,6 +2877,7 @@ Page({
                             // voiceStatus: 0,
                             show_want_to_speck: true
                         })
+
                     }
 
                 } else if (type === 4) {
