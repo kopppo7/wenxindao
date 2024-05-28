@@ -27,7 +27,7 @@
     </view>
   </view>
   <view class="intro-row3">
-    <view class="z-tit1">主题简介</view>
+    <view class="z-tit1">心灵简介</view>
     <view class="g-box">
       <rich-text nodes="{{detailObj.detailsText}}" type="text" class="desc"></rich-text>
     </view>
@@ -67,7 +67,7 @@
         </view> -->
   </view>
   <view class="intro-row4" wx:if="{{evalList.length > 0}}">
-    <view class="z-tit1">主题感悟</view>
+    <view class="z-tit1">心灵感悟</view>
     <view class="z-list3">
       <view class="item g-box" wx:for="{{evalList}}" wx:for-item="item" wx:for-index="index">
         <view class="tit-box">
@@ -126,7 +126,7 @@
     <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
     <rating showRating rating="{{rating}}" bind:click="change"></rating>
     <form bindsubmit="bindFormSubmit">
-      <textarea class="content" placeholder="您认为本次的派对设计如何？您收获了什么？您的感受如何？可以记录下来..." name="textarea" maxlength="500" bindinput="inputArea" />
+      <textarea class="content" placeholder="您认为本次的对话设计如何？您收获了什么？您的感受如何？可以记录下来..." name="textarea" maxlength="500" bindinput="inputArea" />
       <button form-type="submit" class="btn-buy"> 提交 </button>
     </form>
 

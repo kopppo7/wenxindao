@@ -77,7 +77,7 @@ Page({
         } else {
           this.setData({
             buyTips: true,
-            tips: '您已购买私人派对是否继续购买单人匹配席位',
+            tips: '您已购买私人对话是否继续购买单人匹配席位',
             buyType: 'pipei'
           })
         }
@@ -94,7 +94,7 @@ Page({
         } else {
           this.setData({
             buyTips: true,
-            tips: '您已购买快速匹配是否继续购买私人派对',
+            tips: '您已购买快速匹配是否继续购买私人对话',
             buyType: 'haoyou'
           })
         }

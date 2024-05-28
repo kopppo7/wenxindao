@@ -73,7 +73,7 @@
           "scene": null
         },
         {
-          "name": "主题探索",
+          "name": "心灵探索",
           "pathName": "04zhutipaidui/tansuo/tansuo",
           "query": "askId=10",
           "launchMode": "default",
@@ -115,7 +115,7 @@
           "scene": null
         },
         {
-          "name": "主题介绍",
+          "name": "心灵介绍",
           "pathName": "04zhutipaidui/zhutijieshao/zhutijieshao",
           "query": "id=10",
           "launchMode": "default",

@@ -18,7 +18,7 @@ Page({
   onLoad (options) {
     console.log(options);
     wx.setStorageSync('yao_qing_option',JSON.stringify(options))
-    // options会返回主题ID和房间ID
+    // options会返回心灵ID和房间ID
     this.setData({
       routeOptions:options
     })
@@ -32,7 +32,7 @@ Page({
   },
   loadCheckRoomStatus (roomId) {
     checkRoomStatus({ roomId }).then(res => {
-      // 0正常,1房间不存在,2房间已经解散,3派对已经开始,请勿打扰,4派对已经满员,请勿打扰
+      // 0正常,1房间不存在,2房间已经解散,3对话已经开始,请勿打扰,4对话已经满员,请勿打扰
       if (res.data.data.type == 0) {
         // 跳转到房间
         
@@ -57,7 +57,7 @@ Page({
     })
   },
   handleCancel () {
-    // 取消的话返回派对详情
+    // 取消的话返回对话详情
     wx.navigateTo({
       url: '/04zhutipaidui/zhutijieshao/zhutijieshao?id=' + this.data.routeOptions.askId,
     })

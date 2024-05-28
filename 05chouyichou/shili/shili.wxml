@@ -24,13 +24,13 @@
     <view class="pop-mask"></view>
     <view class="pop-win2" style="height: 898rpx">
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
-        <view class="desc">明天要在万人体育场公开演讲，我想分享什么主题？为什么？</view>
+        <view class="desc">明天要在万人体育场公开演讲，我想分享什么心灵？为什么？</view>
         <view class="pop-img">
             <image mode="widthFix" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/example-img.png" alt=""/>
         </view>
         <view class="txt">获取卡牌灵感</view>
         <view class="p1">
-            主题是如何穿越生命中的迷惘时刻。因为发现一切都是自己的定义，迷惘也是一种定义。拿回定义权，人生就有机会得到大自然。
+            心灵是如何穿越生命中的迷惘时刻。因为发现一切都是自己的定义，迷惘也是一种定义。拿回定义权，人生就有机会得到大自然。
         </view>
     </view>
 </block>

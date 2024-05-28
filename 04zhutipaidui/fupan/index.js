@@ -183,7 +183,7 @@ Page({
             // 拉人入群
             var msgObj = {
                 fromNick: msg.name,
-                text: '加入派对',
+                text: '加入对话',
                 sysType: 'sys'
             }
             msgList.push(msgObj)
@@ -192,7 +192,7 @@ Page({
             // 踢人出群
             var msgObj = {
                 fromNick: msg.name,
-                text: '被踢出派对',
+                text: '被踢出对话',
                 sysType: 'sys'
             }
             msgList.push(msgObj)

@@ -503,7 +503,7 @@ Page({
         path: 'probe/detail/detail?id=' + this.data.id + '&shareId=' + shareId,
         imageUrl: this.data.product.shareImgUrl,
         title: '话题很赞，一起探索《' + this.data.product.title + '》吧',
-        desc: '这是开启心灵对话的派对之旅'
+        desc: '这是开启心灵对话的对话之旅'
       }
       return shareObj;
     }

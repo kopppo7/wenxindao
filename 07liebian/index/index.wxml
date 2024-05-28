@@ -122,7 +122,7 @@
     <view class="pop-win2" style="height: 414rpx">
         <view class="pop-tit">您获得了一个免单福利</view>
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
-        <view class="desc">恭喜！您可以免费任选一个付费主题，邀请<text class="num">2-6</text>个好友组队探索。</view>
+        <view class="desc">恭喜！您可以免费任选一个付费心灵，邀请<text class="num">2-6</text>个好友组队探索。</view>
         <view class="btn-know">知道了</view>
     </view>
 </block>

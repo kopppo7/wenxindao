@@ -3,7 +3,7 @@
   <block wx:if="{{isRoomHide}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
-        <view class="pop-tit">此派对邀请已失效</view>
+        <view class="pop-tit">此对话邀请已失效</view>
         <view class="desc">
             <view>非常抱歉！</view>
             <view>系统将为您匹配新房间</view>
@@ -17,7 +17,7 @@
 <block wx:if="{{isRoomBegin}}">
   <view class="pop-mask"></view>
   <view class="pop-win2">
-    <view class="pop-tit">此派对已开始</view>
+    <view class="pop-tit">此对话已开始</view>
     <view class="desc">
         <view>非常抱歉，您来晚了~</view>
         <view>系统将为您匹配新房间</view>
@@ -31,7 +31,7 @@
 <block wx:if="{{isRoomFull}}">
   <view class="pop-mask"></view>
   <view class="pop-win2">
-    <view class="pop-tit">此派对席位已满</view>
+    <view class="pop-tit">此对话席位已满</view>
     <view class="desc">
         <view>非常抱歉！</view>
         <view>系统将为您匹配新房间</view>

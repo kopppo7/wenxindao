@@ -32,7 +32,7 @@ Page({
         activityPopStatus: false, //活动提示
         matePopStatus: false, //匹配中
         waitStatus: false, //等待状态
-        mixPopStatus: false, //至少两人开始派对
+        mixPopStatus: false, //至少两人开始对话
         timePopStatus: false, //倒计时
         kickPopStatus: false, //踢人
         kickPopType: '',
@@ -58,7 +58,7 @@ Page({
         isOwner: false,
         isBeginPlay: false,//是否开始游戏
         isReady: false,//是否准备
-        askId: '',//主题ID
+        askId: '',//心灵ID
         themeDetail: {},
         personInd: '',
         roomId: '',
@@ -118,7 +118,7 @@ Page({
         haveRoom: true,  //刚进来的时候房间是否存在
         kefuPop: false,  //客服弹窗
         isTuichufangjian: false, //结语处退出房间弹窗
-        isPaiduiKaishi: false,  //进来的时候派对是否开始
+        isPaiduiKaishi: false,  //进来的时候对话是否开始
         isTuiChuRoom: false,
         fupanIsSay: true,
         fupanIsVoice: true,
@@ -1061,7 +1061,7 @@ Page({
 
             } else if (content.type == 9) {
 
-                // 这个是开始派对的倒计时
+                // 这个是开始对话的倒计时
                 // this.startCountDown()
                 let obj = {
                     downTime: 3,
@@ -1418,7 +1418,7 @@ Page({
         timeInt = null
         if (this.data.isBeginPlay) {
             wx.showToast({
-                title: '派对已经开始，无法取消准备',
+                title: '对话已经开始，无法取消准备',
                 icon: 'none'
             })
         } else {
@@ -1668,7 +1668,7 @@ Page({
         })
     },
 
-    // 获取派对信息
+    // 获取对话信息
     getPartyDet: function () {
         var that = this;
         findByAskPartyOne({
@@ -1697,7 +1697,7 @@ Page({
         })
     },
 
-    //开始派对的倒计时(没用了)
+    //开始对话的倒计时(没用了)
     startCountDown: function () {
         clearTimeout(startTimeout)
         var that = this;
@@ -1715,7 +1715,7 @@ Page({
                         console.log('该回来了')
                         wx.showModal({
                             title: '提示',
-                            content: '派对即将开始，请返回房间',
+                            content: '对话即将开始，请返回房间',
                             success (res) {
                                 if (res.confirm) {
                                     var url = '/04zhutipaidui/tansuo/tansuo'
@@ -1788,7 +1788,7 @@ Page({
         }, 1000);
     },
 
-    //这个是派对结束之后结尾畅聊的倒计时
+    //这个是对话结束之后结尾畅聊的倒计时
     countDown: function () {
         let that = this
         let obj = {
@@ -2723,7 +2723,7 @@ Page({
             activityPopStatus: wx.getStorageSync('activeStatus') ? false : true
         })
         wx.setStorageSync('isLinShiFangZhu', 1)
-        this.sendCustomMsg(4, { text: '您已成为临时房主（无踢人权限）,快去邀请更多的人参与派对吧~' })
+        this.sendCustomMsg(4, { text: '您已成为临时房主（无踢人权限）,快去邀请更多的人参与对话吧~' })
     },
     handleOpenGuiZe () {
         this.setData({
@@ -2795,7 +2795,7 @@ Page({
                     console.log('该回来了')
                     wx.showModal({
                         title: '提示',
-                        content: '派对即将开始，请返回房间',
+                        content: '对话即将开始，请返回房间',
                         success (res) {
                             if (res.confirm) {
                                 var url = '/04zhutipaidui/tansuo/tansuo'
@@ -3108,7 +3108,7 @@ Page({
                     roomId: options.roomId || '',
                     isMatch: Number(options.isMatch) ? true : false,
                 })
-                //派对详情
+                //对话详情
                 await that.getPartyDet()
                 //活动须知弹窗，不再显示
                 if (wx.getStorageSync('activeStatus')) {

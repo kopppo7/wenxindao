@@ -204,7 +204,7 @@
         <view class="own-btns" wx:if="{{isOwner && !isBeginPlay}}">
             <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
             <view class="btn" bindtap="handleInviRoad"  wx:if="{{!isMatch}}">匹配路人</view>
-            <view class="btn" bindtap="handleFastStart">开启派对</view>
+            <view class="btn" bindtap="handleFastStart">开启对话</view>
         </view>
     </view>
     
@@ -221,7 +221,7 @@
             </view>
             <view class="box3">
                 <view class="box3-item">
-                    <view class="tit">派对解析</view>
+                    <view class="tit">对话解析</view>
                     <view class="con">{{themeDetail.tips}}</view>
                 </view>
                 <view class="box3-item">
@@ -386,7 +386,7 @@
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <view class="pop-tit">活动提示</view>
-        <view class="desc">我是问心小精灵 , 是本场派对的活动主持人。请来到可以语音外放的环境 或 佩戴耳机。</view>
+        <view class="desc">我是问心小精灵 , 是本场对话的活动主持人。请来到可以语音外放的环境 或 佩戴耳机。</view>
         <view class="checkbox" bindtap="activityChange">
             <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-check1.png" wx:if="{{!activeStatus}}"></image>
             <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-check2.png" wx:else></image>
@@ -431,12 +431,12 @@
         </view>
     </view>
 </block> -->
-<!-- 至少两人开始派对 -->
+<!-- 至少两人开始对话 -->
 <block wx:if="{{mixPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
-        <view class="pop-tit">至少{{roomData.minNumber}}人开始派对</view>
-        <view class="desc">至少<text class="num">{{roomData.minNumber}}</text>人才可以开始派对，请邀请好友或匹配路人玩家！
+        <view class="pop-tit">至少{{roomData.minNumber}}人开始对话</view>
+        <view class="desc">至少<text class="num">{{roomData.minNumber}}</text>人才可以开始对话，请邀请好友或匹配路人玩家！
         </view>
         <view class="btns">
             <view class="btn ok" bindtap="closePop">知道了</view>
@@ -518,11 +518,11 @@
     <view class="pop-win2">
         <view class="pop-tit">提示</view>
         <view class="desc">
-            中途退出派对将降低匹配成功率
+            中途退出对话将降低匹配成功率
         </view>
         <view class="btns">
             <view class="btn  close" bindtap="clickZhongTuQuitRoom">确认退出</view>
-            <view class="btn ok" bindtap="closePop">继续派对</view>
+            <view class="btn ok" bindtap="closePop">继续对话</view>
         </view>
     </view>
 </block>
@@ -532,7 +532,7 @@
     <view class="pop-win2">
         <view class="pop-tit">是否成为临时房主？</view>
         <view class="desc">
-            邀请更多人来参与派对
+            邀请更多人来参与对话
             <view>（AA制）</view>
         </view>
         <view class="btns">
@@ -758,13 +758,13 @@
         </view>
     </view>
 </block>
-<!-- 派对已经开始 -->
+<!-- 对话已经开始 -->
 <block wx:if="{{isPaiduiKaishi}}">
     <view class="pop-mask"></view>
     <view class="pop-win2">
         <view class="pop-tit">提示</view>
         <view class="desc">
-            <text>活动已开始，非常抱歉！\n您可以匹配新派对</text>
+            <text>活动已开始，非常抱歉！\n您可以匹配新对话</text>
         </view>
         <view class="btns">
             <view class="btn ok" bindtap="handlePaiduikaishi">确定</view>
@@ -794,8 +794,8 @@
         <view class="pop-tit">提示</view>
         <view class="desc tac">
             <view>很抱歉 <text class="num">{{leaveUserInfor.userName}}</text> 已离开</view>
-                <view>您是否继续进行派对？</view>
-                <view>（本次派对将免费赠送）</view>
+                <view>您是否继续进行对话？</view>
+                <view>（本次对话将免费赠送）</view>
         </view>
         <view class="btns">
             <view class="btn close" bindtap="leaveRoomClear">离开</view>
@@ -810,7 +810,7 @@
         <view class="pop-tit">提示</view>
         <view class="desc tac">
             <view>很抱歉 <text class="num">{{leaveUserInfor.userName}}</text> 已离开</view>
-            <view>建议您继续完成本次派对~</view>
+            <view>建议您继续完成本次对话~</view>
         </view>
         <view class="btns">
             <view class="btn close" bindtap="leaveRoomClear">离开</view>
@@ -827,7 +827,7 @@
         <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
         <rating showRating  rating="{{rating}}" bind:click="changeRating"></rating>
         <form bindsubmit="bindFormSubmit">
-            <textarea class="content" placeholder="您认为本次的派对设计如何？您收获了什么？您的感受如何？可以记录下来..." name="textarea" maxlength="500" bindinput="inputArea" />
+            <textarea class="content" placeholder="您认为本次的对话设计如何？您收获了什么？您的感受如何？可以记录下来..." name="textarea" maxlength="500" bindinput="inputArea" />
             <button form-type="submit" class="btn-buy"> 提交 </button>
         </form>
         
