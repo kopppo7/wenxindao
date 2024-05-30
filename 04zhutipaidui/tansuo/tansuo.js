@@ -28,6 +28,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        showJumpBtn: false, // 跳过按钮在当前人的显隐
         sharePopStatus: false,
         activityPopStatus: false, //活动提示
         matePopStatus: false, //匹配中
@@ -1842,7 +1843,8 @@ Page({
             //思考倒计时
             waitTime: thinkTime > 9 ? thinkTime : '0' + thinkTime,
             personInd: 0,
-            inputStatus: false
+            inputStatus: false,
+            showJumpBtn: false
         })
         // 发送一条开始思考倒计时的消息
         let obj = {
@@ -1986,6 +1988,7 @@ Page({
         this.setData({
             isJump: true,
             inputStatus: true,
+            showJumpBtn: true,
             jumpPopStatus: false,
             jumpPopStatus2: false,
             jumpPopStatus3: false,
@@ -2853,6 +2856,7 @@ Page({
                     if (curAcc == myAcc) {
                         that.setData({
                             inputStatus: true,
+                            showJumpBtn: true,
                             show_speak_count_down: true,
                             waitTime: socketData.downTime,
                             show_think_count_down: false,
@@ -2870,6 +2874,8 @@ Page({
                         that.setData({
                           // 不是当前人发言也可以开语音，所以为true
                             inputStatus: true,
+                            // 控制跳过按钮当前人的显隐
+                            showJumpBtn: false,
                             waitTime: socketData.downTime,
                             show_think_count_down: false,
                             show_speak_count_down: false,
@@ -2877,7 +2883,6 @@ Page({
                             // voiceStatus: 0,
                             show_want_to_speck: true
                         })
-
                     }
 
                 } else if (type === 4) {
