@@ -10,6 +10,7 @@ import {
     getRoomDetails, roomMatchingPlay,
     findByAskPartyOne, complaintUser, dissolveGroup, findByCard, addCardForRoom, quitRoom, likeTeammate, addRoomLog, inviteFriendsRoom, getIfFreeMy, insertEvaluate
 } from "../api";
+import { recordSetting, verifyLogin } from "../../utils/util";
 import { formatMsgList } from "../../utils/yun";
 import { findByOrderList, getUserMsg } from "../../utils/api";
 
@@ -1911,7 +1912,7 @@ Page({
             } else {
                 that.stopPublishAudio()
             }
-        }, 1000);
+        }, 3000);
     },
     nextPerson () {
         let that = this
@@ -3059,8 +3060,8 @@ Page({
      * 生命周期函数--监听页面加载
      */
     async onLoad (options) {
-        console.log(options, 'options');
-
+        await verifyLogin()
+        await recordSetting()
         if (this.socket) {
             this.socket.close({
                 success (res) {
@@ -3176,7 +3177,7 @@ Page({
                 url: '/pages/index/index',
             })
         }
-    },
+    },  
     onUnload () {
         const vm = this;
         vm.socket && vm.socket.close()
@@ -3188,6 +3189,7 @@ Page({
             console.log(e, 'eeeeeeeeeeee');
         }
     },
+
     //邀请好友
     onShareAppMessage () {
         console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&isYaoQing=1');
