@@ -61,6 +61,13 @@ Page({
         isShowModel: false
       })
     }
+
+    // 清除房间缓存
+    wx.removeStorageSync('roomData')
+    wx.removeStorageSync('isLinShiFangZhu')
+    wx.removeStorageSync('roomPath')
+    wx.removeStorageSync('partyData')
+    wx.removeStorageSync('activeStatus')
   },
   getThemeList() {
     getAskPartyList(this.data.listParams).then(res => {

@@ -1963,7 +1963,6 @@ Page({
       if (playerList[personInd].account ===
         that.data.account) {
         that.publishAudio()
-        console.log('test -------- 调用 publishAudio');
       } else {
         that.stopPublishAudio()
       }
