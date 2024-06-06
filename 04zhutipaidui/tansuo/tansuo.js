@@ -47,6 +47,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    messageReceived: false,
     showJumpBtn: false, // 跳过按钮在当前人的显隐
     sharePopStatus: false,
     activityPopStatus: false, //活动提示
@@ -478,9 +479,25 @@ Page({
       }
     })
     console.log('开始发布视频流', that.data.uid, personInd, playerList, that.data.playerList);
+    if (!that.data.messageReceived) {
+      that.setData({
+        messageReceived: true // 设置标志位
+      })
+    } else {
+      return false
+    }
+    // 重置标志位，例如可以在一定时间后重置
+    setTimeout(() => {
+      that.setData({
+        messageReceived: false
+      })
+    }, 1000); // 1秒后重置，根据实际场景调整时间
+
     // 只有在别人或自己发言时才能开麦
-    if (that.data.show_want_to_speck || that.data.show_speak_count_down) {
+    // if (that.data.inputStatus) {
+    if (that.data.isBeginPlay && !that.data.show_think_count_down) {
       //发布本地媒体给房间对端
+      console.log('second - that.data.voiceStatus', that.data.voiceStatus);
       if (that.data.voiceStatus === 0) {
         that.setData({
           voiceStatus: 1
@@ -498,7 +515,6 @@ Page({
             console.error('本地 publish 失败: ', err);
           });
       } else {
-        console.log(' publishAudio else ');
         that.setData({
           voiceStatus: 0,
           audioPushUrl: '',
@@ -782,10 +798,11 @@ Page({
     });
   },
   // 发送消息
-  sendMsg(val) {
-    console.log(val.detail.value);
+  sendTxtMsg(val) {
     var that = this;
-    console.log(this.data.teamId);
+    if (!val.detail.value && !that.data.inputText) {
+      return false
+    }
     var msg = nim.sendText({
       scene: 'team',
       to: that.data.teamId,
@@ -822,7 +839,6 @@ Page({
       done: that.pushMsg
     });
     console.log('正正在发送自定义消息 ' + msg);
-    // console.log(msg)
   },
   //渲染消息
   pushMsg(error, msg) {
@@ -1470,6 +1486,7 @@ Page({
       status: this.data.isReady
     })
     clearInterval(readyTimeout)
+    console.log('已点击准备');
   },
   //-------------------------------------准备end-----------------------------------------------------------
 
@@ -1865,7 +1882,6 @@ Page({
     })
     //触发发牌
     if (that.data.isOwner) {
-
       that.sendCustomMsg(4, {
         text: '发牌中...'
       })
@@ -1922,9 +1938,13 @@ Page({
     //是否轮到本人发言
 
     // QAQ 这里判断是否是房主 房主发轮到谁的消息
+    console.log(that.data.isOwner, "owner");
     if (that.data.isOwner) {
       that.sendCustomMsg(4, {
         text: '轮到' + playerList[personInd].nick + '发言'
+      })
+      that.sendCustomMsg(4, {
+        text: '点击头像可以看到TA的牌哦'
       })
     }
     console.log('当前发言人：' + personInd + speakTime)
@@ -1943,10 +1963,11 @@ Page({
       if (playerList[personInd].account ===
         that.data.account) {
         that.publishAudio()
+        console.log('test -------- 调用 publishAudio');
       } else {
         that.stopPublishAudio()
       }
-    }, 3000);
+    }, 1000);
   },
   nextPerson() {
     let that = this
@@ -1963,6 +1984,7 @@ Page({
       }
     })
     if (that.data.personInd < (playerList.length - 1)) {
+      console.log('speak1');
       //发言人index 小于 成员数量，切换下个人发言
       that.setData({
         personInd: that.data.personInd + 1,
@@ -2065,6 +2087,7 @@ Page({
       this.setData({
         personInd: this.data.personInd + 1,
       })
+      console.log('speak 2');
       this.speak()
     } else {
       //记录本轮内容
@@ -2655,6 +2678,11 @@ Page({
   },
   // 退出房间清缓存跳转
   leaveRoomClear(jump) {
+    // 如果是事件对象则转化
+    console.log(typeof jump);
+    if (typeof jump !== 'string') {
+      jump = '/pages/index/index'
+    }
     this.setData({
       partyData: null,
       roomData: null,
@@ -2664,6 +2692,8 @@ Page({
     wx.removeStorageSync('partyData')
     wx.removeStorageSync('roomPath')
     wx.removeStorageSync('isLinShiFangZhu')
+
+    console.log(jump, "first");
     // 清除nim实例
     if (nim) {
       nim.destroy({
@@ -2672,8 +2702,9 @@ Page({
         }
       })
     }
+    console.log(jump);
     wx.reLaunch({
-      url: jump ? jump : '/pages/index/index',
+      url: jump
     })
     // if (jump === 1) {
     //   console.log('清除缓存');
@@ -2798,6 +2829,7 @@ Page({
     })
   },
   webSocketInit() {
+    console.log('webSocketInit');
     let vm = this
     let that = this
     vm.socket = wx.connectSocket({
@@ -2823,6 +2855,7 @@ Page({
     })
     // onMessage
     vm.socket.onMessage((ret) => {
+
       let socketData = JSON.parse(ret.data)
       let nextPerson = ''; //下一个玩家是谁
       let nextPlayNum = ''; //下一轮是哪一轮
@@ -2843,8 +2876,10 @@ Page({
           })
 
         } else if (type === 2) {
+          console.log("socketData", socketData);
           // 思考倒计时结束,此时轮到第一个人发言,同时type改为发言倒计时
           console.log("这里是不是走了两次??????");
+          console.log('speak 3');
           that.speak()
         } else if (type === 3) {
           // 发言倒计时结束
@@ -2919,7 +2954,7 @@ Page({
               waitTime: socketData.downTime,
               show_think_count_down: false,
               isJump: false,
-              voiceStatus: 1,
+              // voiceStatus: 1,
               show_want_to_speck: false
             })
             // if (totalTime - socketData.downTime > 30 && that.data.show_speak_count_down && !that.data.isFaYan) {
@@ -3013,6 +3048,7 @@ Page({
       data: obj,
       success(res) {
         console.log('WebSocket 消息发送成功', res)
+        console.log('WebSocket 消息发送内容', obj)
       },
       fail(err) {
         console.log('WebSocket 消息发送失败', err)

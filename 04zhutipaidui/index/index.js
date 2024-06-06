@@ -37,7 +37,7 @@ Page({
         roomId: wx.getStorageSync('partyData').roomId || wx.getStorageSync('roomData').id
       }).then(res => {
         // 0正常,1房间不存在,2房间已经解散,3对话已经开始,请勿打扰,4对话已经满员,请勿打扰
-        if (res.data.data.type == 0) {
+        if (res.data.data.type !== 1 || res.data.data.type !== 2) {
           let partyData = wx.getStorageSync('partyData')
           this.setData({
             backTitle: partyData?.themeDetail?.title,
