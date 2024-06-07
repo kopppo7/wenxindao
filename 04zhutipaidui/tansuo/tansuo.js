@@ -1111,9 +1111,10 @@ Page({
             timePopStatus: true,
             waitTime: 3
           })
+          console.log("这个是开始对话的倒计时 test -----------");
           this.sendSocketMsg(obj)
         }, 1000);
-        console.log('开始倒计时')
+        console.log('开始倒计时 3秒后')
       } else if (content.type == 10) {
         // 发言和思考倒计时
         // 这里是思考和发言倒计时
@@ -1375,6 +1376,7 @@ Page({
           isJump: 0
         }
         setTimeout(() => {
+          console.log("准备好了？？？？ test--------");
           vm.sendSocketMsg(obj)
         }, 1000);
       } else {
@@ -1851,6 +1853,7 @@ Page({
       downTime: that.data.themeDetail.coChatTime
     }
     setTimeout(() => {
+      console.log("这个是对话结束巴拉 test---------");
       that.sendSocketMsg(obj)
       that.publishAllAudio()
     }, 1000);
@@ -1902,6 +1905,7 @@ Page({
       downTime: thinkTime + 1
     }
     setTimeout(() => {
+      console.log("发送一条开始思考倒计时 test-----------");
       that.sendSocketMsg(obj)
       that.stopPublishAudio()
     }, 1000);
@@ -1958,6 +1962,7 @@ Page({
       isJump: 0
     }
     setTimeout(() => {
+      console.log("下个人发言 test------------");
       that.sendSocketMsg(obj)
       // 如果当前发言的人是自己的话开始推流,其他人停止推流
       if (playerList[personInd].account ===
@@ -2068,6 +2073,7 @@ Page({
       isJump: 1,
       cmd: 'msg002'
     }
+    console.log("处理跳过发言 test-----------");
     vm.sendSocketMsg(obj)
     //成员列表，去掉空的
     var playerList = []
@@ -3031,6 +3037,7 @@ Page({
    * @param {*} note 其他信息的对象字符串
    */
   sendSocketMsg(params) {
+    console.log(params, "test");
     const vm = this
     let obj = JSON.stringify({
       type: params?.type,
@@ -3047,10 +3054,11 @@ Page({
       data: obj,
       success(res) {
         console.log('WebSocket 消息发送成功', res)
-        console.log('WebSocket 消息发送内容', obj)
+        console.log('WebSocket 消息发送成功内容', obj)
       },
       fail(err) {
         console.log('WebSocket 消息发送失败', err)
+        console.log('WebSocket 消息发送失败内容', obj)
       }
     })
   },
@@ -3081,6 +3089,7 @@ Page({
       userId: vm.data.account,
       cmd: 'msg002'
     }
+    console.log("jumpSocket ======= test");
     vm.sendSocketMsg(obj)
   },
   // socket心跳，由客户端发起
