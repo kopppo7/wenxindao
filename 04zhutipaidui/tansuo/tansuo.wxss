@@ -1470,3 +1470,7 @@ image {
 .want_to_speck {
   width: 271rpx;
 }
+
+.speckView {
+  width: 500rpx;
+}

@@ -2,7 +2,7 @@ import {
   getAskPartyList,
   findByAskPartyOne,
   categoryList,
-  checkRoomStatus
+  checkRoomStatus2
 } from "../api";
 Page({
 
@@ -33,36 +33,33 @@ Page({
   // 查看房间状态
   checkRoomStatus() {
     if (wx.getStorageSync('roomPath')) {
-      checkRoomStatus({
+      checkRoomStatus2({
         roomId: wx.getStorageSync('partyData').roomId || wx.getStorageSync('roomData').id
       }).then(res => {
         // 0正常,1房间不存在,2房间已经解散,3对话已经开始,请勿打扰,4对话已经满员,请勿打扰
-        if (res.data.data.type !== 1 && res.data.data.type !== 2) {
+        if (res.data.data.type == 1 || res.data.data.type == 2) {
+          this.setData({
+            isShowModel: false
+          })
+          this.claerRoomStorage()
+        } else {
           let partyData = wx.getStorageSync('partyData')
           this.setData({
             backTitle: partyData?.themeDetail?.title,
             backStatus: '正在进行中',
             isShowModel: true
           })
-        } else {
-          this.setData({
-            isShowModel: false
-          })
-          // 清除房间缓存
-          wx.removeStorageSync('roomData')
-          wx.removeStorageSync('isLinShiFangZhu')
-          wx.removeStorageSync('roomPath')
-          wx.removeStorageSync('partyData')
-          wx.removeStorageSync('activeStatus')
         }
       })
     } else {
       this.setData({
         isShowModel: false
       })
+      this.claerRoomStorage()
     }
-
-    // 清除房间缓存
+  },
+  // 清除房间缓存
+  claerRoomStorage() {
     wx.removeStorageSync('roomData')
     wx.removeStorageSync('isLinShiFangZhu')
     wx.removeStorageSync('roomPath')

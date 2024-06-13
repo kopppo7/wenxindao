@@ -132,10 +132,11 @@
             </view>
             <view class="speak-con">
                 <!--思考倒计时-->
-                <view class="count-down" wx:if="{{show_think_count_down}}">思考倒计时
+                <view class="count-down speckView" wx:if="{{show_think_count_down}}">思考倒计时
                     <view>
                         {{waitTime}}s
                     </view>
+                    ，倒计时结束后可以发言
                 </view>
                 <!--发言倒计时-->
                 <view class="count-down" wx:if="{{show_speak_count_down}}">发言倒计时
@@ -201,8 +202,16 @@
                wx:if="{{isReady && !isOwner  && !isBeginPlay}}">
             取消准备
         </view>
-        <view class="btn disabled" bindtap="sendTxtMsg"  wx:if="{{inputStatus}}">
-            发送
+        <!-- 发言中的人有完成功能 -->
+        <view wx:if="{{isBeginPlay && showJumpBtn && !isJump && !show_think_count_down}}">
+          <view class="btn disabled" data-speakState="{{true}}" bindtap="sendTxtMsg"  wx:if="{{inputStatus}}">
+            {{inputText ? '发送' : '完成'}}
+        </view>
+        </view>
+        <view wx:else>
+        <view class="btn disabled" data-speakState="{{false}}" bindtap="sendTxtMsg"  wx:if="{{inputStatus}}">
+          发送
+        </view>
         </view>
         <view class="btn disabled" bindtap="jumpSpeak" wx:if="{{isBeginPlay && showJumpBtn && !isJump && !show_think_count_down}}">
             跳过

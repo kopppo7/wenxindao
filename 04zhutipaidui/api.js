@@ -108,6 +108,12 @@ export const addRoomLog = function (data) {
 export const checkRoomStatus = function (roomId) {
     return http.post(handleURL('/room/checkRoom'), roomId);
 }
+
+// 心灵对话 判断房间状态
+export const checkRoomStatus2 = function (roomId) {
+  return http.post(handleURL('/room/checkRoomStatus'), roomId);
+}
+
 // 心灵对话 判断房间状态
 export const getIfFreeMy = function (roomId) {
     return http.get(handleURL('/getIfFreeMy'), roomId);

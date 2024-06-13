@@ -678,7 +678,7 @@ Page({
   },
   // 连接成功
   onConnect() {
-
+    console.log("onConnect");
     // 是匹配并且是房主那此时用户就是临时房主
     if (this.data.isMatch && this.data.isOwner && !wx.getStorageSync('isLinShiFangZhu')) {
       this.setData({
@@ -730,20 +730,28 @@ Page({
   },
   //有人走了
   onRemoveTeamMembers(teamMember) {
-    console.log('有人走了', teamMember.accounts[0]);
     let that = this
+    // 未准备踢出时不执行
+    if(that.data.readyPopStatus && !that.data.isBeginPlay && !that.data.activityPopStatus) {
+      return false
+    }
+    console.log('有人走了', teamMember.accounts[0]);
     var arr = this.data.playerList;
     arr.forEach((item, index) => {
       if (item.account == teamMember.accounts[0]) {
         arr[index] = {}
       }
     })
+    console.log(that.data.truePlayerList, "原始数据");
     let truePlayerList = that.data.truePlayerList
     truePlayerList.forEach((item, index) => {
       if (item.account == teamMember.accounts[0]) {
         truePlayerList.splice(index, 1)
       }
     })
+    console.log(truePlayerList.length, "truePlayerList.length");
+    console.log(that.data.isBeginPlay, "that.data.isBeginPlay");
+    console.log(that.data.isOwner, "that.data.isOwner");
     if (truePlayerList.length <= 1 && !that.data.isBeginPlay && !that.data.isOwner) {
       arr.forEach((item, index) => {
         if (item.account) {
@@ -759,7 +767,6 @@ Page({
           truePlayerList.splice(index, 1)
         }
       })
-      console.log(truePlayerList, 'truePlayerList');
       that.setData({
         isLinShiFangZhu: true,
         isOwner: true,
@@ -798,21 +805,44 @@ Page({
     });
   },
   // 发送消息
-  sendTxtMsg(val) {
+  sendTxtMsg(e) {
     var that = this;
-    if (!val.detail.value && !that.data.inputText) {
+    if(e.currentTarget.dataset.speakstate && !that.data.inputText) {
+      // 点击完成
+      that.jumpConfirm('complete')
+      return false
+    } 
+    if (!that.data.inputText) {
+      // 不发送空消息
       return false
     }
     var msg = nim.sendText({
       scene: 'team',
       to: that.data.teamId,
-      text: val.detail.value || that.data.inputText,
+      text: that.data.inputText,
       done: that.pushMsg
     });
     this.setData({
       inputText: ''
     })
     console.log('正在发送p2p text消息, ' + msg.idClient);
+  },
+  
+    // 回车键发送消息
+    sendMsg (val) {
+      console.log(val.detail.value);
+      var that = this;
+      console.log(this.data.teamId);
+      var msg = nim.sendText({
+          scene: 'team',
+          to: that.data.teamId,
+          text: val.detail.value,
+          done: that.pushMsg
+      });
+      this.setData({
+          inputText: ''
+      })
+      console.log('正在发送p2p text消息, ' + msg.idClient);
   },
   // 发送自定义消息
   sendCustomMsg(type, val) {
@@ -1062,7 +1092,23 @@ Page({
             quitRoom({
               roomId: that.data.roomData.id
             }).then(res => {
-              that.leaveRoomClear()
+              if (that.data.readyPopStatus && !that.data.isBeginPlay && !that.data.activityPopStatus) {
+                // 因为没点击准备被踢出房间
+                wx.showToast({
+                  title: '您已经被抱出房间 ~',
+                  icon: 'none',
+                  duration: 2000,
+                  mask: true,
+                  success: function() {
+                    setTimeout(function() {
+                      that.leaveRoomClear()
+                    }, 2000)
+                  }
+                })
+              } else {
+                that.leaveRoomClear()
+              }
+              
             })
           }
         } else {
@@ -1114,7 +1160,6 @@ Page({
           console.log("这个是开始对话的倒计时 test -----------");
           this.sendSocketMsg(obj)
         }, 1000);
-        console.log('开始倒计时 3秒后')
       } else if (content.type == 10) {
         // 发言和思考倒计时
         // 这里是思考和发言倒计时
@@ -2042,7 +2087,7 @@ Page({
     })
   },
   //确认跳过
-  jumpConfirm: function () {
+  jumpConfirm: function (val) {   
     var that = this
     this.sendCustomMsg(6, {
       text: '跳过发言'
@@ -2058,7 +2103,7 @@ Page({
       jumpPopStatus2: false,
       jumpPopStatus3: false,
       jumpPopStatus4: false,
-      jumpNum: this.data.jumpNum + 1
+      jumpNum: val === 'complete' ? this.data.jumpNum : this.data.jumpNum + 1
     })
   },
   // 有人离开之后处理显示的人员和判断还有几个人在房间
@@ -2788,9 +2833,10 @@ Page({
     })
   },
   bindTuichufangjian() {
-    this.setData({
-      isTuichufangjian: true
-    })
+    // this.setData({
+    //   isTuichufangjian: true
+    // })
+    this.leaveRoomClear()
   },
   handlePaiduikaishi() {
     this.setData({
