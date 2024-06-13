@@ -44,7 +44,7 @@
                                 <image class="ready" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/play-status1.png"
                                        wx:if="{{item.isReady && !isBeginPlay}}"></image>
                             </image>
-                            <view class="ico2" wx:else>
+                            <view class="ico2"  wx:if="{{!item.account && !isBeginPlay}}">
                                 <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-suo.png">
                                 </image>
 <!--                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs
