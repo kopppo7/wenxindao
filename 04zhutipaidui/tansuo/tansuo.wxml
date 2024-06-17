@@ -130,6 +130,11 @@
                     </view>
                 </scroll-view>
             </view>
+            <view wx:if="{{isOwner && !isBeginPlay && showPrompt}}" class="waiting_conutdown">
+                <p wx:if="{{waiting_countdown > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown }}s</p>
+                <p wx:elif="{{waiting_countdown2 > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown2 }}s</p>
+                <p wx:else>暂时没有伙伴想要开启本对话，您可以邀请好友或者参与别的话题</p>
+            </view>
             <view class="speak-con">
                 <!--思考倒计时-->
                 <view class="count-down speckView" wx:if="{{show_think_count_down}}">思考倒计时

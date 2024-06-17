@@ -21,7 +21,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad (options) {
+  onLoad(options) {
     wx.login({
       success: function (res) {
         var obj = {
@@ -29,15 +29,15 @@ Page({
           role: 1
         };
         appletsLogin(obj).then(res => {
-          if(res.data.data.token){
+          if (res.data.data.token) {
             wx.setStorageSync('tokenKey', res.data.data.token);
           }
-          
+
         })
       }
     });
   },
-  chooseAvatar (e) {
+  chooseAvatar(e) {
     var that = this;
     wx.uploadFile({
       url: config.getDomain + '/oss/upload/uploadFile',
@@ -60,17 +60,17 @@ Page({
       }
     })
   },
-  getNick (e) {
+  getNick(e) {
     this.setData({
       nickName: e.detail.value
     })
   },
-  getNickChange (e) {
+  getNickChange(e) {
     this.setData({
       nickName: e.detail.value
     })
   },
-  randomUserInfo () {
+  randomUserInfo() {
     let min = 0,
       max = _charStr.length - 1,
       _str = '';
@@ -91,7 +91,7 @@ Page({
       title: '随机生成头像昵称..',
     })
     var yao_qing_op = null;
-    if(wx.getStorageSync('yao_qing_option')){
+    if (wx.getStorageSync('yao_qing_option')) {
       yao_qing_op = JSON.parse(wx.getStorageSync('yao_qing_option'));
     }
     getUserMsg(token).then(customer => {
@@ -114,7 +114,7 @@ Page({
           //     url: '/pages/login/login',
           //   })
           // } else 
-          if(yao_qing_op) {
+          if (yao_qing_op) {
             wx.navigateTo({
               url: `/04zhutipaidui/yao_qing/index?askId=${yao_qing_op.askId}&roomId=${yao_qing_op.roomId} `,
             })
@@ -127,7 +127,7 @@ Page({
       })
     })
   },
-  RandomIndex (min, max, i) {
+  RandomIndex(min, max, i) {
     let index = Math.floor(Math.random() * (max - min + 1) + min),
       numStart = _charStr.length - 10;
     //如果字符串第一位是数字，则递归重新获取
@@ -137,7 +137,7 @@ Page({
     //返回最终索引值
     return index;
   },
-  getUserInfo (e) {
+  getUserInfo(e) {
     if (!this.data.headImg) {
       wx.showToast({
         title: '请先上传头像',
@@ -155,8 +155,8 @@ Page({
       return
     }
     var token = wx.getStorageSync('tokenKey');
-    var yao_qing_op =null;
-    if(yao_qing_op){
+    var yao_qing_op = null;
+    if (yao_qing_op) {
       yao_qing_op = JSON.parse(wx.getStorageSync('yao_qing_option'));
     }
     getUserMsg(token).then(customer => {
@@ -178,9 +178,15 @@ Page({
             wx.redirectTo({
               url: '/pages/login/login',
             })
-          } else if(yao_qing_op) {
+          } else if (yao_qing_op) {
             wx.navigateTo({
               url: `/04zhutipaidui/yao_qing/index?askId=${yao_qing_op.askId}&roomId=${yao_qing_op.roomId} `,
+            })
+          } else if (wx.getStorageSync('roomPath')) {
+            // 如果是好友房间邀请登录
+            let roomPath = wx.getStorageSync('roomPath')
+            wx.navigateTo({
+              url: '/04zhutipaidui/tansuo/tansuo?askId=' + roomPath.askId + '&isMatch=' + roomPath.isMatch + '&isfriend=' + roomPath.isfriend + '&roomId=' + roomPath.roomId
             })
           } else {
             wx.redirectTo({

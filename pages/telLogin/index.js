@@ -117,6 +117,12 @@ Page({
           wx.redirectTo({
             url: '/pages/auth/auth',
           })
+        } else if(wx.getStorageSync('roomPath')) {
+            // 如果是好友房间邀请登录
+            let roomPath = wx.getStorageSync('roomPath')
+            wx.navigateTo({
+              url: '/04zhutipaidui/tansuo/tansuo?askId=' + roomPath.askId + '&isMatch=' + roomPath.isMatch + '&isfriend=' + roomPath.isfriend + '&roomId=' + roomPath.roomId
+            })
         } else {
           updateUserMsg({
             phone: phone,

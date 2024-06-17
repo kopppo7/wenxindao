@@ -47,6 +47,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isDataReady: false, // saveData 方法数据是否储存成功
+    showPrompt: true, // 房主等待提示
+    waiting_countdown: 60, // 房主等待第一轮倒计时
+    waiting_countdown2: 180, // 房主等待第二轮倒计时
     messageReceived: false,
     showJumpBtn: false, // 跳过按钮在当前人的显隐
     sharePopStatus: false,
@@ -168,6 +172,24 @@ Page({
     rating: 4,
 
   },
+  // 房主等待倒计时开始
+  // startWaitingCountdown() {
+  //   console.log("进入");
+  //   const timer1 = setInterval(() => {
+  //     if (this.waiting_countdown > 0) {
+  //       this.waiting_countdown--;
+  //     } else {
+  //       clearInterval(timer1);
+  //       const timer2 = setInterval(() => {
+  //         if (this.waiting_countdown2 > 0) {
+  //           this.waiting_countdown2--;
+  //         } else {
+  //           clearInterval(timer2);
+  //         }
+  //       }, 1000);
+  //     }
+  //   }, 1000);
+  // },
   //关闭弹窗
   closePop(clear) {
     var that = this;
@@ -732,7 +754,7 @@ Page({
   onRemoveTeamMembers(teamMember) {
     let that = this
     // 未准备踢出时不执行
-    if(that.data.readyPopStatus && !that.data.isBeginPlay && !that.data.activityPopStatus) {
+    if (that.data.readyPopStatus && !that.data.isBeginPlay && !that.data.activityPopStatus) {
       return false
     }
     console.log('有人走了', teamMember.accounts[0]);
@@ -807,11 +829,11 @@ Page({
   // 发送消息
   sendTxtMsg(e) {
     var that = this;
-    if(e.currentTarget.dataset.speakstate && !that.data.inputText) {
+    if (e.currentTarget.dataset.speakstate && !that.data.inputText) {
       // 点击完成
       that.jumpConfirm('complete')
       return false
-    } 
+    }
     if (!that.data.inputText) {
       // 不发送空消息
       return false
@@ -827,22 +849,22 @@ Page({
     })
     console.log('正在发送p2p text消息, ' + msg.idClient);
   },
-  
-    // 回车键发送消息
-    sendMsg (val) {
-      console.log(val.detail.value);
-      var that = this;
-      console.log(this.data.teamId);
-      var msg = nim.sendText({
-          scene: 'team',
-          to: that.data.teamId,
-          text: val.detail.value,
-          done: that.pushMsg
-      });
-      this.setData({
-          inputText: ''
-      })
-      console.log('正在发送p2p text消息, ' + msg.idClient);
+
+  // 回车键发送消息
+  sendMsg(val) {
+    console.log(val.detail.value);
+    var that = this;
+    console.log(this.data.teamId);
+    var msg = nim.sendText({
+      scene: 'team',
+      to: that.data.teamId,
+      text: val.detail.value,
+      done: that.pushMsg
+    });
+    this.setData({
+      inputText: ''
+    })
+    console.log('正在发送p2p text消息, ' + msg.idClient);
   },
   // 发送自定义消息
   sendCustomMsg(type, val) {
@@ -1099,8 +1121,8 @@ Page({
                   icon: 'none',
                   duration: 2000,
                   mask: true,
-                  success: function() {
-                    setTimeout(function() {
+                  success: function () {
+                    setTimeout(function () {
                       that.leaveRoomClear()
                     }, 2000)
                   }
@@ -1108,7 +1130,7 @@ Page({
               } else {
                 that.leaveRoomClear()
               }
-              
+
             })
           }
         } else {
@@ -2087,7 +2109,7 @@ Page({
     })
   },
   //确认跳过
-  jumpConfirm: function (val) {   
+  jumpConfirm: function (val) {
     var that = this
     this.sendCustomMsg(6, {
       text: '跳过发言'
@@ -2456,12 +2478,13 @@ Page({
   //存储数据
   saveData: function () {
     if (!this.data.isTuiChuRoom) {
+      wx.setStorageSync('roomPath', this.data.pageOptions)
+      wx.setStorageSync('partyData', this.data)
       this.setData({
         topArr: formatMsgList(this.data.msgList).topArr,
         botArr: formatMsgList(this.data.msgList).botArr,
+        isDataReady: true,
       })
-      wx.setStorageSync('roomPath', this.data.pageOptions)
-      wx.setStorageSync('partyData', this.data)
     }
   },
 
@@ -2727,12 +2750,7 @@ Page({
     return nick
   },
   // 退出房间清缓存跳转
-  leaveRoomClear(jump) {
-    // 如果是事件对象则转化
-    console.log(typeof jump);
-    if (typeof jump !== 'string') {
-      jump = '/pages/index/index'
-    }
+  leaveRoomClear() {
     this.setData({
       partyData: null,
       roomData: null,
@@ -2752,9 +2770,8 @@ Page({
         }
       })
     }
-    console.log(jump);
     wx.reLaunch({
-      url: jump
+      url: '/pages/index/index'
     })
     // if (jump === 1) {
     //   console.log('清除缓存');
@@ -2873,6 +2890,7 @@ Page({
     this.sendCustomMsg(4, {
       text: '您已成为临时房主（无踢人权限）,快去邀请更多的人参与对话吧~'
     })
+    // this.startWaitingCountdown();
   },
   handleOpenGuiZe() {
     this.setData({
@@ -3052,6 +3070,7 @@ Page({
           personInd: 0,
         })
       }
+      console.log(666666666666666666666666666);
       that.saveData()
     })
     // onError
@@ -3400,7 +3419,7 @@ Page({
         title: '请登录授权进入下一步',
         showCancel: false,
         success: function (auth) {
-          that.leaveRoomClear('/pages/login/login')
+          that.checkRoomPath('/pages/login/login')
         }
       })
     } else if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
@@ -3408,10 +3427,29 @@ Page({
         title: '当前未完善您的头像和昵称，请完善后进行体验',
         showCancel: false,
         success: function (auth) {
-          that.leaveRoomClear('/pages/auth/auth')
+          // 登录完成后还需要返回房间
+          that.checkRoomPath('/pages/auth/auth')
         }
       })
     }
+  },
+
+  // roomPath 存储慢，设置间隔调用
+  checkRoomPath(path) {
+    var that = this
+    const intervalId = setInterval(() => {
+      if (that.data.isDataReady) {
+        // 数据为true，停止检查
+        clearInterval(intervalId);
+        wx.reLaunch({
+          url: path
+        })
+      } else {
+        wx.showLoading({
+          title: '正在加载...',
+        })
+      }
+    }, 700);
   },
 
   onUnload() {
