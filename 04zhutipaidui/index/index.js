@@ -65,6 +65,8 @@ Page({
     wx.removeStorageSync('roomPath')
     wx.removeStorageSync('partyData')
     wx.removeStorageSync('activeStatus')
+    wx.removeStorageSync('waiting_countdown')
+    wx.removeStorageSync('waiting_countdown2')
   },
   getThemeList() {
     getAskPartyList(this.data.listParams).then(res => {
