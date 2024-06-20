@@ -2,6 +2,10 @@
 import YunXinMiniappSDK from '../../NERTC_Miniapp_SDK_v4.6.11'
 import SDK from '../../NIM_Web_SDK_miniapp_v9.6.3'
 import config from "../../utils/config";
+
+import {
+  debounce,
+} from "../../utils/util";
 import {
   createBaoRoom,
   startPlayRoom,
@@ -48,7 +52,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    playerNum: 0, // 当前用户人数
     isDataReady: false, // saveData 方法数据是否储存成功
     showPrompt: false, // 房主等待提示
     waiting_countdown: 60, // 房主等待第一轮倒计时
@@ -242,6 +245,7 @@ Page({
   //-------------------------------------云信-----------------------------------------------------------
   //初始化房间
   initRoom() {
+    console.log("initRoom -------------");
     var token = wx.getStorageSync('loginInfo').yunToken;
     var account = wx.getStorageSync('loginInfo').yunId;
 
@@ -274,36 +278,11 @@ Page({
       onmsg: that.onMsg
     });
     if (that.data.roomData.ownerUserIm == account) {
-      let inProgressReturn = wx.getStorageSync('partyData')?.playerNum >= wx.getStorageSync('partyData').roomData?.minNumber
       that.setData({
         // 是否是房主
         isOwner: true,
         account: account,
-        showPrompt: !inProgressReturn ? true : false
       })
-      if (inProgressReturn) {
-        return false
-      }
-      // 是房主需展示等待倒计时
-      const countdown1 = wx.getStorageSync('waiting_countdown');
-      const countdown2 = wx.getStorageSync('waiting_countdown2');
-      console.log(countdown1, countdown2, "what?");
-      if (countdown1 || countdown2) {
-        if (countdown1 > 0) {
-          // 在页面加载时从缓存中恢复倒计时时间
-          this.setData({
-            waiting_countdown: countdown1
-          });
-          console.log(1111);
-          this.startWaitingCountdown();
-        } else {
-          console.log(2222, "第二个倒计时");
-          this.startSecondCountdown();
-        }
-      } else {
-        console.log(33333);
-        this.startWaitingCountdown()
-      }
     } else {
       that.setData({
         account: account,
@@ -609,9 +588,6 @@ Page({
     var that = this;
     console.log(that.data.teamId, );
     console.log('收到群组', e);
-    this.setData({
-      playerNum: e.length
-    })
     nim.getTeamMembers({
       teamId: that.data.teamId,
       done: that.getTeamMembersDone
@@ -631,6 +607,29 @@ Page({
         haveRoom: false
       })
       this.leaveRoomClear()
+    }
+  },
+  // 显示房主等待提示逻辑
+  showWaiting() {
+    console.log("showWaiting");
+    const that = this
+    that.setData({
+      showPrompt: true
+    })
+    const countdown1 = wx.getStorageSync('waiting_countdown');
+    const countdown2 = wx.getStorageSync('waiting_countdown2');
+    if (countdown1 || countdown2) {
+      if (countdown1 > 0) {
+        // 在页面加载时从缓存中恢复倒计时时间
+        this.setData({
+          waiting_countdown: countdown1
+        });
+        this.startWaitingCountdown();
+      } else {
+        this.startSecondCountdown();
+      }
+    } else {
+      this.startWaitingCountdown()
     }
   },
   // 群成员更新
@@ -659,6 +658,15 @@ Page({
           text: '欢迎 ' + res.data.data.rname + ' 进入心灵对话，请做好准备，对话马上开始'
         })
       })
+
+      // obj.members[closestIndex].account 为当前用户
+      // 判断当前用户数量是否符合最小开始数量，不符合则要显示房主等待倒计时
+      if(obj.members[closestIndex].account === this.data.roomData.ownerUserIm && this.showPrompt === false) {
+        this.showWaiting()
+      }
+    } else {
+      // 是房主或中途退出返回后还是一个人
+      this.showWaiting()
     }
     var that = this
     var accounts = []
@@ -783,7 +791,6 @@ Page({
 
   },
   stopWaitingCountdown() {
-    console.log(4444, "stop");
     this.startWaitingCountdown(true)
     this.startSecondCountdown(true)
   },
@@ -815,9 +822,6 @@ Page({
         truePlayerList.splice(index, 1)
       }
     })
-    console.log(truePlayerList.length, "truePlayerList.length");
-    console.log(that.data.isBeginPlay, "that.data.isBeginPlay");
-    console.log(that.data.isOwner, "that.data.isOwner");
     if (truePlayerList.length <= 1 && !that.data.isBeginPlay && !that.data.isOwner) {
       arr.forEach((item, index) => {
         if (item.account) {
@@ -936,16 +940,6 @@ Page({
     });
     console.log('正正在发送自定义消息 ' + msg);
   },
-  // 通过 playList 列表返回房间人数
-  getPlayNum(play) {
-    play.reduce((acc, obj) => {
-      if (obj && obj.hasOwnProperty('account')) {
-        return acc + 1;
-      } else {
-        return acc;
-      }
-    }, 0);
-  },
   //渲染消息
   pushMsg(error, msg) {
     var yunMsgList = this.data.yunMsgList //原始的所有云信的消息
@@ -994,22 +988,19 @@ Page({
         that.setData({
           msgList: msgList
         })
-        // 统计有几位用户
-        let playerNum = that.getPlayNum(play)
         that.setData({
-          playerList: play,
-          playerNum
+          playerList: play
         })
         //判断是否都准备了
         that.handleReadyStatus()
-        if (playerNum >= that.data.roomData.minNumber) {
-          console.log("人数够了");
-          // 用户满足最小开始人数时可以隐藏房主等待提示语
-          that.setData({
-            showPrompt: false
-          })
-          that.stopWaitingCountdown()
-        }
+        // if (playerNum >= that.data.roomData.minNumber) {
+        //   console.log("人数够了");
+        //   // 用户满足最小开始人数时可以隐藏房主等待提示语
+        //   that.setData({
+        //     showPrompt: false
+        //   })
+        //   that.stopWaitingCountdown()
+        // }
         // console.log(play)
       } else if (content.type == 2) {
         // 自定义消息type为2的时候 玩家是否轮到发言
@@ -1205,22 +1196,19 @@ Page({
               player2.splice(index, 1, {})
             }
           })
-          // 小于最小开始人数要显示房主等待提示
-          let playerNum = that.data.truePlayerList.length
           that.setData({
-            playerList: player2,
-            playerNum
+            playerList: player2
           })
-          if (playerNum < that.data.roomData.minNumber) {
+          if (that.data.truePlayerList.length < that.data.roomData.minNumber) {
             console.log("人不够");
             // 用户满足最小开始人数时可以隐藏房主等待提示语
             that.setData({
               waiting_countdown: 60,
               waiting_countdown2: 180,
               showPrompt: true,
+            }, () => {
+              that.startWaitingCountdown()
             })
-            console.log(555555);
-            that.startWaitingCountdown();
           }
           console.log(that.data.truePlayerList, 'that.data.playerList');
           if (content.data?.isOver) {
@@ -1562,7 +1550,15 @@ Page({
 
   // 房主等待倒计时
   startWaitingCountdown: function (stop = false) {
-    console.log("进入 1", stop);
+    console.log("进入 1", stop, this.data.waiting_countdown, this.data.waiting_countdown2);
+
+    if (stop) {
+      this.setData({
+        waiting_countdown: 0,
+        waiting_countdown2: 0,
+        showPrompt: false
+      })
+    }
     const countdownInterval = setInterval(() => {
       let countdown = this.data.waiting_countdown;
       countdown--;
@@ -1577,9 +1573,6 @@ Page({
       }
     }, 1000);
 
-    if (stop) {
-      clearInterval(countdownInterval);
-    }
   },
 
   startSecondCountdown: function (stop = false) {
@@ -1600,14 +1593,6 @@ Page({
       }
     }, 1000);
 
-    if (stop) {
-      clearInterval(secondCountdownInterval);
-      this.setData({
-        showPrompt: false
-      });
-      wx.removeStorageSync('waiting_countdown'); // 清除已完成的倒计时缓存
-      wx.removeStorageSync('waiting_countdown2');
-    }
   },
 
   //准备弹窗是否显示
@@ -2883,9 +2868,8 @@ Page({
     wx.removeStorageSync('roomData')
     wx.removeStorageSync('partyData')
     wx.removeStorageSync('roomPath')
-    wx.removeStorageSync('waiting_countdown')
-    wx.removeStorageSync('waiting_countdown2')
     wx.removeStorageSync('isLinShiFangZhu')
+    this.stopWaitingCountdown()
     // 清除nim实例
     if (nim) {
       nim.destroy({
@@ -2950,8 +2934,7 @@ Page({
       wx.removeStorageSync('partyData')
       wx.removeStorageSync('roomPath')
       wx.removeStorageSync('isLinShiFangZhu')
-      wx.removeStorageSync('waiting_countdown')
-      wx.removeStorageSync('waiting_countdown2')
+      this.stopWaitingCountdown()
       if (this.socket) {
 
       }

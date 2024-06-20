@@ -23,6 +23,22 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 };
 
+// 防抖
+const debounce = (fn, wait) => {
+  let timeout = null;
+  return function() {
+      let context = this;
+      let args = arguments;
+      if (timeout) clearTimeout(timeout);
+      let callNow = !timeout;
+      timeout = setTimeout(() => {
+          timeout = null;
+      }, wait);
+      if (callNow) fn.apply(context, args);
+  };
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  debounce
 };
