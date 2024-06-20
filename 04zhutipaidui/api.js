@@ -119,6 +119,11 @@ export const getIfFreeMy = function (roomId) {
     return http.get(handleURL('/getIfFreeMy'), roomId);
 }
 
+// 心灵对话 根据云信 account 查询用户名
+export const getRnameByYunId = function (account) {
+    return http.get(handleURL('/getRnameByYunId/' + account));
+}
+
 // 心灵对话 判断房间状态
 export const checkRoomIsFree = function (params) {
   return http.get(handleURL('/room/freeNum'), params);

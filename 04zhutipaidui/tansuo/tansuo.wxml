@@ -1,388 +1,278 @@
 <view wx:if="{{!showFupan}}">
-    <view class="hourse-set">
-        <view class="txt">
-            <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
-            <text bindtap="leaveAudioRoom">人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
-        </view>
-        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet"/>
+  <view class="hourse-set">
+    <view class="txt">
+      <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
+      <text bindtap="leaveAudioRoom">人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
     </view>
-    <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
-        <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
-        <block wx:for="{{stepList}}" wx:key="index">
-            <view class="item {{step == (index+1) ? 'active' : ''}} {{item.view ? 'view' : ''}}"
-                  bindtap="viewStep" data-step="{{index+1}}" wx:key="index">第{{index+1
-                }}轮
-            </view>
-        </block>
-        <view class="item {{step == (themeDetail.list.length+1) ? 'active' : ''}}" data-step="{{themeDetail.list.length+1}}" bindtap="viewStep">结语</view>
-    </scroll-view>
-    <view class="wp" wx:if="{{changeStep != themeDetail.list.length+1}}">
-        <view class="room-theme">
-            <view class="help">
-                <view class="left">
-                    <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg" bindtap="sendmsgggg">
-                    </image>
-                    <view class="ico" bindtap="handleOpenGuiZe">
-                        <image
-                                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-wh.png"></image>
-                        <text class="name">帮助</text>
-                    </view>
-                </view>
-                <view class="right">
-                    <rich-text nodes="{{helpText}}"></rich-text>
-                </view>
-            </view>
-            <view class="peoples">
-                <view class="item" wx:for="{{playerList}}" wx:for-index="index"
-                      wx:for-item="item" wx:key="index">
-                    <view
-                            class="{{ (isBeginPlay && !show_think_count_down && personInd == index)?'people active':'people' }} {{viewAccount === item.account ? 'view' : ''}}"
-                            bindtap="viewPeopleMsg"
-                            data-item="{{item}}">
-                        <view class="face">
-                            <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
-                                <image class="ready" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/play-status1.png"
-                                       wx:if="{{item.isReady && !isBeginPlay}}"></image>
-                            </image>
-                            <view class="ico2"  wx:if="{{!item.account && !isBeginPlay}}">
-                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-suo.png">
-                                </image>
-<!--                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs
+    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet" />
+  </view>
+  <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
+    <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
+    <block wx:for="{{stepList}}" wx:key="index">
+      <view class="item {{step == (index+1) ? 'active' : ''}} {{item.view ? 'view' : ''}}" bindtap="viewStep" data-step="{{index+1}}" wx:key="index">第{{index+1
+        }}轮
+      </view>
+    </block>
+    <view class="item {{step == (themeDetail.list.length+1) ? 'active' : ''}}" data-step="{{themeDetail.list.length+1}}" bindtap="viewStep">结语</view>
+  </scroll-view>
+  <view class="wp" wx:if="{{changeStep != themeDetail.list.length+1}}">
+    <view class="room-theme">
+      <view class="help">
+        <view class="left">
+          <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg" bindtap="sendmsgggg">
+          </image>
+          <view class="ico" bindtap="handleOpenGuiZe">
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-wh.png"></image>
+            <text class="name">帮助</text>
+          </view>
+        </view>
+        <view class="right">
+          <rich-text nodes="{{helpText}}"></rich-text>
+        </view>
+      </view>
+      <view class="peoples">
+        <view class="item" wx:for="{{playerList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+          <view class="{{ (isBeginPlay && !show_think_count_down && personInd == index)?'people active':'people' }} {{viewAccount === item.account ? 'view' : ''}}" bindtap="viewPeopleMsg" data-item="{{item}}">
+            <view class="face">
+              <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
+                <image class="ready" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/play-status1.png" wx:if="{{item.isReady && !isBeginPlay}}"></image>
+              </image>
+              <view class="ico2" wx:if="{{!item.account && !isBeginPlay}}">
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-suo.png">
+                </image>
+                <!--                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs
 .com/system/images/hsy/room-kong.png">-->
-<!--                                </image>-->
-                            </view>
-                        </view>
-                        <text class="name">{{item.nick}}</text>
-                    </view>
-                </view>
-                <scroll-view
-                    class="top-content"
-                    scroll-into-view="{{scrollTo}}"
-                    scroll-y="true"
-                    wx:if="{{stepCardList.length > 0}}"
-                >
-                    <view class="box">
-                        <block wx:for="{{stepCardList}}" wx:key="index" wx:for-index="indexlist">
-                            <view 
-                                wx:for-item="item"
-                                class="itemList sys"
-                                wx:key="index"
-                                >
-                                <view class="name">{{item.cardList[0].nick}}
-                                    <text class="huang">(第{{item.step}}轮)</text>拿到的牌：</view>
-                                <view class="card-box">
-                                    <view class="card-box-l">
-                                        <view class="card-img {{item.cardList[0].isOpen && !item.cardList[0].isOpened ? 'open' : ''}} {{item.cardList[0].isOpened ? 'show' : ''}}"
-                                              bindtap="clickCard"
-                                              data-index="0"
-                                              data-listindex="{{indexlist}}">
-                                            <view class="front">
-                                                <image mode="aspectFill" src="{{item.cardList[0].imgUrl}}"></image>
-                                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
-                                                       class="iconImg"
-                                                       data-img="{{item.cardList[0].imgUrl}}"
-                                                       catchtap="showImg"></image>
-                                            </view>
-                                            <view class="back">
-                                                <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
-                                            </view>
-                                        </view>
-                                    </view>
-                                    <view class="card-box-r">
-                                        <view
-                                                wx:if="{{item.cardList[1]}}"
-                                                class="card-img {{item.cardList[1].isOpen && !item.cardList[1].isOpened ? 'open' : ''}} {{item.cardList[1].isOpened ? 'show' : ''}}"
-                                                bindtap="clickCard" data-index="1"
-                                                data-listindex="{{indexlist}}">
-                                            <view class="front">
-                                                <image mode="aspectFill" src="{{item.cardList[1].imgUrl}}"></image>
-                                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
-                                                       class="iconImg"
-                                                       data-img="{{item.cardList[1].imgUrl}}"
-                                                       catchtap="showImg"></image>
-                                            </view>
-                                            <view class="back">
-                                                <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
-                                            </view>
-                                        </view>
-                                        <view
-                                                wx:if="{{item.cardList[2]}}"
-                                                class="card-img {{item.cardList[2].isOpen && !item.cardList[2].isOpened ? 'open' : ''}} {{item.cardList[2].isOpened ? 'show' : ''}}"
-                                                bindtap="clickCard" data-index="2"
-                                                data-listindex="{{indexlist}}">
-                                            <view class="front">
-                                                <image mode="aspectFill" src="{{item.cardList[2].imgUrl}}"></image>
-                                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png"
-                                                       class="iconImg"
-                                                       data-img="{{item.cardList[2].imgUrl}}"
-                                                       catchtap="showImg"></image>
-                                            </view>
-                                            <view class="back">
-                                                <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
-                                            </view>
-                                        </view>
-                                    </view>
-                                </view>
-                            </view>
-                        </block>
-                        <!-- 最后加一个垫底的节点 -->
-                        <view class="last-view" id="{{endId}}" style="height:20px;"></view>
-                    </view>
-                </scroll-view>
+                <!--                                </image>-->
+              </view>
             </view>
-            <view class="speak-con">
-            
-              <view wx:if="{{isOwner && !isBeginPlay && showPrompt}}" class="waiting_conutdown">
-                <p wx:if="{{waiting_countdown > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown }}s</p>
-                <p wx:elif="{{waiting_countdown2 > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown2 }}s</p>
-                <p wx:else>暂时没有伙伴想要开启本对话，您可以邀请好友或者参与别的话题</p>
-            </view>
-                <!--思考倒计时-->
-                <view class="count-down speckView" wx:if="{{show_think_count_down}}">思考倒计时
-                    <view>
-                        {{waitTime}}s
-                    </view>
-                    ，倒计时结束后可以发言
+            <text class="name">{{item.nick}}</text>
+          </view>
+        </view>
+        <scroll-view class="top-content" scroll-into-view="{{scrollTo}}" scroll-y="true" wx:if="{{stepCardList.length > 0}}">
+          <view class="box">
+            <block wx:for="{{stepCardList}}" wx:key="index" wx:for-index="indexlist">
+              <view wx:for-item="item" class="itemList sys" wx:key="index">
+                <view class="name">{{item.cardList[0].nick}}
+                  <text class="huang">(第{{item.step}}轮)</text>拿到的牌：
                 </view>
-                <!--发言倒计时-->
-                <view class="count-down" wx:if="{{show_speak_count_down}}">发言倒计时
-                    <view>
-                        {{waitTime}}s
+                <view class="card-box">
+                  <view class="card-box-l">
+                    <view class="card-img {{item.cardList[0].isOpen && !item.cardList[0].isOpened ? 'open' : ''}} {{item.cardList[0].isOpened ? 'show' : ''}}" bindtap="clickCard" data-index="0" data-listindex="{{indexlist}}">
+                      <view class="front">
+                        <image mode="aspectFill" src="{{item.cardList[0].imgUrl}}"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{item.cardList[0].imgUrl}}" catchtap="showImg"></image>
+                      </view>
+                      <view class="back">
+                        <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                      </view>
                     </view>
-                </view>
-                <!--闭麦时提示信息-->
-                <view class="count-down want_to_speck" wx:if="{{show_want_to_speck}}">
-                  <view>
-                    如需发言请手动开麦
+                  </view>
+                  <view class="card-box-r">
+                    <view wx:if="{{item.cardList[1]}}" class="card-img {{item.cardList[1].isOpen && !item.cardList[1].isOpened ? 'open' : ''}} {{item.cardList[1].isOpened ? 'show' : ''}}" bindtap="clickCard" data-index="1" data-listindex="{{indexlist}}">
+                      <view class="front">
+                        <image mode="aspectFill" src="{{item.cardList[1].imgUrl}}"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{item.cardList[1].imgUrl}}" catchtap="showImg"></image>
+                      </view>
+                      <view class="back">
+                        <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                      </view>
+                    </view>
+                    <view wx:if="{{item.cardList[2]}}" class="card-img {{item.cardList[2].isOpen && !item.cardList[2].isOpened ? 'open' : ''}} {{item.cardList[2].isOpened ? 'show' : ''}}" bindtap="clickCard" data-index="2" data-listindex="{{indexlist}}">
+                      <view class="front">
+                        <image mode="aspectFill" src="{{item.cardList[2].imgUrl}}"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{item.cardList[2].imgUrl}}" catchtap="showImg"></image>
+                      </view>
+                      <view class="back">
+                        <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                      </view>
+                    </view>
                   </view>
                 </view>
-                <scroll-view
-                    class="bot-content"
-                    scroll-into-view="{{scrollTo}}"
-                    scroll-y="true"
-                    wx:if="{{botArr.length > 0}}"
-                >
-                    <view class="box">
-                        <block wx:for="{{botArr}}" wx:key="index">
-                            <view
-                                wx:for-item="item"
-                                class="{{item.sysType != 'sys'?'item':'item sys'}}"
-                                wx:key="index">
-                                <view class="text" wx:if="item.text">
-                                    <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
-                                <text class="name a2" wx:else>系统：</text>
-                                    <text class="con">{{item.text}}</text>
-                                </view>
-                            </view>
-                        </block>
-                        <!-- 最后加一个垫底的节点 -->
-                        <view class="last-view" id="{{endId}}" style="height:20px;"></view>
-                    </view>
-                </scroll-view>
-            </view>
+              </view>
+            </block>
+            <!-- 最后加一个垫底的节点 -->
+            <view class="last-view" id="{{endId}}" style="height:20px;"></view>
+          </view>
+        </scroll-view>
+      </view>
+      <view class="speak-con">
+        <!-- 房主等待倒计时 -->
+        <view wx:if="{{isOwner && !isBeginPlay && showPrompt}}" class="waiting_conutdown">
+          <p wx:if="{{waiting_countdown > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown }}s</p>
+          <p wx:elif="{{waiting_countdown2 > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown2 }}s</p>
+          <p wx:else>暂时没有伙伴想要开启本对话，您可以邀请好友或者参与别的话题</p>
         </view>
-    </view>
-    <view class="theme-bot" wx:if="{{changeStep != themeDetail.list.length+1}}">
-        <view class="play" bindtap="publishAudio">
-            <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png" wx:if="{{voiceStatus == 1}}"></image>
-            <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio2.png" wx:if="{{voiceStatus == 0}}"></image>
-            <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
+        <!--思考倒计时-->
+        <view class="count-down speckView" wx:if="{{show_think_count_down}}">思考倒计时
+          <view>
+            {{waitTime}}s
+          </view>
+          ，倒计时结束后可以发言
         </view>
-                   <!-- wx:if="{{inputStatus}}" -->
-                   <!-- disabled="{{!inputStatus}}" -->
-        <view class="inp">
-            <input type="text"
-                   value="{{inputText}}"
-                   wx:if="{{inputStatus}}"
-                   disabled="{{!inputStatus}}"
-                   placeholder="说点什么吧..."
-                   confirm-type="send"
-                   bindinput="inputChange"
-                   bindconfirm="sendMsg"/>
+        <!--发言倒计时-->
+        <view class="count-down" wx:if="{{show_speak_count_down}}">发言倒计时
+          <view>
+            {{waitTime}}s
+          </view>
         </view>
-        <view class="btn" bindtap="handleReady"
-              wx:if="{{(!isReady&&!isOwner) && !isOwner && !isBeginPlay}}">
-            准备
+        <!--闭麦时提示信息-->
+        <view class="count-down want_to_speck" wx:if="{{show_want_to_speck}}">
+          <view>
+            如需发言请手动开麦
+          </view>
         </view>
-        <view  bindtap="cancelReady" class="btn disabled"
-               wx:if="{{isReady && !isOwner  && !isBeginPlay}}">
-            取消准备
-        </view>
-        <!-- 发言中的人有完成功能 -->
-        <view wx:if="{{isBeginPlay && showJumpBtn && !isJump && !show_think_count_down}}">
-          <view class="btn disabled" data-speakState="{{true}}" bindtap="sendTxtMsg"  wx:if="{{inputStatus}}">
-            {{inputText ? '发送' : '完成'}}
-        </view>
-        </view>
-        <view wx:else>
-        <view class="btn disabled" data-speakState="{{false}}" bindtap="sendTxtMsg"  wx:if="{{inputStatus}}">
-          发送
-        </view>
-        </view>
-        <view class="btn disabled" bindtap="jumpSpeak" wx:if="{{isBeginPlay && showJumpBtn && !isJump && !show_think_count_down}}">
-            跳过
-        </view>
-        <view class="own-btns" wx:if="{{isOwner && !isBeginPlay}}">
-            <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
-            <view class="btn" bindtap="handleInviRoad"  wx:if="{{!isMatch}}">匹配路人</view>
-            <view class="btn" bindtap="handleFastStart">开启对话</view>
-        </view>
-    </view>
-    
-   
-    <!-- 结语 -->
-    <view class="wp">
-        <view class="yinyan-box yinyan-box5" wx:if="{{changeStep == (themeDetail.list.length+1)}}">
-            <view class="box1">
-                <image class="avatar"
-                       src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
-                <view class="txt">
-                    {{themeDetail.tags}}
+        <scroll-view class="bot-content" scroll-into-view="{{scrollTo}}" scroll-y="true" wx:if="{{botArr.length > 0}}">
+          <view class="box">
+            <block wx:for="{{botArr}}" wx:key="index">
+              <view wx:for-item="item" class="{{item.sysType != 'sys'?'item':'item sys'}}" wx:key="index">
+                <view class="text" wx:if="item.text">
+                  <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
+                  <text class="name a2" wx:else>系统：</text>
+                  <text class="con">{{item.text}}</text>
                 </view>
-            </view>
-            <view class="box3">
-                <view class="box3-item">
-                    <view class="tit">对话解析</view>
-                    <view class="con">{{themeDetail.tips}}</view>
-                </view>
-                <view class="box3-item">
-                    <view class="tit">想要更深入的了解自己？</view>
-                    <view class="con"> 每个人都有自己认知的盲区。敞开自己，每个人都有自我认知的盲区。如果您想要更全面的探索本话题，获得问心认证教练的专业反馈，或者体验问心岛线下活动，欢迎联系我们。！</view>
-                </view>
-            </view>
-            <view class="box4">
-                <image class="box4-l" src="https://file.wxdao.net/2023-02/655ac759-acc1-4fc8-af91-14543152a35c.png"></image>
-                <image class="box4-r"
-                       src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
-            </view>
-            <view class="box5">
-                
-                <button class="share"  open-type="share">分享</button>
-                <view class="g-submit" bindtap="handleXieganwu">写感悟</view>
-                <view class="g-submit" bindtap="bindTuichufangjian">退出</view>
-            </view>
-        </view>
+              </view>
+            </block>
+            <!-- 最后加一个垫底的节点 -->
+            <view class="last-view" id="{{endId}}" style="height:20px;"></view>
+          </view>
+        </scroll-view>
+      </view>
     </view>
+  </view>
+  <view class="theme-bot" wx:if="{{changeStep != themeDetail.list.length+1}}">
+    <view class="play" bindtap="publishAudio">
+      <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png" wx:if="{{voiceStatus == 1}}"></image>
+      <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio2.png" wx:if="{{voiceStatus == 0}}"></image>
+      <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
+    </view>
+    <!-- wx:if="{{inputStatus}}" -->
+    <!-- disabled="{{!inputStatus}}" -->
+    <view class="inp">
+      <input type="text" value="{{inputText}}" wx:if="{{inputStatus}}" disabled="{{!inputStatus}}" placeholder="说点什么吧..." confirm-type="send" bindinput="inputChange" bindconfirm="sendMsg" />
+    </view>
+    <view class="btn" bindtap="handleReady" wx:if="{{(!isReady&&!isOwner) && !isOwner && !isBeginPlay}}">
+      准备
+    </view>
+    <view bindtap="cancelReady" class="btn disabled" wx:if="{{isReady && !isOwner  && !isBeginPlay}}">
+      取消准备
+    </view>
+    <!-- 发言中的人有完成功能 -->
+    <view wx:if="{{isBeginPlay && showJumpBtn && !isJump && !show_think_count_down}}">
+      <view class="btn disabled" data-speakState="{{true}}" bindtap="sendTxtMsg" wx:if="{{inputStatus}}">
+        {{inputText ? '发送' : '完成'}}
+      </view>
+    </view>
+    <view wx:else>
+      <view class="btn disabled" data-speakState="{{false}}" bindtap="sendTxtMsg" wx:if="{{inputStatus}}">
+        发送
+      </view>
+    </view>
+    <view class="btn disabled" bindtap="jumpSpeak" wx:if="{{isBeginPlay && showJumpBtn && !isJump && !show_think_count_down}}">
+      跳过
+    </view>
+    <view class="own-btns" wx:if="{{isOwner && !isBeginPlay}}">
+      <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
+      <view class="btn" bindtap="handleInviRoad" wx:if="{{!isMatch}}">匹配路人</view>
+      <view class="btn" bindtap="handleFastStart">开启对话</view>
+    </view>
+  </view>
+
+
+  <!-- 结语 -->
+  <view class="wp">
+    <view class="yinyan-box yinyan-box5" wx:if="{{changeStep == (themeDetail.list.length+1)}}">
+      <view class="box1">
+        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
+        <view class="txt">
+          {{themeDetail.tags}}
+        </view>
+      </view>
+      <view class="box3">
+        <view class="box3-item">
+          <view class="tit">对话解析</view>
+          <view class="con">{{themeDetail.tips}}</view>
+        </view>
+        <view class="box3-item">
+          <view class="tit">想要更深入的了解自己？</view>
+          <view class="con"> 每个人都有自己认知的盲区。敞开自己，每个人都有自我认知的盲区。如果您想要更全面的探索本话题，获得问心认证教练的专业反馈，或者体验问心岛线下活动，欢迎联系我们。！</view>
+        </view>
+      </view>
+      <view class="box4">
+        <image class="box4-l" src="https://file.wxdao.net/2023-02/655ac759-acc1-4fc8-af91-14543152a35c.png"></image>
+        <image class="box4-r" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
+      </view>
+      <view class="box5">
+
+        <button class="share" open-type="share">分享</button>
+        <view class="g-submit" bindtap="handleXieganwu">写感悟</view>
+        <view class="g-submit" bindtap="bindTuichufangjian">退出</view>
+      </view>
+    </view>
+  </view>
 </view>
-<view wx:if="{{audioPushUrl!==''}}" >
-    <live-pusher  
-        wx:key="livePusher"
-        style="display:inline-block;width:0;height:0;"
-        mode="RTC"
-        url="{{audioPushUrl}}"
-        autopush="true"
-        enable-mic="{{ pushIsMuted }}"
-        enable-camera="{{false}}"
-    />  
+<view wx:if="{{audioPushUrl!==''}}">
+  <live-pusher wx:key="livePusher" style="display:inline-block;width:0;height:0;" mode="RTC" url="{{audioPushUrl}}" autopush="true" enable-mic="{{ pushIsMuted }}" enable-camera="{{false}}" />
 </view>
 
 
 <view wx:for="{{remoteStreams}}" wx:key="url" wx:if="{{remoteStreams.length > 0}}">
-    <live-player 
-    style="display:inline-block;width:0;height:0;" 
-    data-user="{{uid}}"
-    wx:if="{{item.uid !== uid}}" 
-    src="{{item.url}}"  
-    mode="RTC" 
-    debug="true" 
-    min-cache="0.2"
-    muted="{{playIsMuted}}"
-    max-cache="0.8"  
-    auto-pause-if-navigate= "true"
-    auto-pause-if-open-native= "true"
-    autoplay="true" 
-    />
+  <live-player style="display:inline-block;width:0;height:0;" data-user="{{uid}}" wx:if="{{item.uid !== uid}}" src="{{item.url}}" mode="RTC" debug="true" min-cache="0.2" muted="{{playIsMuted}}" max-cache="0.8" auto-pause-if-navigate="true" auto-pause-if-open-native="true" autoplay="true" />
 </view>
-  
+
 <!--结尾畅聊-->
 <view class="fupan" wx:if="{{showFupan && !isLastPeople}}">
-    <view class="title">
-        <image
-                src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png"
-                mode="scaleToFill"
-        />
-        <view class="txt">
-            为他点赞提升匹配到的概率
-        </view>
+  <view class="title">
+    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png" mode="scaleToFill" />
+    <view class="txt">
+      为他点赞提升匹配到的概率
     </view>
-    <view class="list">
-        <view class="person" wx:for="{{showPlayerList}}" wx:key="index">
-            <view class="avatar">
-                <image
-                        src="{{item.avatar}}"
-                        mode="scaleToFill"
-                />
-                <view class="num">{{index+1}}</view>
-                <view class="tx"
-                      wx:if="{{account !== item.account}}"
-                      bindtap="handleTousu2" data-item="{{item}}">投诉</view>
-            </view>
-            <view class="name">{{item.nick}}</view>
-            <view class="zan" bindtap="dianZan" data-index="{{index}}">
-                <image
-                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan2.png"
-                        mode="scaleToFill"
-                        wx:if="{{!item.zan}}"
-                />
-                <image
-                        src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png"
-                        mode="scaleToFill"
-                        wx:else
-                />
-                <view class="txt" wx:if="{{item.zan}}">{{item.zan}}</view>
-            </view>
-        </view>
+  </view>
+  <view class="list">
+    <view class="person" wx:for="{{showPlayerList}}" wx:key="index">
+      <view class="avatar">
+        <image src="{{item.avatar}}" mode="scaleToFill" />
+        <view class="num">{{index+1}}</view>
+        <view class="tx" wx:if="{{account !== item.account}}" bindtap="handleTousu2" data-item="{{item}}">投诉</view>
+      </view>
+      <view class="name">{{item.nick}}</view>
+      <view class="zan" bindtap="dianZan" data-index="{{index}}">
+        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan2.png" mode="scaleToFill" wx:if="{{!item.zan}}" />
+        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png" mode="scaleToFill" wx:else />
+        <view class="txt" wx:if="{{item.zan}}">{{item.zan}}</view>
+      </view>
     </view>
-    <view class="bot-fix">
-        <view class="countdown">
-            <text class="time">{{sec}}s</text>
-            <text>后关闭复盘环节</text>
-        </view>
-        <view class="btns">
-            <view class="lx" bindtap="openKefu">添加客服</view>
-            <view class="fp-btns">
-                <view class="say">
-                    <image
-                        src="https://file.wxdao.net/2023-03/ba07ede1-7354-4856-8661-2945462ea4c9.png"
-                        mode="scaleToFill"
-                        wx:if="{{fupanIsSay}}"
-                        bindtap="handleToggleFupanIsSay"
-                    />
-                    <image
-                        src="https://file.wxdao.net/2023-03/23ccfdd6-b0d2-405d-aa97-a0ae28705cf3.png"
-                        mode="scaleToFill"
-                        wx:else
-                        bindtap="handleToggleFupanIsSay"
-                    />
-                </view>
-                <view class="say">
-                    <image
-                        src="https://file.wxdao.net/2023-03/7714487f-3fad-4e19-975b-f81603fada72.png"
-                        mode="scaleToFill"
-                        wx:if="{{fupanIsVoice}}"
-                        bindtap="handleToggleFupanIsVoice"
-                    />
-                    <image
-                        src="https://file.wxdao.net/2023-03/d6a1af8b-fa67-4032-bd66-274f439d5ed5.png"
-                        mode="scaleToFill"
-                        wx:else
-                        bindtap="handleToggleFupanIsVoice"
-                    />
-                </view>
-            </view>
-            <!-- <view class="leave" bindtap="handleTiaoguo">跳过</view> -->
-            <view class="leave" bindtap="handleTiaoguo">跳过</view>
-        </view>
+  </view>
+  <view class="bot-fix">
+    <view class="countdown">
+      <text class="time">{{sec}}s</text>
+      <text>后关闭复盘环节</text>
     </view>
+    <view class="btns">
+      <view class="lx" bindtap="openKefu">添加客服</view>
+      <view class="fp-btns">
+        <view class="say">
+          <image src="https://file.wxdao.net/2023-03/ba07ede1-7354-4856-8661-2945462ea4c9.png" mode="scaleToFill" wx:if="{{fupanIsSay}}" bindtap="handleToggleFupanIsSay" />
+          <image src="https://file.wxdao.net/2023-03/23ccfdd6-b0d2-405d-aa97-a0ae28705cf3.png" mode="scaleToFill" wx:else bindtap="handleToggleFupanIsSay" />
+        </view>
+        <view class="say">
+          <image src="https://file.wxdao.net/2023-03/7714487f-3fad-4e19-975b-f81603fada72.png" mode="scaleToFill" wx:if="{{fupanIsVoice}}" bindtap="handleToggleFupanIsVoice" />
+          <image src="https://file.wxdao.net/2023-03/d6a1af8b-fa67-4032-bd66-274f439d5ed5.png" mode="scaleToFill" wx:else bindtap="handleToggleFupanIsVoice" />
+        </view>
+      </view>
+      <!-- <view class="leave" bindtap="handleTiaoguo">跳过</view> -->
+      <view class="leave" bindtap="handleTiaoguo">跳过</view>
+    </view>
+  </view>
 </view>
 
 
 
 <!-- 倒计时 -->
-<view class="timeDown" wx:if="{{ timePopStatus}}"><view>
+<view class="timeDown" wx:if="{{ timePopStatus}}">
+  <view>
     {{waitTime}}
-</view>
   </view>
+</view>
 <!--分享到-->
 <!-- <block wx:if="{{sharePopStatus}}">
     <view class="pop-mask"></view>
@@ -405,29 +295,29 @@
 
 <!-- 活动提示 -->
 <block wx:if="{{activityPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">活动提示</view>
-        <view class="desc">我是问心小精灵 , 是本场对话的活动主持人。请来到可以语音外放的环境 或 佩戴耳机。</view>
-        <view class="checkbox" bindtap="activityChange">
-            <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-check1.png" wx:if="{{!activeStatus}}"></image>
-            <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-check2.png" wx:else></image>
-            <text>不再提示</text>
-        </view>
-        <view class="btns">
-            <view class="close btn" bindtap="cancelActivityPop">退出</view>
-            <view class="ok btn" bindtap="closeActivityPop">准备好了</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">活动提示</view>
+    <view class="desc">我是问心小精灵 , 是本场对话的活动主持人。请来到可以语音外放的环境 或 佩戴耳机。</view>
+    <view class="checkbox" bindtap="activityChange">
+      <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-check1.png" wx:if="{{!activeStatus}}"></image>
+      <image class="ico" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-check2.png" wx:else></image>
+      <text>不再提示</text>
     </view>
+    <view class="btns">
+      <view class="close btn" bindtap="cancelActivityPop">退出</view>
+      <view class="ok btn" bindtap="closeActivityPop">准备好了</view>
+    </view>
+  </view>
 </block>
 
 <!-- 准备提示   " -->
 <block wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}">
-    <view class="ready-fix">
-        请 {{readyTime}}S 内点击准备
-    </view>
+  <view class="ready-fix">
+    请 {{readyTime}}S 内点击准备
+  </view>
 </block>
-  
+
 <!-- <block wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}">
     <view class="pop-mask"></view>
     <view class="pop-win2" style="z-index: 799;">
@@ -455,403 +345,376 @@
 </block> -->
 <!-- 至少两人开始对话 -->
 <block wx:if="{{mixPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">至少{{roomData.minNumber}}人开始对话</view>
-        <view class="desc">至少<text class="num">{{roomData.minNumber}}</text>人才可以开始对话，请邀请好友或匹配路人玩家！
-        </view>
-        <view class="btns">
-            <view class="btn ok" bindtap="closePop">知道了</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">至少{{roomData.minNumber}}人开始对话</view>
+    <view class="desc">至少<text class="num">{{roomData.minNumber}}</text>人才可以开始对话，请邀请好友或匹配路人玩家！
     </view>
+    <view class="btns">
+      <view class="btn ok" bindtap="closePop">知道了</view>
+    </view>
+  </view>
 </block>
 <!-- 跳过提示 -->
 
 <block wx:if="{{jumpPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">提示</view>
-        <view class="desc">
-            <view>
-                每场只有  
-                <text class="num">2</text>
-                次提跳过机会，请珍惜~
-            </view>
-        </view>
-        <view class="btns">
-            <view class="btn close" bindtap="closePop">取消</view>
-            <view class="btn close" bindtap="jumpConfirm">确定跳过</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">提示</view>
+    <view class="desc">
+      <view>
+        每场只有
+        <text class="num">2</text>
+        次提跳过机会，请珍惜~
+      </view>
     </view>
+    <view class="btns">
+      <view class="btn close" bindtap="closePop">取消</view>
+      <view class="btn close" bindtap="jumpConfirm">确定跳过</view>
+    </view>
+  </view>
 </block>
 <block wx:if="{{jumpPopStatus2}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">提示</view>
-        <view class="desc">
-            <view>
-                这是您最后 <text class="num">1</text>次跳过机会，请珍惜~
-            </view>
-        </view>
-        <view class="btns">
-            <view class="btn close" bindtap="closePop">取消</view>
-            <view class="btn close" bindtap="jumpConfirm">确定跳过</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">提示</view>
+    <view class="desc">
+      <view>
+        这是您最后 <text class="num">1</text>次跳过机会，请珍惜~
+      </view>
     </view>
+    <view class="btns">
+      <view class="btn close" bindtap="closePop">取消</view>
+      <view class="btn close" bindtap="jumpConfirm">确定跳过</view>
+    </view>
+  </view>
 </block>
 <block wx:if="{{jumpPopStatus3}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">提示</view>
-        <view class="desc">
-            <view>
-                您已跳过
-                <text class="num">2</text>
-                轮
-            </view>
-            再次跳过将视为
-            <text class="num">放弃</text>
-        </view>
-        <view class="btns">
-            <view class="btn close" bindtap="closePop">取消</view>
-            <view class="btn ok" bindtap="jumpConfirm">确定</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">提示</view>
+    <view class="desc">
+      <view>
+        您已跳过
+        <text class="num">2</text>
+        轮
+      </view>
+      再次跳过将视为
+      <text class="num">放弃</text>
     </view>
+    <view class="btns">
+      <view class="btn close" bindtap="closePop">取消</view>
+      <view class="btn ok" bindtap="jumpConfirm">确定</view>
+    </view>
+  </view>
 </block>
 <block wx:if="{{jumpPopStatus5}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">提示</view>
-        <view class="desc">
-            <view>
-                由于您 
-                <text class="num">30</text>
-                s 内没有发言，系统已自动跳过本轮
-            </view>
-        </view>
-        <view class="btns">
-            <view class="btn ok" bindtap="jumpConfirmChaoShi">确定</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">提示</view>
+    <view class="desc">
+      <view>
+        由于您
+        <text class="num">30</text>
+        s 内没有发言，系统已自动跳过本轮
+      </view>
     </view>
+    <view class="btns">
+      <view class="btn ok" bindtap="jumpConfirmChaoShi">确定</view>
+    </view>
+  </view>
 </block>
 <!-- 中途退出提醒 -->
 <block wx:if="{{isZhongTuTuiChu}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">提示</view>
-        <view class="desc">
-            中途退出对话将降低匹配成功率
-        </view>
-        <view class="btns">
-            <view class="btn  close" bindtap="clickZhongTuQuitRoom">确认退出</view>
-            <view class="btn ok" bindtap="closePop">继续对话</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">提示</view>
+    <view class="desc">
+      中途退出对话将降低匹配成功率
     </view>
+    <view class="btns">
+      <view class="btn  close" bindtap="clickZhongTuQuitRoom">确认退出</view>
+      <view class="btn ok" bindtap="closePop">继续对话</view>
+    </view>
+  </view>
 </block>
 <!-- 成为临时房主提醒 -->
 <block wx:if="{{isLinShiFangZhu}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">是否成为临时房主？</view>
-        <view class="desc">
-            邀请更多人来参与对话
-            <view>（AA制）</view>
-        </view>
-        <view class="btns">
-            <view class="btn  close" bindtap="backPrev">返回</view>
-            <view class="btn ok" bindtap="handleIsLinShiFz">确定</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">是否成为临时房主？</view>
+    <view class="desc">
+      邀请更多人来参与对话
+      <view>（AA制）</view>
     </view>
+    <view class="btns">
+      <view class="btn  close" bindtap="backPrev">返回</view>
+      <view class="btn ok" bindtap="handleIsLinShiFz">确定</view>
+    </view>
+  </view>
 </block>
 <!-- 踢人 -->
 <block wx:if="{{kickPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
-               bindtap="closePop" data-pop="kickPopStatus"></image>
-        <view class="person">
-            <image class="ico" src="{{kickPlayer.avatar}}"></image>
-            <view class="name">{{kickPlayer.nick}}</view>
-        </view>
-        <view class="btns">
-<!--            <view class="btn close" bindtap="handleKickDone" wx:if="{{kickPopType === 1}}">踢出房间-->
-<!--            </view>-->
-            <view class="btn close" bindtap="handleTousu" wx:if="{{kickPopType === 1 || kickPopType === 2}}">投诉
-            </view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop" data-pop="kickPopStatus"></image>
+    <view class="person">
+      <image class="ico" src="{{kickPlayer.avatar}}"></image>
+      <view class="name">{{kickPlayer.nick}}</view>
     </view>
+    <view class="btns">
+      <!--            <view class="btn close" bindtap="handleKickDone" wx:if="{{kickPopType === 1}}">踢出房间-->
+      <!--            </view>-->
+      <view class="btn close" bindtap="handleTousu" wx:if="{{kickPopType === 1 || kickPopType === 2}}">投诉
+      </view>
+    </view>
+  </view>
 </block>
 <!-- 匹配路人 -->
 <block wx:if="{{passerPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">确认开始匹配路人吗？</view>
-        <view class="desc">
-            匹配路人参与者则不能再邀请好友，请先邀请好友！
-        </view>
-        <view class="btns">
-            <view class="btn  close" bindtap="closePop">取消</view>
-            <view class="btn ok" bindtap="handleInviRoadDone">确认匹配</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">确认开始匹配路人吗？</view>
+    <view class="desc">
+      匹配路人参与者则不能再邀请好友，请先邀请好友！
     </view>
+    <view class="btns">
+      <view class="btn  close" bindtap="closePop">取消</view>
+      <view class="btn ok" bindtap="handleInviRoadDone">确认匹配</view>
+    </view>
+  </view>
 </block>
 <!-- 继续匹配路人 -->
 <block wx:if="{{contPasserPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">是否继续等待路人</view>
-        <view class="desc">
-            没有路人参与者，可以邀请好友参与
-        </view>
-        <view class="btns">
-            <view class="btn  close" bindtap="closePop">知道了</view>
-            <view class="btn ok" bindtap="handleInviRoadDone">继续匹配</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">是否继续等待路人</view>
+    <view class="desc">
+      没有路人参与者，可以邀请好友参与
     </view>
+    <view class="btns">
+      <view class="btn  close" bindtap="closePop">知道了</view>
+      <view class="btn ok" bindtap="handleInviRoadDone">继续匹配</view>
+    </view>
+  </view>
 </block>
 <!-- 房间设置 -->
 <block wx:if="{{roomSetPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">房间设置</view>
-        <view class="roomset">
-            <view class="item">
-                <text class="name">房间ID</text>
-                <text class="num">{{roomData.imGroup}}</text>
-            </view>
-            <view class="item">
-                <text class="name">开局人数</text>
-                <text class="num">{{themeDetail.minNumber}}-{{themeDetail.maxNumber}}人</text>
-            </view>
-            <view class="line"></view>
-            <block wx:if="{{isOwner && !isMatch}}">
-                <view class="kick-tit">踢出玩家</view>
-                <view class="kick-list">
-                    <block wx:for="{{playerList}}" wx:key="index">
-                    <view class="kick-item" wx:if="{{item && item.account && item.account!=roomData.ownerUserIm}}">
-                        <view class="l">
-                            <view class="face">
-                                <image src="{{item.avatar}}"></image>
-                            </view>
-                            <view class="name">{{item.nick}}</view>
-                        </view>
-                        <view class="r" bindtap="handleKickDone" data-item="{{item}}">踢出</view>
-                    </view>
-                    </block>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">房间设置</view>
+    <view class="roomset">
+      <view class="item">
+        <text class="name">房间ID</text>
+        <text class="num">{{roomData.imGroup}}</text>
+      </view>
+      <view class="item">
+        <text class="name">开局人数</text>
+        <text class="num">{{themeDetail.minNumber}}-{{themeDetail.maxNumber}}人</text>
+      </view>
+      <view class="line"></view>
+      <block wx:if="{{isOwner && !isMatch}}">
+        <view class="kick-tit">踢出玩家</view>
+        <view class="kick-list">
+          <block wx:for="{{playerList}}" wx:key="index">
+            <view class="kick-item" wx:if="{{item && item.account && item.account!=roomData.ownerUserIm}}">
+              <view class="l">
+                <view class="face">
+                  <image src="{{item.avatar}}"></image>
                 </view>
-            </block>
+                <view class="name">{{item.nick}}</view>
+              </view>
+              <view class="r" bindtap="handleKickDone" data-item="{{item}}">踢出</view>
+            </view>
+          </block>
         </view>
-        <view class="btns" bindtap="closePop">
-            <view class="btn ok">确定</view>
-        </view>
-        <view class="quit-btn" bindtap="handleZhongTuTuiChu">
-            <text>退出房间</text>
-            <image src="/static/SignOut.png"></image>
-        </view>
+      </block>
     </view>
+    <view class="btns" bindtap="closePop">
+      <view class="btn ok">确定</view>
+    </view>
+    <view class="quit-btn" bindtap="handleZhongTuTuiChu">
+      <text>退出房间</text>
+      <image src="/static/SignOut.png"></image>
+    </view>
+  </view>
 </block>
 <!-- 被踢出房间 -->
 <block wx:if="{{isBeiTi && beiTiAccount == account}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">提示</view>
-        <view class="desc">
-            <view>您已被房主</view>
-            <view>抱出房间</view>
-        </view>
-        <view class="btns">
-            <view class="btn ok" bindtap="leaveRoomClear">确定</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">提示</view>
+    <view class="desc">
+      <view>您已被房主</view>
+      <view>抱出房间</view>
     </view>
+    <view class="btns">
+      <view class="btn ok" bindtap="leaveRoomClear">确定</view>
+    </view>
+  </view>
 </block>
 <!--投诉-->
 <block>
-    <view class="tousu-wrap" wx:if="{{showTousuPop}}">
-        <view class="tousu-mask"></view>
-        <view class="tousu">
-            <view class="pop-tit">投诉</view>
-            <image class="pop-close"
-                   src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
-                   bindtap="closePop" data-pop="showTousuPop"></image>
-            <view class="tousu-content">
-                <view class="title">要投诉的岛民</view>
-                <view class="person">
-                    <image
-                            src="{{kickPlayer.avatar}}"
-                            mode="scaleToFill"
-                    />
-                    <view class="txt">
-                        {{ kickPlayer.nick}}
-                    </view>
-                </view>
-                <view class="title">投诉理由</view>
-                <view class="radio-box">
-                    <radio-group bindchange="radioChange">
-                        <label class="label-radio">
-                            <radio value="1" checked="true"/>
-                            语音一直跳过
-                        </label>
-                        <label class="label-radio">
-                            <radio value="2"/>
-                            内容过于阴暗、暴力、涉黄
-                        </label>
-                        <label class="label-radio">
-                            <radio value="3"/>
-                            推送广告
-                        </label>
-                        <label class="label-radio">
-                            <radio value="4"/>
-                            骂人
-                        </label>
-                    </radio-group>
-                </view>
-                <view class="title">上传图片（{{tousuImage.length}}/4）</view>
-                <view class="upload">
-                    <block wx:if="{{tousuImage && tousuImage.length > 0}}">
-                        <view class="image"
-                              wx:key="index"
-                              wx:for="{{tousuImage}}">
-                            <image
-                                    bindtap="delPic"
-                                    data-index="{{index}}"
-                                    class="close"
-                                    src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
-                            <image
-                                    mode="widthFix"
-                                    src="{{item}}"></image>
-                        </view>
-                    </block>
-                    
-                    <image
-                            wx:if="{{tousuImage.length < 4}}"
-                            bindtap="callGetPic" class="add"
-                            src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/upload.png"></image>
-                </view>
-                <view class="title">文字描述</view>
-                <view class="textarea">
-                        <textarea
-                                bindinput="textInput"
-                                v-model="tousuTextarea"
-                                placeholder="请用文字描述投诉内容..."
-                                placeholder-class="textarea-placeholder"
-                                class="area"
-                        />
-                </view>
-            </view>
-            <view class="btn-submit" catchtap="tousuSubmit">提交</view>
+  <view class="tousu-wrap" wx:if="{{showTousuPop}}">
+    <view class="tousu-mask"></view>
+    <view class="tousu">
+      <view class="pop-tit">投诉</view>
+      <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop" data-pop="showTousuPop"></image>
+      <view class="tousu-content">
+        <view class="title">要投诉的岛民</view>
+        <view class="person">
+          <image src="{{kickPlayer.avatar}}" mode="scaleToFill" />
+          <view class="txt">
+            {{ kickPlayer.nick}}
+          </view>
         </view>
+        <view class="title">投诉理由</view>
+        <view class="radio-box">
+          <radio-group bindchange="radioChange">
+            <label class="label-radio">
+              <radio value="1" checked="true" />
+              语音一直跳过
+            </label>
+            <label class="label-radio">
+              <radio value="2" />
+              内容过于阴暗、暴力、涉黄
+            </label>
+            <label class="label-radio">
+              <radio value="3" />
+              推送广告
+            </label>
+            <label class="label-radio">
+              <radio value="4" />
+              骂人
+            </label>
+          </radio-group>
+        </view>
+        <view class="title">上传图片（{{tousuImage.length}}/4）</view>
+        <view class="upload">
+          <block wx:if="{{tousuImage && tousuImage.length > 0}}">
+            <view class="image" wx:key="index" wx:for="{{tousuImage}}">
+              <image bindtap="delPic" data-index="{{index}}" class="close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-del.png"></image>
+              <image mode="widthFix" src="{{item}}"></image>
+            </view>
+          </block>
+
+          <image wx:if="{{tousuImage.length < 4}}" bindtap="callGetPic" class="add" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/upload.png"></image>
+        </view>
+        <view class="title">文字描述</view>
+        <view class="textarea">
+          <textarea bindinput="textInput" v-model="tousuTextarea" placeholder="请用文字描述投诉内容..." placeholder-class="textarea-placeholder" class="area" />
+        </view>
+      </view>
+      <view class="btn-submit" catchtap="tousuSubmit">提交</view>
     </view>
+  </view>
 </block>
 <!--放大卡牌-->
 <block wx:if="{{bigPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-big">
-        <image class="big-pic" src="{{selectImgUrl}}" mode="widthFix"></image>
-        <image class="pop-close-bot"
-               src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png"
-               bindtap="closeImgPop"></image>
-    </view>
+  <view class="pop-mask"></view>
+  <view class="pop-big">
+    <image class="big-pic" src="{{selectImgUrl}}" mode="widthFix"></image>
+    <image class="pop-close-bot" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/pop-close.png" bindtap="closeImgPop"></image>
+  </view>
 </block>
 <!-- 添加客服 -->
 <block wx:if="{{kefuPop}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win">
-        <view class="pop-tit">添加客服</view>
-        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png"
-               bindtap="closePop"></image>
-        <view class="qr">
-            想获得更多解读，添加企业二维码 寻求卡牌获得帮助！
-            <image 
-                       src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win">
+    <view class="pop-tit">添加客服</view>
+    <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
+    <view class="qr">
+      想获得更多解读，添加企业二维码 寻求卡牌获得帮助！
+      <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
     </view>
+  </view>
 </block>
 <!-- 退出房间 -->
 <block wx:if="{{isTuichufangjian}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">退出房间</view>
-        <view class="desc">
-            确定要退出房间吗？
-        </view>
-        <view class="btns">
-            <view class="btn  close" bindtap="closePop">取消</view>
-            <view class="btn ok" bindtap="clickQuitRoom">确定</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">退出房间</view>
+    <view class="desc">
+      确定要退出房间吗？
     </view>
+    <view class="btns">
+      <view class="btn  close" bindtap="closePop">取消</view>
+      <view class="btn ok" bindtap="clickQuitRoom">确定</view>
+    </view>
+  </view>
 </block>
 <!-- 对话已经开始 -->
 <block wx:if="{{isPaiduiKaishi}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">提示</view>
-        <view class="desc">
-            <text>活动已开始，非常抱歉！\n您可以匹配新对话</text>
-        </view>
-        <view class="btns">
-            <view class="btn ok" bindtap="handlePaiduikaishi">确定</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">提示</view>
+    <view class="desc">
+      <text>活动已开始，非常抱歉！\n您可以匹配新对话</text>
     </view>
+    <view class="btns">
+      <view class="btn ok" bindtap="handlePaiduikaishi">确定</view>
+    </view>
+  </view>
 </block>
 <!-- 【房间匹配规则】 -->
 <block wx:if="{{isRoomGuiZe}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">【房间匹配规则】</view>
-        <view class="desc tal">
-            <view>1、您需要找到安静的环境，探索过程中会有声音外放，同时您需要使用语音功能与其他岛民交流。</view>
-            <view>2、房间内超过<text class="num">【4】</text>位岛民准备，就会开始倒计时10秒启动问心探索。未准备的岛民会被踢出房间。</view>
-            <view>3、若没有其他参与者准备，1分钟后，会为您开启与问心精灵的互动探索。</view>
-        </view>
-        <view class="btns">
-            <view class="btn ok" bindtap="closePop">确定</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">【房间匹配规则】</view>
+    <view class="desc tal">
+      <view>1、您需要找到安静的环境，探索过程中会有声音外放，同时您需要使用语音功能与其他岛民交流。</view>
+      <view>2、房间内超过<text class="num">【4】</text>位岛民准备，就会开始倒计时10秒启动问心探索。未准备的岛民会被踢出房间。</view>
+      <view>3、若没有其他参与者准备，1分钟后，会为您开启与问心精灵的互动探索。</view>
     </view>
+    <view class="btns">
+      <view class="btn ok" bindtap="closePop">确定</view>
+    </view>
+  </view>
 </block>
 <!-- 别的用户离开房间 -->
 <!-- 第一次出现赠送 -->
 <block wx:if="{{lastPeoplePop1 && changeStep != (themeDetail.list.length+1)}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">提示</view>
-        <view class="desc tac">
-            <view>很抱歉 <text class="num">{{leaveUserInfor.userName}}</text> 已离开</view>
-                <view>您是否继续进行对话？</view>
-                <view>（本次对话将免费赠送）</view>
-        </view>
-        <view class="btns">
-            <view class="btn close" bindtap="leaveRoomClear">离开</view>
-            <view class="btn ok" bindtap="closePop">继续</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">提示</view>
+    <view class="desc tac">
+      <view>很抱歉 <text class="num">{{leaveUserInfor.userName}}</text> 已离开</view>
+      <view>您是否继续进行对话？</view>
+      <view>（本次对话将免费赠送）</view>
     </view>
+    <view class="btns">
+      <view class="btn close" bindtap="leaveRoomClear">离开</view>
+      <view class="btn ok" bindtap="closePop">继续</view>
+    </view>
+  </view>
 </block>
 <!-- 第一次之后不再出现赠送 -->
 <block wx:if="{{lastPeoplePop2}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2">
-        <view class="pop-tit">提示</view>
-        <view class="desc tac">
-            <view>很抱歉 <text class="num">{{leaveUserInfor.userName}}</text> 已离开</view>
-            <view>建议您继续完成本次对话~</view>
-        </view>
-        <view class="btns">
-            <view class="btn close" bindtap="leaveRoomClear">离开</view>
-            <view class="btn ok" bindtap="closePop">继续</view>
-        </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">提示</view>
+    <view class="desc tac">
+      <view>很抱歉 <text class="num">{{leaveUserInfor.userName}}</text> 已离开</view>
+      <view>建议您继续完成本次对话~</view>
     </view>
+    <view class="btns">
+      <view class="btn close" bindtap="leaveRoomClear">离开</view>
+      <view class="btn ok" bindtap="closePop">继续</view>
+    </view>
+  </view>
 </block>
 <!-- 别的用户离开房间 end -->
 <!--写感悟弹窗-->
 <block wx:if="{{gwPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win">
-        <view class="pop-tit">给本次的心灵对话打分</view>
-        <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
-        <rating showRating  rating="{{rating}}" bind:click="changeRating"></rating>
-        <form bindsubmit="bindFormSubmit">
-            <textarea class="content" placeholder="您认为本次的对话设计如何？您收获了什么？您的感受如何？可以记录下来..." name="textarea" maxlength="500" bindinput="inputArea" />
-            <button form-type="submit" class="btn-buy"> 提交 </button>
-        </form>
-        
-    </view>
+  <view class="pop-mask"></view>
+  <view class="pop-win">
+    <view class="pop-tit">给本次的心灵对话打分</view>
+    <image class="pop-close" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-close.png" bindtap="closePop"></image>
+    <rating showRating rating="{{rating}}" bind:click="changeRating"></rating>
+    <form bindsubmit="bindFormSubmit">
+      <textarea class="content" placeholder="您认为本次的对话设计如何？您收获了什么？您的感受如何？可以记录下来..." name="textarea" maxlength="500" bindinput="inputArea" />
+      <button form-type="submit" class="btn-buy"> 提交 </button>
+    </form>
+
+  </view>
 </block>

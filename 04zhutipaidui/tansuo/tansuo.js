@@ -19,7 +19,8 @@ import {
   addRoomLog,
   inviteFriendsRoom,
   getIfFreeMy,
-  insertEvaluate
+  insertEvaluate,
+  getRnameByYunId
 } from "../api";
 import {
   formatMsgList
@@ -280,8 +281,6 @@ Page({
         account: account,
         showPrompt: !inProgressReturn ? true : false
       })
-      console.log(inProgressReturn, "return");
-      console.log(that.data.playerNum, "NNNNNNNNNNNNNNNNumn");
       if (inProgressReturn) {
         return false
       }
@@ -295,11 +294,14 @@ Page({
           this.setData({
             waiting_countdown: countdown1
           });
+          console.log(1111);
           this.startWaitingCountdown();
         } else {
+          console.log(2222, "第二个倒计时");
           this.startSecondCountdown();
         }
       } else {
+        console.log(33333);
         this.startWaitingCountdown()
       }
     } else {
@@ -634,6 +636,30 @@ Page({
   // 群成员更新
   onTeamMembers(obj) {
     console.log('收到群成员', obj);
+    // 非房主不发送消息
+    if (obj.members.length !== 1) {
+      // 对比时间戳获取进房时间最近的，用作当前用户
+      // 获取当前时间的时间戳
+      let currentTime = Date.now();
+      // 初始化最小时间差为一个较大的数值
+      let minDifference = Infinity;
+      let closestIndex = -1;
+
+      // 遍历数组，找出离当前时间最近的对象的索引值
+      obj.members.forEach((obj, index) => {
+        let timeDifference = Math.abs(currentTime - obj.joinTime);
+        if (timeDifference < minDifference) {
+          minDifference = timeDifference;
+          closestIndex = index;
+        }
+      });
+
+      getRnameByYunId(obj.members[closestIndex].account).then(res => {
+        this.sendCustomMsg(4, {
+          text: '欢迎 ' + res.data.data.rname + ' 进入心灵对话，请做好准备，对话马上开始'
+        })
+      })
+    }
     var that = this
     var accounts = []
     // var truePlayerList = this.data.truePlayerList
@@ -757,6 +783,7 @@ Page({
 
   },
   stopWaitingCountdown() {
+    console.log(4444, "stop");
     this.startWaitingCountdown(true)
     this.startSecondCountdown(true)
   },
@@ -957,7 +984,7 @@ Page({
         })
         var msgObj = {
           sysType: 'people',
-          text: content.data.status ? '玩家已准备' : '玩家取消准备',
+          text: content.data.status ? '玩家已做好准备，请耐心等待房主开启对话' : '玩家取消准备',
           msgStep: that.data.step,
           isBotMes: 1, // isBotMes 1 是下面展示的消息列表 0 是上面的系统内容
           fromAccount: msg.from,
@@ -1192,6 +1219,7 @@ Page({
               waiting_countdown2: 180,
               showPrompt: true,
             })
+            console.log(555555);
             that.startWaitingCountdown();
           }
           console.log(that.data.truePlayerList, 'that.data.playerList');
@@ -1293,7 +1321,7 @@ Page({
         })
         var msgObj = {
           sysType: 'people',
-          text: content.data.status ? '玩家已准备' : '玩家取消准备',
+          text: content.data.status ? '玩家已做好准备，请耐心等待房主开启对话' : '玩家取消准备',
           isBotMes: 1,
           msgStep: that.data.step,
           fromAccount: msg.from,
@@ -1712,9 +1740,9 @@ Page({
     var that = this
     if (msg.attach.type == 'addTeamMembers') {
       // 拉人入群
-      that.sendCustomMsg(4, {
-        text: msg.attach.users[0].nick + '进入房间'
-      })
+      // that.sendCustomMsg(4, {
+      //   text: msg.attach.users[0].nick + '进入房间'
+      // })
     } else if (msg.attach.type == 'removeTeamMembers') {
       // 踢人出群
       // that.sendCustomMsg(8, { account: msg.attach.users[0].account })
