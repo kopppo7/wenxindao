@@ -477,7 +477,7 @@ Page({
         that.returnJoin();
       });
   },
-  publishAudio() {
+  publishAudio(type = "Manual") {
     let that = this
     var playerList = []
     let personInd = that.data.personInd
@@ -503,6 +503,11 @@ Page({
         messageReceived: false
       })
     }, 1000); // 1秒后重置，根据实际场景调整时间
+
+    // 如果发言人开麦时，另一用户也进行了开麦，下一轮轮到该用户发言，麦克风状态维持开启即可
+    if (type === "auto" && that.data.voiceStatus === 1) {
+      return false
+    }
 
     // 只有在别人或自己发言时才能开麦
     // if (that.data.inputStatus) {
@@ -661,7 +666,7 @@ Page({
 
       // obj.members[closestIndex].account 为当前用户
       // 判断当前用户数量是否符合最小开始数量，不符合则要显示房主等待倒计时
-      if(obj.members[closestIndex].account === this.data.roomData.ownerUserIm && this.showPrompt === false) {
+      if (obj.members[closestIndex].account === this.data.roomData.ownerUserIm && this.showPrompt === false) {
         this.showWaiting()
       }
     } else {
@@ -1241,6 +1246,10 @@ Page({
           downTime: 3,
           type: 1
         }
+
+        // 断线重连
+        // that.reconnectSocket()
+
         setTimeout(() => {
           this.setData({
             timePopStatus: true,
@@ -1400,6 +1409,7 @@ Page({
         })
 
       } else if (content.type === 6) {
+        console.log("进入跳过");
         //跳过发言
         var player = that.data.playerList;
         player.forEach(item => {
@@ -2144,7 +2154,7 @@ Page({
       // 如果当前发言的人是自己的话开始推流,其他人停止推流
       if (playerList[personInd].account ===
         that.data.account) {
-        that.publishAudio()
+        that.publishAudio("auto")
       } else {
         that.stopPublishAudio()
       }
@@ -3021,7 +3031,7 @@ Page({
     })
     // onOpen
     vm.socket.onOpen((ret) => {
-      console.log('打开 WebSocket 连接111')
+      console.log('打开 WebSocket 连接111', ret)
       console.log(vm.data.isOnloadSocket);
       if (vm.data.isOnloadSocket) {
         vm.refreshSendSocketMsg()
@@ -3032,7 +3042,6 @@ Page({
     })
     // onMessage
     vm.socket.onMessage((ret) => {
-
       let socketData = JSON.parse(ret.data)
       let nextPerson = ''; //下一个玩家是谁
       let nextPlayNum = ''; //下一轮是哪一轮
@@ -3156,6 +3165,7 @@ Page({
           }
 
         } else if (type === 4) {
+          console.log("进入结尾");
           // 结尾开始
           vm.setData({
             sec: socketData.downTime,
@@ -3197,6 +3207,7 @@ Page({
     if (vm.data.step < this.data.stepList.length + 1) {
       vm.webSocketInit()
     }
+    console.log("reconnectSocket", vm.data.step);
   },
   // send message
   /**
