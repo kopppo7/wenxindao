@@ -1248,7 +1248,9 @@ Page({
         }
 
         // 断线重连
-        // that.reconnectSocket()
+        if(!(this.socket.readyState == 1 || this.socket.readyState == 2)) {
+          that.reconnectSocket()
+        }
 
         setTimeout(() => {
           this.setData({
@@ -3020,6 +3022,7 @@ Page({
     let vm = this
     let that = this
     vm.socket = wx.connectSocket({
+      // url: 'wss://wenxin.wxdao.net:20016/wc',
       url: 'ws://wenxin.wxdao.net:20016/wc',
       success(res) {
         console.log('WebSocket 连接成功: ', res)
@@ -3196,9 +3199,16 @@ Page({
     })
     // onClose
     vm.socket.onClose((ret) => {
-      console.log('断开 WebSocket 连接', ret)
+      console.log('断开 WebSocket 连接', ret.code, ret)
       clearInterval(vm.SocketInterval)
       vm.SocketInterval = null
+      if(ret.code == 1006) {
+        console.log(vm.socket, 2222222222222);
+        // vm.reconnectSocket()
+        // 异常关闭情况，重连
+        vm.webSocketInit()
+        // vm.pingSocket()
+      }
     })
   },
   // WebSocket 断线重连
@@ -3285,7 +3295,7 @@ Page({
     })
     // 每 10 秒钟由客户端发送一次心跳
     vm.SocketInterval = setInterval(function () {
-      if (vm.socket?.readyState == 1) {
+      if ((vm.socket && vm.socket?.readyState == 1) || (vm.socket && vm.socket?.readyState == 0)) {
         vm.socket.send({
           data: obj,
           success(res) {
@@ -3299,11 +3309,12 @@ Page({
         times += 1
         // 超时重连，最多尝试 10 次
         if (times >= 10) {
-          wx.showToast({
-            title: 'WebSocket 连接已断开~',
-            icon: 'none',
-            duration: 3000
-          })
+          // wx.showToast({
+          //   title: 'WebSocket 连接已断开~',
+          //   icon: 'none',
+          //   duration: 3000
+          // })
+          console.log('WebSocket 连接已断开~');
           clearInterval(vm.SocketInterval)
         } else {
           vm.reconnectSocket()
@@ -3353,6 +3364,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
+    console.log(options, "options");
     this.recordSetting()
     this.verifyLogin()
     if (this.socket) {
@@ -3369,7 +3381,7 @@ Page({
       // this.getUserInfo()
       this.contentScroll()
       var partyData = wx.getStorageSync('partyData')
-
+      console.log(partyData, "partyData");
       if (partyData) {
         //进入过页面，从别处返回
         this.setData(partyData)

@@ -72,10 +72,12 @@ Page({
                   }).then(up => {
                     wx.hideLoading();
                     // 如果是好友房间邀请登录
+                    wx.removeStorageSync('partyData')
+                    wx.removeStorageSync('roomData')
                     let roomPath = wx.getStorageSync('roomPath')
                     if (roomPath) {
                       wx.navigateTo({
-                        url: '/04zhutipaidui/tansuo/tansuo?askId=' + roomPath.askId + '&isMatch=' + roomPath.isMatch + '&isfriend=' + roomPath.isfriend + '&roomId=' + roomPath.roomId
+                        url: '/04zhutipaidui/tansuo/tansuo?askId=' + roomPath.askId + '&isMatch=' + roomPath.isMatch + '&isfriend=' + roomPath.isfriend + '&roomId=' + roomPath.roomId + '&isLoginToRomm=' + true
                       })
                     } else {
                       wx.redirectTo({
