@@ -52,6 +52,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    title: '', // 对话标题
     loginPath: '',
     isDataReady: false, // saveData 方法数据是否储存成功
     showPrompt: false, // 房主等待提示
@@ -3384,6 +3385,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
+    console.log(options, "111111111111");
+    if(options.title) {
+      this.setData({ title: options.title })
+    }
     if (this.socket) {
       this.socket.close({
         success(res) {
@@ -3574,7 +3579,7 @@ Page({
     const that = this
     if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
       wx.showModal({
-        title: '欢迎进入问心岛平台' + that.data.roomData.title + '心灵对话聊天室，在正式加入前请先登录',
+        title: '欢迎进入问心岛平台《' + that.data.title + '》心灵对话聊天室，在正式加入前请先登录',
         showCancel: false,
         success: function (auth) {
           console.log("success 点击确定");
@@ -3586,7 +3591,7 @@ Page({
       })
     } else if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
       wx.showModal({
-        title: '欢迎进入问心岛平台' + that.data.roomData.title + '心灵对话聊天室，在正式加入前请先完善您的头像和昵称',
+        title: '欢迎进入问心岛平台《' + that.data.roomData.title + '》心灵对话聊天室，在正式加入前请先完善您的头像和昵称',
         showCancel: false,
         success: function (auth) {
           console.log("success 点击确定");
@@ -3649,18 +3654,18 @@ Page({
 
   //邀请好友
   onShareAppMessage() {
-    console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&isYaoQing=1');
+    console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&isYaoQing=1' + '&title=' + this.data.themeDetail.title);
     return {
       title: this.data.themeDetail.title,
-      path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1',
+      path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.themeDetail.title,
     }
   },
   //邀请好友
   onShareTimeline() {
-    console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1');
+    console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.themeDetail.title);
     return {
       title: this.data.themeDetail.title,
-      query: 'askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
+      query: 'askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.themeDetail.title, // 路径，传递参数到指定页面。
       imageUrl: '',
     }
   },
