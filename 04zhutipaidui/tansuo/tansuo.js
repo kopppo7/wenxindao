@@ -52,6 +52,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loginPath: '',
     isDataReady: false, // saveData 方法数据是否储存成功
     showPrompt: false, // 房主等待提示
     waiting_countdown: 60, // 房主等待第一轮倒计时
@@ -128,7 +129,7 @@ Page({
 
     //准备弹窗
     readyPopStatus: false,
-    readyTime: 5,
+    readyTime: 15,
 
     //页面参数
     pageOptions: {},
@@ -660,7 +661,7 @@ Page({
 
       getRnameByYunId(obj.members[closestIndex].account).then(res => {
         this.sendCustomMsg(4, {
-          text: '欢迎 ' + res.data.data.rname + ' 进入心灵对话，请做好准备，对话马上开始'
+          text: '欢迎 ' + res.data.data.rname + ' 请您在' + this.data.readyTime + 's 内做好准备，对话马上开始。如果15s内没有完成，您将会被抱出房间（需要重新进入）'
         })
       })
 
@@ -1248,7 +1249,7 @@ Page({
         }
 
         // 断线重连
-        if(!(this.socket.readyState == 1 || this.socket.readyState == 2)) {
+        if (!(this.socket.readyState == 1 || this.socket.readyState == 2)) {
           that.reconnectSocket()
         }
 
@@ -1287,8 +1288,8 @@ Page({
         isFaYan: true
       })
     }
+    console.log("调用了 pushMsg 的 saveData");
     that.saveData()
-
   },
 
   //渲染消息记录
@@ -1488,6 +1489,7 @@ Page({
         msgList: msgList
       })
     }
+    console.log("调用了 renderHistoryMsh 的 saveData");
     that.saveData()
   },
 
@@ -1674,7 +1676,7 @@ Page({
     this.setData({
       isReady: true,
       readyPopStatus: false,
-      readyTime: 5,
+      readyTime: 15,
     })
     this.sendCustomMsg(1, {
       status: this.data.isReady
@@ -1815,6 +1817,13 @@ Page({
         teamId: res.data.data.imGroup,
         audioId: res.data.data.audioGroup,
         roomData: res.data.data
+      }, () => {
+        // 数据获取到后验证是否登录
+        // that.verifyLogin()
+
+        if (this.verifyLogin()) {
+          this.recordSetting()
+        }
       })
       wx.setStorageSync('roomData', res.data.data)
       that.initRoom()
@@ -1941,7 +1950,6 @@ Page({
       wx.setNavigationBarTitle({
         title: res.data.data.title
       })
-
     })
   },
 
@@ -2598,6 +2606,9 @@ Page({
 
   //存储数据
   saveData: function () {
+    console.log("来到了 saveData - pageOptions", this.data.pageOptions);
+    console.log("来到了 saveData - partyData", this.data);
+    console.log("来到了 saveData - isTuiChuRoom === false?", this.data.isTuiChuRoom);
     if (!this.data.isTuiChuRoom) {
       wx.setStorageSync('roomPath', this.data.pageOptions)
       wx.setStorageSync('partyData', this.data)
@@ -2605,7 +2616,13 @@ Page({
         topArr: formatMsgList(this.data.msgList).topArr,
         botArr: formatMsgList(this.data.msgList).botArr,
         isDataReady: true,
+      }, () => {
+        console.log("数据存储完成，isDataReady 的值变为 true 了吗？", this.data.isDataReady);
+        if (this.data.loginPath) {
+          this.checkRoomPath()
+        }
       })
+
     }
   },
 
@@ -2924,6 +2941,7 @@ Page({
     if (this.data.haveRoom) {
       if (this.data.isOwner) {
         //房主
+        console.log("调用了 onUnload 的 saveData");
         this.saveData()
       } else {
         if (!this.data.isReady) {
@@ -2937,6 +2955,7 @@ Page({
           // })
         } else {
           //已经准备了
+          console.log("调用了 onUnload 的 saveData 2");
           this.saveData()
         }
       }
@@ -3191,6 +3210,7 @@ Page({
           personInd: 0,
         })
       }
+      console.log("调用了 onMessage 的 savaData");
       that.saveData()
     })
     // onError
@@ -3202,7 +3222,7 @@ Page({
       console.log('断开 WebSocket 连接', ret.code, ret)
       clearInterval(vm.SocketInterval)
       vm.SocketInterval = null
-      if(ret.code == 1006) {
+      if (ret.code == 1006) {
         console.log(vm.socket, 2222222222222);
         // vm.reconnectSocket()
         // 异常关闭情况，重连
@@ -3364,9 +3384,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
-    console.log(options, "options");
-    this.recordSetting()
-    this.verifyLogin()
     if (this.socket) {
       this.socket.close({
         success(res) {
@@ -3486,7 +3503,7 @@ Page({
     }
   },
 
-  // 验证是否开启语音授权
+  // 验证是否开启语音授权，在登录后弹出，若已登录则最先弹出
   recordSetting() {
     const that = this
     wx.getSetting({
@@ -3551,44 +3568,71 @@ Page({
 
   // 验证是否有登录信息
   verifyLogin() {
+    // 重复调用了
+    console.log("jinru verifyLogin ");
     var loginInfo = getLoginInfo()
     const that = this
     if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
       wx.showModal({
-        title: '请登录授权进入下一步',
+        title: '欢迎进入问心岛平台' + that.data.roomData.title + '心灵对话聊天室，在正式加入前请先登录',
         showCancel: false,
         success: function (auth) {
-          that.checkRoomPath('/pages/login/login')
+          console.log("success 点击确定");
+          that.setData({ loginPath: '/pages/login/login' }, () => {
+            that.checkRoomPath()
+            })
+          return false
         }
       })
     } else if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
       wx.showModal({
-        title: '当前未完善您的头像和昵称，请完善后进行体验',
+        title: '欢迎进入问心岛平台' + that.data.roomData.title + '心灵对话聊天室，在正式加入前请先完善您的头像和昵称',
         showCancel: false,
         success: function (auth) {
+          console.log("success 点击确定");
           // 登录完成后还需要返回房间
-          that.checkRoomPath('/pages/auth/auth')
+          that.setData({ loginPath: '/pages/auth/auth' }, () => {
+            that.checkRoomPath()})
+          return false
         }
       })
+    } else {
+      return true
     }
   },
 
   // roomPath 存储慢，设置间隔调用
-  checkRoomPath(path) {
+  checkRoomPath() {
+    console.log("进入 checkRoomPath");
     var that = this
-    const intervalId = setInterval(() => {
-      if (that.data.isDataReady) {
-        // 数据为true，停止检查
-        clearInterval(intervalId);
-        wx.reLaunch({
-          url: path
-        })
-      } else {
-        wx.showLoading({
-          title: '正在加载...',
-        })
-      }
-    }, 700);
+    if (!that.data.isDataReady) {
+      console.log("进入 checkRoomPath ！");
+      wx.showLoading({
+        title: '正在加载...',
+        mask: true,
+        fail(err) {
+          console.log(err);
+        }
+      })
+    } else {
+      // wx.hideLoading()
+      wx.reLaunch({
+        url: that.data.loginPath
+      })
+    }
+    // const intervalId = setInterval(() => {
+    //   if (that.data.isDataReady) {
+    //     // 数据为true，停止检查
+    //     clearInterval(intervalId);
+    //     wx.reLaunch({
+    //       url: path
+    //     })
+    //   } else {
+    //     wx.showLoading({
+    //       title: '正在加载...',
+    //     })
+    //   }
+    // }, 700);
   },
 
   onUnload() {

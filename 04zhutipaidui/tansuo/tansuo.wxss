@@ -1652,12 +1652,13 @@ image {
 }
 
 .ready-fix {
+  width: 90%;
   position: fixed;
   left: 50%;
   bottom: 130rpx;
   padding: 0 24rpx;
   background: rgba(255, 181, 140, 0.2);
-  border-radius: 44rpx;
+  border-radius: 20rpx;
   font-size: 28rpx;
   color: #ffb58c;
   -ms-transform: translateX(-50%);
