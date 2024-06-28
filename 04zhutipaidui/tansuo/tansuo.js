@@ -52,9 +52,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    clickExit: false, // 主动点击退出标识
     title: '', // 对话标题
-    loginPath: '',
-    isDataReady: false, // saveData 方法数据是否储存成功
     showPrompt: false, // 房主等待提示
     waiting_countdown: 60, // 房主等待第一轮倒计时
     waiting_countdown2: 180, // 房主等待第二轮倒计时
@@ -1177,7 +1176,7 @@ Page({
             quitRoom({
               roomId: that.data.roomData.id
             }).then(res => {
-              if (that.data.readyPopStatus && !that.data.isBeginPlay && !that.data.activityPopStatus) {
+              if (that.data.readyPopStatus && !that.data.isBeginPlay && !that.data.activityPopStatus && !that.data.clickExit) {
                 // 因为没点击准备被踢出房间
                 wx.showToast({
                   title: '您已经被抱出房间 ~',
@@ -1817,13 +1816,17 @@ Page({
       that.setData({
         teamId: res.data.data.imGroup,
         audioId: res.data.data.audioGroup,
-        roomData: res.data.data
+        roomData: res.data.data,
       }, () => {
         // 数据获取到后验证是否登录
-        // that.verifyLogin()
-
         if (this.verifyLogin()) {
           this.recordSetting()
+        } else {
+          wx.setStorageSync('loginToRoomPath', {
+            askId: res.data.data.askId,
+            roomId: res.data.data.id,
+            isfriend: 1
+          })
         }
       })
       wx.setStorageSync('roomData', res.data.data)
@@ -1946,6 +1949,7 @@ Page({
         themeDetail: res.data.data,
         helpText: res.data.data.detailsText,
         stepList: res.data.data.list,
+        title: res.data.data.title,
         // backgrooundMusic: innerAudioContext
       })
       wx.setNavigationBarTitle({
@@ -2607,23 +2611,13 @@ Page({
 
   //存储数据
   saveData: function () {
-    console.log("来到了 saveData - pageOptions", this.data.pageOptions);
-    console.log("来到了 saveData - partyData", this.data);
-    console.log("来到了 saveData - isTuiChuRoom === false?", this.data.isTuiChuRoom);
     if (!this.data.isTuiChuRoom) {
       wx.setStorageSync('roomPath', this.data.pageOptions)
       wx.setStorageSync('partyData', this.data)
       this.setData({
         topArr: formatMsgList(this.data.msgList).topArr,
-        botArr: formatMsgList(this.data.msgList).botArr,
-        isDataReady: true,
-      }, () => {
-        console.log("数据存储完成，isDataReady 的值变为 true 了吗？", this.data.isDataReady);
-        if (this.data.loginPath) {
-          this.checkRoomPath()
-        }
+        botArr: formatMsgList(this.data.msgList).botArr
       })
-
     }
   },
 
@@ -2867,6 +2861,10 @@ Page({
   },
   clickZhongTuQuitRoom() {
     let that = this
+    // 主动点击退出标识
+    this.setData({
+      clickExit: true
+    })
     this.sendCustomMsg(8, {
       account: that.data.account
     })
@@ -3020,7 +3018,7 @@ Page({
   },
   backPrev() {
     this.clickZhongTuQuitRoom()
-    wx.navigateBack();
+    // wx.navigateBack();
   },
   handleIsLinShiFz() {
     this.setData({
@@ -3211,7 +3209,6 @@ Page({
           personInd: 0,
         })
       }
-      console.log("调用了 onMessage 的 savaData");
       that.saveData()
     })
     // onError
@@ -3385,9 +3382,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
-    console.log(options, "111111111111");
-    if(options.title) {
-      this.setData({ title: options.title })
+    // 清除登录跳转缓存
+    if(wx.getStorageSync('loginToRoomPath')) {
+      wx.removeStorageSync('loginToRoomPath')
+    }
+    if (options.title) {
+      this.setData({
+        title: options.title
+      })
     }
     if (this.socket) {
       this.socket.close({
@@ -3573,8 +3575,6 @@ Page({
 
   // 验证是否有登录信息
   verifyLogin() {
-    // 重复调用了
-    console.log("jinru verifyLogin ");
     var loginInfo = getLoginInfo()
     const that = this
     if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
@@ -3582,62 +3582,26 @@ Page({
         title: '欢迎进入问心岛平台《' + that.data.title + '》心灵对话聊天室，在正式加入前请先登录',
         showCancel: false,
         success: function (auth) {
-          console.log("success 点击确定");
-          that.setData({ loginPath: '/pages/login/login' }, () => {
-            that.checkRoomPath()
-            })
+          wx.reLaunch({
+            url: '/pages/login/login'
+          })
           return false
         }
       })
     } else if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
       wx.showModal({
-        title: '欢迎进入问心岛平台《' + that.data.roomData.title + '》心灵对话聊天室，在正式加入前请先完善您的头像和昵称',
+        title: '欢迎进入问心岛平台《' + that.data.title + '》心灵对话聊天室，在正式加入前请先完善您的头像和昵称',
         showCancel: false,
         success: function (auth) {
-          console.log("success 点击确定");
-          // 登录完成后还需要返回房间
-          that.setData({ loginPath: '/pages/auth/auth' }, () => {
-            that.checkRoomPath()})
+          wx.reLaunch({
+            url: '/pages/auth/auth'
+          })
           return false
         }
       })
     } else {
       return true
     }
-  },
-
-  // roomPath 存储慢，设置间隔调用
-  checkRoomPath() {
-    console.log("进入 checkRoomPath");
-    var that = this
-    if (!that.data.isDataReady) {
-      console.log("进入 checkRoomPath ！");
-      wx.showLoading({
-        title: '正在加载...',
-        mask: true,
-        fail(err) {
-          console.log(err);
-        }
-      })
-    } else {
-      // wx.hideLoading()
-      wx.reLaunch({
-        url: that.data.loginPath
-      })
-    }
-    // const intervalId = setInterval(() => {
-    //   if (that.data.isDataReady) {
-    //     // 数据为true，停止检查
-    //     clearInterval(intervalId);
-    //     wx.reLaunch({
-    //       url: path
-    //     })
-    //   } else {
-    //     wx.showLoading({
-    //       title: '正在加载...',
-    //     })
-    //   }
-    // }, 700);
   },
 
   onUnload() {
@@ -3654,18 +3618,18 @@ Page({
 
   //邀请好友
   onShareAppMessage() {
-    console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&isYaoQing=1' + '&title=' + this.data.themeDetail.title);
+    console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&isYaoQing=1' + '&title=' + this.data.title);
     return {
       title: this.data.themeDetail.title,
-      path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.themeDetail.title,
+      path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.title,
     }
   },
   //邀请好友
   onShareTimeline() {
-    console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.themeDetail.title);
+    console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.title);
     return {
       title: this.data.themeDetail.title,
-      query: 'askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.themeDetail.title, // 路径，传递参数到指定页面。
+      query: 'askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.title, // 路径，传递参数到指定页面。
       imageUrl: '',
     }
   },

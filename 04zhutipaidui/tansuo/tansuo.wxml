@@ -313,7 +313,7 @@
 <block wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}">
   <view wx:if="{{readyTime <= 10}}">
     <view class="ready-fix" wx:if="{{isfriend}}">
-      您正在受邀加入 {{ roomData.title}} 心灵对话。请在 {{readyTime}}s 做好对话准备。
+      您正在受邀加入《{{title}}》心灵对话。请在 {{readyTime}}s 做好对话准备。
     </view>
     <view class="ready-fix" wx:else>您已匹配成功。
       请在 {{readyTime}}s 内完成准备。未准备将被抱出房间哦~

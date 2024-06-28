@@ -117,13 +117,13 @@ Page({
           wx.redirectTo({
             url: '/pages/auth/auth',
           })
-        } else if(wx.getStorageSync('roomPath')) {
+        } else if(wx.getStorageSync('loginToRoomPath')) {
             // 如果是好友房间邀请登录
             wx.removeStorageSync('partyData')
             wx.removeStorageSync('roomData')
-            let roomPath = wx.getStorageSync('roomPath')
+            let loginToRoomPath = wx.getStorageSync('loginToRoomPath')
             wx.navigateTo({
-              url: '/04zhutipaidui/tansuo/tansuo?askId=' + roomPath.askId + '&isMatch=' + roomPath.isMatch + '&isfriend=' + roomPath.isfriend + '&roomId=' + roomPath.roomId
+              url: '/04zhutipaidui/tansuo/tansuo?askId=' + loginToRoomPath.askId + '&isMatch=' + loginToRoomPath.isMatch + '&isfriend=' + loginToRoomPath.isfriend + '&roomId=' + loginToRoomPath.roomId
             })
         } else {
           updateUserMsg({
