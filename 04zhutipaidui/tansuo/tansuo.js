@@ -129,7 +129,8 @@ Page({
 
     //准备弹窗
     readyPopStatus: false,
-    readyTime: 15,
+    readyTime: 15, // 显示用
+    readyTimeVal: 15, // 标识
 
     //页面参数
     pageOptions: {},
@@ -661,7 +662,7 @@ Page({
 
       getRnameByYunId(obj.members[closestIndex].account).then(res => {
         this.sendCustomMsg(4, {
-          text: '欢迎 ' + res.data.data.rname + ' 请您在' + this.data.readyTime + 's 内做好准备，对话马上开始。如果15s内没有完成，您将会被抱出房间（需要重新进入）'
+          text: '欢迎 ' + res.data.data.rname + ' 请您在' + this.data.readyTimeVal + 's 内做好准备，对话马上开始。如果15s内没有完成，您将会被抱出房间（需要重新进入）'
         })
       })
 
@@ -1249,9 +1250,9 @@ Page({
         }
 
         // 断线重连
-        if (!(this.socket.readyState == 1 || this.socket.readyState == 2)) {
-          that.reconnectSocket()
-        }
+        // if (!(this.socket.readyState == 1 || this.socket.readyState == 2)) {
+        //   that.reconnectSocket()
+        // }
 
         setTimeout(() => {
           this.setData({
@@ -1676,7 +1677,7 @@ Page({
     this.setData({
       isReady: true,
       readyPopStatus: false,
-      readyTime: 15,
+      readyTime: this.data.readyTimeVal,
     })
     this.sendCustomMsg(1, {
       status: this.data.isReady
@@ -2821,6 +2822,12 @@ Page({
     that.socket.close()
     that.socket = null
 
+    //退出房间
+    quitRoom({
+      id: this.data.roomData.id
+    }).then(res => {
+      this.clearRoomData()
+    })
   },
   //离开
   quit: function () {
@@ -2888,6 +2895,14 @@ Page({
   },
   // 退出房间清缓存跳转
   leaveRoomClear() {
+    this.clearRoomData()
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
+  },
+
+  // 清除缓存、nim数据
+  clearRoomData: function () {
     this.setData({
       partyData: null,
       roomData: null,
@@ -2906,16 +2921,6 @@ Page({
         }
       })
     }
-    wx.reLaunch({
-      url: '/pages/index/index'
-    })
-    // if (jump === 1) {
-    //   console.log('清除缓存');
-    // } else {
-    //   wx.reLaunch({
-    //     url: '/pages/index/index',
-    //   })
-    // }
   },
 
 
@@ -2989,10 +2994,9 @@ Page({
     })
   },
   bindTuichufangjian() {
-    // this.setData({
-    //   isTuichufangjian: true
-    // })
-    this.leaveRoomClear()
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
   },
   handlePaiduikaishi() {
     this.setData({
@@ -3040,8 +3044,9 @@ Page({
     let vm = this
     let that = this
     vm.socket = wx.connectSocket({
+      url: 'wss://wenxin.wxdao.net/ws',
       // url: 'wss://wenxin.wxdao.net:20016/wc',
-      url: 'ws://wenxin.wxdao.net:20016/wc',
+      // url: 'ws://wenxin.wxdao.net:20016/wc',
       success(res) {
         console.log('WebSocket 连接成功: ', res)
         vm.pingSocket()
@@ -3383,7 +3388,7 @@ Page({
    */
   async onLoad(options) {
     // 清除登录跳转缓存
-    if(wx.getStorageSync('loginToRoomPath')) {
+    if (wx.getStorageSync('loginToRoomPath')) {
       wx.removeStorageSync('loginToRoomPath')
     }
     if (options.title) {
@@ -3620,17 +3625,18 @@ Page({
   onShareAppMessage() {
     console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&isYaoQing=1' + '&title=' + this.data.title);
     return {
-      title: this.data.themeDetail.title,
+      title: '欢迎参加《' + this.data.themeDetail.title + '》心灵对话',
       path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.title,
+      imageUrl: 'https://wenxin-file.oss-cn-beijing.aliyuncs.com/roomShareImg.jpg',
     }
   },
   //邀请好友
   onShareTimeline() {
     console.log('/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.title);
     return {
-      title: this.data.themeDetail.title,
+      title: '欢迎参加《' + this.data.themeDetail.title + '》心灵对话',
       query: 'askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1' + '&title=' + this.data.title, // 路径，传递参数到指定页面。
-      imageUrl: '',
+      imageUrl: 'https://wenxin-file.oss-cn-beijing.aliyuncs.com/roomShareImg.jpg',
     }
   },
   /**

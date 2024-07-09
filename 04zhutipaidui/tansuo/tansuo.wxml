@@ -4,7 +4,7 @@
       <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
       <text bindtap="leaveAudioRoom">人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
     </view>
-    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet" />
+    <image wx:if="{{!(changeStep == (themeDetail.list.length+1))}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet" />
   </view>
   <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
     <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
@@ -203,7 +203,7 @@
 
         <button class="share" open-type="share">分享</button>
         <view class="g-submit" bindtap="handleXieganwu">写感悟</view>
-        <view class="g-submit" bindtap="bindTuichufangjian">退出</view>
+        <view class="g-submit" bindtap="bindTuichufangjian">返回主页</view>
       </view>
     </view>
   </view>
