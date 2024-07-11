@@ -148,7 +148,7 @@
     <view class="inp">
       <input type="text" value="{{inputText}}" wx:if="{{inputStatus}}" disabled="{{!inputStatus}}" placeholder="说点什么吧..." confirm-type="send" bindinput="inputChange" bindconfirm="sendMsg" />
     </view>
-    <view class="btn" bindtap="handleReady" wx:if="{{(!isReady&&!isOwner) && !isOwner && !isBeginPlay}}">
+    <view class="btn" bindtap="handleReady" wx:if="{{(!isReady&&!isOwner) && !isOwner && !isBeginPlay && canBeReady}}">
       准备
     </view>
     <view bindtap="cancelReady" class="btn disabled" wx:if="{{isReady && !isOwner  && !isBeginPlay}}">

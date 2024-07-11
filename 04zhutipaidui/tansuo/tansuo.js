@@ -52,6 +52,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    canBeReady: false, // 数据准备好，可以点击准备了
     clickExit: false, // 主动点击退出标识
     title: '', // 对话标题
     showPrompt: false, // 房主等待提示
@@ -1065,8 +1066,10 @@ Page({
 
         msgList.push(msgObj)
         that.setData({
-          msgList: msgList
+          msgList: msgList,
+          canBeReady: true
         })
+        
         console.log(that.data.msgList);
       } else if (content.type == 5) {
         // 发牌
