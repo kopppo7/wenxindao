@@ -42,14 +42,6 @@
       ]
     },
     {
-      "root": "05chouyichou",
-      "name": "抽一抽",
-      "pages": [
-        "index/index",
-        "shili/shili"
-      ]
-    },
-    {
       "root": "pages/my",
       "name": "我的",
       "pages": [

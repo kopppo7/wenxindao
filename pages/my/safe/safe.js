@@ -7,7 +7,7 @@ import {
   sendCodeForUpdate,userLoginOut,updatePhone,updateUserMsg,getUserMsg
 } from "../../../utils/api";
 import { login } from '../../../utils/common'
-import config from "../../utils/config";
+import config from "../../../utils/config";
 Page({
 
     /**
@@ -205,9 +205,11 @@ Page({
         content: '是否确定退出',
         success (res) {
           if (res.confirm) {
+            wx.removeStorageSync("tokenKey")
+            wx.removeStorageSync("loginInfo")
             userLoginOut().then((res) => {
               wx.redirectTo({
-                url: '/pages/auth/auth',
+                url: '/pages/login/login',
               })
             })
           } else if (res.cancel) {

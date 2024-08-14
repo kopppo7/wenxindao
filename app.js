@@ -32,3 +32,4 @@ App({
     
   },
 });
+console.log = __wxConfig.envVersion=='develop'?console.log: ()=> {};

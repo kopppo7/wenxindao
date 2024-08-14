@@ -38,7 +38,7 @@
                 <image class="ready" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/play-status1.png" wx:if="{{item.isReady && !isBeginPlay}}"></image>
               </image>
               <view class="ico2" wx:if="{{!item.account && !isBeginPlay}}">
-                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-suo.png">
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-suo1.png">
                 </image>
                 <!--                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs
 .com/system/images/hsy/room-kong.png">-->
@@ -305,6 +305,21 @@
     <view class="btns">
       <view class="close btn" bindtap="cancelActivityPop">退出</view>
       <view class="ok btn" bindtap="closeActivityPop">准备好了</view>
+    </view>
+  </view>
+</block>
+
+<!-- 语音授权提示 -->
+<block wx:if="{{isOpenRecordSetting}}">
+  <view class="pop-mask" style="z-index: 801;"></view>
+  <view class="pop-win2">
+    <view class="pop-tit">活动提示</view>
+    <view class="desc">
+      您未授权录音，功能将无法使用
+    </view>
+    <view class="btns">
+      <view class="btn  close" bindtap="backPrev">返回</view>
+      <button style="color: #fff;" class="btn ok" bindtap="openSetting">确定</button>
     </view>
   </view>
 </block>
@@ -655,7 +670,7 @@
   <view class="pop-win2">
     <view class="pop-tit">提示</view>
     <view class="desc">
-      <text>活动已开始，非常抱歉！\n您可以匹配新对话</text>
+      <text>非常抱歉活动已经正式开始咯！\n您可以创建新对话或者选择其它话题。</text>
     </view>
     <view class="btns">
       <view class="btn ok" bindtap="handlePaiduikaishi">确定</view>

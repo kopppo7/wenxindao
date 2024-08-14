@@ -93,6 +93,7 @@ Page({
     this.getThemeList()
   },
   goDetail(e) {
+    console.log(e.currentTarget.dataset.id, "id");
     wx.navigateTo({
       url: '/04zhutipaidui/zhutijieshao/zhutijieshao?id=' + e.currentTarget.dataset.id,
     })

@@ -4,10 +4,13 @@
     <image class="pic" src="{{detailObj.imgUrl}}"></image>
     <view class="txt">
       <view class="s1">{{detailObj.title}}</view>
-      <rich-text nodes="{{detailObj.detailsText}}" type="text" class="s2"></rich-text>
+      <!-- <rich-text nodes="{{detailObj.detailsText}}" type="text" class="s2"></rich-text> -->
+
+      <!-- <view>{{ detailObj.slogan }}</view> -->
       <view class="s3">预计{{detailObj.meanTime}}分钟</view>
       <view class="s4">
-        <text wx:for="{{detailObj.tips}}" wx:for-item="item">{{item}}</text>
+        <text>{{detailObj.slogan}}</text>
+        <!-- <text wx:for="{{detailObj.tips}}" wx:for-item="item">{{item}}</text> -->
       </view>
     </view>
   </view>
@@ -27,7 +30,7 @@
     </view>
   </view>
   <view class="intro-row3">
-    <view class="z-tit1">心灵简介</view>
+    <view class="z-tit1">对话简介</view>
     <view class="g-box">
       <rich-text nodes="{{detailObj.detailsText}}" type="text" class="desc"></rich-text>
     </view>
@@ -67,7 +70,7 @@
         </view> -->
   </view>
   <view class="intro-row4" wx:if="{{evalList.length > 0}}">
-    <view class="z-tit1">心灵感悟</view>
+    <view class="z-tit1">对话感悟</view>
     <view class="z-list3">
       <view class="item g-box" wx:for="{{evalList}}" wx:for-item="item" wx:for-index="index">
         <view class="tit-box">

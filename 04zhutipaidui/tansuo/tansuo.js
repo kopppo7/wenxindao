@@ -130,8 +130,8 @@ Page({
 
     //准备弹窗
     readyPopStatus: false,
-    readyTime: 15, // 显示用
-    readyTimeVal: 15, // 标识
+    readyTime: 30, // 显示用
+    readyTimeVal: 30, // 标识
 
     //页面参数
     pageOptions: {},
@@ -178,7 +178,7 @@ Page({
     pushIsMuted: true, //是否开启麦克风
     gwPopStatus: false, //感悟弹窗
     rating: 4,
-
+    isOpenRecordSetting: false, // 录音权限弹窗
   },
 
   //关闭弹窗
@@ -1069,7 +1069,7 @@ Page({
           msgList: msgList,
           canBeReady: true
         })
-        
+
         console.log(that.data.msgList);
       } else if (content.type == 5) {
         // 发牌
@@ -3001,12 +3001,16 @@ Page({
       url: '/pages/index/index'
     })
   },
+  // 跳转到当前对话简介
   handlePaiduikaishi() {
     this.setData({
       isPaiduiKaishi: false
     })
-    wx.reLaunch({
-      url: '/pages/index/index',
+    // wx.reLaunch({
+    //   url: '/pages/index/index',
+    // })
+    wx.navigateTo({
+      url: '/04zhutipaidui/zhutijieshao/zhutijieshao?id=' + this.data.askId,
     })
   },
   handleToggleFupanIsSay() {
@@ -3531,46 +3535,8 @@ Page({
             },
             fail() {
               console.log('用户拒绝了授权请求');
-              wx.showModal({
-                title: '提示',
-                content: '您未授权录音，功能将无法使用',
-                showCancel: true,
-                confirmText: "授权",
-                confirmColor: "#52a2d8",
-                success: function (res) {
-                  if (res.confirm) {
-                    //确认则打开设置页面（重点）
-                    wx.openSetting({
-                      success: (res) => {
-                        if (!res.authSetting['scope.record']) {
-                          //未设置录音授权
-                          wx.showModal({
-                            title: '提示',
-                            content: '您未授权录音，功能将无法使用',
-                            showCancel: false,
-                            success: function (res) {
-                              console.log('进入设置页面未打开录音权限');
-                              that.leaveRoomClear()
-                              // wx.reLaunch({
-                              //   url: '/pages/index/index',
-                              // })
-                            },
-                          })
-                        } else {
-                          console.log('进入设置页面打开了录音权限');
-                        }
-                      },
-                      fail: function () {}
-                    })
-                  } else if (res.cancel) {
-                    console.log('还是不进行授权');
-                    that.leaveRoomClear()
-                    // wx.reLaunch({
-                    //   url: '/pages/index/index',
-                    // })
-                  }
-                },
-                fail: function () {}
+              that.setData({
+                isOpenRecordSetting: true
               })
             }
           });
@@ -3581,8 +3547,25 @@ Page({
     });
   },
 
+  openSetting() {
+    wx.openSetting({
+      success: (res) => {
+        if (!res.authSetting['scope.record']) {
+          // 还是没授权
+        } else {
+          console.log('进入设置页面打开了录音权限');
+          this.setData({
+            isOpenRecordSetting: false
+          })
+        }
+      },
+      fail: function () {}
+    })
+  },
+
   // 验证是否有登录信息
   verifyLogin() {
+    console.log();
     var loginInfo = getLoginInfo()
     const that = this
     if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
