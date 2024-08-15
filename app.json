@@ -83,5 +83,6 @@
     "navigationBarTextStyle": "white"
   },
   "sitemapLocation": "sitemap.json",
-  "__usePrivacyCheck__":true
+  "__usePrivacyCheck__":true,
+  "debug": false
 }

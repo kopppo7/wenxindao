@@ -1,4 +1,4 @@
-<view wx:if="{{!showFupan}}">
+<scroll-view wx:if="{{!showFupan}}">
   <view class="hourse-set">
     <view class="txt">
       <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
@@ -207,7 +207,7 @@
       </view>
     </view>
   </view>
-</view>
+</scroll-view>
 <view wx:if="{{audioPushUrl!==''}}">
   <live-pusher wx:key="livePusher" style="display:inline-block;width:0;height:0;" mode="RTC" url="{{audioPushUrl}}" autopush="true" enable-mic="{{ pushIsMuted }}" enable-camera="{{false}}" />
 </view>
