@@ -214,7 +214,7 @@
 
 
 <view wx:for="{{remoteStreams}}" wx:key="url" wx:if="{{remoteStreams.length > 0}}">
-  <live-player style="display:inline-block;width:0;height:0;" data-user="{{uid}}" wx:if="{{item.uid !== uid}}" src="{{item.url}}" mode="RTC" debug="true" min-cache="0.2" muted="{{playIsMuted}}" max-cache="0.8" auto-pause-if-navigate="true" auto-pause-if-open-native="true" autoplay="true" />
+  <live-player style="display:inline-block;width:0;height:0;" data-user="{{uid}}" wx:if="{{item.uid !== uid}}" src="{{item.url}}" mode="RTC" min-cache="0.2" muted="{{playIsMuted}}" max-cache="0.8" auto-pause-if-navigate="true" auto-pause-if-open-native="true" autoplay="true" />
 </view>
 
 <!--结尾畅聊-->

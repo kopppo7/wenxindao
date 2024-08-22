@@ -101,9 +101,9 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad(options) {
+    async onLoad(options) {
       if(Number(options.type)>0&&Number(options.type)<4){
-        this.setData({
+        await this.setData({
             cur_tab: Number(options.type),
             seType: this.data.tab[Number(options.type)].type,
         })
