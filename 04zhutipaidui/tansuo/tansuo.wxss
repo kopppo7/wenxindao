@@ -1590,6 +1590,13 @@ image {
   transform: rotateY(90deg);
 }
 
+.full-image {
+  max-width: 100%;  /* 确保图片按比例缩放 */
+  max-height: 100%; /* 确保图片按比例缩放 */
+  width: auto;
+  height: auto;
+}
+
 @keyframes cardback {
   0% {
     transform: rotateY(0);

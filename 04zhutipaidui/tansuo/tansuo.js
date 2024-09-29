@@ -730,6 +730,7 @@ Page({
       this.setData({
         playerList: members
       })
+      console.log("getUsers - playerList", this.data.playerList);
     }
     //结尾畅聊成员列表
     var list = JSON.parse(JSON.stringify(playerList))
@@ -855,6 +856,8 @@ Page({
     this.setData({
       playerList: arr
     })
+    
+    console.log("onRemoveTeamMembers - playerList", this.data.playerList);
   },
   // 收到消息
   onMsg(msg) {
@@ -999,6 +1002,8 @@ Page({
         that.setData({
           playerList: play
         })
+        
+       console.log("content.type == 1 - playerList", this.data.playerList);
         //判断是否都准备了
         that.handleReadyStatus()
         // if (playerNum >= that.data.roomData.minNumber) {
@@ -1032,6 +1037,8 @@ Page({
         that.setData({
           playerList: play
         })
+        
+    console.log("(content.type == 2) - playerList", this.data.playerList);
       } else if (content.type == 3) {
         // 自定义消息type为3的时候 玩家是否在线
         var play = that.data.playerList;
@@ -1043,6 +1050,8 @@ Page({
         that.setData({
           playerList: play
         })
+        
+    console.log("content.type == 3 - playerList", this.data.playerList);
       } else if (content.type == 4) {
         var play = that.data.playerList;
         // 自定义消息type为4的时候 为系统文字消息
@@ -1209,6 +1218,8 @@ Page({
           that.setData({
             playerList: player2
           })
+          
+    console.log("别人离开的话，更新人员信息 - playerList", this.data.playerList);
           if (that.data.truePlayerList.length < that.data.roomData.minNumber) {
             console.log("人不够");
             // 用户满足最小开始人数时可以隐藏房主等待提示语
@@ -1263,7 +1274,19 @@ Page({
             waitTime: 3
           })
           console.log("这个是开始对话的倒计时 test -----------");
-          this.sendSocketMsg(obj)
+          // this.sendSocketMsg(obj)
+          if (this.data.isSocketOpen) {
+            this.sendSocketMsg(obj)
+          } else {
+            console.log('WebSocket 尚未连接，稍后重试发送消息', obj);
+            setTimeout(() => {
+              if (this.data.isSocketOpen) {
+                sendMessage();
+              } else {
+                console.log('WebSocket 仍然未连接，放弃发送消息', obj);
+              }
+            }, 1000); // 等待1秒后重试
+          }
         }, 1000);
       } else if (content.type == 10) {
         // 发言和思考倒计时
@@ -1323,6 +1346,8 @@ Page({
         that.setData({
           playerList: play
         })
+        
+    console.log("// 自定义消息type为1的时候 玩家准备 - playerList", this.data.playerList);
         var msgObj = {
           sysType: 'people',
           text: content.data.status ? '玩家已做好准备，请耐心等待房主开启对话' : '玩家取消准备',
@@ -1357,6 +1382,8 @@ Page({
         that.setData({
           playerList: play
         })
+        
+    console.log("自定义消息type为2的时候 玩家是否轮到发言 - playerList", this.data.playerList);
       } else if (content.type == 3) {
         // 自定义消息type为3的时候 玩家是否在线
         var play = that.data.playerList;
@@ -1368,6 +1395,8 @@ Page({
         that.setData({
           playerList: play
         })
+        
+    console.log("自定义消息type为3的时候 玩家是否在线 - playerList", this.data.playerList);
       } else if (content.type == 4) {
         // 自定义消息type为4的时候 为系统文字消息
         var msgObj = {
@@ -1478,6 +1507,8 @@ Page({
         that.setData({
           playerList: player2
         })
+        
+    console.log(" 别人离开的话，更新人员信息player.forEach((item, index) => { - playerList", this.data.playerList);
       }
     } else {
       var msgObj = {
@@ -1528,7 +1559,19 @@ Page({
           isJump: 0
         }
         setTimeout(() => {
-          vm.sendSocketMsg(obj)
+          // vm.sendSocketMsg(obj)
+          if (vm.data.isSocketOpen) {
+            vm.sendSocketMsg(obj)
+          } else {
+            console.log('WebSocket 尚未连接，稍后重试发送消息', obj);
+            setTimeout(() => {
+              if (vm.data.isSocketOpen) {
+                vm.sendSocketMsg(obj)
+              } else {
+                console.log('WebSocket 仍然未连接，放弃发送消息', obj);
+              }
+            }, 1000); // 等待1秒后重试
+          }
         }, 1000);
       } else {
         console.log('还没准备好')
@@ -2062,7 +2105,19 @@ Page({
       downTime: that.data.themeDetail.coChatTime
     }
     setTimeout(() => {
-      that.sendSocketMsg(obj)
+      // that.sendSocketMsg(obj)
+      if (that.data.isSocketOpen) {
+        that.sendSocketMsg(obj)
+      } else {
+        console.log('WebSocket 尚未连接，稍后重试发送消息', obj);
+        setTimeout(() => {
+          if (that.data.isSocketOpen) {
+            that.sendSocketMsg(obj)
+          } else {
+            console.log('WebSocket 仍然未连接，放弃发送消息', obj);
+          }
+        }, 1000); // 等待1秒后重试
+      }
       that.publishAllAudio()
     }, 1000);
   },
@@ -2113,7 +2168,19 @@ Page({
       downTime: thinkTime + 1
     }
     setTimeout(() => {
-      that.sendSocketMsg(obj)
+      // that.sendSocketMsg(obj)
+      if (that.data.isSocketOpen) {
+        that.sendSocketMsg(obj)
+      } else {
+        console.log('WebSocket 尚未连接，稍后重试发送消息', obj);
+        setTimeout(() => {
+          if (that.data.isSocketOpen) {
+            that.sendSocketMsg(obj)
+          } else {
+            console.log('WebSocket 仍然未连接，放弃发送消息', obj);
+          }
+        }, 1000); // 等待1秒后重试
+      }
       that.stopPublishAudio()
     }, 1000);
     // this.getDownTime(thinkTime, this.speak)
@@ -2169,7 +2236,19 @@ Page({
       isJump: 0
     }
     setTimeout(() => {
-      that.sendSocketMsg(obj)
+      // that.sendSocketMsg(obj)
+      if (that.data.isSocketOpen) {
+        that.sendSocketMsg(obj)
+      } else {
+        console.log('WebSocket 尚未连接，稍后重试发送消息', obj);
+        setTimeout(() => {
+          if (that.data.isSocketOpen) {
+            that.sendSocketMsg(obj)
+          } else {
+            console.log('WebSocket 仍然未连接，放弃发送消息', obj);
+          }
+        }, 1000); // 等待1秒后重试
+      }
       // 如果当前发言的人是自己的话开始推流,其他人停止推流
       if (playerList[personInd].account ===
         that.data.account) {
@@ -2249,6 +2328,7 @@ Page({
   },
   //确认跳过
   jumpConfirm: function (val) {
+
     var that = this
     this.sendCustomMsg(6, {
       text: '跳过发言'
@@ -2279,7 +2359,19 @@ Page({
       isJump: 1,
       cmd: 'msg002'
     }
-    vm.sendSocketMsg(obj)
+    // vm.sendSocketMsg(obj)
+    if (vm.data.isSocketOpen) {
+      vm.sendSocketMsg(obj)
+    } else {
+      console.log('WebSocket 尚未连接，稍后重试发送消息', obj);
+      setTimeout(() => {
+        if (vm.data.isSocketOpen) {
+          vm.sendSocketMsg(obj)
+        } else {
+          console.log('WebSocket 仍然未连接，放弃发送消息', obj);
+        }
+      }, 1000); // 等待1秒后重试
+    }
     //成员列表，去掉空的
     var playerList = []
     this.data.playerList.map(item => {
@@ -3067,11 +3159,26 @@ Page({
       console.log('打开 WebSocket 连接111', ret)
       console.log(vm.data.isOnloadSocket);
       if (vm.data.isOnloadSocket) {
-        vm.refreshSendSocketMsg()
+        // vm.refreshSendSocketMsg()
+        if (vm.data.isSocketOpen) {
+          vm.sendSocketMsg(obj)
+        } else {
+          console.log('WebSocket 尚未连接，稍后重试发送消息', obj);
+          setTimeout(() => {
+            if (vm.data.isSocketOpen) {
+              vm.sendSocketMsg(obj)
+            } else {
+              console.log('WebSocket 仍然未连接，放弃发送消息', obj);
+            }
+          }, 1000); // 等待1秒后重试
+        }
         vm.setData({
           isOnloadSocket: false
         })
       }
+      vm.setData({
+        isSocketOpen: true
+      });
     })
     // onMessage
     vm.socket.onMessage((ret) => {
@@ -3176,6 +3283,7 @@ Page({
               // voiceStatus: 1,
               show_want_to_speck: false
             })
+            console.log(this.data.isBeginPlay && this.data.showJumpBtn && !this.data.isJump && !this.data.show_think_count_down);
             // if (totalTime - socketData.downTime > 30 && that.data.show_speak_count_down && !that.data.isFaYan) {
             //     that.setData({
             //         jumpPopStatus5: true
@@ -3226,6 +3334,9 @@ Page({
     // onError
     vm.socket.onError((err) => {
       console.log('WebSocket 连接失败：', err)
+      vm.setData({
+        isSocketOpen: false
+      });
     })
     // onClose
     vm.socket.onClose((ret) => {
@@ -3239,6 +3350,9 @@ Page({
         vm.webSocketInit()
         // vm.pingSocket()
       }
+      vm.setData({
+        isSocketOpen: false
+      });
     })
   },
   // WebSocket 断线重连
@@ -3313,7 +3427,19 @@ Page({
       cmd: 'msg002'
     }
     console.log("jumpSocket ======= test");
-    vm.sendSocketMsg(obj)
+    // vm.sendSocketMsg(obj)
+    if (vm.data.isSocketOpen) {
+      this.sendSocketMsg(obj)
+    } else {
+      console.log('WebSocket 尚未连接，稍后重试发送消息', obj);
+      setTimeout(() => {
+        if (vm.data.isSocketOpen) {
+          sendMessage();
+        } else {
+          console.log('WebSocket 仍然未连接，放弃发送消息', obj);
+        }
+      }, 1000); // 等待1秒后重试
+    }
   },
   // socket心跳，由客户端发起
   pingSocket() {
