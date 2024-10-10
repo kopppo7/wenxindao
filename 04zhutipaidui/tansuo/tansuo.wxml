@@ -1,4 +1,4 @@
-<scroll-view wx:if="{{!showFupan}}">
+<scroll-view wx:if="{{!showFupan}}" style="height: 100vh">
   <view class="hourse-set">
     <view class="txt">
       <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
@@ -132,7 +132,7 @@
               </view>
             </block>
             <!-- 最后加一个垫底的节点 -->
-            <view class="last-view" id="{{endId}}" style="height:20px;"></view>
+            <view class="last-view" id="{{endId}}" style="height:2px;"></view>
           </view>
         </scroll-view>
       </view>
@@ -335,21 +335,7 @@
       请在 {{readyTime}}s 内完成准备。未准备将被抱出房间哦~
     </view>
   </view>
-  <!-- <view class="ready-fix">
-    请 {{readyTime}}S 内点击准备
-  </view> -->
 </block>
-
-<!-- <block wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}">
-    <view class="pop-mask"></view>
-    <view class="pop-win2" style="z-index: 799;">
-        <view class="pop-tit">提示</view>
-        <view class="desc">请在 <text class="num">{{readyTime}}s</text> 内完成准备，否则自动退出</view>
-        <view class="btns">
-            <view class="ok btn" bindtap="clickReady">立即准备</view>
-        </view>
-    </view>
-</block> -->
 
 <!-- 匹配中 -->
 <!-- <block wx:if="{{matePopStatus}}">

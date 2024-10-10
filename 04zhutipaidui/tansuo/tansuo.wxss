@@ -1467,7 +1467,8 @@ image {
 
 .room-theme .speak-con {
   flex-grow: 1;
-  height: calc(100% - 700rpx);
+  /* height: calc(100% - 700rpx); */
+  height: 27vh;
   margin-top: 18rpx;
   -wekit-box-sizing: border-box;
   -moz-box-sizing: border-box;

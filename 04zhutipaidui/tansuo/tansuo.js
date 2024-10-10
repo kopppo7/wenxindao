@@ -3161,12 +3161,12 @@ Page({
       if (vm.data.isOnloadSocket) {
         // vm.refreshSendSocketMsg()
         if (vm.data.isSocketOpen) {
-          vm.sendSocketMsg(obj)
+          vm.sendSocketMsg()
         } else {
           console.log('WebSocket 尚未连接，稍后重试发送消息', obj);
           setTimeout(() => {
             if (vm.data.isSocketOpen) {
-              vm.sendSocketMsg(obj)
+              vm.sendSocketMsg();
             } else {
               console.log('WebSocket 仍然未连接，放弃发送消息', obj);
             }
