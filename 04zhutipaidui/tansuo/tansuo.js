@@ -670,6 +670,8 @@ Page({
     })
     this.setData({
       truePlayerList: members
+    }, () => {
+      console.log('onTeamMembers Updated truePlayerList:', this.data.playerList);
     })
     nim.getUsers({
       accounts: accounts,
@@ -796,52 +798,23 @@ Page({
   //有人走了
   onRemoveTeamMembers(teamMember) {
     let that = this
+    let truePlayerList = that.data.truePlayerList
     // 未准备踢出时不执行
     if (that.data.readyPopStatus && !that.data.isBeginPlay && !that.data.activityPopStatus) {
       return false
     }
-    console.log('有人走了', teamMember.accounts[0]);
-    var arr = this.data.playerList;
-    arr.forEach((item, index) => {
-      if (item.account == teamMember.accounts[0]) {
-        arr[index] = {}
-      }
-    })
+    console.log('有人走了 onRemoveTeamMembers', teamMember.accounts[0]);
     console.log(that.data.truePlayerList, "原始数据");
-    let truePlayerList = that.data.truePlayerList
-    truePlayerList.forEach((item, index) => {
-      if (item.account == teamMember.accounts[0]) {
-        truePlayerList.splice(index, 1)
-      }
-    })
-    if (truePlayerList.length <= 1 && !that.data.isBeginPlay && !that.data.isOwner) {
-      arr.forEach((item, index) => {
-        if (item.account) {
-          item['isReady'] = false
-          arr.splice(0, 1, item)
-          arr.splice(index, 1, {})
-        }
-      })
-      truePlayerList.forEach((item, index) => {
-        if (item.account) {
-          item['isReady'] = false
-          truePlayerList.splice(0, 1, item)
-          truePlayerList.splice(index, 1)
-        }
-      })
+    if (truePlayerList.length < 1 && !that.data.isBeginPlay && !that.data.isOwner) {
       that.setData({
         isLinShiFangZhu: true,
         isOwner: true,
         truePlayerList,
         isReady: false,
+      }, () => {
+        console.log(truePlayerList.length, that.data.isBeginPlay, that.data.isOwner, "房间变为只有自己了且自己之前不是房主");
       })
     }
-    this.setData({
-      playerList: arr
-    }, () => {
-      // 数据更新完成后的回调函数
-      console.log('onRemoveTeamMembers Updated playerList:', this.data.playerList);
-    })
   },
   // 收到消息
   onMsg(msg) {
@@ -1196,18 +1169,8 @@ Page({
             })
           }
         } else {
-          // 别人离开的话，更新人员信息
-          player.forEach((item, index) => {
-            if (item?.account && item?.account == userAccount) {
-              player2.splice(index, 1, {})
-            }
-          })
-          that.setData({
-            playerList: player2
-          }, () => {
-            // 数据更新完成后的回调函数
-            console.log('别人离开的话，更新人员信息 Updated playerList:', this.data.playerList);
-          })
+          console.log("有人离开了");
+          that.handleOtherLeave(userAccount)
           if (that.data.truePlayerList.length < that.data.roomData.minNumber) {
             console.log("人不够");
             // 用户满足最小开始人数时可以隐藏房主等待提示语
@@ -1219,7 +1182,7 @@ Page({
               that.startWaitingCountdown()
             })
           }
-          console.log(that.data.truePlayerList, 'that.data.playerList');
+          console.log(that.data.truePlayerList, 'that.data.truePlayerList');
           if (content.data?.isOver) {
             return
           } else {
@@ -1307,6 +1270,34 @@ Page({
     that.saveData()
   },
 
+  // 别人离开，更新人员信息
+  handleOtherLeave(account) {
+    let that = this
+    let truePlayerList = that.data.truePlayerList;
+    let playerList = that.data.playerList;
+    let maxNumber = that.data.roomData.maxNumber;
+    // 找到要删除的玩家索引
+    let index = playerList.findIndex(player => player.account === account);
+
+    // 如果找到了对应的玩家
+    if (index !== -1) {
+      // 删除该玩家
+      playerList.splice(index, 1);
+      truePlayerList.splice(index, 1);
+
+      // 补全固定长度的空对象
+      while (playerList.length < maxNumber) {
+        playerList.push({});
+      }
+      that.setData({
+        playerList,
+        truePlayerList
+      }, () => {
+        console.log('handleOtherLeave Updated playerList:', that.data.playerList);
+        console.log('handleOtherLeave Updated truePlayerList:', that.data.truePlayerList);
+      })
+    }
+  },
   //渲染消息记录
   renderHistoryMsh(msg) {
     console.log('这里是重新渲染消息记录');
@@ -1681,6 +1672,7 @@ Page({
         console.log(that.data.readyTime)
         console.log(account)
       } else {
+        console.log("执行了 readyTimeDown，sendCustomMsg type 8")
         that.sendCustomMsg(8, {
           account: account
         })
@@ -2966,6 +2958,7 @@ Page({
   //退出房间
   clickQuitRoom: function () {
     var that = this
+    console.log("执行了 clickQuitRoom - sendCustomMsg type 8")
     // that.sendCustomMsg(8, { account: that.data.account, isOver: 1 })
     that.sendCustomMsg(8, {
       account: that.data.account
@@ -2977,6 +2970,7 @@ Page({
     this.setData({
       clickExit: true
     })
+    console.log("执行了 clickZhongTuQuitRoom，sendCustomMsg type 8")
     this.sendCustomMsg(8, {
       account: that.data.account
     })
