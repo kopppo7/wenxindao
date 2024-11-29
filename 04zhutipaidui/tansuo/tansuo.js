@@ -657,9 +657,6 @@ Page({
       })
 
       // 判断当前用户数量是否符合最小开始数量，不符合则要显示房主等待倒计时
-      if (obj.members[closestIndex].account === this.data.roomData.ownerUserIm && this.showPrompt === false) {
-        this.showWaiting()
-      }
       if (members[members.length - 1].account === this.data.roomData.ownerUserIm && this.showPrompt === false) {
         this.showWaiting()
       }
@@ -679,12 +676,6 @@ Page({
       sync: true,
       done: that.getUsers
     });
-  },
-  getUserDone(error, user) {
-    console.log('获取用户资料' + (!error ? '成功' : '失败'));
-    if (!error) {
-      onUsers(user);
-    }
   },
   getUsers(error, users) {
     var that = this
@@ -1766,13 +1757,6 @@ Page({
     })
   },
   //-------------------------------------匹配路人end-----------------------------------------------------------
-
-  getUserDone(error, user) {
-    console.log(error);
-    console.log(user);
-    console.log('获取用户资料' + (!error ? '成功' : '失败'));
-  },
-
 
   onDismissTeam(obj) {
     console.log('群解散了', obj);
@@ -3059,6 +3043,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
+    console.log("第一个 unload 执行了")
     if (timeInt) clearInterval(timeInt)
     if (timeout) clearInterval(timeout)
     if (readyTimeout) clearInterval(readyTimeout)
@@ -3747,6 +3732,7 @@ Page({
   },
 
   onUnload() {
+    console.log("第二个 onunload 执行了")
     const vm = this;
     vm.socket && vm.socket.close()
     try {
