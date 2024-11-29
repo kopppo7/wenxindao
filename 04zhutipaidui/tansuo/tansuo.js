@@ -642,51 +642,37 @@ Page({
   },
   // 群成员更新
   onTeamMembers(obj) {
+    var that = this
     console.log('收到群成员', obj);
+    const members = obj.members
+    // 按照 joinTime 从小到大排序
+    members.sort((a, b) => a.joinTime - b.joinTime);
     // 非房主不发送消息
-    if (obj.members.length !== 1) {
-      // 对比时间戳获取进房时间最近的，用作当前用户
-      // 获取当前时间的时间戳
-      let currentTime = Date.now();
-      // 初始化最小时间差为一个较大的数值
-      let minDifference = Infinity;
-      let closestIndex = -1;
-
-      // 遍历数组，找出离当前时间最近的对象的索引值
-      obj.members.forEach((obj, index) => {
-        let timeDifference = Math.abs(currentTime - obj.joinTime);
-        if (timeDifference < minDifference) {
-          minDifference = timeDifference;
-          closestIndex = index;
-        }
-      });
-
-      getRnameByYunId(obj.members[closestIndex].account).then(res => {
+    if (members.length !== 1) {
+      // members[members.length - 1] 为当前用户
+      getRnameByYunId(members[members.length - 1].account).then(res => {
         this.sendCustomMsg(4, {
           text: '欢迎 ' + res.data.data.rname + ' 请您在' + this.data.readyTimeVal + 's 内做好准备，对话马上开始。如果15s内没有完成，您将会被抱出房间（需要重新进入）'
         })
       })
 
-      // obj.members[closestIndex].account 为当前用户
       // 判断当前用户数量是否符合最小开始数量，不符合则要显示房主等待倒计时
       if (obj.members[closestIndex].account === this.data.roomData.ownerUserIm && this.showPrompt === false) {
+        this.showWaiting()
+      }
+      if (members[members.length - 1].account === this.data.roomData.ownerUserIm && this.showPrompt === false) {
         this.showWaiting()
       }
     } else {
       // 是房主或中途退出返回后还是一个人
       this.showWaiting()
     }
-    var that = this
     var accounts = []
-    // var truePlayerList = this.data.truePlayerList
-    var truePlayerList = []
-
-    truePlayerList = truePlayerList.concat(obj.members)
-    truePlayerList.forEach(item => {
+    members.forEach(item => {
       accounts.push(item.account)
     })
     this.setData({
-      truePlayerList: truePlayerList
+      truePlayerList: members
     })
     nim.getUsers({
       accounts: accounts,
@@ -694,43 +680,49 @@ Page({
       done: that.getUsers
     });
   },
-  // 判断是否是房主 如果是房主的话把房主排到第一位
+  getUserDone(error, user) {
+    console.log('获取用户资料' + (!error ? '成功' : '失败'));
+    if (!error) {
+      onUsers(user);
+    }
+  },
   getUsers(error, users) {
-    console.log(users);
-    var maxNum = this.data.roomData.maxNumber;
-    var playerList = this.data.playerList
     var that = this
-    var members = []
-    if (playerList[this.data.roomData.maxNumber - 1]?.account) {
+    var playerList = this.data.playerList
+    var members = [...playerList] // 复制 playerList 数组
+    const maxNumber = this.data.roomData.maxNumber;
+    if (playerList[maxNumber - 1]?.account) {
       // 如果包房人数已满的话，看是否需要下面处理一下
     } else {
-      playerList[this.data.roomData.maxNumber - 1] = {}; //就算包房只有一个人也要给其他的加空人
-      members = playerList
-      for (let i = 0; i < users.length; i++) {
-        for (let j = 0; j < members.length; j++) {
-          if (!members[j]?.account) {
-            members[j] = users[i]
-            break
-          } else if (members[j]?.account == users[i]?.account) {
-            break
+      /*
+        此处逻辑：
+        users 数组中的每一项都需要通过 account 属性都和 member 数组中的每一项进行对比，如果 users 数组中的某一项在 members 数组中出现过，那么不做任何操作，若某一项没有出现在 members 数组中，且members数组中没有 {} 空对象， 即将该项 push 到数组中，若有空对象，那么将该项放于第一个空对象的位置
+        members 数组数据处理完毕后，需要将数组长度和 maxNumber 的值进行比对，若数组长度不满 maxNumber 则需要将数组填满，填充项的值为 {}，若数组长度满足了maxNumber，那么不做任任何操作 
+      */
+      // 对比 users 和 members，将不在 members 中的项添加到 members 中
+      users.forEach(user => {
+        if (!members.some(member => member.account === user.account)) {
+          // 找到第一个空对象 {} 的位置
+          let emptyIndex = members.findIndex(member => Object.keys(member).length === 0);
+          if (emptyIndex !== -1) {
+            // 如果找到了空对象，则将用户插入到该位置
+            members[emptyIndex] = user;
+          } else {
+            // 如果没有找到空对象，则将用户添加到末尾
+            members.push(user);
           }
         }
-      }
-
-      console.log(this.data.playerList, 'this.data.playerList');
-      if (members[0] && members[0].account != this.data.roomData.ownerUserIm) {
-        members.forEach((item, index) => {
-          if (item?.account == this.data.roomData.ownerUserIm) {
-            let obj = members[0];
-            members[0] = item;
-            members[index] = obj;
-          }
-        })
+      });
+      // 检查 members 数组长度是否满足 maxNumber 的要求，若不满则填充 {}
+      while (members.length < maxNumber) {
+        members.push({});
       }
       this.setData({
         playerList: members
+      }, () => {
+        // 数据更新完成后的回调函数
+        console.log('getUsers Updated playerList:', this.data.playerList);
       })
-      console.log("getUsers - playerList", this.data.playerList);
     }
     //结尾畅聊成员列表
     var list = JSON.parse(JSON.stringify(playerList))
@@ -855,9 +847,10 @@ Page({
     }
     this.setData({
       playerList: arr
+    }, () => {
+      // 数据更新完成后的回调函数
+      console.log('onRemoveTeamMembers Updated playerList:', this.data.playerList);
     })
-    
-    console.log("onRemoveTeamMembers - playerList", this.data.playerList);
   },
   // 收到消息
   onMsg(msg) {
@@ -1001,9 +994,10 @@ Page({
         })
         that.setData({
           playerList: play
+        }, () => {
+          // 数据更新完成后的回调函数
+          console.log('content.type == 1 Updated playerList:', this.data.playerList);
         })
-        
-       console.log("content.type == 1 - playerList", this.data.playerList);
         //判断是否都准备了
         that.handleReadyStatus()
         // if (playerNum >= that.data.roomData.minNumber) {
@@ -1036,9 +1030,10 @@ Page({
         })
         that.setData({
           playerList: play
+        }, () => {
+          // 数据更新完成后的回调函数
+          console.log('content.type == 2 Updated playerList:', this.data.playerList);
         })
-        
-    console.log("(content.type == 2) - playerList", this.data.playerList);
       } else if (content.type == 3) {
         // 自定义消息type为3的时候 玩家是否在线
         var play = that.data.playerList;
@@ -1049,9 +1044,10 @@ Page({
         })
         that.setData({
           playerList: play
+        }, () => {
+          // 数据更新完成后的回调函数
+          console.log('content.type == 3 Updated playerList:', this.data.playerList);
         })
-        
-    console.log("content.type == 3 - playerList", this.data.playerList);
       } else if (content.type == 4) {
         var play = that.data.playerList;
         // 自定义消息type为4的时候 为系统文字消息
@@ -1217,9 +1213,10 @@ Page({
           })
           that.setData({
             playerList: player2
+          }, () => {
+            // 数据更新完成后的回调函数
+            console.log('别人离开的话，更新人员信息 Updated playerList:', this.data.playerList);
           })
-          
-    console.log("别人离开的话，更新人员信息 - playerList", this.data.playerList);
           if (that.data.truePlayerList.length < that.data.roomData.minNumber) {
             console.log("人不够");
             // 用户满足最小开始人数时可以隐藏房主等待提示语
@@ -1345,9 +1342,10 @@ Page({
         })
         that.setData({
           playerList: play
+        }, () => {
+          // 数据更新完成后的回调函数
+          console.log('自定义消息type为1的时候 玩家准备 Updated playerList:', this.data.playerList);
         })
-        
-    console.log("// 自定义消息type为1的时候 玩家准备 - playerList", this.data.playerList);
         var msgObj = {
           sysType: 'people',
           text: content.data.status ? '玩家已做好准备，请耐心等待房主开启对话' : '玩家取消准备',
@@ -1381,9 +1379,10 @@ Page({
         })
         that.setData({
           playerList: play
+        }, () => {
+          // 数据更新完成后的回调函数
+          console.log('自定义消息type为2的时候 玩家是否轮到发言 Updated playerList:', this.data.playerList);
         })
-        
-    console.log("自定义消息type为2的时候 玩家是否轮到发言 - playerList", this.data.playerList);
       } else if (content.type == 3) {
         // 自定义消息type为3的时候 玩家是否在线
         var play = that.data.playerList;
@@ -1394,9 +1393,10 @@ Page({
         })
         that.setData({
           playerList: play
+        }, () => {
+          // 数据更新完成后的回调函数
+          console.log('自定义消息type为3的时候 玩家是否在线 Updated playerList:', this.data.playerList);
         })
-        
-    console.log("自定义消息type为3的时候 玩家是否在线 - playerList", this.data.playerList);
       } else if (content.type == 4) {
         // 自定义消息type为4的时候 为系统文字消息
         var msgObj = {
@@ -1506,9 +1506,10 @@ Page({
         })
         that.setData({
           playerList: player2
+        }, () => {
+          // 数据更新完成后的回调函数
+          console.log('别人离开的话，更新人员信息player.forEach((item, index) => { - playerList Updated playerList:', this.data.playerList);
         })
-        
-    console.log(" 别人离开的话，更新人员信息player.forEach((item, index) => { - playerList", this.data.playerList);
       }
     } else {
       var msgObj = {
@@ -1611,7 +1612,7 @@ Page({
 
   // 房主等待倒计时
   startWaitingCountdown: function (stop = false) {
-    console.log("进入 1", stop, this.data.waiting_countdown, this.data.waiting_countdown2);
+    console.log("进入 1 房主等待倒计时", stop, this.data.waiting_countdown, this.data.waiting_countdown2);
 
     if (stop) {
       this.setData({
@@ -1637,7 +1638,7 @@ Page({
   },
 
   startSecondCountdown: function (stop = false) {
-    console.log("进入 2", stop);
+    console.log("进入 2 第二轮房主等待倒计时", stop);
     const secondCountdownInterval = setInterval(() => {
       let countdown = this.data.waiting_countdown2;
       countdown--;
@@ -1898,12 +1899,37 @@ Page({
 
 
   //快速开始
+  // handleBegin() {
+  //   var num = 0;
+  //   var that = this;
+  //   var userIm = [];
+  //   var readyNum = 0;
+
+  //   this.data.playerList.forEach(item => {
+  //     if (item && item.account) {
+  //       userIm.push(item.account);
+  //       num++;
+  //     }
+  //     if (item && item.isReady) {
+  //       readyNum++;
+  //     }
+  //   });
+
+  //   console.log(this.data.playerList, 'this.data.playerList');
+  //   console.log(this.data.truePlayerList, 'this.data.truePlayerList');
+
+  //   nim.getUsers({
+  //     accounts: userIm,
+  //     sync: true,
+  //     done: that.getUsers
+  //   });
+  // },
   handleBegin() {
     var num = 0;
     var that = this;
     var userIm = []
     var readyNum = 0
-    console.log(this.data.playerList, 'this.data.playerList');
+    console.log(this.data.playerList, 'handleBegin - this.data.playerList');
     console.log(this.data.truePlayerList, 'this.data.truePlayerList');
     this.data.playerList.forEach(item => {
       if (item && item.account) {
@@ -3344,7 +3370,6 @@ Page({
       clearInterval(vm.SocketInterval)
       vm.SocketInterval = null
       if (ret.code == 1006) {
-        console.log(vm.socket, 2222222222222);
         // vm.reconnectSocket()
         // 异常关闭情况，重连
         vm.webSocketInit()
