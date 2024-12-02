@@ -29,9 +29,10 @@ Component({
   methods: {
     backRoom () {
       let roomPath = wx.getStorageSync('roomPath')
+      let partyData = wx.getStorageSync('partyData')
       if (roomPath) {
         wx.navigateTo({
-          url: '/04zhutipaidui/tansuo/tansuo?askId=' + roomPath.askId + '&isMatch=' + roomPath.isMatch + '&isfriend=' + roomPath.isfriend + '&roomId=' + roomPath.roomId
+          url: '/04zhutipaidui/tansuo/tansuo?askId=' + roomPath.askId + '&isMatch=' + roomPath.isMatch + '&isfriend=' + roomPath.isfriend + '&roomId=' + roomPath.roomId + '&title=' + partyData.themeDetail.title
         })
       }
     }

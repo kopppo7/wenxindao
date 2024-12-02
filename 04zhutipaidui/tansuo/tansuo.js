@@ -300,6 +300,7 @@ Page({
     }
     console.log(nim);
   },
+  // 离开频道房间
   leaveAudioRoom() {
     let that = this
     YunXinNertc.leave({
@@ -717,24 +718,25 @@ Page({
         console.log('getUsers Updated playerList:', this.data.playerList);
       })
     }
-    //结尾畅聊成员列表
-    var list = JSON.parse(JSON.stringify(playerList))
-    var showPlayerList = []
-    list.map(item => {
-      if (item && item.account) {
-        item.zan = 0
-        item.isZan = false
-        showPlayerList.push(item)
-        if (item.account === that.data.account) {
-          that.setData({
-            nickName: item.nick
-          })
-        }
-      }
-    })
-    this.setData({
-      showPlayerList: showPlayerList
-    })
+    // //结尾畅聊成员列表
+    // var list = JSON.parse(JSON.stringify(playerList))
+    // console.log(list)
+    // var showPlayerList = []
+    // list.map(item => {
+    //   if (item && item.account) {
+    //     item.zan = 0
+    //     item.isZan = false
+    //     showPlayerList.push(item)
+    //     if (item.account === that.data.account) {
+    //       that.setData({
+    //         nickName: item.nick
+    //       })
+    //     }
+    //   }
+    // })
+    // this.setData({
+    //   showPlayerList: showPlayerList
+    // })
 
   },
   // 连接成功
@@ -805,7 +807,17 @@ Page({
     }
     console.log('有人走了 onRemoveTeamMembers', teamMember.accounts[0]);
     console.log(that.data.truePlayerList, "原始数据");
-    if (truePlayerList.length < 1 && !that.data.isBeginPlay && !that.data.isOwner) {
+    if (truePlayerList.length <= 1 && !that.data.isBeginPlay && !that.data.isOwner) {
+      arr.forEach((item, index) => {
+        if (item.account) {
+          item['isReady'] = false
+        }
+      })
+      truePlayerList.forEach((item, index) => {
+        if (item.account) {
+          item['isReady'] = false
+        }
+      })
       that.setData({
         isLinShiFangZhu: true,
         isOwner: true,
@@ -815,6 +827,7 @@ Page({
         console.log(truePlayerList.length, that.data.isBeginPlay, that.data.isOwner, "房间变为只有自己了且自己之前不是房主");
       })
     }
+
   },
   // 收到消息
   onMsg(msg) {
@@ -2038,7 +2051,7 @@ Page({
                     url: url.replace('&', '?'),
                   })
                 } else if (res.cancel) {
-                  console.log('用户点击取消')
+                  console.log('用户点击取消 quitRoom')
                   //退出房间
                   quitRoom({
                     id: this.data.roomData.id
@@ -2299,7 +2312,26 @@ Page({
             text: '全部结束'
           })
         }
-        that.countDown()
+         //结尾畅聊成员列表
+         var list = JSON.parse(JSON.stringify(that.data.playerList))
+         console.log(list)
+         var showPlayerList = []
+         list.map(item => {
+           if (item && item.account) {
+             item.zan = 0
+             item.isZan = false
+             showPlayerList.push(item)
+             if (item.account === that.data.account) {
+               that.setData({
+                 nickName: item.nick
+               })
+             }
+           }
+         })
+         this.setData({
+           showPlayerList: showPlayerList
+         })
+         that.countDown()
 
       }
     }
@@ -2411,6 +2443,26 @@ Page({
             text: '全部结束'
           })
         }
+        
+        //结尾畅聊成员列表
+        var list = JSON.parse(JSON.stringify(this.data.playerList))
+        console.log(list)
+        var showPlayerList = []
+        list.map(item => {
+          if (item && item.account) {
+            item.zan = 0
+            item.isZan = false
+            showPlayerList.push(item)
+            if (item.account === this.data.account) {
+              this.setData({
+                nickName: item.nick
+              })
+            }
+          }
+        })
+        this.setData({
+          showPlayerList: showPlayerList
+        })
         this.countDown()
       }
 
@@ -2918,7 +2970,7 @@ Page({
     })
     that.socket.close()
     that.socket = null
-
+    console.log("handleTiaoguo quitRoom")
     //退出房间
     quitRoom({
       id: this.data.roomData.id
@@ -2940,6 +2992,7 @@ Page({
       })
       that.leaveRoomClear()
     } else {
+      console.log("quit =quitRoom");
       //退出房间
       quitRoom({
         id: this.data.roomData.id
@@ -3042,6 +3095,15 @@ Page({
     if (timeout) clearInterval(timeout)
     if (readyTimeout) clearInterval(readyTimeout)
     if (startTimeout) clearInterval(startTimeout)
+    const vm = this;
+    vm.socket && vm.socket.close()
+    try {
+      YunXinNertc.leave()
+      YunXinNertc.destroy()
+      YunXinNertc = null
+    } catch (e) {
+      console.log(e, 'onUnload - e');
+    }
     if (this.data.haveRoom) {
       if (this.data.isOwner) {
         //房主
@@ -3502,7 +3564,9 @@ Page({
         isOnloadSocket: true
       })
       setTimeout(() => {
-        this.webSocketInit()
+        if (!this.socket) {
+          this.webSocketInit()
+        }
       }, 1000);
       console.log(partyData, 'partyData');
     }
@@ -3530,6 +3594,10 @@ Page({
     }
     if (options.title) {
       this.setData({
+        title: options.title
+      })
+      
+      wx.setNavigationBarTitle({
         title: options.title
       })
     }
@@ -3725,18 +3793,18 @@ Page({
     }
   },
 
-  onUnload() {
-    console.log("第二个 onunload 执行了")
-    const vm = this;
-    vm.socket && vm.socket.close()
-    try {
-      YunXinNertc.leave()
-      YunXinNertc.destroy()
-      YunXinNertc = null
-    } catch (e) {
-      console.log(e, 'eeeeeeeeeeee');
-    }
-  },
+  // onUnload() {
+  //   console.log("第二个 onunload 执行了")
+  //   const vm = this;
+  //   vm.socket && vm.socket.close()
+  //   try {
+  //     YunXinNertc.leave()
+  //     YunXinNertc.destroy()
+  //     YunXinNertc = null
+  //   } catch (e) {
+  //     console.log(e, 'eeeeeeeeeeee');
+  //   }
+  // },
 
   //邀请好友
   onShareAppMessage() {
