@@ -657,12 +657,13 @@ Page({
           text: '欢迎 ' + res.data.data.rname + ' 请您在' + this.data.readyTimeVal + 's 内做好准备，对话马上开始。如果15s内没有完成，您将会被抱出房间（需要重新进入）'
         })
       })
-
       // 判断当前用户数量是否符合最小开始数量，不符合则要显示房主等待倒计时
       if (members[members.length - 1].account === this.data.roomData.ownerUserIm && this.showPrompt === false) {
+        console.log("断当前用户数量是否符合最小开始数量，不符合则要显示房主等待倒计时")
         this.showWaiting()
       }
     } else {
+      console.log("是房主或中途退出返回后还是一个人")
       // 是房主或中途退出返回后还是一个人
       this.showWaiting()
     }
@@ -708,13 +709,16 @@ Page({
       const updatedReadyMembers = members.map(member => {
         const user = listUser.find(user => user.userIm === member.account);
         if (user) {
-          return { ...member, isReady: JSON.parse(user.isReady.toLowerCase()) };
+          return {
+            ...member,
+            isReady: JSON.parse(user.isReady.toLowerCase())
+          };
         }
         return member;
       });
       // 检查 members 数组长度是否满足 maxNumber 的要求，若不满则填充 {}
       while (updatedReadyMembers.length < maxNumber) {
-        updatedMembers.push({});
+        updatedReadyMembers.push({});
       }
       this.setData({
         playerList: updatedReadyMembers
@@ -804,35 +808,47 @@ Page({
   //有人走了
   onRemoveTeamMembers(teamMember) {
     let that = this
-    let truePlayerList = that.data.truePlayerList
+    let playerList = that.data.playerList
     // 未准备踢出时不执行
     if (that.data.readyPopStatus && !that.data.isBeginPlay && !that.data.activityPopStatus) {
       return false
     }
     console.log('有人走了 onRemoveTeamMembers', teamMember.accounts[0]);
-    console.log(that.data.truePlayerList, "原始数据");
-    if (truePlayerList.length <= 1 && !that.data.isBeginPlay && !that.data.isOwner) {
-      arr.forEach((item, index) => {
-        if (item.account) {
-          item['isReady'] = false
-        }
-      })
-      truePlayerList.forEach((item, index) => {
-        if (item.account) {
-          item['isReady'] = false
-        }
-      })
+    console.log("玩家列表数据",playerList);
+    console.log("当前玩家数据", that.data);
+    // if (truePlayerList.length <= 1 && !that.data.isBeginPlay && !that.data.isOwner) {
+    if (playerList.length >= 1 && playerList[0].account === that.data.account 
+      && !that.data.isBeginPlay && !that.data.isOwner ) {
+      // arr.forEach((item, index) => {
+      //   if (item.account) {
+      //     item['isReady'] = false
+      //   }
+      // })
+      // playerList.forEach((item, index) => {
+      //   if (item.account === that.data.account) {
+      //     item['isReady'] = false
+      //   }
+      // })
       that.setData({
         isLinShiFangZhu: true,
         isOwner: true,
-        truePlayerList,
         isReady: false,
       }, () => {
-        console.log(truePlayerList.length, that.data.isBeginPlay, that.data.isOwner, "房间变为只有自己了且自己之前不是房主");
+        //取消房主的准备
+        this.updateReadyStatus(false)
+        this.setData({
+          isReady: false,
+          readyPopStatus: true
+        })
+        this.sendCustomMsg(1, {
+          status: this.data.isReady
+        })
+        console.log("房间之前是第二位玩家变为房主");
       })
     }
 
   },
+
   // 收到消息
   onMsg(msg) {
     var that = this
@@ -1712,7 +1728,6 @@ Page({
         isReady: false,
         readyPopStatus: true
       })
-      console.log(this.data.account, 'this.data.account');
       this.readyTimeDown(this.data.account)
       this.sendCustomMsg(1, {
         status: this.data.isReady
@@ -1989,7 +2004,6 @@ Page({
       yunId: item.account,
       roomId: that.data.roomData.id
     }).then(res => {
-      console.log(item.account, 'item.accountitem.account');
       console.log(that.data.account);
       that.setData({
         roomSetPopStatus: false,
@@ -2972,25 +2986,25 @@ Page({
 
 
   },
-  // 跳过复盘
+  // 跳过复盘
   async handleTiaoguo() {
     var that = this
     console.log(this.data.isOwner)
+    this.stopPublishAudio()
+    that.socket.close()
+    that.socket = null
+    console.log("handleTiaoguo quitRoom")
+    //退出房间
+    await quitRoom({
+      id: this.data.roomData.id
+    }).then(res => {
+      this.clearRoomData()
+    })
     that.setData({
       haveRoom: false,
       showFupan: false,
       step: that.data.stepList.length + 1,
       changeStep: that.data.stepList.length + 1,
-    })
-    this.stopPublishAudio()
-    that.socket.close()
-    that.socket = null
-    console.log("handleTiaoguo quitRoom")
-    //退出房间
-    quitRoom({
-      id: this.data.roomData.id
-    }).then(res => {
-      this.clearRoomData()
     })
   },
   //离开
@@ -3054,8 +3068,6 @@ Page({
     this.data.playerList.forEach(item => {
       if (item?.account && account === item.account) {
         nick = item.nick
-      } else {
-        console.log(account, 'account');
       }
     })
     return nick
@@ -3641,7 +3653,6 @@ Page({
           audioId: wx.getStorageSync('roomData').audioGroup,
           isOnloadSocket: true
         })
-
         //重新进来，准备后的倒计时没有结束，继续显示
         if (this.data.timePopStatus) {
           clearTimeout(startTimeout)
