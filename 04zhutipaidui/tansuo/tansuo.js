@@ -53,6 +53,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    countdownInterval: null,
+    secondCountdownInterval: null,
     canBeReady: false, // 数据准备好，可以点击准备了
     clickExit: false, // 主动点击退出标识
     title: '', // 对话标题
@@ -475,6 +477,7 @@ Page({
       })
       .then((data) => {
         console.log('加入房间成功，开始初始化本地音视频流', data);
+        that.showWaiting()
         // that.initLocalStream();
       })
       .catch((error) => {
@@ -636,6 +639,10 @@ Page({
         });
         this.startWaitingCountdown();
       } else {
+        // 在页面加载时从缓存中恢复倒计时时间
+        this.setData({
+          waiting_countdown2: countdown2
+        });
         this.startSecondCountdown();
       }
     } else {
@@ -1518,6 +1525,10 @@ Page({
           if (item?.account && item?.account == userAccount) {
             player2.splice(index, 1)
           }
+          
+          if(index === 1 && item?.account && item?.account == this.data.account){
+            console.log("房主离开了，本人要成为房主")
+          }
         })
         that.setData({
           playerList: player2
@@ -1636,6 +1647,9 @@ Page({
         showPrompt: false
       })
     }
+    if(this.data.countdownInterval){
+      clearInterval(this.data.countdownInterval);
+    }
     const countdownInterval = setInterval(() => {
       let countdown = this.data.waiting_countdown;
       countdown--;
@@ -1646,14 +1660,22 @@ Page({
         wx.setStorageSync('waiting_countdown', countdown); // 更新缓存中的倒计时时间
       } else {
         clearInterval(countdownInterval);
+        this.setData({
+          countdownInterval: null
+        })
         this.startSecondCountdown();
       }
     }, 1000);
-
+    this.setData({
+      countdownInterval: countdownInterval
+    })
   },
 
   startSecondCountdown: function (stop = false) {
     console.log("进入 2 第二轮房主等待倒计时", stop);
+    if(this.data.secondCountdownInterval){
+      clearInterval(this.data.secondCountdownInterval);
+    }
     const secondCountdownInterval = setInterval(() => {
       let countdown = this.data.waiting_countdown2;
       countdown--;
@@ -1664,12 +1686,17 @@ Page({
         wx.setStorageSync('waiting_countdown2', countdown); // 更新缓存中的倒计时时间
       } else {
         clearInterval(secondCountdownInterval);
+        this.setData({
+          secondCountdownInterval: null
+        })
         // this.setData({ showPrompt: false });
         wx.removeStorageSync('waiting_countdown'); // 清除已完成的倒计时缓存
         wx.removeStorageSync('waiting_countdown2');
       }
     }, 1000);
-
+    this.setData({
+      secondCountdownInterval: null
+    })
   },
 
   //准备弹窗是否显示
