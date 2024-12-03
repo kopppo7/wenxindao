@@ -128,3 +128,8 @@ export const getRnameByYunId = function (account) {
 export const checkRoomIsFree = function (params) {
   return http.get(handleURL('/room/freeNum'), params);
 }
+
+// 心灵对话 修改玩家准备状态
+export const updateReady = function (data) {
+  return http.post(handleURL('/room/updateReady'), data);
+}

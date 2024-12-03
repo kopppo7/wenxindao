@@ -24,7 +24,8 @@ import {
   inviteFriendsRoom,
   getIfFreeMy,
   insertEvaluate,
-  getRnameByYunId
+  getRnameByYunId,
+  updateReady
 } from "../api";
 import {
   formatMsgList
@@ -567,7 +568,7 @@ Page({
         console.error('本地 publish所有人 失败: ', err);
       });
   },
-  stopPublishAudio() {
+  async stopPublishAudio() {
     let that = this
     that.setData({
       voiceStatus: 0,
@@ -685,14 +686,10 @@ Page({
     var playerList = this.data.playerList
     var members = [...playerList] // 复制 playerList 数组
     const maxNumber = this.data.roomData.maxNumber;
+    const listUser = this.data.roomData.listUser; // 获取成员准备状态
     if (playerList[maxNumber - 1]?.account) {
       // 如果包房人数已满的话，看是否需要下面处理一下
     } else {
-      /*
-        此处逻辑：
-        users 数组中的每一项都需要通过 account 属性都和 member 数组中的每一项进行对比，如果 users 数组中的某一项在 members 数组中出现过，那么不做任何操作，若某一项没有出现在 members 数组中，且members数组中没有 {} 空对象， 即将该项 push 到数组中，若有空对象，那么将该项放于第一个空对象的位置
-        members 数组数据处理完毕后，需要将数组长度和 maxNumber 的值进行比对，若数组长度不满 maxNumber 则需要将数组填满，填充项的值为 {}，若数组长度满足了maxNumber，那么不做任任何操作 
-      */
       // 对比 users 和 members，将不在 members 中的项添加到 members 中
       users.forEach(user => {
         if (!members.some(member => member.account === user.account)) {
@@ -707,14 +704,21 @@ Page({
           }
         }
       });
+      // 使用 map 方法遍历 members 数组，并使用 find 方法在 listUser 中查找匹配的 userIm，将 isReady 更新进去
+      const updatedReadyMembers = members.map(member => {
+        const user = listUser.find(user => user.userIm === member.account);
+        if (user) {
+          return { ...member, isReady: JSON.parse(user.isReady.toLowerCase()) };
+        }
+        return member;
+      });
       // 检查 members 数组长度是否满足 maxNumber 的要求，若不满则填充 {}
-      while (members.length < maxNumber) {
-        members.push({});
+      while (updatedReadyMembers.length < maxNumber) {
+        updatedMembers.push({});
       }
       this.setData({
-        playerList: members
+        playerList: updatedReadyMembers
       }, () => {
-        // 数据更新完成后的回调函数
         console.log('getUsers Updated playerList:', this.data.playerList);
       })
     }
@@ -1695,6 +1699,7 @@ Page({
   },
   //取消准备
   cancelReady: function () {
+    this.updateReadyStatus(false)
     clearInterval(timeInt)
     timeInt = null
     if (this.data.isBeginPlay) {
@@ -1715,8 +1720,17 @@ Page({
     }
 
   },
+  updateReadyStatus(status) {
+    const params = {
+      roomId: this.data.roomId,
+      userId: wx.getStorageSync('loginInfo').id,
+      isReady: status
+    }
+    updateReady(params)
+  },
   //点击准备
   handleReady() {
+    this.updateReadyStatus(true)
     this.setData({
       isReady: true,
       readyPopStatus: false,
@@ -1726,6 +1740,7 @@ Page({
       status: this.data.isReady
     })
     clearInterval(readyTimeout)
+
     console.log('已点击准备');
   },
   //-------------------------------------准备end-----------------------------------------------------------
@@ -2312,26 +2327,26 @@ Page({
             text: '全部结束'
           })
         }
-         //结尾畅聊成员列表
-         var list = JSON.parse(JSON.stringify(that.data.playerList))
-         console.log(list)
-         var showPlayerList = []
-         list.map(item => {
-           if (item && item.account) {
-             item.zan = 0
-             item.isZan = false
-             showPlayerList.push(item)
-             if (item.account === that.data.account) {
-               that.setData({
-                 nickName: item.nick
-               })
-             }
-           }
-         })
-         this.setData({
-           showPlayerList: showPlayerList
-         })
-         that.countDown()
+        //结尾畅聊成员列表
+        var list = JSON.parse(JSON.stringify(that.data.playerList))
+        console.log(list)
+        var showPlayerList = []
+        list.map(item => {
+          if (item && item.account) {
+            item.zan = 0
+            item.isZan = false
+            showPlayerList.push(item)
+            if (item.account === that.data.account) {
+              that.setData({
+                nickName: item.nick
+              })
+            }
+          }
+        })
+        this.setData({
+          showPlayerList: showPlayerList
+        })
+        that.countDown()
 
       }
     }
@@ -2443,7 +2458,7 @@ Page({
             text: '全部结束'
           })
         }
-        
+
         //结尾畅聊成员列表
         var list = JSON.parse(JSON.stringify(this.data.playerList))
         console.log(list)
@@ -2958,16 +2973,16 @@ Page({
 
   },
   // 跳过复盘
-  handleTiaoguo() {
+  async handleTiaoguo() {
     var that = this
     console.log(this.data.isOwner)
-    this.stopPublishAudio()
-    this.setData({
+    that.setData({
       haveRoom: false,
       showFupan: false,
-      step: this.data.stepList.length + 1,
-      changeStep: this.data.stepList.length + 1,
+      step: that.data.stepList.length + 1,
+      changeStep: that.data.stepList.length + 1,
     })
+    this.stopPublishAudio()
     that.socket.close()
     that.socket = null
     console.log("handleTiaoguo quitRoom")
@@ -3054,10 +3069,10 @@ Page({
   },
 
   // 清除缓存、nim数据
-  clearRoomData: function () {
+  async clearRoomData() {
     this.setData({
       partyData: null,
-      roomData: null,
+      // roomData: null,
       isTuiChuRoom: true
     })
     wx.removeStorageSync('roomData')
@@ -3596,7 +3611,7 @@ Page({
       this.setData({
         title: options.title
       })
-      
+
       wx.setNavigationBarTitle({
         title: options.title
       })
