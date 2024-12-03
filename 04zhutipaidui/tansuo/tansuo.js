@@ -1736,12 +1736,14 @@ Page({
 
   },
   updateReadyStatus(status) {
+    const vm  = this
     const params = {
-      roomId: this.data.roomId,
+      roomId: vm.data.roomId,
       userId: wx.getStorageSync('loginInfo').id,
       isReady: status
     }
     updateReady(params)
+    vm.getRoomDetails(vm.data.roomId, true)
   },
   //点击准备
   handleReady() {
@@ -1875,11 +1877,17 @@ Page({
     })
   },
   // 获取房间详情
-  getRoomDetails(roomId, isInitRoom) {
+  getRoomDetails(roomId, refresh = false) {
     var that = this
     getRoomDetails({
       roomId: roomId
     }).then(res => {
+      if(refresh) {
+        that.setData({
+          roomData: res.data.data,
+        })
+        return
+      }
       that.setData({
         teamId: res.data.data.imGroup,
         audioId: res.data.data.audioGroup,
