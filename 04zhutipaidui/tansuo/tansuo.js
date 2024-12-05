@@ -236,6 +236,7 @@ Page({
     // this.creatRoom()
   },
   cancelActivityPop() {
+    console.log("cancelActivityPop - leaveRoomClear")
     this.leaveRoomClear()
   },
   // 活动提示end
@@ -479,7 +480,10 @@ Page({
       })
       .then((data) => {
         console.log('加入房间成功，开始初始化本地音视频流', data);
-        that.showWaiting()
+        if(this.data.isOwner) {
+          console.log("isOwner - showWaiting");
+          that.showWaiting()
+        }
         // that.initLocalStream();
       })
       .catch((error) => {
@@ -621,6 +625,7 @@ Page({
       this.setData({
         haveRoom: false
       })
+      console.log("getTeamMembersDone - leaveRoomClear")
       this.leaveRoomClear()
     }
   },
@@ -663,7 +668,7 @@ Page({
       // members[members.length - 1] 为当前用户
       getRnameByYunId(members[members.length - 1].account).then(res => {
         this.sendCustomMsg(4, {
-          text: '欢迎 ' + res.data.data.rname + ' 请您在' + this.data.readyTimeVal + 's 内做好准备，对话马上开始。如果15s内没有完成，您将会被抱出房间（需要重新进入）'
+          text: '欢迎 ' + res.data.data.rname + ' 请您在' + this.data.readyTimeVal + 's 内点击右下角准备按钮，对话马上开始。如果' + this.data.readyTimeVal + 's内没有完成，您将会被抱出房间（需要重新进入）'
         })
       })
       // 判断当前用户数量是否符合最小开始数量，不符合则要显示房主等待倒计时
@@ -1207,6 +1212,7 @@ Page({
                   }
                 })
               } else {
+                console.log("elseelseelse - leaveRoomClear")
                 that.leaveRoomClear()
               }
 
@@ -1868,6 +1874,7 @@ Page({
 
     function dismissTeamDone(error, obj) {
       console.log('解散群' + (!error ? '成功' : '失败'), error, obj);
+      console.log("dismissTeamDone - leaveRoomClear")
       that.leaveRoomClear()
     }
 
@@ -2123,6 +2130,7 @@ Page({
                   quitRoom({
                     id: this.data.roomData.id
                   }).then(res => {
+                    console.log("startCountDown - leaveRoomClear");
                     that.leaveRoomClear()
                   })
                 }
@@ -3060,6 +3068,7 @@ Page({
         id: this.data.roomData.id,
         token: wx.getStorageSync('tokenKey')
       })
+      console.log("quitquitquit - leaveRoomClear");
       that.leaveRoomClear()
     } else {
       console.log("quit =quitRoom");
@@ -3067,6 +3076,7 @@ Page({
       quitRoom({
         id: this.data.roomData.id
       }).then(res => {
+        console.log("quitquitquit2 - leaveRoomClear");
         that.leaveRoomClear()
       })
     }
@@ -3115,6 +3125,7 @@ Page({
   },
   // 退出房间清缓存跳转
   leaveRoomClear() {
+    console.log("leaveRoomClear");
     this.clearRoomData()
     wx.reLaunch({
       url: '/pages/index/index'
@@ -3179,6 +3190,8 @@ Page({
         this.saveData()
       } else {
         if (!this.data.isReady) {
+          console.log("onUnload - leaveRoomClear");
+          if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) return
           this.leaveRoomClear()
           //未准备，退出页面，代表退出房间。
           // quitRoom({
@@ -3224,6 +3237,7 @@ Page({
     })
   },
   bindTuichufangjian() {
+    console.log("bindTuichufangjian");
     wx.reLaunch({
       url: '/pages/index/index'
     })
@@ -3278,8 +3292,8 @@ Page({
     let vm = this
     let that = this
     vm.socket = wx.connectSocket({
-      // url: 'wss://wenxin.wxdao.net/ws',
-      url: 'ws://172.16.152.32:20016/wc',
+      url: 'wss://wenxin.wxdao.net/ws',
+      // url: 'ws://172.16.152.32:20016/wc',
       // url: 'ws://wenxin.wxdao.net:20016/wc',
       success(res) {
         console.log('WebSocket 连接成功: ', res)
@@ -3793,6 +3807,7 @@ Page({
       this.setData({
         haveRoom: false
       })
+      console.log("onload - 返回主页");
       wx.reLaunch({
         url: '/pages/index/index',
       })
@@ -3843,28 +3858,27 @@ Page({
   // 验证是否有登录信息
   verifyLogin() {
     var loginInfo = getLoginInfo()
-    console.log(loginInfo);
     const that = this
-    if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
-      wx.showModal({
-        title: '欢迎进入问心岛平台《' + that.data.title + '》心灵对话聊天室，在正式加入前请先完善手机号',
-        showCancel: false,
-        success: function (auth) {
-          wx.reLaunch({
-            url: '/pages/my/index/index',
-          })
-          return false
-        }
-      })
-    } else if (loginInfo.wechatName == '' || loginInfo.wechatName == null 
-    || loginInfo.wechatName == undefined) {
+    // if (loginInfo.phone == '' || loginInfo.phone == null || loginInfo.phone == undefined) {
+    //   wx.showModal({
+    //     title: '欢迎进入问心岛平台《' + that.data.title + '》心灵对话聊天室，在正式加入前请先完善手机号',
+    //     showCancel: false,
+    //     success: function (auth) {
+    //       wx.reLaunch({
+    //         url: '/pages/my/index/index',
+    //       })
+    //       return false
+    //     }
+    //   })
+    // } else
+     if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
       wx.showModal({
         title: '欢迎进入问心岛平台《' + that.data.title + '》心灵对话聊天室，在正式加入前请先完善您的头像和昵称',
         showCancel: false,
         success: function (auth) {
           wx.reLaunch({
-            url: '/pages/auth/auth'
-          })
+            url: '/pages/auth/auth',
+        })
           return false
         }
       })
