@@ -1,4 +1,4 @@
-<scroll-view wx:if="{{!showFupan}}" style="height: 100vh">
+<scroll-view wx:if="{{!showFupan}}" style="height: 100%">
   <view class="hourse-set">
     <view class="txt">
       <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>

@@ -95,6 +95,15 @@ export const getRoomDetails = function (data) {
 export const findByCard = function (data) {
     return http.get(handleURL('/room/findByCard'), data);
 }
+// 心灵对话 查询缓存当前轮次卡牌
+export const findCacheCard = function (data) {
+    return http.get(handleURL('/room/findCacheCard'), data);
+}
+// 心灵对话 缓存当前轮次卡牌
+export const cacheCard = function (data) {
+    return http.post(handleURL('/room/cacheCard'), data);
+}
+
 // 心灵对话 新增当前人当轮卡牌
 export const addCardForRoom = function (data) {
     return http.post(handleURL('/room/addCardForRoom'), data);
