@@ -480,7 +480,7 @@ Page({
       })
       .then((data) => {
         console.log('加入房间成功，开始初始化本地音视频流', data);
-        if(this.data.isOwner) {
+        if (this.data.isOwner) {
           console.log("isOwner - showWaiting");
           that.showWaiting()
         }
@@ -828,11 +828,11 @@ Page({
       return false
     }
     console.log('有人走了 onRemoveTeamMembers', teamMember.accounts[0]);
-    console.log("玩家列表数据",playerList);
+    console.log("玩家列表数据", playerList);
     console.log("当前玩家数据", that.data);
     // if (truePlayerList.length <= 1 && !that.data.isBeginPlay && !that.data.isOwner) {
-    if (playerList.length >= 1 && playerList[0].account === that.data.account 
-      && !that.data.isBeginPlay && !that.data.isOwner ) {
+    if (playerList.length >= 1 && playerList[0].account === that.data.account &&
+      !that.data.isBeginPlay && !that.data.isOwner) {
       // arr.forEach((item, index) => {
       //   if (item.account) {
       //     item['isReady'] = false
@@ -1088,7 +1088,9 @@ Page({
 
         console.log(that.data.msgList);
       } else if (content.type == 5) {
-        findCacheCard({ id: that.data.roomData.id}).then(res => {
+        findCacheCard({
+          id: that.data.roomData.id
+        }).then(res => {
           if (res.data.ret === 200) {
             // 发牌
             var list = []
@@ -1275,19 +1277,19 @@ Page({
             waitTime: 3
           })
           console.log("这个是开始对话的倒计时 test -----------");
-          // this.sendSocketMsg(obj)
-          if (this.data.isSocketOpen) {
-            this.sendSocketMsg(obj)
-          } else {
-            console.log('WebSocket 尚未连接1，稍后重试发送消息', obj);
-            setTimeout(() => {
-              if (this.data.isSocketOpen) {
-                sendMessage();
-              } else {
-                console.log('WebSocket 仍然未连接1，放弃发送消息', obj);
-              }
-            }, 1000); // 等待1秒后重试
-          }
+          this.sendSocketMsg(obj)
+          // if (this.data.isSocketOpen) {
+          //   this.sendSocketMsg(obj)
+          // } else {
+          //   console.log('WebSocket 尚未连接1，稍后重试发送消息', obj);
+          //   setTimeout(() => {
+          //     if (this.data.isSocketOpen) {
+          //       sendMessage();
+          //     } else {
+          //       console.log('WebSocket 仍然未连接1，放弃发送消息', obj);
+          //     }
+          //   }, 1000); // 等待1秒后重试
+          // }
         }, 1000);
       } else if (content.type == 10) {
         // 发言和思考倒计时
@@ -1535,8 +1537,8 @@ Page({
           if (item?.account && item?.account == userAccount) {
             player2.splice(index, 1)
           }
-          
-          if(index === 1 && item?.account && item?.account == this.data.account){
+
+          if (index === 1 && item?.account && item?.account == this.data.account) {
             console.log("房主离开了，本人要成为房主")
           }
         })
@@ -1596,19 +1598,19 @@ Page({
           isJump: 0
         }
         setTimeout(() => {
-          // vm.sendSocketMsg(obj)
-          if (vm.data.isSocketOpen) {
-            vm.sendSocketMsg(obj)
-          } else {
-            console.log('WebSocket 尚未连接2，稍后重试发送消息', obj);
-            setTimeout(() => {
-              if (vm.data.isSocketOpen) {
-                vm.sendSocketMsg(obj)
-              } else {
-                console.log('WebSocket 仍然未连接2，放弃发送消息', obj);
-              }
-            }, 1000); // 等待1秒后重试
-          }
+          vm.sendSocketMsg(obj)
+          // if (vm.data.isSocketOpen) {
+          //   vm.sendSocketMsg(obj)
+          // } else {
+          //   console.log('WebSocket 尚未连接2，稍后重试发送消息', obj);
+          //   setTimeout(() => {
+          //     if (vm.data.isSocketOpen) {
+          //       vm.sendSocketMsg(obj)
+          //     } else {
+          //       console.log('WebSocket 仍然未连接2，放弃发送消息', obj);
+          //     }
+          //   }, 1000); // 等待1秒后重试
+          // }
         }, 1000);
       } else {
         console.log('还没准备好')
@@ -1657,7 +1659,7 @@ Page({
         showPrompt: false
       })
     }
-    if(this.data.countdownInterval){
+    if (this.data.countdownInterval) {
       clearInterval(this.data.countdownInterval);
     }
     const countdownInterval = setInterval(() => {
@@ -1683,7 +1685,7 @@ Page({
 
   startSecondCountdown: function (stop = false) {
     console.log("进入 2 第二轮房主等待倒计时", stop);
-    if(this.data.secondCountdownInterval){
+    if (this.data.secondCountdownInterval) {
       clearInterval(this.data.secondCountdownInterval);
     }
     const secondCountdownInterval = setInterval(() => {
@@ -1773,7 +1775,7 @@ Page({
 
   },
   updateReadyStatus(status) {
-    const vm  = this
+    const vm = this
     const params = {
       roomId: vm.data.roomId,
       userId: wx.getStorageSync('loginInfo').id,
@@ -1919,7 +1921,7 @@ Page({
     getRoomDetails({
       roomId: roomId
     }).then(res => {
-      if(refresh) {
+      if (refresh) {
         that.setData({
           roomData: res.data.data,
         })
@@ -2195,19 +2197,19 @@ Page({
       downTime: that.data.themeDetail.coChatTime
     }
     setTimeout(() => {
-      // that.sendSocketMsg(obj)
-      if (that.data.isSocketOpen) {
-        that.sendSocketMsg(obj)
-      } else {
-        console.log('WebSocket 尚未连接3，稍后重试发送消息', obj);
-        setTimeout(() => {
-          if (that.data.isSocketOpen) {
-            that.sendSocketMsg(obj)
-          } else {
-            console.log('WebSocket 仍然未连接3，放弃发送消息', obj);
-          }
-        }, 1000); // 等待1秒后重试
-      }
+      that.sendSocketMsg(obj)
+      // if (that.data.isSocketOpen) {
+      //   that.sendSocketMsg(obj)
+      // } else {
+      //   console.log('WebSocket 尚未连接3，稍后重试发送消息', obj);
+      //   setTimeout(() => {
+      //     if (that.data.isSocketOpen) {
+      //       that.sendSocketMsg(obj)
+      //     } else {
+      //       console.log('WebSocket 仍然未连接3，放弃发送消息', obj);
+      //     }
+      //   }, 1000); // 等待1秒后重试
+      // }
       that.publishAllAudio()
     }, 1000);
   },
@@ -2258,19 +2260,19 @@ Page({
       downTime: thinkTime + 1
     }
     setTimeout(() => {
-      // that.sendSocketMsg(obj)
-      if (that.data.isSocketOpen) {
-        that.sendSocketMsg(obj)
-      } else {
-        console.log('WebSocket 尚未连接4，稍后重试发送消息', obj);
-        setTimeout(() => {
-          if (that.data.isSocketOpen) {
-            that.sendSocketMsg(obj)
-          } else {
-            console.log('WebSocket 仍然未连接4，放弃发送消息', obj);
-          }
-        }, 1000); // 等待1秒后重试
-      }
+      that.sendSocketMsg(obj)
+      // if (that.data.isSocketOpen) {
+      //   that.sendSocketMsg(obj)
+      // } else {
+      //   console.log('WebSocket 尚未连接4，稍后重试发送消息', obj);
+      //   setTimeout(() => {
+      //     if (that.data.isSocketOpen) {
+      //       that.sendSocketMsg(obj)
+      //     } else {
+      //       console.log('WebSocket 仍然未连接4，放弃发送消息', obj);
+      //     }
+      //   }, 1000); // 等待1秒后重试
+      // }
       that.stopPublishAudio()
     }, 1000);
     // this.getDownTime(thinkTime, this.speak)
@@ -2326,19 +2328,19 @@ Page({
       isJump: 0
     }
     setTimeout(() => {
-      // that.sendSocketMsg(obj)
-      if (that.data.isSocketOpen) {
-        that.sendSocketMsg(obj)
-      } else {
-        console.log('WebSocket 尚未连接5，稍后重试发送消息', obj);
-        setTimeout(() => {
-          if (that.data.isSocketOpen) {
-            that.sendSocketMsg(obj)
-          } else {
-            console.log('WebSocket 仍然未连接5，放弃发送消息', obj);
-          }
-        }, 1000); // 等待1秒后重试
-      }
+      that.sendSocketMsg(obj)
+      // if (that.data.isSocketOpen) {
+      //   that.sendSocketMsg(obj)
+      // } else {
+      //   console.log('WebSocket 尚未连接5，稍后重试发送消息', obj);
+      //   setTimeout(() => {
+      //     if (that.data.isSocketOpen) {
+      //       that.sendSocketMsg(obj)
+      //     } else {
+      //       console.log('WebSocket 仍然未连接5，放弃发送消息', obj);
+      //     }
+      //   }, 1000); // 等待1秒后重试
+      // }
       // 如果当前发言的人是自己的话开始推流,其他人停止推流
       if (playerList[personInd].account ===
         that.data.account) {
@@ -2468,19 +2470,19 @@ Page({
       isJump: 1,
       cmd: 'msg002'
     }
-    // vm.sendSocketMsg(obj)
-    if (vm.data.isSocketOpen) {
-      vm.sendSocketMsg(obj)
-    } else {
-      console.log('WebSocket 尚未连接6，稍后重试发送消息', obj);
-      setTimeout(() => {
-        if (vm.data.isSocketOpen) {
-          vm.sendSocketMsg(obj)
-        } else {
-          console.log('WebSocket 仍然未连接6，放弃发送消息', obj);
-        }
-      }, 1000); // 等待1秒后重试
-    }
+    vm.sendSocketMsg(obj)
+    // if (vm.data.isSocketOpen) {
+    //   vm.sendSocketMsg(obj)
+    // } else {
+    //   console.log('WebSocket 尚未连接6，稍后重试发送消息', obj);
+    //   setTimeout(() => {
+    //     if (vm.data.isSocketOpen) {
+    //       vm.sendSocketMsg(obj)
+    //     } else {
+    //       console.log('WebSocket 仍然未连接6，放弃发送消息', obj);
+    //     }
+    //   }, 1000); // 等待1秒后重试
+    // }
     //成员列表，去掉空的
     var playerList = []
     this.data.playerList.map(item => {
@@ -2566,7 +2568,7 @@ Page({
   },
 
   //发牌
-  async sendCard () {
+  async sendCard() {
     let that = this
     if (this.data.isOwner) {
       findByCard({
@@ -2575,24 +2577,27 @@ Page({
         if (res.data.ret === 200) {
           var list = that.fenPai(res.data.data)
           // 消息体有长度限制 改为卡片存入后端缓存中
-          cacheCard({ roomId: this.data.roomData.id, cardList: list }).then(res => {
-              // 发牌接口房主调一次 分给其他人 每张牌添加一个yunid 发给每个人
-              //将卡牌显示到消息内容，但不能使用发送消息，不然每个人的牌都能看到
-              // 牌直接发三张 三张都记录
-              // var msgList = that.data.stepCardList
-              // var msgObj = {
-              //     sysType: 'sys',
-              //     cardList: list,
-              //     step: this.data.step,
-              // }
-              // msgList.push(msgObj)
-              // that.setData({
-              //     stepCardList: msgList
-              // })
-              console.log(list, 'list');
-              that.sendCustomMsg(5, {
-                list: []
-              })
+          cacheCard({
+            roomId: this.data.roomData.id,
+            cardList: list
+          }).then(res => {
+            // 发牌接口房主调一次 分给其他人 每张牌添加一个yunid 发给每个人
+            //将卡牌显示到消息内容，但不能使用发送消息，不然每个人的牌都能看到
+            // 牌直接发三张 三张都记录
+            // var msgList = that.data.stepCardList
+            // var msgObj = {
+            //     sysType: 'sys',
+            //     cardList: list,
+            //     step: this.data.step,
+            // }
+            // msgList.push(msgObj)
+            // that.setData({
+            //     stepCardList: msgList
+            // })
+            console.log(list, 'list');
+            that.sendCustomMsg(5, {
+              list: []
+            })
           })
         }
       })
@@ -3313,18 +3318,19 @@ Page({
       console.log(vm.data.isOnloadSocket);
       if (vm.data.isOnloadSocket) {
         // vm.refreshSendSocketMsg()
-        if (vm.data.isSocketOpen) {
-          vm.sendSocketMsg()
-        } else {
-          console.log('WebSocket 尚未连接7，稍后重试发送消息', obj);
-          setTimeout(() => {
-            if (vm.data.isSocketOpen) {
-              vm.sendSocketMsg();
-            } else {
-              console.log('WebSocket 仍然未连接7，放弃发送消息', obj);
-            }
-          }, 1000); // 等待1秒后重试
-        }
+        vm.sendSocketMsg()
+        // if (vm.data.isSocketOpen) {
+        //   vm.sendSocketMsg()
+        // } else {
+        //   console.log('WebSocket 尚未连接7，稍后重试发送消息', obj);
+        //   setTimeout(() => {
+        //     if (vm.data.isSocketOpen) {
+        //       vm.sendSocketMsg();
+        //     } else {
+        //       console.log('WebSocket 仍然未连接7，放弃发送消息', obj);
+        //     }
+        //   }, 1000); // 等待1秒后重试
+        // }
         vm.setData({
           isOnloadSocket: false
         })
@@ -3547,8 +3553,8 @@ Page({
         console.log('WebSocket 消息发送成功内容', obj)
       },
       fail(err) {
-        console.log('WebSocket 消息发送失败', err)
-        console.log('WebSocket 消息发送失败内容', obj)
+        console.error('WebSocket 消息发送失败', err)
+        console.error('WebSocket 消息发送失败内容', obj)
         setTimeout(() => {
           vm.sendSocketMsg(params);
         }, 1000); // 等待1秒后重试
@@ -3583,19 +3589,19 @@ Page({
       cmd: 'msg002'
     }
     console.log("jumpSocket ======= test");
-    // vm.sendSocketMsg(obj)
-    if (vm.data.isSocketOpen) {
-      this.sendSocketMsg(obj)
-    } else {
-      console.log('WebSocket 尚未连接8，稍后重试发送消息', obj);
-      setTimeout(() => {
-        if (vm.data.isSocketOpen) {
-          sendMessage();
-        } else {
-          console.log('WebSocket 仍然未连接8，放弃发送消息', obj);
-        }
-      }, 1000); // 等待1秒后重试
-    }
+    vm.sendSocketMsg(obj)
+    // if (vm.data.isSocketOpen) {
+    //   this.sendSocketMsg(obj)
+    // } else {
+    //   console.log('WebSocket 尚未连接8，稍后重试发送消息', obj);
+    //   setTimeout(() => {
+    //     if (vm.data.isSocketOpen) {
+    //       sendMessage();
+    //     } else {
+    //       console.log('WebSocket 仍然未连接8，放弃发送消息', obj);
+    //     }
+    //   }, 1000); // 等待1秒后重试
+    // }
   },
   // socket心跳，由客户端发起
   pingSocket() {
@@ -3871,14 +3877,14 @@ Page({
     //     }
     //   })
     // } else
-     if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
+    if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) {
       wx.showModal({
         title: '欢迎进入问心岛平台《' + that.data.title + '》心灵对话聊天室，在正式加入前请先完善您的头像和昵称',
         showCancel: false,
         success: function (auth) {
           wx.reLaunch({
             url: '/pages/auth/auth',
-        })
+          })
           return false
         }
       })

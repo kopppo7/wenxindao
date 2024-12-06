@@ -5,7 +5,7 @@
         <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
         <text bindtap="leaveAudioRoom">人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
       </view>
-      <image wx:if="{{!(changeStep == (themeDetail.list.length+1))}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet" />
+      <image wx:if="{{!(step == (themeDetail.list.length+1))}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet" />
     </view>
     <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
       <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
@@ -46,7 +46,7 @@
                   <!--                                </image>-->
                 </view>
               </view>
-              <text class="name">{{item.nick}}</text>
+              <text class="name">{{account == item.account ? '自己' : item.nick}}</text>
             </view>
           </view>
           <scroll-view class="top-content" scroll-into-view="{{scrollTo}}" scroll-y="true" wx:if="{{stepCardList.length > 0}}">
@@ -139,7 +139,7 @@
         </view>
       </view>
     </view>
-    <view class="theme-bot" wx:if="{{changeStep != themeDetail.list.length+1}}">
+    <view class="theme-bot" wx:if="{{step != themeDetail.list.length+1}}">
       <view class="play" bindtap="publishAudio">
         <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png" wx:if="{{voiceStatus == 1}}"></image>
         <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio2.png" wx:if="{{voiceStatus == 0}}"></image>
