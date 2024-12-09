@@ -3,7 +3,9 @@ import YunXinMiniappSDK from '../../NERTC_Miniapp_SDK_v4.6.11'
 import SDK from '../../NIM_Web_SDK_miniapp_v9.6.3'
 import config from "../../utils/config";
 
-const { throttle } = require('../../utils/common');
+const {
+  throttle
+} = require('../../utils/common');
 import {
   debounce,
 } from "../../utils/util";
@@ -3814,4 +3816,14 @@ Page({
   //         path: '/04zhutipaidui/tansuo/tansuo?askId=' + this.data.askId + '&roomId=' + this.data.roomData.id + '&isfriend=1', // 路径，传递参数到指定页面。
   //     }
   // }
+
+  handleGoBack() {
+    if(this.data.isBeginPlay) {
+      this.handleZhongTuTuiChu()
+      return
+    }
+    wx.navigateBack({
+      delta: 1 // 返回上一页
+    });
+  }
 })

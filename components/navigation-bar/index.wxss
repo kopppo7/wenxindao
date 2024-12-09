@@ -1,0 +1,35 @@
+.nav-bar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  color: #fff;
+  background: #222653;
+  z-index: 999;
+}
+
+.nav-bar .content {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-left: 50rpx;
+  padding-right: 50rpx;
+  box-sizing: border-box;
+}
+
+.nav-bar .content .title {
+  text-align: center;
+  line-height: inherit;
+  width: 100%;
+  display: block;
+}
+
+.nav-bar .content .icon_back {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  left: 8rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s;
+}

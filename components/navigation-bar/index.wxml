@@ -1,0 +1,10 @@
+<!-- 自定义顶部栏 -->
+<view class="nav-bar" style="height:{{navBarHeight}}px;">
+  <view class="content" style="height:{{menuHeight}}px; min-height:{{menuHeight}}px; line-height:{{menuHeight}}px; left:{{menuRight}}px; top:{{menuTop}}px;">
+    <image src="./img/back.png" class="icon_back" bindtap="triggerGoBack"></image>
+    <text class="title">{{title}}</text>
+  </view>
+</view>
+
+<!-- 占位，高度与顶部栏一样 -->
+<view style="height:{{navBarHeight}}px;"></view>

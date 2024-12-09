@@ -98,6 +98,11 @@ page {
   color: #ffb58c;
 }
 
+.scroll-view {
+  position: relative;
+  box-sizing: border-box;
+}
+
 .form-z .textarea-box {
 	position: relative;
 	margin-bottom: 24rpx;

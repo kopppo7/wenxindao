@@ -1,3 +1,4 @@
+<navigation-bar title="{{title}}" bind:goBack="handleGoBack"></navigation-bar>
 <scroll-view wx:if="{{!showFupan}}" style="height: 100%">
     <view class="hourse-set">
       <view class="txt">
