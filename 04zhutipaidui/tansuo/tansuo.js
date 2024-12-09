@@ -3,6 +3,7 @@ import YunXinMiniappSDK from '../../NERTC_Miniapp_SDK_v4.6.11'
 import SDK from '../../NIM_Web_SDK_miniapp_v9.6.3'
 import config from "../../utils/config";
 
+const { throttle } = require('../../utils/common');
 import {
   debounce,
 } from "../../utils/util";
@@ -55,7 +56,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    publishAudioMaxRetries: 2,
+    publishAudioMaxRetries: 3,
     publishAudioRetryCount: 0,
     countdownInterval: null,
     secondCountdownInterval: null,
@@ -576,11 +577,11 @@ Page({
     YunXinNertc.publish('audio')
       .then((url) => {
         console.log('本地 publish 成功', url, `尝试次数: ${vm.data.publishAudioRetryCount + 1}`);
-        that.setData({
+        vm.setData({
           audioPushUrl: url,
           pushIsMuted: true
         }, () => {
-          that.setData({
+          vm.setData({
             voiceStatus: 1
           }, () => {
             vm.data.publishAudioRetryCount = 0; // 重置计数器
@@ -925,7 +926,7 @@ Page({
     var that = this;
     if (e.currentTarget.dataset.speakstate && !that.data.inputText) {
       // 点击完成
-      that.jumpConfirm('complete')
+      throttle(that.jumpConfirm('complete'), 2000)
       return false
     }
     if (!that.data.inputText) {

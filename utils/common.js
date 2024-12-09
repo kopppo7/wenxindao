@@ -74,3 +74,34 @@ export const getConfigList = (token) => {
     setStoreConfigList(res.data.data);
   });
 }
+
+/**
+ * 节流函数
+ * @param {Function} func 需要节流的函数
+ * @param {number} wait 节流时间间隔，单位为毫秒
+ * @returns {Function} 返回处理后的函数
+ */
+export const throttle = (func, wait) => {
+  let timer = null;
+  let lastTime = 0;
+
+  return function(...args) {
+      const now = Date.now();
+      const remainingTime = wait - (now - lastTime);
+
+      if (remainingTime <= 0) {
+          if (timer) {
+              clearTimeout(timer);
+              timer = null;
+          }
+          lastTime = now;
+          func.apply(this, args);
+      } else if (!timer) {
+          timer = setTimeout(() => {
+              lastTime = now;
+              timer = null;
+              func.apply(this, args);
+          }, remainingTime);
+      }
+  };
+}
