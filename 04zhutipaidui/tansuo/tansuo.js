@@ -55,6 +55,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    publishAudioMaxRetries: 2,
+    publishAudioRetryCount: 0,
     countdownInterval: null,
     secondCountdownInterval: null,
     canBeReady: false, // 数据准备好，可以点击准备了
@@ -332,7 +334,7 @@ Page({
     });
     that.joinChannel()
     YunXinNertc.on('error', (data) => {
-      console.log('音视频通知：错误')
+      console.log('音视频通知：错误', data)
     })
     //监听事件
     YunXinNertc.on('peer-online', (evt) => {
@@ -529,21 +531,23 @@ Page({
       //发布本地媒体给房间对端
       console.log('second - that.data.voiceStatus', that.data.voiceStatus);
       if (that.data.voiceStatus === 0) {
-        that.setData({
-          voiceStatus: 1
-        })
-        YunXinNertc
-          .publish('audio')
-          .then((url) => {
-            console.log('本地 publish 成功', url);
-            that.setData({
-              audioPushUrl: url,
-              pushIsMuted: true
-            })
-          })
-          .catch((err) => {
-            console.error('本地 publish 失败: ', err);
-          });
+        that.publishAudio()
+        // YunXinNertc
+        //   .publish('audio')
+        //   .then((url) => {
+        //     console.log('本地 publish 成功', url);
+        //     that.setData({
+        //       audioPushUrl: url,
+        //       pushIsMuted: true
+        //     }, () => {
+        //       that.setData({
+        //         voiceStatus: 1
+        //       })
+        //     })
+        //   })
+        //   .catch((err) => {
+        //     console.error('本地 publish 失败: ', err);
+        //   });
       } else {
         that.setData({
           voiceStatus: 0,
@@ -560,6 +564,34 @@ Page({
           });
       }
     }
+  },
+  // 开启语音
+  publishAudio() {
+    const vm = this
+    if (vm.data.publishAudioRetryCount >= vm.data.publishAudioMaxRetries) {
+      console.error('publishAudio 达到最大重连次数');
+      return;
+    }
+
+    YunXinNertc.publish('audio')
+      .then((url) => {
+        console.log('本地 publish 成功', url, `尝试次数: ${vm.data.publishAudioRetryCount + 1}`);
+        that.setData({
+          audioPushUrl: url,
+          pushIsMuted: true
+        }, () => {
+          that.setData({
+            voiceStatus: 1
+          }, () => {
+            vm.data.publishAudioRetryCount = 0; // 重置计数器
+          });
+        });
+      })
+      .catch((err) => {
+        vm.data.publishAudioRetryCount++;
+        console.error(`本地 publish 尝试失败 (${vm.data.publishAudioRetryCount}):`, err);
+        publishAudio(); // 重试 publishAudio
+      });
   },
   // 结束倒计时的时候都可以发言
   publishAllAudio() {
@@ -663,8 +695,8 @@ Page({
     const members = obj.members
     // 按照 joinTime 从小到大排序
     members.sort((a, b) => a.joinTime - b.joinTime);
-    // 非房主不发送消息
-    if (members.length !== 1) {
+    // 非房主不发送消息  游戏开始也不发送 进入房间通知消息
+    if (members.length !== 1 && !that.data.isBeginPlay) {
       // members[members.length - 1] 为当前用户
       getRnameByYunId(members[members.length - 1].account).then(res => {
         this.sendCustomMsg(4, {
@@ -765,12 +797,12 @@ Page({
   onConnect() {
     console.log("onConnect");
     // 是匹配并且是房主那此时用户就是临时房主
-    if (this.data.isMatch && this.data.isOwner && !wx.getStorageSync('isLinShiFangZhu')) {
+    if (this.data && this.data.isMatch && this.data.isOwner && !wx.getStorageSync('isLinShiFangZhu')) {
       this.setData({
         isLinShiFangZhu: true
       })
+      console.log('连接成功');
     }
-    console.log('连接成功');
   },
   //重新连接
   onWillReconnect(obj) {
@@ -806,7 +838,6 @@ Page({
   //群成员信息更新
   onUpdateTeamMember(teamMember) {
     console.log('群成员信息更新了', teamMember);
-
   },
   stopWaitingCountdown() {
     this.startWaitingCountdown(true)
@@ -937,6 +968,7 @@ Page({
       data: {
         status: val?.status, //玩家是否准备 
         value: val?.text, //发的内容
+        step: val?.step, //发牌的轮数
         // cardList: val?.list, //发的卡牌
         audio: val?.audio, //发的音频
         video: val?.video, //发的视频
@@ -953,10 +985,11 @@ Page({
       content: content ? JSON.stringify(content) : '',
       done: that.pushMsg
     });
-    console.log('正正在发送自定义消息 ' + msg);
+    console.log('正正在发送自定义消息 ', msg);
   },
   //渲染消息
-  pushMsg(error, msg) {
+  async pushMsg(error, msg) {
+    if (!this.data) return
     var yunMsgList = this.data.yunMsgList //原始的所有云信的消息
     yunMsgList.push(msg)
     // yunMsgList = []
@@ -1077,6 +1110,10 @@ Page({
           that.runStep()
         }
         if (content.data.value === '发牌中...') {
+          console.log('发牌的轮数', content.data.step)
+          that.setData({
+            step: content.data.step
+          })
           that.sendCard()
         }
 
@@ -1088,6 +1125,7 @@ Page({
 
         console.log(that.data.msgList);
       } else if (content.type == 5) {
+        // 查询后端缓存卡片
         findCacheCard({
           id: that.data.roomData.id
         }).then(res => {
@@ -1124,8 +1162,8 @@ Page({
               stepCardListCopy: stepList,
               stepCardListAll: stepListAll,
             })
-            console.log(stepListAll, 'stepListAll1');
-            console.log(this.data.stepCardListAll, 'this.data.stepCardListAll1');
+            // console.log(stepListAll, 'stepListAll1');
+            // console.log(this.data.stepCardListAll, 'this.data.stepCardListAll1');
             this.contentScroll()
           }
         })
@@ -1267,9 +1305,9 @@ Page({
         }
 
         // 断线重连
-        if (!(this.socket.readyState == 1 || this.socket.readyState == 2)) {
-          that.reconnectSocket()
-        }
+        // if (!(this.socket.readyState == 1 || this.socket.readyState == 2)) {
+        //   that.reconnectSocket()
+        // }
 
         setTimeout(() => {
           this.setData({
@@ -1350,223 +1388,6 @@ Page({
       })
     }
   },
-  //渲染消息记录
-  renderHistoryMsh(msg) {
-    console.log('这里是重新渲染消息记录');
-    if (!this.data.showOtherStep) {
-      this.contentScroll()
-    }
-
-    // console.log(error);
-    // console.log(msg);
-    // console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error ? '成功' : '失败') + ', id=' + msg.idClient);
-    var msgList = this.data.msgList
-    var that = this;
-    if (msg.content) {
-      var content = JSON.parse(msg.content)
-      let nick = ''
-      if (content.type == 1) {
-        // 自定义消息type为1的时候 玩家准备
-        var play = that.data.playerList;
-        play.forEach(item => {
-          if (item && item.account && item.account == msg.from) {
-            item.isReady = content.data.status
-            nick = item.nick
-          }
-        })
-        that.setData({
-          playerList: play
-        }, () => {
-          // 数据更新完成后的回调函数
-          console.log('自定义消息type为1的时候 玩家准备 Updated playerList:', this.data.playerList);
-        })
-        var msgObj = {
-          sysType: 'people',
-          text: content.data.status ? '玩家已做好准备，请耐心等待房主开启对话' : '玩家取消准备',
-          isBotMes: 1,
-          msgStep: that.data.step,
-          fromAccount: msg.from,
-          nick
-        }
-        msgList.push(msgObj)
-        that.setData({
-          msgList: msgList
-        })
-      } else if (content.type == 2) {
-        // 自定义消息type为2的时候 玩家是否轮到发言
-        var play = that.data.playerList;
-        var msgObj = {}
-        play.forEach(item => {
-          if (item && item.account && item.account == msg.from) {
-            item.isActive = content.data.status
-            msgObj = {
-              sysType: 'sys',
-              text: '轮到' + item.nick + '发言',
-              msgStep: that.data.step,
-              isBotMes: 1, // isBotMes 是否是下面展示的消息列表 isTopMes 是否是上面展示的系统消息
-            }
-          }
-        })
-        msgList.push(msgObj)
-        that.setData({
-          msgList: msgList
-        })
-        that.setData({
-          playerList: play
-        }, () => {
-          // 数据更新完成后的回调函数
-          console.log('自定义消息type为2的时候 玩家是否轮到发言 Updated playerList:', this.data.playerList);
-        })
-      } else if (content.type == 3) {
-        // 自定义消息type为3的时候 玩家是否在线
-        var play = that.data.playerList;
-        player.forEach(item => {
-          if (item && item.account && item.account == msg.from) {
-            item.isActive = content.data.status
-          }
-        })
-        that.setData({
-          playerList: play
-        }, () => {
-          // 数据更新完成后的回调函数
-          console.log('自定义消息type为3的时候 玩家是否在线 Updated playerList:', this.data.playerList);
-        })
-      } else if (content.type == 4) {
-        // 自定义消息type为4的时候 为系统文字消息
-        var msgObj = {
-          sysType: 'sys',
-          text: content.data.value,
-          msgStep: that.data.step,
-          isBotMes: 1,
-          fromAccount: msg.from,
-          nick
-        }
-        if (content.data.value === '开始') {
-          that.setData({
-            step: 1,
-            personInd: 0,
-            isBeginPlay: true
-          })
-          that.runStep()
-        }
-        if (content.data.value === '发牌中...') {
-          that.sendCard()
-        }
-
-        msgList.push(msgObj)
-        that.setData({
-          msgList: msgList
-        })
-        // console.log(APP.globalData.mesList);
-      } else if (content.type == 5) {
-        // 自定义消息type为5的时候 为系统发牌消息
-        var msgObj = {
-          sysType: 'sys',
-          cardList: content.data.cardList,
-          step: that.data.step,
-          isBotMes: 0,
-          bigImage: {
-            url: '',
-            id: ''
-          },
-          msgStep: that.data.step,
-          fromAccount: msg.from,
-          nick
-        }
-        msgList.push(msgObj)
-        that.setData({
-          msgList: msgList
-        })
-
-      } else if (content.type === 6) {
-        console.log("进入跳过");
-        //跳过发言
-        var player = that.data.playerList;
-        player.forEach(item => {
-          if (item && item.account && item.account == msg.from) {
-            var msgObj = {
-              sysType: 'sys',
-              text: item.nick + '跳过本轮发言',
-              msgStep: that.data.step,
-              isBotMes: 1,
-            }
-            msgList.push(msgObj)
-            that.setData({
-              msgList: msgList
-            })
-            that.handleJumpSpeak()
-          }
-        })
-
-      } else if (content.type === 7) {
-        //点赞
-        var showPlayerList = that.data.showPlayerList
-        showPlayerList[content.data.value].zan++
-        that.setData({
-          showPlayerList: showPlayerList
-        })
-        var msgObj = {
-          fromNick: msg.fromNick,
-          zan: 1,
-          msgStep: that.data.step,
-          fromAccount: msg.from
-        }
-        msgList.push(msgObj)
-        that.setData({
-          msgList: msgList
-        })
-
-      } else if (content.type == 8) {
-        //玩家离开房间
-        var player = that.data.playerList;
-        var player2 = that.data.playerList;
-        var userName = that.getUserName(content.data.account)
-        var userAccount = content.data.account
-        var msgObj = {
-          sysType: 'sys',
-          text: userName + '离开房间',
-          msgStep: that.data.step,
-          isBotMes: 1,
-        }
-        msgList.push(msgObj)
-        that.setData({
-          msgList: msgList
-        })
-        // 别人离开的话，更新人员信息
-        player.forEach((item, index) => {
-          if (item?.account && item?.account == userAccount) {
-            player2.splice(index, 1)
-          }
-
-          if (index === 1 && item?.account && item?.account == this.data.account) {
-            console.log("房主离开了，本人要成为房主")
-          }
-        })
-        that.setData({
-          playerList: player2
-        }, () => {
-          // 数据更新完成后的回调函数
-          console.log('别人离开的话，更新人员信息player.forEach((item, index) => { - playerList Updated playerList:', this.data.playerList);
-        })
-      }
-    } else {
-      var msgObj = {
-        sysType: 'people',
-        nick: msg.fromNick,
-        text: msg.text,
-        msgStep: that.data.step,
-        isBotMes: 1,
-        fromAccount: msg.from,
-      }
-      msgList.push(msgObj)
-      that.setData({
-        msgList: msgList
-      })
-    }
-    console.log("调用了 renderHistoryMsh 的 saveData");
-    that.saveData()
-  },
-
   //-------------------------------------云信end-----------------------------------------------------------
 
   //-------------------------------------准备----------------------------------------------------------
@@ -2214,9 +2035,10 @@ Page({
     }, 1000);
   },
   //执行每一轮
-  runStep: function () {
+  async runStep() {
     var that = this;
     var step = this.data.step
+    console.log('runStep', step)
     var stepData = this.data.themeDetail.list[step - 1]
     // 隐藏跳过发言相关弹窗
     this.setData({
@@ -2241,7 +2063,8 @@ Page({
     //触发发牌
     if (that.data.isOwner) {
       that.sendCustomMsg(4, {
-        text: '发牌中...'
+        text: '发牌中...',
+        step: step
       })
     }
     //思考时间倒计时
@@ -2350,7 +2173,7 @@ Page({
       }
     }, 1000);
   },
-  nextPerson() {
+  async nextPerson() {
     let that = this
     that.setData({
       show_speak_count_down: false,
@@ -2374,13 +2197,17 @@ Page({
     } else {
       //记录本轮内容ƒ
       that.addRecode()
-      console.log('全部人发言结束,进入下一轮')
+      console.log('1全部人发言结束,进入下一轮')
+      console.log(that.data.themeDetail.list.length)
+      console.log(that.data.step)
       if (that.data.step < that.data.themeDetail.list.length) {
         //轮数 小于 全部轮数，切换下一轮
         that.setData({
           step: that.data.step + 1,
         })
-        that.runStep()
+        console.log(that.data.step)
+        //开始发牌
+        await that.runStep()
       } else {
         //全部结束
         console.log('全部结束')
@@ -2505,13 +2332,19 @@ Page({
     } else {
       //记录本轮内容
       this.addRecode()
-      console.log('全部人发言结束,进入下一轮')
+      console.log('2全部人发言结束,进入下一轮')
+      console.log(this.data.themeDetail.list.length)
+      console.log(this.data.step)
       if (this.data.step < this.data.themeDetail.list.length) {
         //轮数 小于 全部轮数，切换下一轮
         this.setData({
           step: this.data.step + 1,
         })
-        this.runStep()
+        console.log('进入下一轮', this.data.step)
+        //开始发牌
+        setTimeout(() => {
+          this.runStep()
+        }, 200);
       } else {
         //全部结束
         console.log('全部结束')
@@ -2571,6 +2404,7 @@ Page({
   async sendCard() {
     let that = this
     if (this.data.isOwner) {
+      // 房主开始发牌
       findByCard({
         id: this.data.roomData.id
       }).then(res => {
@@ -3149,6 +2983,7 @@ Page({
     wx.removeStorageSync('roomPath')
     wx.removeStorageSync('isLinShiFangZhu')
     this.stopWaitingCountdown()
+    this.onUnloadData()
     // 清除nim实例
     if (nim) {
       nim.destroy({
@@ -3169,12 +3004,14 @@ Page({
     data[name] = value;
     this.setData(data);
   },
-
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
     console.log("第一个 unload 执行了")
+    this.onUnloadData()
+  },
+  onUnloadData() {
     if (timeInt) clearInterval(timeInt)
     if (timeout) clearInterval(timeout)
     if (readyTimeout) clearInterval(readyTimeout)
@@ -3430,7 +3267,9 @@ Page({
           let curAcc = playerList[socketData.readyPerson]?.account
           //我的账号
           let myAcc = wx.getStorageSync('loginInfo').yunId
-          let totalTime = that.data.themeDetail.list[socketData.playNum - 1].speakTime
+          // let totalTime = that.data.themeDetail.list[socketData.playNum - 1].speakTime
+          // console.log('当前发言人账号', curAcc)
+          // console.log('我的账号', myAcc)
           if (curAcc == myAcc) {
             that.setData({
               inputStatus: true,
@@ -3442,7 +3281,7 @@ Page({
               // voiceStatus: 1,
               show_want_to_speck: false
             })
-            console.log(this.data.isBeginPlay && this.data.showJumpBtn && !this.data.isJump && !this.data.show_think_count_down);
+            // console.log(this.data.isBeginPlay && this.data.showJumpBtn && !this.data.isJump && !this.data.show_think_count_down);
             // if (totalTime - socketData.downTime > 30 && that.data.show_speak_count_down && !that.data.isFaYan) {
             //     that.setData({
             //         jumpPopStatus5: true
@@ -3549,10 +3388,16 @@ Page({
     vm.socket.send({
       data: obj,
       success(res) {
-        console.log('WebSocket 消息发送成功', res)
+        vm.setData({
+          isSocketOpen: true
+        });
+        // console.log('WebSocket 消息发送成功', res)
         console.log('WebSocket 消息发送成功内容', obj)
       },
       fail(err) {
+        vm.setData({
+          isSocketOpen: false
+        });
         console.error('WebSocket 消息发送失败', err)
         console.error('WebSocket 消息发送失败内容', obj)
         setTimeout(() => {
@@ -3604,7 +3449,7 @@ Page({
     // }
   },
   // socket心跳，由客户端发起
-  pingSocket() {
+  async pingSocket() {
     const vm = this
     let times = 0
     let obj = JSON.stringify({
@@ -3624,6 +3469,9 @@ Page({
           },
           fail(err) {
             // console.log('心跳发送失败', err)
+            vm.setData({
+              isSocketOpen: false
+            });
           }
         })
       } else {
@@ -3664,7 +3512,7 @@ Page({
       })
       setTimeout(() => {
         // if (!this.socket) {
-        if (!this.data.isSocketOpen) {
+        if (!this.socket) {
           this.webSocketInit()
         }
       }, 1000);
@@ -3701,16 +3549,20 @@ Page({
         title: options.title
       })
     }
-    if (this.socket) {
-      this.socket.close({
-        success(res) {
-          console.log('关闭成功', res)
-        },
-        fail(err) {
-          console.log('关闭失败', err)
-        }
-      })
-    }
+    // if (this.socket) {
+    //   var vm = this
+    //   this.socket.close({
+    //     success(res) {
+    //       vm.setData({
+    //         isSocketOpen: false
+    //       });
+    //       console.log('关闭成功', res)
+    //     },
+    //     fail(err) {
+    //       console.log('关闭失败', err)
+    //     }
+    //   })
+    // }
     if (options.roomId) {
       // this.getUserInfo()
       this.contentScroll()

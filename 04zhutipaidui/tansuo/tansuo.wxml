@@ -1,5 +1,4 @@
-<view style="height: 100vh">
-  <scroll-view wx:if="{{!showFupan}}" style="height: 100%">
+<scroll-view wx:if="{{!showFupan}}" style="height: 100%">
     <view class="hourse-set">
       <view class="txt">
         <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
@@ -194,7 +193,7 @@
           </view>
           <view class="box3-item">
             <view class="tit">想要更深入的了解自己？</view>
-            <view class="con"> 每个人都有自己认知的盲区。敞开自己，每个人都有自我认知的盲区。如果您想要更全面的探索本话题，获得问心认证教练的专业反馈，或者体验问心岛线下活动，欢迎联系我们。！</view>
+            <view class="con"> 每个人都有自己认知的盲区。敞开自己，每个人都有自我认知的盲区。如果您想要更全面的探索本话题，获得问心认证教练的专业反馈，或者体验问心岛线下活动，欢迎联系我们！</view>
           </view>
         </view>
         <view class="box4">
@@ -209,8 +208,54 @@
         </view>
       </view>
     </view>
+
   </scroll-view>
-</view>
+
+      <!--结尾畅聊-->
+      <view class="fupan" wx:if="{{showFupan && !isLastPeople}}">
+      <view class="title">
+        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png" mode="scaleToFill" />
+        <view class="txt">
+          为他点赞提升匹配到的概率
+        </view>
+      </view>
+      <view class="list">
+        <view class="person" wx:for="{{showPlayerList}}" wx:key="index">
+          <view class="avatar">
+            <image src="{{item.avatar}}" mode="scaleToFill" />
+            <view class="num">{{index+1}}</view>
+            <view class="tx" wx:if="{{account !== item.account}}" bindtap="handleTousu2" data-item="{{item}}">投诉</view>
+          </view>
+          <view class="name">{{item.nick}}</view>
+          <view class="zan" bindtap="dianZan" data-index="{{index}}">
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan2.png" mode="scaleToFill" wx:if="{{!item.zan}}" />
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png" mode="scaleToFill" wx:else />
+            <view class="txt" wx:if="{{item.zan}}">{{item.zan}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="bot-fix">
+        <view class="countdown">
+          <text class="time">{{sec}}s</text>
+          <text>后关闭复盘环节</text>
+        </view>
+        <view class="btns">
+          <view class="lx" bindtap="openKefu">添加客服</view>
+          <view class="fp-btns">
+            <view class="say">
+              <image src="https://file.wxdao.net/2023-03/ba07ede1-7354-4856-8661-2945462ea4c9.png" mode="scaleToFill" wx:if="{{fupanIsSay}}" bindtap="handleToggleFupanIsSay" />
+              <image src="https://file.wxdao.net/2023-03/23ccfdd6-b0d2-405d-aa97-a0ae28705cf3.png" mode="scaleToFill" wx:else bindtap="handleToggleFupanIsSay" />
+            </view>
+            <view class="say">
+              <image src="https://file.wxdao.net/2023-03/7714487f-3fad-4e19-975b-f81603fada72.png" mode="scaleToFill" wx:if="{{fupanIsVoice}}" bindtap="handleToggleFupanIsVoice" />
+              <image src="https://file.wxdao.net/2023-03/d6a1af8b-fa67-4032-bd66-274f439d5ed5.png" mode="scaleToFill" wx:else bindtap="handleToggleFupanIsVoice" />
+            </view>
+          </view>
+          <!-- <view class="leave" bindtap="handleTiaoguo">跳过</view> -->
+          <view class="leave" bindtap="handleTiaoguo">跳过</view>
+        </view>
+      </view>
+    </view>
 <view wx:if="{{audioPushUrl!==''}}">
   <live-pusher wx:key="livePusher" style="display:inline-block;width:0;height:0;" mode="RTC" url="{{audioPushUrl}}" autopush="true" enable-mic="{{ pushIsMuted }}" enable-camera="{{false}}" log-level="silent" />
 </view>
@@ -220,51 +265,7 @@
   <live-player style="display:inline-block;width:0;height:0;" data-user="{{uid}}" wx:if="{{item.uid !== uid}}" src="{{item.url}}" mode="RTC" min-cache="0.2" muted="{{playIsMuted}}" max-cache="0.8" auto-pause-if-navigate="true" auto-pause-if-open-native="true" autoplay="true" log-level="silent" />
 </view>
 
-<!--结尾畅聊-->
-<view class="fupan" wx:if="{{showFupan && !isLastPeople}}">
-  <view class="title">
-    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png" mode="scaleToFill" />
-    <view class="txt">
-      为他点赞提升匹配到的概率
-    </view>
-  </view>
-  <view class="list">
-    <view class="person" wx:for="{{showPlayerList}}" wx:key="index">
-      <view class="avatar">
-        <image src="{{item.avatar}}" mode="scaleToFill" />
-        <view class="num">{{index+1}}</view>
-        <view class="tx" wx:if="{{account !== item.account}}" bindtap="handleTousu2" data-item="{{item}}">投诉</view>
-      </view>
-      <view class="name">{{item.nick}}</view>
-      <view class="zan" bindtap="dianZan" data-index="{{index}}">
-        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan2.png" mode="scaleToFill" wx:if="{{!item.zan}}" />
-        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png" mode="scaleToFill" wx:else />
-        <view class="txt" wx:if="{{item.zan}}">{{item.zan}}</view>
-      </view>
-    </view>
-  </view>
-  <view class="bot-fix">
-    <view class="countdown">
-      <text class="time">{{sec}}s</text>
-      <text>后关闭复盘环节</text>
-    </view>
-    <view class="btns">
-      <view class="lx" bindtap="openKefu">添加客服</view>
-      <view class="fp-btns">
-        <view class="say">
-          <image src="https://file.wxdao.net/2023-03/ba07ede1-7354-4856-8661-2945462ea4c9.png" mode="scaleToFill" wx:if="{{fupanIsSay}}" bindtap="handleToggleFupanIsSay" />
-          <image src="https://file.wxdao.net/2023-03/23ccfdd6-b0d2-405d-aa97-a0ae28705cf3.png" mode="scaleToFill" wx:else bindtap="handleToggleFupanIsSay" />
-        </view>
-        <view class="say">
-          <image src="https://file.wxdao.net/2023-03/7714487f-3fad-4e19-975b-f81603fada72.png" mode="scaleToFill" wx:if="{{fupanIsVoice}}" bindtap="handleToggleFupanIsVoice" />
-          <image src="https://file.wxdao.net/2023-03/d6a1af8b-fa67-4032-bd66-274f439d5ed5.png" mode="scaleToFill" wx:else bindtap="handleToggleFupanIsVoice" />
-        </view>
-      </view>
-      <!-- <view class="leave" bindtap="handleTiaoguo">跳过</view> -->
-      <view class="leave" bindtap="handleTiaoguo">跳过</view>
-    </view>
-  </view>
-</view>
+
 
 
 
