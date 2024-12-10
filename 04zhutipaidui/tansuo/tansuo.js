@@ -498,6 +498,7 @@ Page({
   },
   publishAudio(type = "Manual") {
     let that = this
+    const vm = this
     var playerList = []
     let personInd = that.data.personInd
     that.data.playerList.map(item => {
@@ -510,10 +511,12 @@ Page({
     })
     console.log('开始发布视频流', that.data.uid, personInd, playerList, that.data.playerList);
     if (!that.data.messageReceived) {
+      console.log("!that.data.messageReceived");
       that.setData({
         messageReceived: true // 设置标志位
       })
     } else {
+      console.log("that.data.messageReceived");
       return false
     }
     // 重置标志位，例如可以在一定时间后重置
@@ -525,16 +528,43 @@ Page({
 
     // 如果发言人开麦时，另一用户也进行了开麦，下一轮轮到该用户发言，麦克风状态维持开启即可
     if (type === "auto" && that.data.voiceStatus === 1) {
+      console.log("如果发言人开麦时，另一用户也进行了开麦，下一轮轮到该用户发言，麦克风状态维持开启即可");
       return false
     }
 
     // 只有在别人或自己发言时才能开麦
     // if (that.data.inputStatus) {
+      console.log(that.data.isBeginPlay,that.data.show_think_count_down,  "1");
     if (that.data.isBeginPlay && !that.data.show_think_count_down) {
       //发布本地媒体给房间对端
       console.log('second - that.data.voiceStatus', that.data.voiceStatus);
       if (that.data.voiceStatus === 0) {
+        console.log("调用 publishAudio")
         that.publishAudio()
+          if (vm.data.publishAudioRetryCount >= vm.data.publishAudioMaxRetries) {
+            console.error('publishAudio 达到最大重连次数');
+            return;
+          }
+      
+          YunXinNertc.publish('audio')
+            .then((url) => {
+              console.log('本地 publish 成功', url, `尝试次数: ${vm.data.publishAudioRetryCount + 1}`);
+              vm.setData({
+                audioPushUrl: url,
+                pushIsMuted: true
+              }, () => {
+                vm.setData({
+                  voiceStatus: 1
+                }, () => {
+                  vm.data.publishAudioRetryCount = 0; // 重置计数器
+                });
+              });
+            })
+            .catch((err) => {
+              vm.data.publishAudioRetryCount++;
+              console.error(`本地 publish 尝试失败 (${vm.data.publishAudioRetryCount}):`, err);
+              publishAudio(); // 重试 publishAudio
+            });
         // YunXinNertc
         //   .publish('audio')
         //   .then((url) => {
@@ -567,34 +597,6 @@ Page({
           });
       }
     }
-  },
-  // 开启语音
-  publishAudio() {
-    const vm = this
-    if (vm.data.publishAudioRetryCount >= vm.data.publishAudioMaxRetries) {
-      console.error('publishAudio 达到最大重连次数');
-      return;
-    }
-
-    YunXinNertc.publish('audio')
-      .then((url) => {
-        console.log('本地 publish 成功', url, `尝试次数: ${vm.data.publishAudioRetryCount + 1}`);
-        vm.setData({
-          audioPushUrl: url,
-          pushIsMuted: true
-        }, () => {
-          vm.setData({
-            voiceStatus: 1
-          }, () => {
-            vm.data.publishAudioRetryCount = 0; // 重置计数器
-          });
-        });
-      })
-      .catch((err) => {
-        vm.data.publishAudioRetryCount++;
-        console.error(`本地 publish 尝试失败 (${vm.data.publishAudioRetryCount}):`, err);
-        publishAudio(); // 重试 publishAudio
-      });
   },
   // 结束倒计时的时候都可以发言
   publishAllAudio() {

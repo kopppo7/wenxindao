@@ -1,262 +1,284 @@
 <navigation-bar title="{{title}}" bind:goBack="handleGoBack"></navigation-bar>
 <scroll-view wx:if="{{!showFupan}}" style="height: 100%">
-    <view class="hourse-set">
-      <view class="txt">
-        <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
-        <text bindtap="leaveAudioRoom">人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
-      </view>
-      <image wx:if="{{!(step == (themeDetail.list.length+1))}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet" />
+  <view class="hourse-set">
+    <view class="txt">
+      <text bindtap="dismissTeam">房间ID：{{roomData.imGroup}}</text>
+      <text bindtap="leaveAudioRoom">人数：{{roomData.minNumber}}-{{roomData.maxNumber}}人局</text>
     </view>
-    <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
-      <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
-      <block wx:for="{{stepList}}" wx:key="index">
-        <view class="item {{step == (index+1) ? 'active' : ''}} {{item.view ? 'view' : ''}}" bindtap="viewStep" data-step="{{index+1}}" wx:key="index">第{{index+1
-          }}轮
-        </view>
-      </block>
-      <view class="item {{step == (themeDetail.list.length+1) ? 'active' : ''}}" data-step="{{themeDetail.list.length+1}}" bindtap="viewStep">结语</view>
-    </scroll-view>
-    <view class="wp" wx:if="{{changeStep != themeDetail.list.length+1}}">
-      <view class="room-theme">
-        <view class="help">
-          <view class="left">
-            <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg" bindtap="sendmsgggg">
-            </image>
-            <view class="ico" bindtap="handleOpenGuiZe">
-              <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-wh.png"></image>
-              <text class="name">帮助</text>
-            </view>
-          </view>
-          <view class="right">
-            <rich-text nodes="{{helpText}}"></rich-text>
+    <image wx:if="{{!(step == (themeDetail.list.length+1))}}" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/h-set.png" mode="scaleToFill" bindtap="openSet" />
+  </view>
+  <scroll-view class="z-tab2" scroll-x="true" wx:if="{{isBeginPlay}}">
+    <view class="item {{step == 0 ? 'active' : ''}}">引言</view>
+    <block wx:for="{{stepList}}" wx:key="index">
+      <view class="item {{step == (index+1) ? 'active' : ''}} {{item.view ? 'view' : ''}}" bindtap="viewStep" data-step="{{index+1}}" wx:key="index">第{{index+1
+        }}轮
+      </view>
+    </block>
+    <view class="item {{step == (themeDetail.list.length+1) ? 'active' : ''}}" data-step="{{themeDetail.list.length+1}}" bindtap="viewStep">结语</view>
+  </scroll-view>
+  <view class="wp" wx:if="{{changeStep != themeDetail.list.length+1}}">
+    <view class="room-theme">
+      <view class="help">
+        <view class="left">
+          <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg" bindtap="sendmsgggg">
+          </image>
+          <view class="ico" bindtap="handleOpenGuiZe">
+            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-wh.png"></image>
+            <text class="name">帮助</text>
           </view>
         </view>
-        <view class="peoples">
-          <view class="item" wx:for="{{playerList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
-            <view class="{{ (isBeginPlay && !show_think_count_down && personInd == index)?'people active':'people' }} {{viewAccount === item.account ? 'view' : ''}}" bindtap="viewPeopleMsg" data-item="{{item}}">
-              <view class="face">
-                <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
-                  <image class="ready" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/play-status1.png" wx:if="{{item.isReady && !isBeginPlay}}"></image>
+        <view class="right">
+          <rich-text nodes="{{helpText}}"></rich-text>
+        </view>
+      </view>
+      <view class="peoples">
+        <view class="item" wx:for="{{playerList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+          <view class="{{ (isBeginPlay && !show_think_count_down && personInd == index)?'people active':'people' }} {{viewAccount === item.account ? 'view' : ''}}" bindtap="viewPeopleMsg" data-item="{{item}}">
+            <view class="face">
+              <image class="ico" src="{{item.avatar}}" wx:if="{{item.account}}">
+                <image class="ready" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/play-status1.png" wx:if="{{item.isReady && !isBeginPlay}}"></image>
+              </image>
+              <view class="ico2" wx:if="{{!item.account && !isBeginPlay}}">
+                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-suo1.png">
                 </image>
-                <view class="ico2" wx:if="{{!item.account && !isBeginPlay}}">
-                  <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-suo1.png">
-                  </image>
-                  <!--                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs
+                <!--                                <image src="https://wenxin-file.oss-cn-beijing.aliyuncs
 .com/system/images/hsy/room-kong.png">-->
-                  <!--                                </image>-->
+                <!--                                </image>-->
+              </view>
+            </view>
+            <text class="name">{{account == item.account ? '自己' : item.nick}}</text>
+          </view>
+        </view>
+        <scroll-view class="top-content" scroll-into-view="{{scrollTo}}" scroll-y="true" wx:if="{{stepCardList.length > 0}}">
+          <view class="box">
+            <block wx:for="{{stepCardList}}" wx:key="index" wx:for-index="indexlist">
+              <view wx:for-item="item" class="itemList sys" wx:key="index">
+                <view class="name">{{item.cardList[0].nick}}
+                  <text class="huang">(第{{item.step}}轮)</text>拿到的牌：
+                </view>
+                <view class="card-box">
+                  <view class="card-box-l">
+                    <view class="card-img {{item.cardList[0].isOpen && !item.cardList[0].isOpened ? 'open' : ''}} {{item.cardList[0].isOpened ? 'show' : ''}}" bindtap="clickCard" data-index="0" data-listindex="{{indexlist}}">
+                      <view class="front">
+                        <image mode="aspectFill" src="{{item.cardList[0].imgUrl}}"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{item.cardList[0].imgUrl}}" catchtap="showImg"></image>
+                      </view>
+                      <view class="back">
+                        <image mode="aspectFit" class="full-image" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                        <!-- <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image> -->
+                      </view>
+                    </view>
+                  </view>
+                  <view class="card-box-r">
+                    <view wx:if="{{item.cardList[1]}}" class="card-img {{item.cardList[1].isOpen && !item.cardList[1].isOpened ? 'open' : ''}} {{item.cardList[1].isOpened ? 'show' : ''}}" bindtap="clickCard" data-index="1" data-listindex="{{indexlist}}">
+                      <view class="front">
+                        <image mode="aspectFill" src="{{item.cardList[1].imgUrl}}"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{item.cardList[1].imgUrl}}" catchtap="showImg"></image>
+                      </view>
+                      <view class="back">
+                        <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                      </view>
+                    </view>
+                    <view wx:if="{{item.cardList[2]}}" class="card-img {{item.cardList[2].isOpen && !item.cardList[2].isOpened ? 'open' : ''}} {{item.cardList[2].isOpened ? 'show' : ''}}" bindtap="clickCard" data-index="2" data-listindex="{{indexlist}}">
+                      <view class="front">
+                        <image mode="aspectFill" src="{{item.cardList[2].imgUrl}}"></image>
+                        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{item.cardList[2].imgUrl}}" catchtap="showImg"></image>
+                      </view>
+                      <view class="back">
+                        <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
+                      </view>
+                    </view>
+                  </view>
                 </view>
               </view>
-              <text class="name">{{account == item.account ? '自己' : item.nick}}</text>
-            </view>
+            </block>
+            <!-- 最后加一个垫底的节点 -->
+            <view class="last-view" id="{{endId}}" style="height:20px;"></view>
           </view>
-          <scroll-view class="top-content" scroll-into-view="{{scrollTo}}" scroll-y="true" wx:if="{{stepCardList.length > 0}}">
-            <view class="box">
-              <block wx:for="{{stepCardList}}" wx:key="index" wx:for-index="indexlist">
-                <view wx:for-item="item" class="itemList sys" wx:key="index">
-                  <view class="name">{{item.cardList[0].nick}}
-                    <text class="huang">(第{{item.step}}轮)</text>拿到的牌：
-                  </view>
-                  <view class="card-box">
-                    <view class="card-box-l">
-                      <view class="card-img {{item.cardList[0].isOpen && !item.cardList[0].isOpened ? 'open' : ''}} {{item.cardList[0].isOpened ? 'show' : ''}}" bindtap="clickCard" data-index="0" data-listindex="{{indexlist}}">
-                        <view class="front">
-                          <image mode="aspectFill" src="{{item.cardList[0].imgUrl}}"></image>
-                          <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{item.cardList[0].imgUrl}}" catchtap="showImg"></image>
-                        </view>
-                        <view class="back">
-                          <image mode="aspectFit" class="full-image" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
-                          <!-- <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image> -->
-                        </view>
-                      </view>
-                    </view>
-                    <view class="card-box-r">
-                      <view wx:if="{{item.cardList[1]}}" class="card-img {{item.cardList[1].isOpen && !item.cardList[1].isOpened ? 'open' : ''}} {{item.cardList[1].isOpened ? 'show' : ''}}" bindtap="clickCard" data-index="1" data-listindex="{{indexlist}}">
-                        <view class="front">
-                          <image mode="aspectFill" src="{{item.cardList[1].imgUrl}}"></image>
-                          <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{item.cardList[1].imgUrl}}" catchtap="showImg"></image>
-                        </view>
-                        <view class="back">
-                          <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
-                        </view>
-                      </view>
-                      <view wx:if="{{item.cardList[2]}}" class="card-img {{item.cardList[2].isOpen && !item.cardList[2].isOpened ? 'open' : ''}} {{item.cardList[2].isOpened ? 'show' : ''}}" bindtap="clickCard" data-index="2" data-listindex="{{indexlist}}">
-                        <view class="front">
-                          <image mode="aspectFill" src="{{item.cardList[2].imgUrl}}"></image>
-                          <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/icon-fan.png" class="iconImg" data-img="{{item.cardList[2].imgUrl}}" catchtap="showImg"></image>
-                        </view>
-                        <view class="back">
-                          <image mode="widthFix" src="https://file.wxdao.net/2023-02/298e5232-266f-4bb8-a1c9-48fdd51569b8.jpg"></image>
-                        </view>
-                      </view>
-                    </view>
-                  </view>
+        </scroll-view>
+      </view>
+      <!-- 提示区域 -->
+      <view class="tips_box">
+        <view wx:if="{{isOwner && !isBeginPlay && showPrompt}}" class="tips">
+          <p wx:if="{{waiting_countdown > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown }}s</p>
+          <p wx:elif="{{waiting_countdown2 > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown2 }}s</p>
+          <p wx:else="">暂时没有伙伴想要开启本对话，您可以邀请好友或者参与别的话题</p>
+        </view>
+        <!-- 准备提示   " -->
+        <view wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}" class="tips tips_center" style="width: 100%;">
+          <view wx:if="{{isfriend}}">
+            您正在受邀加入《{{title}}》心灵对话。请在 {{readyTime}}s 做好对话准备。
+          </view>
+          <view wx:else>您已匹配成功。请在 {{readyTime}}s 内完成准备。未准备将被抱出房间哦~
+          </view>
+        </view>
+        <!--思考倒计时-->
+      <view class="tips tips_center" wx:if="{{show_think_count_down}}" style="white-space: nowrap;">思考倒计时 {{waitTime}}s，倒计时结束后可以发言</view>
+        <!--发言倒计时-->
+        <view class="tips tips_center" wx:if="{{show_speak_count_down}}">发言倒计时 {{waitTime}} s</view>
+        <!--闭麦时提示信息-->
+        <view class="tips tips_center" wx:if="{{show_want_to_speck}}">如需发言请手动开麦</view></view>
+      <view class="speak-con">
+        <!-- <view wx:if="{{isOwner && !isBeginPlay && showPrompt}}" class="waiting_conutdown">
+          <p wx:if="{{waiting_countdown > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown }}s</p>
+          <p wx:elif="{{waiting_countdown2 > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown2 }}s</p>
+          <p wx:else>暂时没有伙伴想要开启本对话，您可以邀请好友或者参与别的话题</p>
+        </view> -->
+        <!-- 准备提示   " -->
+        <!-- <view wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}" class="waiting_conutdown tips_center">
+          <view wx:if="{{isfriend}}">
+            您正在受邀加入《{{title}}》心灵对话。请在 {{readyTime}}s 做好对话准备。
+          </view>
+          <view wx:else>您已匹配成功。请在 {{readyTime}}s 内完成准备。未准备将被抱出房间哦~
+          </view>
+        </view> -->
+
+        <!--思考倒计时-->
+        <!-- <view class="waiting_conutdown tips_center" wx:if="{{show_think_count_down}}">思考倒计时 {{waitTime}}s，倒计时结束后可以发言
+        </view> -->
+        <!--发言倒计时-->
+        <!-- <view class="waiting_conutdown tips_center" wx:if="{{show_speak_count_down}}">发言倒计时{{waitTime}}s
+        </view> -->
+        <!--闭麦时提示信息-->
+        <!-- <view class="waiting_conutdown tips_center" wx:if="{{show_want_to_speck}}">
+          <view>如需发言请手动开麦</view>
+        </view> -->
+        <scroll-view class="bot-content" scroll-into-view="{{scrollTo}}" scroll-y="true" wx:if="{{botArr.length > 0}}">
+          <view class="box">
+            <block wx:for="{{botArr}}" wx:key="index">
+              <view wx:for-item="item" class="{{item.sysType != 'sys'?'item':'item sys'}}" wx:key="index">
+                <view class="text" wx:if="item.text">
+                  <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
+                  <text class="name a2" wx:else>系统：</text>
+                  <text class="con">{{item.text}}</text>
                 </view>
-              </block>
-              <!-- 最后加一个垫底的节点 -->
-              <view class="last-view" id="{{endId}}" style="height:20px;"></view>
-            </view>
-          </scroll-view>
-        </view>
-        <view class="speak-con">
-          <!-- 房主等待倒计时 -->
-          <view wx:if="{{isOwner && !isBeginPlay && showPrompt}}" class="waiting_conutdown">
-            <p wx:if="{{waiting_countdown > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown }}s</p>
-            <p wx:elif="{{waiting_countdown2 > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown2 }}s</p>
-            <p wx:else>暂时没有伙伴想要开启本对话，您可以邀请好友或者参与别的话题</p>
+              </view>
+            </block>
+            <!-- 最后加一个垫底的节点 -->
+            <view class="last-view" id="{{endId}}" style="height:2px;"></view>
           </view>
-          <!--思考倒计时-->
-          <view class="count-down speckView" wx:if="{{show_think_count_down}}">思考倒计时
-            <view>
-              {{waitTime}}s
-            </view>
-            ，倒计时结束后可以发言
-          </view>
-          <!--发言倒计时-->
-          <view class="count-down" wx:if="{{show_speak_count_down}}">发言倒计时
-            <view>
-              {{waitTime}}s
-            </view>
-          </view>
-          <!--闭麦时提示信息-->
-          <view class="count-down want_to_speck" wx:if="{{show_want_to_speck}}">
-            <view>如需发言请手动开麦</view>
-          </view>
-          <scroll-view class="bot-content" scroll-into-view="{{scrollTo}}" scroll-y="true" wx:if="{{botArr.length > 0}}">
-            <view class="box">
-              <block wx:for="{{botArr}}" wx:key="index">
-                <view wx:for-item="item" class="{{item.sysType != 'sys'?'item':'item sys'}}" wx:key="index">
-                  <view class="text" wx:if="item.text">
-                    <text class="name a1" wx:if="{{item.sysType != 'sys'}}">{{item.fromNick || item.nick}}：</text>
-                    <text class="name a2" wx:else>系统：</text>
-                    <text class="con">{{item.text}}</text>
-                  </view>
-                </view>
-              </block>
-              <!-- 最后加一个垫底的节点 -->
-              <view class="last-view" id="{{endId}}" style="height:2px;"></view>
-            </view>
-          </scroll-view>
-        </view>
+        </scroll-view>
       </view>
     </view>
-    <view class="theme-bot" wx:if="{{step != themeDetail.list.length+1}}">
-      <view class="play" bindtap="publishAudio">
-        <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png" wx:if="{{voiceStatus == 1}}"></image>
-        <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio2.png" wx:if="{{voiceStatus == 0}}"></image>
-        <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
-      </view>
-      <!-- wx:if="{{inputStatus}}" -->
-      <!-- disabled="{{!inputStatus}}" -->
-      <view class="inp">
-        <input type="text" value="{{inputText}}" wx:if="{{inputStatus}}" disabled="{{!inputStatus}}" placeholder="说点什么吧..." confirm-type="send" bindinput="inputChange" bindconfirm="sendMsg" />
-      </view>
-      <view class="btn" bindtap="handleReady" wx:if="{{(!isReady&&!isOwner) && !isOwner && !isBeginPlay && canBeReady}}">
-        准备
-      </view>
-      <view bindtap="cancelReady" class="btn disabled" wx:if="{{isReady && !isOwner  && !isBeginPlay}}">
-        取消准备
-      </view>
-      <!-- 发言中的人有完成功能 -->
-      <view wx:if="{{isBeginPlay && showJumpBtn && !isJump && !show_think_count_down}}">
-        <view class="btn disabled" data-speakState="{{true}}" bindtap="sendTxtMsg" wx:if="{{inputStatus}}">
-          {{inputText ? '发送' : '完成'}}
-        </view>
-      </view>
-      <view wx:else>
-        <view class="btn disabled" data-speakState="{{false}}" bindtap="sendTxtMsg" wx:if="{{inputStatus}}">
-          发送
-        </view>
-      </view>
-      <view class="btn disabled" bindtap="jumpSpeak" wx:if="{{isBeginPlay && showJumpBtn && !isJump && !show_think_count_down}}">
-        跳过
-      </view>
-      <view class="own-btns" wx:if="{{isOwner && !isBeginPlay}}">
-        <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
-        <view class="btn" bindtap="handleInviRoad" wx:if="{{!isMatch}}">匹配路人</view>
-        <view class="btn" bindtap="handleFastStart">开启对话</view>
+  </view>
+  <view class="theme-bot" wx:if="{{step != themeDetail.list.length+1}}">
+    <view class="play" bindtap="publishAudio">
+      <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio1.png" wx:if="{{voiceStatus == 1}}"></image>
+      <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio2.png" wx:if="{{voiceStatus == 0}}"></image>
+      <image class="img" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/room-audio3.png" wx:if="{{voiceStatus == 2}}"></image>
+    </view>
+    <!-- wx:if="{{inputStatus}}" -->
+    <!-- disabled="{{!inputStatus}}" -->
+    <view class="inp">
+      <input type="text" value="{{inputText}}" wx:if="{{inputStatus}}" disabled="{{!inputStatus}}" placeholder="说点什么吧..." confirm-type="send" bindinput="inputChange" bindconfirm="sendMsg" />
+    </view>
+    <view class="btn" bindtap="handleReady" wx:if="{{(!isReady&&!isOwner) && !isOwner && !isBeginPlay && canBeReady}}">
+      准备
+    </view>
+    <view bindtap="cancelReady" class="btn disabled" wx:if="{{isReady && !isOwner  && !isBeginPlay}}">
+      取消准备
+    </view>
+    <!-- 发言中的人有完成功能 -->
+    <view wx:if="{{isBeginPlay && showJumpBtn && !isJump && !show_think_count_down}}">
+      <view class="btn disabled" data-speakState="{{true}}" bindtap="sendTxtMsg" wx:if="{{inputStatus}}">
+        {{inputText ? '发送' : '完成'}}
       </view>
     </view>
-
-
-    <!-- 结语 -->
-    <view class="wp">
-      <view class="yinyan-box yinyan-box5" wx:if="{{changeStep == (themeDetail.list.length+1)}}">
-        <view class="box1">
-          <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
-          <view class="txt">
-            {{themeDetail.tags}}
-          </view>
-        </view>
-        <view class="box3">
-          <view class="box3-item">
-            <view class="tit">对话解析</view>
-            <view class="con">{{themeDetail.tips}}</view>
-          </view>
-          <view class="box3-item">
-            <view class="tit">想要更深入的了解自己？</view>
-            <view class="con"> 每个人都有自己认知的盲区。敞开自己，每个人都有自我认知的盲区。如果您想要更全面的探索本话题，获得问心认证教练的专业反馈，或者体验问心岛线下活动，欢迎联系我们！</view>
-          </view>
-        </view>
-        <view class="box4">
-          <image class="box4-l" src="https://file.wxdao.net/2023-02/655ac759-acc1-4fc8-af91-14543152a35c.png"></image>
-          <image class="box4-r" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
-        </view>
-        <view class="box5">
-
-          <button class="share" open-type="share">分享</button>
-          <view class="g-submit" bindtap="handleXieganwu">写感悟</view>
-          <view class="g-submit" bindtap="bindTuichufangjian">返回主页</view>
-        </view>
+    <view wx:else>
+      <view class="btn disabled" data-speakState="{{false}}" bindtap="sendTxtMsg" wx:if="{{inputStatus}}">
+        发送
       </view>
     </view>
+    <view class="btn disabled" bindtap="jumpSpeak" wx:if="{{isBeginPlay && showJumpBtn && !isJump && !show_think_count_down}}">
+      跳过
+    </view>
+    <view class="own-btns" wx:if="{{isOwner && !isBeginPlay}}">
+      <button open-type="share" class="btn" bindtap="handleInviFriend">邀请好友</button>
+      <view class="btn" bindtap="handleInviRoad" wx:if="{{!isMatch}}">匹配路人</view>
+      <view class="btn" bindtap="handleFastStart">开启对话</view>
+    </view>
+  </view>
 
-  </scroll-view>
 
-      <!--结尾畅聊-->
-      <view class="fupan" wx:if="{{showFupan && !isLastPeople}}">
-      <view class="title">
-        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png" mode="scaleToFill" />
+  <!-- 结语 -->
+  <view class="wp">
+    <view class="yinyan-box yinyan-box5" wx:if="{{changeStep == (themeDetail.list.length+1)}}">
+      <view class="box1">
+        <image class="avatar" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/avatar0.jpg"></image>
         <view class="txt">
-          为他点赞提升匹配到的概率
+          {{themeDetail.tags}}
         </view>
       </view>
-      <view class="list">
-        <view class="person" wx:for="{{showPlayerList}}" wx:key="index">
-          <view class="avatar">
-            <image src="{{item.avatar}}" mode="scaleToFill" />
-            <view class="num">{{index+1}}</view>
-            <view class="tx" wx:if="{{account !== item.account}}" bindtap="handleTousu2" data-item="{{item}}">投诉</view>
-          </view>
-          <view class="name">{{item.nick}}</view>
-          <view class="zan" bindtap="dianZan" data-index="{{index}}">
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan2.png" mode="scaleToFill" wx:if="{{!item.zan}}" />
-            <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png" mode="scaleToFill" wx:else />
-            <view class="txt" wx:if="{{item.zan}}">{{item.zan}}</view>
-          </view>
+      <view class="box3">
+        <view class="box3-item">
+          <view class="tit">对话解析</view>
+          <view class="con">{{themeDetail.tips}}</view>
+        </view>
+        <view class="box3-item">
+          <view class="tit">想要更深入的了解自己？</view>
+          <view class="con"> 每个人都有自己认知的盲区。敞开自己，每个人都有自我认知的盲区。如果您想要更全面的探索本话题，获得问心认证教练的专业反馈，或者体验问心岛线下活动，欢迎联系我们！</view>
         </view>
       </view>
-      <view class="bot-fix">
-        <view class="countdown">
-          <text class="time">{{sec}}s</text>
-          <text>后关闭复盘环节</text>
-        </view>
-        <view class="btns">
-          <view class="lx" bindtap="openKefu">添加客服</view>
-          <view class="fp-btns">
-            <view class="say">
-              <image src="https://file.wxdao.net/2023-03/ba07ede1-7354-4856-8661-2945462ea4c9.png" mode="scaleToFill" wx:if="{{fupanIsSay}}" bindtap="handleToggleFupanIsSay" />
-              <image src="https://file.wxdao.net/2023-03/23ccfdd6-b0d2-405d-aa97-a0ae28705cf3.png" mode="scaleToFill" wx:else bindtap="handleToggleFupanIsSay" />
-            </view>
-            <view class="say">
-              <image src="https://file.wxdao.net/2023-03/7714487f-3fad-4e19-975b-f81603fada72.png" mode="scaleToFill" wx:if="{{fupanIsVoice}}" bindtap="handleToggleFupanIsVoice" />
-              <image src="https://file.wxdao.net/2023-03/d6a1af8b-fa67-4032-bd66-274f439d5ed5.png" mode="scaleToFill" wx:else bindtap="handleToggleFupanIsVoice" />
-            </view>
-          </view>
-          <!-- <view class="leave" bindtap="handleTiaoguo">跳过</view> -->
-          <view class="leave" bindtap="handleTiaoguo">跳过</view>
-        </view>
+      <view class="box4">
+        <image class="box4-l" src="https://file.wxdao.net/2023-02/655ac759-acc1-4fc8-af91-14543152a35c.png"></image>
+        <image class="box4-r" src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/qrcode.png"></image>
+      </view>
+      <view class="box5">
+
+        <button class="share" open-type="share">分享</button>
+        <view class="g-submit" bindtap="handleXieganwu">写感悟</view>
+        <view class="g-submit" bindtap="bindTuichufangjian">返回主页</view>
       </view>
     </view>
+  </view>
+
+</scroll-view>
+
+<!--结尾畅聊-->
+<view class="fupan" wx:if="{{showFupan && !isLastPeople}}">
+  <view class="title">
+    <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png" mode="scaleToFill" />
+    <view class="txt">
+      为他点赞提升匹配到的概率
+    </view>
+  </view>
+  <view class="list">
+    <view class="person" wx:for="{{showPlayerList}}" wx:key="index">
+      <view class="avatar">
+        <image src="{{item.avatar}}" mode="scaleToFill" />
+        <view class="num">{{index+1}}</view>
+        <view class="tx" wx:if="{{account !== item.account}}" bindtap="handleTousu2" data-item="{{item}}">投诉</view>
+      </view>
+      <view class="name">{{item.nick}}</view>
+      <view class="zan" bindtap="dianZan" data-index="{{index}}">
+        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan2.png" mode="scaleToFill" wx:if="{{!item.zan}}" />
+        <image src="https://wenxin-file.oss-cn-beijing.aliyuncs.com/system/images/hsy/zt-zan1.png" mode="scaleToFill" wx:else />
+        <view class="txt" wx:if="{{item.zan}}">{{item.zan}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="bot-fix">
+    <view class="countdown">
+      <text class="time">{{sec}}s</text>
+      <text>后关闭复盘环节</text>
+    </view>
+    <view class="btns">
+      <view class="lx" bindtap="openKefu">添加客服</view>
+      <view class="fp-btns">
+        <view class="say">
+          <image src="https://file.wxdao.net/2023-03/ba07ede1-7354-4856-8661-2945462ea4c9.png" mode="scaleToFill" wx:if="{{fupanIsSay}}" bindtap="handleToggleFupanIsSay" />
+          <image src="https://file.wxdao.net/2023-03/23ccfdd6-b0d2-405d-aa97-a0ae28705cf3.png" mode="scaleToFill" wx:else bindtap="handleToggleFupanIsSay" />
+        </view>
+        <view class="say">
+          <image src="https://file.wxdao.net/2023-03/7714487f-3fad-4e19-975b-f81603fada72.png" mode="scaleToFill" wx:if="{{fupanIsVoice}}" bindtap="handleToggleFupanIsVoice" />
+          <image src="https://file.wxdao.net/2023-03/d6a1af8b-fa67-4032-bd66-274f439d5ed5.png" mode="scaleToFill" wx:else bindtap="handleToggleFupanIsVoice" />
+        </view>
+      </view>
+      <!-- <view class="leave" bindtap="handleTiaoguo">跳过</view> -->
+      <view class="leave" bindtap="handleTiaoguo">跳过</view>
+    </view>
+  </view>
+</view>
 <view wx:if="{{audioPushUrl!==''}}">
   <live-pusher wx:key="livePusher" style="display:inline-block;width:0;height:0;" mode="RTC" url="{{audioPushUrl}}" autopush="true" enable-mic="{{ pushIsMuted }}" enable-camera="{{false}}" log-level="silent" />
 </view>
@@ -330,7 +352,7 @@
 </block>
 
 <!-- 准备提示   " -->
-<block wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}">
+<!-- <block wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}">
   <view wx:if="{{readyTime <= 10}}">
     <view class="ready-fix" wx:if="{{isfriend}}">
       您正在受邀加入《{{title}}》心灵对话。请在 {{readyTime}}s 做好对话准备。
@@ -339,7 +361,7 @@
       请在 {{readyTime}}s 内完成准备。未准备将被抱出房间哦~
     </view>
   </view>
-</block>
+</block> -->
 
 <!-- 匹配中 -->
 <!-- <block wx:if="{{matePopStatus}}">
