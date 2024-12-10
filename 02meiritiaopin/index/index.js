@@ -30,6 +30,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    KeyBoardHeight: 0,
     isHavePhone:true,
     isOpen: 1,
     playPopStatus: false,
@@ -830,6 +831,14 @@ Page({
    */
   onShow() {
 
+  },
+
+  getKeyBoardHeight(e){
+    console.log(e);
+    let height = e?.detail?.height || 0
+    this.setData({
+      KeyBoardHeight:height === 0 ? 0 : height-200
+    })
   },
 
 

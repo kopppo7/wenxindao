@@ -4,6 +4,11 @@ page {
   box-sizing: border-box;
 }
 
+.wp {
+  position: relative;
+  bottom: 0;
+}
+
 .m-p1 {
 	position: absolute;
 	top: 0;
