@@ -140,8 +140,8 @@ Page({
 
     //准备弹窗
     readyPopStatus: false,
-    readyTime: 30, // 显示用
-    readyTimeVal: 30, // 标识
+    readyTime: 5, // 显示用
+    readyTimeVal: 5, // 标识
 
     //页面参数
     pageOptions: {},
@@ -318,9 +318,9 @@ Page({
       channelName: that.data.roomData.audioGroup,
       uid: that.data.uid,
     }).then((data) => {
-      console.log('离开房间成功');
+      console.log('离开房间成功',data);
     }).catch((error) => {
-      console.error('离开房间失败：');
+      console.error('离开房间失败：',error);
     });
   },
   /**
@@ -534,37 +534,37 @@ Page({
 
     // 只有在别人或自己发言时才能开麦
     // if (that.data.inputStatus) {
-      console.log(that.data.isBeginPlay,that.data.show_think_count_down,  "1");
+    console.log(that.data.isBeginPlay, that.data.show_think_count_down, "1");
     if (that.data.isBeginPlay && !that.data.show_think_count_down) {
       //发布本地媒体给房间对端
       console.log('second - that.data.voiceStatus', that.data.voiceStatus);
       if (that.data.voiceStatus === 0) {
         console.log("调用 publishAudio")
         that.publishAudio()
-          if (vm.data.publishAudioRetryCount >= vm.data.publishAudioMaxRetries) {
-            console.error('publishAudio 达到最大重连次数');
-            return;
-          }
-      
-          YunXinNertc.publish('audio')
-            .then((url) => {
-              console.log('本地 publish 成功', url, `尝试次数: ${vm.data.publishAudioRetryCount + 1}`);
+        if (vm.data.publishAudioRetryCount >= vm.data.publishAudioMaxRetries) {
+          console.error('publishAudio 达到最大重连次数');
+          return;
+        }
+
+        YunXinNertc.publish('audio')
+          .then((url) => {
+            console.log('本地 publish 成功', url, `尝试次数: ${vm.data.publishAudioRetryCount + 1}`);
+            vm.setData({
+              audioPushUrl: url,
+              pushIsMuted: true
+            }, () => {
               vm.setData({
-                audioPushUrl: url,
-                pushIsMuted: true
+                voiceStatus: 1
               }, () => {
-                vm.setData({
-                  voiceStatus: 1
-                }, () => {
-                  vm.data.publishAudioRetryCount = 0; // 重置计数器
-                });
+                vm.data.publishAudioRetryCount = 0; // 重置计数器
               });
-            })
-            .catch((err) => {
-              vm.data.publishAudioRetryCount++;
-              console.error(`本地 publish 尝试失败 (${vm.data.publishAudioRetryCount}):`, err);
-              publishAudio(); // 重试 publishAudio
             });
+          })
+          .catch((err) => {
+            vm.data.publishAudioRetryCount++;
+            console.error(`本地 publish 尝试失败 (${vm.data.publishAudioRetryCount}):`, err);
+            publishAudio(); // 重试 publishAudio
+          });
         // YunXinNertc
         //   .publish('audio')
         //   .then((url) => {
@@ -2968,9 +2968,9 @@ Page({
     return nick
   },
   // 退出房间清缓存跳转
-  leaveRoomClear() {
+  async leaveRoomClear() {
     console.log("leaveRoomClear");
-    this.clearRoomData()
+    await this.clearRoomData()
     wx.reLaunch({
       url: '/pages/index/index'
     })
@@ -2978,17 +2978,18 @@ Page({
 
   // 清除缓存、nim数据
   async clearRoomData() {
+    console.log("clearRoomData");
     this.setData({
       partyData: null,
       // roomData: null,
       isTuiChuRoom: true
-    })
+    }, () => {
+    this.stopWaitingCountdown()})
     wx.removeStorageSync('roomData')
     wx.removeStorageSync('partyData')
     wx.removeStorageSync('roomPath')
     wx.removeStorageSync('isLinShiFangZhu')
-    this.stopWaitingCountdown()
-    this.onUnloadData()
+    // this.onUnloadData()
     // 清除nim实例
     if (nim) {
       nim.destroy({
@@ -3012,11 +3013,8 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {
-    console.log("第一个 unload 执行了")
-    this.onUnloadData()
-  },
-  onUnloadData() {
+  async onUnload() {
+    console.log("unload")
     if (timeInt) clearInterval(timeInt)
     if (timeout) clearInterval(timeout)
     if (readyTimeout) clearInterval(readyTimeout)
@@ -3038,15 +3036,9 @@ Page({
       } else {
         if (!this.data.isReady) {
           console.log("onUnload - leaveRoomClear");
+          var loginInfo = getLoginInfo()
           if (loginInfo.wechatName == '' || loginInfo.wechatName == null || loginInfo.wechatName == undefined) return
-          this.leaveRoomClear()
-          //未准备，退出页面，代表退出房间。
-          // quitRoom({
-          //     roomId: this.data.roomData.id
-          // }).then(res => {
-          //     clearTimeout(readyTimeout)
-          //     wx.removeStorageSync('roomData')
-          // })
+          vm.leaveRoomClear()
         } else {
           //已经准备了
           console.log("调用了 onUnload 的 saveData 2");
@@ -3065,6 +3057,8 @@ Page({
       }
     }
   },
+  // onUnloadData() {
+  // },
   //content滚动
   contentScroll: function () {
     let view_id = 'view_id_' + parseInt(Math.random() * 1000000)
@@ -3820,7 +3814,7 @@ Page({
   // }
 
   handleGoBack() {
-    if(this.data.isBeginPlay) {
+    if (this.data.isBeginPlay) {
       this.handleZhongTuTuiChu()
       return
     }

@@ -102,10 +102,10 @@
         <view wx:if="{{isOwner && !isBeginPlay && showPrompt}}" class="tips">
           <p wx:if="{{waiting_countdown > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown }}s</p>
           <p wx:elif="{{waiting_countdown2 > 0}}">系统正在努力为您寻找对话伙伴 {{ waiting_countdown2 }}s</p>
-          <p wx:else="">暂时没有伙伴想要开启本对话，您可以邀请好友或者参与别的话题</p>
+          <p wx:else>暂时没有伙伴想要开启本对话，您可以邀请好友或者参与别的话题</p>
         </view>
         <!-- 准备提示   " -->
-        <view wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}" class="tips tips_center" style="width: 100%;">
+        <view wx:if="{{readyPopStatus && !isBeginPlay && !activityPopStatus}}" class="tips tips_center tips_top" style="width: 100%;">
           <view wx:if="{{isfriend}}">
             您正在受邀加入《{{title}}》心灵对话。请在 {{readyTime}}s 做好对话准备。
           </view>

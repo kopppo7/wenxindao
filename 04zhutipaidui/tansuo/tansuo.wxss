@@ -1468,8 +1468,8 @@ image {
 .room-theme .speak-con {
   flex-grow: 1;
   /* height: calc(100% - 700rpx); */
-  height: 27vh;
-  margin-top: 18rpx;
+  height: 25vh;
+  margin-top: 16rpx;
   -wekit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -1752,16 +1752,23 @@ image {
   position: relative;
   height: 60rpx;
   margin-top: 10rpx;
+  padding-top: 10rpx;
 }
 
 .tips {
   position: absolute;
   background: rgba(255, 181, 140, 0.2);
-  padding: 10rpx 20rpx;
+  padding: 8rpx 20rpx;
   border-radius: 24rpx;
+  font-size: 24rpx;
 }
 
 .tips_center {
   left: 50%;
   transform: translateX(-50%);
+  font-size: 24rpx;
+}
+
+.tips_top {
+  top: -40rpx;
 }
